@@ -1,0 +1,99 @@
+.main__consoleCatalog {
+    width: 100%;
+    height: 40vh;
+    /* --------------------- */
+   margin: 2rem 0;
+}
+
+.main__consoleCatalog .consoleCatalog__div {
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    justify-content: space-around;
+    flex-flow: column nowrap;
+    
+}
+
+
+.consoleCatalog__text {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.consoleCatalog__items {
+    gap: 2rem;
+}
+
+.main__consoleCatalog .consoleCatalog__item {
+    background-color: white;
+    width: 200px;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.main__consoleCatalog .consoleCatalog__item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box-shadow effect */
+}
+
+.main__consoleCatalog .item__div {
+    width: 100%;
+    height: 100%;
+    flex-flow: column nowrap;
+}
+
+.main__consoleCatalog .item__img {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+.main__consoleCatalog .item__info {
+    flex-flow: column nowrap;
+    width: 100%;
+    height: 20%;
+    margin: 1rem;
+    justify-content: space-between;
+}
+
+.main__consoleCatalog .info__price {
+    height: 100%;
+    font-weight: 800;
+}
+.main__consoleCatalog .info__price span {
+    font-weight: 600;
+    font-size: .75rem;
+    padding-left: .1rem;
+}
+
+.main__consoleCatalog .info__title {
+    font-weight: 700;
+}
+@media only screen and (max-width: 1824px) {
+    .main__consoleCatalog{
+          height: 100%;
+    }
+    .main__consoleCatalog .consoleCatalog__div{
+            gap: 20px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .consoleCatalog__text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 0 1rem;
+        text-align: center;
+    }
+    .consoleCatalog__items {
+        flex-wrap: wrap;
+    }
+}
+.main__consoleCatalog .item__div:hover .info__price{
+    color: var(--MS-C);
+}
+.main__consoleCatalog .item__div:hover .info__title{
+    color: var(--MS-C);
+}

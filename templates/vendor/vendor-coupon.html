@@ -1,0 +1,284 @@
+{% extends "vendor/vendor-base.html" %} 
+{% load static %} 
+{% block content %} 
+{% load crispy_forms_tags %}
+<!-- {% crispy form %} -->
+<style>
+  th,
+  td {
+    white-space: nowrap;
+  }
+</style>
+<div class="dashboard_content_wrapper">
+  <div class="dashboard dashboard_wrapper pr30 pr0-md">
+    {% include 'vendor/dashboard-nav.html' %}
+
+    <div class="dashboard__main pl0-md">
+      <div class="dashboard__content bgc-gmart-gray">
+        <div class="row pb50">
+          <div class="col-lg-12">
+            <div class="dashboard_title_area">
+              
+              {% if query == None or query == "" %}
+                <h2>Coupons & Discounts</h2>
+                <p class="para"><b>{{ coupon.count }} </b> Total Coupons</p>
+              {% else %}
+                <h2>Showing results for "{{query}}"</h2>
+                <p class="para"><b>{{ coupon.count }} </b> Total Coupons</p>
+                <a href="{% url 'vendor:coupon' %}" class="btn purple-btn">View All</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="dashboard_product_list account_user_deails">
+              <div
+                class="row d-block d-sm-flex justify-content-center justify-content-sm-between"
+              >
+                <div class="col-sm-6 col-lg-6">
+                  <div
+                    class="dashboard_page header_search_widget mb30 mb15-520"
+                  >
+                    <form action="" method="GET">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="q"
+                          placeholder="Search Coupons"
+                          aria-label="Recipient's username"
+                        />
+                        <div class="input-group-append">
+                          <button class="btn" type="submit">
+                            <span class="fa fa-search"></span>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-6">
+                  <div
+                    class="dashboard_page_add_listing text-center text-lg-end mb30 mb15-520 d-grid"
+                  >
+                    <!-- <a href="{% url 'vendor:create_product' %}" class="btn btn-new btn-lg btn-thm">Add New Products</a> -->
+                    <button
+                      type="button"
+                      class="btn btn-new btn-lg purple-btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Create New Coupon
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="exampleModal"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Create new coupon
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <form
+                          method="POST"
+                          action="{% url 'vendor:create_coupon' %}"
+                        >
+                          {% csrf_token %}
+                          <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"
+                              >Enter Coupon - (example: COUPON123)</label
+                            >
+                            {{form.code}}
+                          </div>
+                          <div class="mb-3">
+                            <label
+                              for="exampleInputPassword1"
+                              class="form-label"
+                              >Discount % - (e.g 20)</label
+                            >
+                            {{form.discount}}
+                          </div>
+                          <div class="mb-3">
+                            <label
+                              for="exampleInputPassword1"
+                              class="form-label"
+                              >Valid From</label
+                            >
+                            {{form.valid_from}}
+                          </div>
+
+                          <div class="mb-3">
+                            <label
+                              for="exampleInputPassword1"
+                              class="form-label"
+                              >Valid To</label
+                            >
+                            {{form.valid_to}}
+                          </div>
+
+                          <div class="mb-3 form-check">
+                            {{form.make_public}}
+                            <label class="form-check-label" for="exampleCheck1"
+                              >Make Coupon Public <br />
+                            </label>
+                            <label for=""
+                              ><b
+                                >NOTE: Making coupon public would make this
+                                coupon visible to anyone viewing your
+                                products</b
+                              ></label
+                            >
+                          </div>
+                          <button type="submit" class="btn btn-primary">
+                            Create Coupon
+                          </button>
+                        </form>
+                      </div>
+                      <!-- <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                                </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="order_table table-responsive">
+                <table class="table">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">S/N</th>
+                      <th scope="col">Code</th>
+                      <th scope="col">Discount</th>
+                      <th scope="col">Valid From</th>
+                      <th scope="col">Valid To</th>
+                      <th scope="col">Redemption</th>
+                      <th scope="col">Public Status</th>
+                      <th scope="col">Active Status</th>
+                      <th scope="col">Created</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for c in coupon %}
+                    <tr>
+                      <th scope="row" style="width: 50px">
+                        {{forloop.counter}}
+                      </th>
+                      <th scope="row">{{ c.code }}</th>
+                      <td>{{ c.discount }}%</td>
+                      <td>{{c.valid_from}}</td>
+                      <td>{{c.valid_to}}</td>
+                      <td>{{c.redemption}}</td>
+
+                      {% if c.make_public == True %}
+                      <td class="status"><span class="style">Public</span></td>
+                      {% endif %} {% if c.make_public == False %}
+                      <td class="status"><span class="style">Private</span></td>
+                      {% endif %} {% if c.active == True %}
+                      <td class="status"><span class="style">Active</span></td>
+                      {% endif %} {% if c.active == False %}
+                      <td class="status">
+                        <span class="style">In Active</span>
+                      </td>
+                      {% endif %} {% if p.status == "rejected" %}
+                      <td class="status">
+                        <span class="style">{{p.status|title}}</span>
+                      </td>
+                      {% endif %}
+
+                      <td>{{ c.date }}</td>
+                      <td class="editing_list align-middle">
+                        <ul>
+                          <li class="list-inline-item mb-1">
+                            <a
+                              href="{% url 'vendor:update_coupon' c.cid %}"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Edit"
+                              data-bs-original-title="View"
+                              aria-label="View"
+                              ><span class="fas fa-edit"></span
+                            ></a>
+                          </li>
+                          <li class="list-inline-item mb-1">
+                            <a
+                              href="{% url 'vendor:delete_coupon' c.cid %}"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Delete"
+                              data-bs-original-title="View"
+                              aria-label="View"
+                              ><span class="fas fa-trash"></span
+                            ></a>
+                          </li>
+                          <div sty></div>
+                        </ul>
+                      </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <li>No Coupons</li>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Pie chart
+    new Chart(document.getElementById("chartjs-dashboard-pie"), {
+      type: "pie",
+      data: {
+        labels: ["Direct", "Affiliate", "E-mail", "Other"],
+        datasets: [
+          {
+            data: [2602, 1253, 541, 1465],
+            backgroundColor: [
+              window.theme.primary,
+              window.theme.warning,
+              window.theme.danger,
+              "#E8EAED",
+            ],
+            borderWidth: 5,
+            borderColor: window.theme.white,
+          },
+        ],
+      },
+      options: {
+        responsive: !window.MSInputMethodContext,
+        maintainAspectRatio: false,
+        cutoutPercentage: 70,
+        legend: {
+          display: false,
+        },
+      },
+    });
+  });
+</script>
+{% endblock content %}

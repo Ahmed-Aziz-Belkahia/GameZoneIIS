@@ -1,0 +1,855 @@
+.header__div {
+    width: 100%;
+     height: 134px; 
+    color: black;
+}
+
+.header__navbar {
+
+position: fixed;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+z-index: 1000;
+
+width: 100%;
+
+height: 100px;
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+gap: .5rem;
+
+padding: 10px 3rem;
+
+background-color: white;
+
+z-index: 100;
+
+height: fit-content;
+background: url(https://gameszone.tn/static/images/background/footer-bg-img-home2.png);
+    color: white;
+    background-size: contain;
+}
+
+.navbar__logo {
+    z-index: 1000;
+    width: 250px;
+    height: 100%;
+    margin: 0 1rem;
+}
+
+.logo__img {
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.navbar__search {
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search__div {
+    z-index: 1000;
+    color: black;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    width: 100%;
+    height: 45%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+.search__ico {
+    z-index: 1000;
+    padding: 0;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 100%;
+    border-radius: 2px;
+
+}
+
+.search__ico:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* White with low opacity */
+}
+.search__ico:active {
+    background-color: transparent; /* Remove background color on :active */
+}
+
+.search__ico i {
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+}
+
+.search__input {
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+}
+
+.search__input input {
+    z-index: 1000;
+    outline: none;
+    font-weight: 400;
+    padding: 0 .5rem;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    margin: 0;
+    font-size: medium;
+}
+
+.navbar__navigation {
+    z-index: 1000;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navigation__element {
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    flex-flow: column nowrap;
+    padding: .5rem 0;
+    width: max-content;
+    color: white;
+}
+
+.navigation__sign-in {
+    z-index: 1000;
+}
+
+.sign-in__text {
+    z-index: 1000;
+}
+
+.navigation__sign-in i{
+    z-index: 1000;
+}
+
+.navigation__cart {
+    z-index: 1000;
+}
+
+.navigation__cart i {
+    z-index: 1000;
+}
+
+.cart__text {
+    z-index: 1000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.header__categories {
+    z-index: 40;
+    position: fixed;
+    top: 84px;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    width: 100%;
+    height: 50px;
+    /* Add a higher z-index value to the categories */
+    z-index: 10;
+    transition: all .3s;
+    background: url(https://gameszone.tn/static/images/background/footer-bg-img-home2.png);
+    background-size: contain;
+}
+
+.categories__div {
+    z-index: 40;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0;
+    padding: 0 3rem;
+}
+
+.categories__div a {
+    z-index: 40;
+
+}
+
+.SideMenu > .sidemenu_btn{
+    background: none;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+/*     gap: 5px; */
+    align-items: center;
+    color: white !important;
+}
+.sidemenu_btn > span{
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.sidemenu_wrapper{
+    display: none;
+    position: fixed;
+    background: white;
+    color: black;
+    width: 340px;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 2000;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.5);
+    height: 100%;
+}
+.user_sidemenu_wrapper{
+    display: none;
+    position: fixed;
+    background: white;
+    color: black;
+    width: 400px;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 2000;
+    box-shadow: 0 0.5rem 20rem 2000px rgba(0,0,0,.5);
+    height: 100%;
+}
+.user_sidemenu_wrapper .user_list_group > h2{
+    font-weight: 800;
+}
+.user_sidemenu_wrapper .user_list_group{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.user_sidemenu_wrapper .user_options{
+    display: flex;
+    flex-direction: column;
+    gap: 30PX;
+}
+.user_sidemenu_wrapper .option_link{
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.user_sidemenu_wrapper .option_link:hover{
+    color: #9fe02e;
+}
+.user_sidemenu_wrapper .option_link > a{
+    font-weight: 500;
+}
+.user_sidemenu_wrapper .signout > a , .user_sidemenu_wrapper .signout > span{
+    font-size: 20px;
+    cursor: pointer;
+    color: red !important;
+}
+.sign-in__text{
+    font-weight: 500;
+}
+.user_sidemenu_wrapper .sidemenu_header > .user_sidemenu_close{
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+}
+.sidemenu_header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem;
+    box-shadow: 0 2px 16px rgba(0,0,0,.078);
+    background: url(https://gameszone.tn/static/images/background/footer-bg-img-home2.png);
+    color: white;
+    background-size: contain;
+}
+.sidemenu_header > .title{
+    font-weight: 700;
+    background: none;
+    color: white;
+    padding: 0;
+}
+.sidemenu_header > .sidemenu_close{
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: white !important;
+}
+.overlay_close{
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color:  #fff !important;
+}
+.menu_group{
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+.menu_group::-webkit-scrollbar{
+    display: none;
+}
+.store_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+}
+.store_container > .store_details{
+    display: flex;
+    flex-direction: column;
+}
+.store_container > .store_icon{
+    font-size: 20px;
+}
+.store_details > .address{
+    font-size: medium;
+    font-weight: 700;
+    text-align: left;
+    border: none;
+    padding: 0;
+    display: block;
+    width: auto;
+    border-radius: 0;
+}
+.store_details > .time{
+    font-size: small;
+    font-weight: 500;
+}
+.store_container:hover{
+    color: #9fe02e;
+}
+.categories_group{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.categories_group > .categories{
+    display: flex;
+    flex-direction: column;
+}
+.categories_group > .categories > li{
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+}
+.categories_group > .categories > li:hover{
+    background-color: #dcdcdc;
+    padding: 10px;
+    border-radius: 0;
+}
+.categories_group > .categories > li > a{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    font-size: medium;
+}
+.categories_group > .categories > li > a:hover{
+    color: black;
+}
+.sidemenu_overlay{
+    display: none;
+    position: fixed;
+    background: white;
+    color: black;
+    width: 340px;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 3000;
+}
+.sidemenu_back{
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff !important;
+}
+.Sub_categories{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+.Sub_categories > .sub_category_link{
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    font-size: medium;
+}
+.Sub_categories > .sub_category_link:hover{
+    background-color: #dcdcdc;
+    padding: 10px;
+    border-radius: 0;
+    color: black;
+}
+.Sub_categories > .sub_category_link > a:hover{
+    color: black;
+}
+.sidemenu_overlay h2{
+    padding: 1rem;
+    font-weight: 700;
+}
+.categories_group h2{
+    font-weight: 700;
+}
+.categories__div {
+    display: flex;
+}
+
+.category__div {
+    position: relative;
+    margin-right: 20px; /* Adjust as needed */
+}
+
+.category__div a {
+    display: block;
+    padding: 10px;
+    color: #fff !important;
+    text-decoration: none;
+    font-size: medium;
+    padding-bottom: 3px;
+}
+
+.category__div .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: 200px;
+    padding: 1rem;
+    border: 0;
+    border-radius: 0;
+    -webkit-box-shadow: 0 0 1rem rgba(0,0,0,.18);
+    box-shadow: 0 0 1rem rgba(0,0,0,.18);
+    float: none;
+    left: 0;
+    margin-left: 4px;
+    padding: 0.5rem 0;
+    position: absolute;
+    right: unset;
+    z-index: 10000;
+}
+
+.category__div:hover .sub-menu {
+    display: block;
+}
+.category__div:hover a{
+    color: var(--MS-C) !important;
+    transition: color ease 0.5;
+}
+
+.category__div .sub-menu a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.category__div .sub-menu a:hover {
+    background-color: #f5f5f5;
+}
+.category__div:hover a:before {
+    left: 0;
+    width: 100%;
+}
+.category__div a:before {
+    background-color: #a2f518;
+    bottom: 0;
+    content: "";
+    height: 1px;
+    position: absolute;
+    left: 50%;
+    width: 0;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.user__signed{
+    position: relative;
+}
+.user__signed:hover .profile_menu{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100px;
+}
+.closefilter{
+    color: black;
+}
+@media screen and (max-width: 768px) {
+    .navbar__search{
+        position: absolute !important;
+        top: 72%;
+        bottom: 0;
+        left: 0;
+    }
+    .navbar__logo{
+        width: 120px;
+    }
+    .sign-in__text, .cart__text{
+        font-size: medium;
+    }
+    .categories__div {
+        z-index: 40;
+        width: 100vw;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 2rem;
+        /* padding: 0 3rem; */
+        justify-content: start;
+        max-width: 100%;
+        overflow-x: auto;
+        padding: 0;
+    }
+    .category__div{
+        margin-right: 0;
+    }
+    .header__categories{
+        width: 100vw;
+        top: 72px;
+        display: none;
+    }
+    .category__div a{
+        width: max-content;
+    }
+    .header__div{
+        height: 135px;
+    }
+    .header__navbar{
+        width: 100vw;
+        padding: 1rem;
+    }
+    .navbar__navigation{
+        width: auto;
+    }
+    .category__div:hover .sub-menu, .subcategory__div:hover .sub-sub-menu{
+        display: none !important;
+    }
+    .search__div{
+        height: 60%;
+        border-bottom: 2px solid #898989;
+    }
+}
+.sort-by-up-arrow {
+    border-bottom: 15px solid #fff;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    height: 0;
+    left: 8px;
+    position: absolute;
+    top: -8px;
+    width: 0;
+}
+.mobile-cart-items-count{
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .container{
+        flex-direction: column;
+        margin: 0;
+        width: 100%;
+        gap: 20px;
+    }
+    form div{
+        flex-wrap: wrap;
+    }
+    .content{
+        padding: 0;
+    }
+    .user_sidemenu_wrapper{
+        width: 100%;
+    }
+    .sidemenu_wrapper{
+        width: 100%;
+    }
+    .sidemenu_overlay{
+        width: 100%;
+    }
+    .mobile-cart{
+        position: relative;
+    }
+    .cart-items-count{
+        display: none;
+    }
+    .mobile-cart-items-count{
+        background: var(--MS-C);
+        font-size: 13px;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    
+}
+
+.category__div .sub-menu,
+.category__div .sub-sub-menu {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: 200px;
+    padding: 1rem;
+    border: 0;
+    border-radius: 0;
+    -webkit-box-shadow: 0 0 1rem rgba(0,0,0,.18);
+    box-shadow: 0 0 1rem rgba(0,0,0,.18);
+    float: none;
+    left: 0;
+    margin-left: 4px;
+    padding: 0.5rem 0;
+    position: absolute;
+    right: unset;
+    z-index: 10000;
+}
+
+.category__div:hover .sub-menu,
+.subcategory__div:hover .sub-sub-menu {
+    visibility: visible;
+     opacity: 1;
+    margin: 0;
+}
+.categories__div > .right-content > .track_container{
+    border: none;
+    border-left: 1px solid white;
+    color: white;
+    border-bottom: none;
+    padding: 0.75rem;
+}
+.categories__div > .right-content{
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.categories__div > .right-content > .track_container > .track_details > p {
+    display: block;
+    font-size: medium;
+    font-weight: 700;
+    padding: 0 15px 0 0;
+    margin: 0;
+    color: white;
+}
+.categories__div > .right-content > .track_container > .track_details > p:hover{
+    color: var(--MS-C)
+}
+.categories__div > .right-content > .track_container:hover{
+    color: var(--MS-C);
+}
+.category__div .sub-menu a,
+.subcategory__div .sub-sub-menu a {
+    display: flex;
+    padding: 10px;
+    color: #000 !important;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-weight: 500;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category__div .sub-menu a:hover,
+.subcategory__div .sub-sub-menu a:hover {
+    background-color: var(--MP-C);
+    color: white !important;
+
+}
+
+.subcategory__div:hover .sub-sub-menu{
+    top: 0%;
+    left: 100%;
+    margin: 0;
+}
+.category__div .sub-menu a > svg{
+    color: #606060;
+    width: 20px;
+    height: 20px;
+}
+
+.see_all{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+}
+.see_all > h2{
+    padding: 1rem 0;
+}
+.see_all > a{
+    text-decoration: underline;
+    font-size: medium;
+}
+.navbar__search{
+    position: relative;
+}
+#searchResult{
+    position: absolute;
+    top: 100%;
+    width: -webkit-fill-available;
+    background-color: #f2f4f7;
+    border-top: 1px solid #e0e0e0;
+    -webkit-box-shadow: 0 12px 12px 0 rgba(0,0,0,.1);
+    box-shadow: 0 12px 12px 0 rgba(0,0,0,.1);
+    display: block;
+    position: absolute;
+    width: -webkit-fill-available;
+    z-index: 3000;
+    padding: 8px 0;
+    display: none;
+}
+#searchResult > div{
+    border-radius: 4px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 14px;
+    margin-left: 4px;
+    margin-right: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    padding-left: 2px;
+    padding: 8px 16px;
+    color: black;
+}
+#searchResult > div:hover{
+    background-color: #e5e5e5;
+}
+.search__div .search__input input:focus-within > .search__div {
+    background: white;
+}
+.track_container{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: auto;
+    justify-content: space-between;
+    padding: 1rem;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+.track_details > p {
+    display: block;
+    font-size: medium;
+    font-weight: 700;
+    padding: 0 15px 0 0;
+    margin: 0;
+    color: var(--MP-C);
+}
+.track_icon{
+    font-size: 20px;
+}
+.track_container:hover p {
+    color: #9fe02e;
+}
+.category_link i{
+    font-size: medium;
+}
+.categories_title_header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.categories_title_header a{
+    font-weight: 500;
+    font-size: medium;
+    text-decoration: underline;
+}
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+    .header__categories{
+        top: 80px;
+    }
+    .header__div{
+        height: 129px;
+    }
+}
+@media screen and (max-width: 375px) {
+    .header__categories {
+        width: 100vw;
+        top: 77px;
+    }
+}

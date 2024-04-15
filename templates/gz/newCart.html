@@ -1,0 +1,359 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "gz/styles/newCart.css" %}">
+    {% block title %}<title>GameZone | Cart</title>{% endblock title %}
+    
+
+{% endblock head %}
+
+
+{% block header %}
+    {% include 'gz/components/navigation.html' %}
+{% endblock header %}
+
+
+
+{% block main %}
+    <div class="card">
+        <div class="row cartContainer">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                        <div class="col align-self-center text-right text-muted itemsCount">{{total_items}} items</div>
+                    </div>
+                </div>
+                {% if cart %}
+                <div class="cartItems">
+                    {% for item in items %}
+                        <div class="row border-top border-bottom list__item">
+                            <div class="row shoppinglist align-items-center">
+                                <div class="product">
+                                    <div class="col-2 image"><img class="img-fluid" src="{{ item.product.image.url }}"></div>
+                                    <div class="col info">
+                                        <div class="row text-muted">{{ item.product.title }}</div>
+                                        <div class="row">{{ item.product.category }}</div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="quantity__div">
+                                        <div class="value-button" id="decrease" data-item-id="{{ item.id }}" value="Decrease Value">-</div>
+                                        <input type="number" class='number' id="number{{ item.id }}" value="{{item.quantity}}" />
+                                        <div class="value-button" id="increase" data-item-id="{{ item.id }}" value="Increase Value">+</div>
+                                    </div>
+                                </div>
+                                <div class="col price">TND {{item.product.price}}</div>
+                                <button class="delete-item-btn delete__delete" data-item-id="{{ item.id }}">Remove</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {% endif %}
+                
+                <div class="back-to-shop"><a href="{% url "catalog" %}">&leftarrow; <span class="text-muted">Back to shop</span></a></div>
+        </div>
+        <div class="col-md-4 summary">
+            <div class="heading">Summary</div>
+            <hr>
+            <div class="row itemsRow">
+                <div class="col" style="padding-left:0;">Subtotal <span class ='itemsCount'> ({{total_items}} items) </span></div>
+                <div class="col text-right totalPrice">TND {{cart.calculate_total_price}}</div>
+            </div>
+            <div>
+                <form id="shippingForm" method="POST" action="">
+                    <p class="shipping_title">SHIPPING</p>
+                    <div class="colors__divs">
+                        <div class="divs__div color flexCenter pick_up_in_store">
+                            <div class="shipping_option_container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-store"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
+                                <p>Pick up in store</p>
+                                <p>Available in working time</p>
+                            </div>
+                        </div>
+                
+                        <div class="divs__div color flexCenter ship_to_home selected">
+
+                            <div class="shipping_option_container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                                <p>Ship to home</p>
+                                <p>1-2 day shipping</p>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedColorInput" name="selected_color" value="">
+                </form>
+            </div>
+            
+            <div>
+                <p class="coupon_title">GIVE CODE</p>
+                <form id="couponForm" method="POST" action="">
+                    <input id="code" name="code" placeholder="Enter your code" type="text">
+                    <button id="applyCouponButton" data-cart-id="{{ cart.id }}">Apply Coupon</button>
+                </form>
+            </div>
+            <div class="row totalPrices" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                <div>
+                    <div class="col shippingspan">SHIPPING</div>
+                    <div class="col text-right shippingtotal">TND 7.00</div>
+                </div>
+                {% if cart.coupon %}
+                    <div>
+                        <div class="col shippingspan">COUPON</div>
+                        <div class="col text-right shippingtotal couponInfo">TND </div>
+                    </div>
+                {% endif %}
+                <div>
+                    <div class="col totalpricespan">TOTAL PRICE</div>
+                    <div class="col text-right total_ttotal">TND {{cart.calculate_total_price}}</div>
+                </div>
+                
+            </div>
+            <button class="btn checkoutbtn checkoutButton">CHECKOUT</button>
+        </div>
+    </div>
+
+{% endblock main %}
+
+{% block footer %}
+    {% include "gz/components/footer.html" %}
+{% endblock footer %}
+
+{% block scripts %}
+
+            
+<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+                                
+<script type='text/javascript'>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Define variables
+        const subTotalDiv = document.querySelector(".totalPrice");
+        const TotalDiv = document.querySelector('.total_ttotal');
+        const itemsCount = document.querySelectorAll('.itemsCount');
+
+        const increaseButtons = document.querySelectorAll('#increase');
+        const decreaseButtons = document.querySelectorAll('#decrease');
+        const deleteButtons = document.querySelectorAll('.delete-item-btn');
+        const shippingTotalDiv = document.querySelector('.shippingtotal');
+        const shippingOptions = document.querySelectorAll('.color.flexCenter');
+        let selectedShippingMethod = 0;
+        let TotalPrice = {{cart.calculate_total_price}}
+        let shippingCost = 0
+        
+        function reloadPrices(totalPrice, shippingMethod) {
+            subTotalDiv.innerText = `TND ${totalPrice}`
+            TotalDiv.innerText = `TND ${totalPrice + calculateShippingCost(shippingMethod)}`;
+            shippingCost = calculateShippingCost(shippingMethod)
+            selectedShippingMethod = shippingMethod
+            console.log("selectedShippingMethod: ", selectedShippingMethod)
+            TotalPrice = totalPrice
+            console.log("TotalPrice: ", TotalPrice)
+            console.log("shippingCost: ", shippingCost)
+            shippingTotalDiv.innerText = `TND ${shippingCost}`
+        }
+
+        // Add event listeners to all delete buttons
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = button.dataset.itemId; // Access dataset attribute of the button
+    
+                // Send a POST request to delete the cart item
+                $.ajax({
+                    type: 'POST',
+                    url: '/delete-cart-item/',
+                    data: { itemId: itemId }, // Pass the item ID in the request data
+                    beforeSend: function (xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        // Remove the cart item from the HTML on success
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error deleting cart item:', error);
+                    }
+                });
+            });
+        });
+
+        
+        // Event listener for shipping options
+        shippingOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                shippingOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                option.classList.add('selected');
+                document.getElementById('selectedColorInput').value = option.classList.contains('pick_up_in_store') ? "0" : "1";
+        
+                // Update selected shipping method
+                selectedShippingMethod = document.getElementById('selectedColorInput').value;
+                console.log('Selected Shipping Method:', selectedShippingMethod);
+                
+                // Calculate and update shipping cost and total price
+                reloadPrices(TotalPrice, selectedShippingMethod);
+            });
+        });
+        
+        // Simulate click event on default shipping option (ship to home)
+        document.querySelector('.ship_to_home').click(); // Assuming ship_to_home has the 'selected' class by default
+        
+        // Function to calculate shipping cost
+        function calculateShippingCost(shippingMethod) {
+            if (shippingMethod === '0') {
+                return 0; // No shipping cost for pick up in store
+            } else {
+                return 7; // Fixed shipping cost for ship to home
+            }
+        }
+
+        // Event listener for checkout button
+        const checkoutButton = document.querySelector('.checkoutbtn');
+        checkoutButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            //save price and shipping method to cart
+            console.log(TotalPrice + calculateShippingCost(selectedShippingMethod))
+            $.ajax({
+                type: 'POST',
+                url: '/final-cart-checkout/',
+                data: {cartId: {{cart.id}}, price: TotalPrice + calculateShippingCost(selectedShippingMethod), shippingMethod: selectedShippingMethod, shippingCost: calculateShippingCost(selectedShippingMethod)},
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                },
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error deleting cart item:', error);
+                }
+            });
+
+
+
+
+
+
+
+
+            
+            console.log(`checkout`);
+            window.location.href = `/checkout`;
+        });
+    
+        // Function to update quantity
+        function UpdateQuantity(itemId, value) {
+            $.ajax({
+                type: 'POST',
+                url: '/update-cart-item-quantity/',
+                data: {itemId: itemId, quantity: value},
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                },
+                success: function (response) {
+                    TotalPrice = parseFloat(response.total_price, 10)
+                    reloadPrices(TotalPrice, selectedShippingMethod)
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error deleting cart item:', error);
+                }
+            });
+        }
+    
+        // Function to increase value
+        function increaseValue(itemId) {
+            var value = parseInt(document.getElementById(`number${itemId}`).value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            UpdateQuantity(itemId, value)
+            document.getElementById(`number${itemId}`).value = value;
+        }
+        
+        // Function to decrease value
+        function decreaseValue(itemId) {
+            var value = parseInt(document.getElementById(`number${itemId}`).value, 10);
+            value = isNaN(value) ? 0 : value;
+            value = Math.max(1, value - 1); 
+            UpdateQuantity(itemId, value)
+            document.getElementById(`number${itemId}`).value = value;
+        }
+
+
+        increaseButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.dataset.itemId;
+                increaseValue(itemId);
+            });
+        });
+
+        decreaseButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.dataset.itemId;
+                decreaseValue(itemId);
+            });
+        });
+    
+        applyCouponButton = document.getElementById("applyCouponButton");
+        applyCouponButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            var cartId = this.dataset.cartId; // Accessing cart ID from data attribute
+            var code = document.getElementById("code").value;
+            $.ajax({
+                type: 'POST',
+                url: '/apply_coupon_to_cart/',
+                data: {code: code, cartId: cartId}, // Pass cart ID to the data object
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        window.location.reload()
+                    }
+                    // Handle success response here, such as updating the UI
+                },
+                error: function (xhr, status, error) {
+                    console.error('error', error);
+                    // Handle error response here
+                }
+            });
+        });
+
+        // Assuming you have the coupon discount percentage and total price available
+        var total_price = {{cart.calculate_total_price}}; // Example total price
+        var discount_percentage = {{cart.coupon.discount}}; // Example discount percentage
+
+        // Calculate the discount amount
+        var discount_amount = total_price * (discount_percentage / 100);
+
+        // Update the HTML to display the calculated values
+        var couponInfoElement = document.querySelector(".couponInfo");
+        if (couponInfoElement) {
+            couponInfoElement.innerHTML = `
+            <div class="col text-right shippingtotal">TND -%${discount_percentage}</div>
+            `;
+        }
+
+        // Function to get cookie value
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+    </script>
+
+
+
+{% endblock scripts %}

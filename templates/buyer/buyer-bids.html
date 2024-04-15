@@ -1,0 +1,356 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+  Bids
+{% endblock title %}
+{% load humanize %}
+{% block content %}
+
+<style>
+  .modalDialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 100ms ease-in;
+    -moz-transition: opacity 100ms ease-in;
+    transition: opacity 100ms ease-in;
+    pointer-events: none;
+}
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialog > div {
+    max-width: 800px;
+    width: 90%;
+    position: relative;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 3px;
+    background: #fff;
+}
+.close {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #b331ff;
+    color: #fff;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 34px;
+    height: 34px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+    padding-top: 5px;
+}
+.close:hover {
+    background: #b331ff;
+    color: white;
+}
+/* .modal-backdrop{
+  background-color: #000;
+  z-index: -1;
+} */
+
+
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-title {
+  margin-top: 0;
+}
+
+.modal-content-text {
+  margin-bottom: 0;
+}
+.openModal{
+  border: none;
+  background: none;
+  color: #b331ff;
+}
+
+</style>
+
+
+
+<section class="our-dashbord dashbord"style="margin-top: 0;">
+   <div class="container">
+      <div class="row">
+         {% include 'buyer/nav-desktop.html' %}
+         <div class="col-lg-9 col-xl-9">
+            {% include 'buyer/nav-mobile.html' %}
+               <div class="row">
+               <div class="col-xl-12">
+                  <div class="account_user_deails pl40 pl0-md">
+                     <h2 class="title mb30">My Bids</h2>
+                     <div class="ui_kit_tab style2">
+                        <!-- nav tab Nav List Start -->
+                        <!-- <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
+                           <li class="nav-item" role="predsentation">
+                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">All Bids</button>
+                           </li>
+                           <li class="nav-item" role="presedntation">
+                              <button class="nav-link" id="baby-tab" data-bs-toggle="tab" data-bs-target="#baby" type="button" role="tab" aria-controls="baby" aria-selected="false">Won Bids</button>
+                           </li>
+                           <li class="nav-item" role="presedntation">
+                              <button class="nav-link" id="furniture-tab" data-bs-toggle="tab" data-bs-target="#furniture" type="button" role="tab" aria-controls="furniture" aria-selected="false">Lost Bids</button>
+                           </li>
+                        </ul> -->
+
+                        <div class="tab-content pt20 row" id="myTabContent">
+                           <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <!-- <h2 class="title mb30">All Bids</h2> -->
+                                <div class="order_table table-responsive">
+                                  <table class="table">
+                                    <thead class="table-light">
+                                      <tr>
+                                        <!-- <th scope="col">ID</th> -->
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Win Status</th>
+                                        <th scope="col">View Bid</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for o in bids %}
+
+                                        <tr>
+                                        <!-- <th scope="row">{{o.bid}}</th> -->
+                                        <th scope="row"><a href="{% url 'core:buyer_bids_detail' o.product.pid o.bid %}" style="border-bottom: 1px dashed black;">{{o.product.title|truncatechars:20}}</a></th>
+                                        <!-- <td>{{o.product}}</td> -->
+                                        {% if o.winner == True and o.product.bidding_ended == True %}
+                                          <td class="text-success">Won <i class="bi bi-trophy"></i></td>
+                                        {% endif %}
+                                        {% if o.winner == False and o.product.bidding_ended == True %}
+                                          <td class="text-success">Lost</td>
+                                        {% endif %}
+                                        {% if o.winner == False and o.product.bidding_ended == False %}
+                                          <td class="text-success">Pending...</td>
+                                        {% endif %}
+                                        <td><button 
+                                          class="openModal" 
+                                          data-modal-title="{{ o.product.title }}" 
+                                          data-modal-amount="{{ o.price|floatformat:2|intcomma }}"
+                                          data-modal-date="{{ o.date|date:'d M, Y' }}"
+                                          data-modal-auction-status="{{ o.product.auction_status|title }}"
+                                          data-modal-winner="{{ o.winner|yesno:'Won,Lost' }}"
+                                          data-modal-oid="{{ o.oid }}"
+                                          ><i class="fas fa-eye"></i></button></td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td><h4>No Bids Yet</h4></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                           </div>
+                           <!-- <div class="tab-pane fade col-lg-12" id="baby" role="tabpanel" aria-labelledby="baby-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <h2 class="title mb30">Won Bids</h2>
+                                <div class="order_table table-responsive">
+                                    <table class="table">
+                                        <thead class="table-light">
+                                          <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Date Bidded</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Win Status</th>
+                                            <th scope="col">Auction Status</th>
+                                            <th scope="col">Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for o in won_bids %}
+                                            <tr>
+                                             <th scope="row">{{o.bid}}</th>
+                                             <th scope="row"><a href="{% url 'store:product-detail' o.product.pid %}" style="border-bottom: 1px dashed black;">{{o.product.title|truncatechars:20}}</a></th>
+                                             <td><small>{{o.date|date:"d M, Y"}}</small></td>
+                                             <td><small>{{ cs }}{{o.price|floatformat:2}}</small></td>
+                                             {% if o.winner == True and o.product.bidding_ended == True %}
+                                               <td class="text-success">Won <i class="bi bi-trophy"></i></td>
+                                             {% endif %}
+                                             {% if o.winner == False and o.product.bidding_ended == True %}
+                                               <td class="text-success">Lost</td>
+                                             {% endif %}
+                                             {% if o.winner == False and o.product.bidding_ended == False %}
+                                               <td class="text-success">Pending...</td>
+                                             {% endif %}
+                                             <td class="status"><span class="stylde4">{{o.product.auction_status|title}}</span></td>
+                                             <td class="status"><span class="style4"><a href="{% url 'core:buyer_bids_detail' o.product.pid o.bid %}">View Detail</a></span></td>
+                                             </tr>
+                                             {% empty %}
+                                             <tr>
+                                                 <td><h4>No Won Bids Yet</h4></td>
+                                             </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                      </table>
+                                </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-xl-12" id="furniture" role="tabpanel" aria-labelledby="furniture-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <h2 class="title mb30">Lost Bids</h2>
+                                <div class="order_table table-responsive">
+                                    <table class="table">
+                                        <thead class="table-light">
+                                          <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Date Bidded</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Win Status</th>
+                                            <th scope="col">Auction Status</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for o in lost_bids %}
+                                            <tr>
+                                              <th scope="row">{{o.bid}}</th>
+                                              <th scope="row"><a href="{% url 'store:product-detail' o.product.pid %}" style="border-bottom: 1px dashed black;">{{o.product.title|truncatechars:20}}</a></th>
+                                              <td><small>{{o.date|date:"d M, Y"}}</small></td>
+
+                                              <td><small>{{ cs }}{{o.price|floatformat:2}}</small></td>
+
+                                              {% if o.winner == True and o.product.bidding_ended == True %}
+                                                <td class="text-success">Won <i class="bi bi-trophy"></i></td>
+                                              {% endif %}
+
+                                              {% if o.winner == False and o.product.bidding_ended == True %}
+                                                <td class="text-success">Lost</td>
+                                              {% endif %}
+
+                                              {% if o.winner == False and o.product.bidding_ended == False %}
+                                                <td class="text-success">Pending...</td>
+                                              {% endif %}
+                                              
+                                              <td class="status"><span class="stylde4">{{o.product.auction_status|title}}</span></td>
+                                             </tr>
+                                             {% empty %}
+                                             <tr>
+                                                 <td><h4>No Losts Bids Yet</h4></td>
+                                             </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                      </table>
+                                </div>
+                              </div>
+                           </div> -->
+                        </div>
+
+                       
+
+                        <div class="modal">
+                          <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h2 class="modal-title"></h2>
+                            <hr>
+                            <h4 class="mt-3">Amount: <b><span class="modal-amount"></span></b> </h4>
+                            <h4 class="mt-3">Bid Date: <b><span class="modal-date"></span></b> </h4>
+                            <h4 class="mt-3">Win Status: <b><span class="modal-win-status"></span></b> </h4>
+                            <h4 class="mt-3">Auction Status: <b><span class="modal-auction-status"></span></b> </h4>
+                            <!-- <h4 class="mt-3">ID: <b><span class="modal-oid"></span></b> </h4> -->
+                          </div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  var modalBtns = document.getElementsByClassName("openModal");
+  var modal = document.querySelector(".modal");
+  var closeBtn = document.querySelector(".close");
+
+  for (var i = 0; i < modalBtns.length; i++) {
+    modalBtns[i].addEventListener("click", function() {
+      modal.style.display = "block";
+      var title = this.getAttribute("data-modal-title");
+      var amount = this.getAttribute("data-modal-amount");
+      var date = this.getAttribute("data-modal-date");
+      var auction_status = this.getAttribute("data-modal-auction-status");
+      var win_status = this.getAttribute("data-modal-winner");
+      var oid = this.getAttribute("data-modal-oid");
+
+
+      document.querySelector(".modal-title").innerHTML = title;
+      document.querySelector(".modal-amount").innerHTML = `$${amount}`;
+      document.querySelector(".modal-auction-status").innerHTML = auction_status;
+      document.querySelector(".modal-win-status").innerHTML = win_status;
+      document.querySelector(".modal-date").innerHTML = date;
+      document.querySelector(".modal-oid").innerHTML = oid;
+    });
+  }
+
+  closeBtn.addEventListener("click", function() {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", function(event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+});
+
+</script>
+
+{% endblock content %}

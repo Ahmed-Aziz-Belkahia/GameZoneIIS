@@ -1,0 +1,453 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "gz/styles/profile.css" %}">
+{% endblock head %}
+
+
+
+{% block header %}
+    {% include 'gz/components/navigation.html' %}
+    {% block title %}
+        <title>GameZone | Profile</title>
+    {% endblock title %}
+{% endblock header %}
+
+{% block main %}
+<div class="container">
+    <div class="sidebar">
+        <ul>
+            <li onclick="showContent('profile')" class="tab active-tab"><i class="fa-solid fa-user"></i> Profile</li>
+            <li onclick="showContent('orders')" class="tab"><i class="fa-solid fa-boxes-stacked"></i> Orders</li> <!-- Changed from my-orders to orders -->
+            <li onclick="showContent('receipts')" class="tab"><i class="fa-solid fa-receipt"></i> Receipts</li>
+            <li onclick="showContent('addresses')" class="tab"><i class="fa-solid fa-location-dot"></i> Addresses</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="profile active">
+            <h1>Profile</h1>
+            <form id='profile-form' method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="profile-settings">
+                        <div class="label-input">
+                            <label for="first_name">First Name</label>
+                            {{profileForm.first_name}}
+                        </div>
+                        <div class="label-input">
+                            <label for="last_name">Last Name</label>
+                            {{profileForm.last_name}}
+                        </div>
+                        <div class="label-input">
+                            <label for="email">Email</label>
+                            {{profileForm.email}}
+                        </div>
+                        <div class="label-input">
+                            <label for="tel">Phone Number</label>
+                            {{profileForm.tel}}
+                        </div>
+                        <div class="label-input">
+                            <label for="date_of_birth">Date of Birth</label>
+                            {{profileForm.date_of_birth}}
+                        </div>
+                </div>
+                <button id="save-button" type="submit">Save Changes</button>
+                <div>GZ coins {{user.customuser.points}}</div>
+                <p id="popupmessage"></p>
+            </form>
+        </div>
+        <div class="orders" id='orders'> <!-- Changed from my-orders to orders -->
+            <h1>Orders</h1>
+            <ul>
+                {% if orders %}
+                {% for order in orders %}
+                        <li class="order-list">
+                            <div class="order-box">
+                                <img src="{% static "gz/assets\qr-code-scan.png" %}" alt="Order Pic">
+                                <div class="order-details">
+                                    <p>Order ID: <span>{{ order.id }}</span></p>
+                                    <p>Total Price: <span>TND {{ order.price }}</span></p>
+                                    {% comment %} <p>Order Date: <span>{{ order.created_at }}</span></p> {% endcomment %}
+                                    {% if order.status == 'pending' %}
+                                    <p>Status: <span class="pending">Pending</span></p><br>
+                                {% elif order.status == 'completed' %}
+                                    <p>Status: <span class="completed">Completed</span></p><br>
+                                {% else %}
+                                    <p>Status: <spand class="cancelled">Cancelled</span></p><br>
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="order-items">
+                                
+                                <h3 class="items-title">Items:</h3>
+                                <ul class="order-items">
+                                    {% for item in order.order_items.all %}
+                                        <li>{{ item.product.title }} x {{ item.quantity }}</li>
+                                    {% endfor %}
+                                    
+                                </ul>
+                            </div>
+                            {% if order.status == 'pending' %}
+                                <div class="order-cancel">
+                                    <button data-orderId="{{order.id}}" class="cancel-button"><i class="fa-solid fa-xmark"></i> Cancel</button>
+                                </div>
+                            {% endif %}
+                        </li>
+                    <hr>
+                    {% endfor %}
+
+                {% else %}
+                <div class="no-orders">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <p>It looks empty here.
+                        <br>
+                        Make your first purchase now to view it listed here.</p>
+                    <button class="shop-now"><a href="{% url "catalog" %}">Shop Now</a></button>
+                </div>
+                {% endif %}
+
+            </ul>
+        </div>
+        <div class="receipts">
+            <h1>Receipts</h1>
+            <ul>
+                {% for receipt in receipts %}
+                    <li>Receipt ID: {{ receipt.id }}, User: {{ receipt.user }}, Date: {{ receipt.created_at }}</li>
+                    <!-- Display other receipt details as needed -->
+                {% endfor %}
+            </ul>
+        </div>
+        
+        
+        <div class="addresses">
+            <h1>Address Book</h1>
+            <div class="addresses-container">
+                <div class="address add-address">
+                    <i class="fa-solid fa-plus"></i>
+                    <h2>Add a new delivary address</h2>
+                </div>
+                {% for address in addresses %}
+                    <div class="address" id="address-{{ address.id }}">
+                        <p>{{ address }}</p>
+                        <div>
+                        <button data-id="{{ address.id }}" class="edit-address-button">Edit</button>
+                        <button data-id="{{ address.id }}" class="delete-address-button edit-address-button">Delete</button>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+            </div>
+            <div class="add-address-container">
+                <h1>Add a new address</h1>
+                <form class="addAddressForm">
+                    {% csrf_token %}
+                    <div>
+                        <label for="address">Address</label>
+                        {{addressForm.line}}
+                        <div class="city-state-zip">
+                            <div>
+                            <label for="city">country</label>
+                            {{addressForm.country}}
+                            </div>
+                            <div>
+                            <label for="state">City</label>
+                            {{addressForm.city}}
+                            </div>
+                            <div>
+                            <label for="zip">Zip Code</label>
+                            {{addressForm.zip_code}}
+                            </div>
+                        </div>
+                        {% comment %} <label for="country">Country</label>
+                        <input type="text" placeholder="Country"> {% endcomment %}
+                        <input class="add-address-button submit" type="submit" value="Add Address">
+
+                    </div>
+                </form>
+            </div>
+            <div class="edit-address-container">
+                <h1>Edit address</h1>
+                <form class="edit-address-form" method="post">
+                    {% csrf_token %}
+                    <div>
+                        <label for="address">Address</label>
+                        {{addressForm.line}}
+                        <div class="city-state-zip">
+                            <div>
+                            <label for="city">country</label>
+                            {{addressForm.country}}
+                            </div>
+                            <div>
+                            <label for="state">City</label>
+                            {{addressForm.city}}
+                            </div>
+                            <div>
+                            <label for="zip">Zip Code</label>
+                            {{addressForm.zip_code}}
+                            </div>
+                        </div>
+                        <button id="save-changes-button" type="submit">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock main %}
+
+{% block footer %}
+
+{% endblock footer %}
+
+{% block scripts %}
+<script>
+        function showContent(contentName) {
+            var contents = document.querySelectorAll('.content > div');
+            var selectedTab = document.querySelector('.tab');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+            var selectedContent = document.querySelector('.' + contentName);
+            document.addEventListener("click", function (event) {
+                if (event.target.classList.contains('tab')) {
+                    selectedTab.classList.remove('active-tab');
+                    selectedTab = event.target;
+                    selectedTab.classList.add('active-tab');
+                }
+            });
+            selectedContent.classList.add('active');
+        }
+
+        if ("{{val}}" != "None") {
+            showContent("{{val}}");
+        }
+    const form = document.querySelector("#profile-form");
+    const submitButton = form.querySelector("#save-button");
+  
+    submitButton.addEventListener("click", function (event) {
+      event.preventDefault();
+  
+      const formData = new FormData(form);
+  
+      $.ajax({
+          type: 'POST',
+          url: '/update-profile/',
+          data: formData,
+          processData: false,
+          contentType: false,
+          beforeSend: function (xhr, settings) {
+              xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+          },
+          success: function (response) {
+              console.log(response)
+              document.getElementById('popupmessage').innerHTML = "Profile updated successfully";
+              
+          },
+          error: function (error) {
+              console.error('Error filtering products:', error);
+          }
+      });
+    });
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const cancelButtons = document.querySelectorAll(".cancel-button");
+        console.log(cancelButtons)
+        cancelButtons.forEach(function(cancelButton) {
+            cancelButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                const orderId = cancelButton.getAttribute('data-orderId');
+    
+                // Send AJAX request to cancel the order
+                $.ajax({
+                    type: 'POST',
+                    url: `/cancel-order/${orderId}/`,
+                    data: {"status": 'cancelled'},
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        window.location.reload();
+                        // You can optionally update the UI here if needed
+                    },
+                    error: function(error) {
+                        console.error('Error cancelling order:', error);
+                    }
+                });
+            });
+        });
+    });
+
+document.addEventListener("click", function (event) {
+    var AddAdress = document.querySelector('.add-address');
+    var AddAdressContainer = document.querySelector('.add-address-container');
+    var EditAdressContainer = document.querySelector('.edit-address-container');
+    var EditAdressButton = document.querySelector('.edit-address-button');
+    var AdressesContainer = document.querySelector('.addresses');
+    var selectedTab = document.querySelector('.tab');
+
+    if (event.target.classList.contains('add-address')) {
+        AddAdressContainer.style.display = 'flex';
+        AddAdress.style.display = 'none';
+        EditAdressContainer.style.display = 'none';
+    }
+    if (event.target.classList.contains('add-address-button')) {
+        AddAdressContainer.style.display = 'none';
+        AddAdress.style.display = 'flex';
+        EditAdressContainer.style.display = 'none';
+    }
+    if (event.target.classList.contains('edit-address-button')) {
+        AddAdressContainer.style.display = 'none';
+        AddAdress.style.display = 'none';
+        EditAdressContainer.style.display = 'flex';
+    }
+
+    if (event.target.classList.contains('tab')) {
+        AddAdressContainer.style.display = 'none';
+        EditAdressContainer.style.display = 'none';
+        AddAdress.style.display = 'flex';
+    }
+});
+
+    addAddressSubmit = document.querySelector(".add-address-button.submit")
+
+    addAddressSubmit.addEventListener("click", (event) => {
+        event.preventDefault();
+        var addAddressFormData = $(".addAddressForm").serialize();  // Serialize form data
+        $.ajax({
+            type: 'POST',
+            url:'/add_address/',
+            data: addAddressFormData,
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+            },
+            success: function(response) {
+                console.log(response);
+                window.location.reload();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+
+    const deleteButtons = document.querySelectorAll(".delete-address-button");
+
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            const addressId = this.getAttribute('data-id');
+    
+            // Send AJAX request to delete the address
+            $.ajax({
+                type: 'POST',
+                url: `/delete-address/${addressId}/`,
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Optionally update the UI here if needed
+                    window.location.reload()
+                },
+                error: function(error) {
+                    console.error('Error deleting address:', error);
+                }
+            });
+        });
+    });
+
+
+
+    const editButtons = document.querySelectorAll(".edit-address-button");
+    const editForm = document.querySelector(".edit-address-form");
+
+    editButtons.forEach(function(editButton) {
+        editButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            const addressId = this.getAttribute('data-id');
+    
+            // Fetch the address data and populate the edit form
+            $.ajax({
+                type: 'GET',
+                url: `/get-address/${addressId}/`, // You need to define a route to fetch address details
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                },
+                success: function(response) {
+                    // Populate the edit form fields with the fetched address data
+                    populateEditForm(response, editForm, addressId);
+                },
+                error: function(error) {
+                    console.error('Error fetching address details:', error);
+                }
+            });
+        });
+    });
+
+    function populateEditForm(addressData, editForm, addressId) {
+        // Assuming you have form fields with appropriate names in your form object
+        editForm.elements['line'].value = addressData.line;
+        editForm.elements['country'].value = addressData.country;
+        editForm.elements['city'].value = addressData.city;
+        editForm.elements['zip_code'].value = addressData.zip_code;
+    
+        // Update the data-id attribute of the saveChangesButton
+        saveChangesButton.setAttribute('data-id', addressId);
+    }
+
+
+
+
+    const saveChangesButton = document.querySelector("#save-changes-button");
+
+    // Add event listener to the save changes button
+    saveChangesButton.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        // Serialize the form data
+        const formData = new FormData(editForm);
+        const addressId = this.getAttribute('data-id');
+        // AJAX request to update the address
+        $.ajax({
+            type: 'POST',
+            url: `/edit-address/${addressId}/`, // Assuming you have a proper URL for editing addresses
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+            },
+            success: function(response) {
+                console.log(response);
+                window.location.reload()
+                // Optionally update the UI or perform any necessary action
+            },
+            error: function(error) {
+                console.error('Error updating address:', error);
+            }
+        });
+    });
+
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+      }
+    </script>
+{% endblock scripts %}

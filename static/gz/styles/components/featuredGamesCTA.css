@@ -1,0 +1,102 @@
+.main__featureGamesCTA {
+    width: 100%;
+    height: 25vh;
+}
+
+.featuredGamesCTA__div {
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    padding: 0rem 16rem;
+}
+
+.featuredGameCTA__slider {
+    border-radius: 15px;
+    overflow: hidden;
+    width: 100%;
+    height: 80%;
+}
+
+
+
+
+
+.swiperMini {
+    overflow: hidden;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: darkkhaki;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+.swiperMini-pagination {
+    
+}
+
+
+.autoplay-progress {
+  
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--MS-C);
+  }
+  
+  .autoplay-progress svg {
+    
+    --progress: 0;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    
+    width: 100%;
+    height: 100%;
+    stroke-width: 4px;
+    stroke: var(--MS-C);
+    fill: none;
+    stroke-dashoffset: calc(125.6 * (1 - var(--progress)));
+    stroke-dasharray: 125.6;
+    transform: rotate(-90deg);
+  }
+
+@media screen and (max-width: 1024px){
+  .featuredGamesCTA__div{
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+  }
+  
+}
+@media screen and (max-width: 768px){
+  .main__featureGamesCTA{
+    height: auto;
+  }
+  .main__featureGamesCTA .swiper-wrapper{
+    height: auto;
+  }
+  .swiper-slide img{
+    object-fit: contain;
+  }
+}

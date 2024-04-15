@@ -1,0 +1,346 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block title %}
+  Address
+{% endblock title %}
+  
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- {% crispy form %}
+{% crispy billing_form %} -->
+<style>
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .modalDialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 100ms ease-in;
+    -moz-transition: opacity 100ms ease-in;
+    transition: opacity 100ms ease-in;
+    pointer-events: none;
+  }
+  .modalDialog:target {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modalDialog > div {
+    max-width: 800px;
+    width: 90%;
+    position: relative;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 3px;
+    background: #fff;
+  }
+  .close {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #b331ff;
+    color: #fff;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 34px;
+    height: 34px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+    padding-top: 5px;
+  }
+  .close:hover {
+    background: #b331ff;
+    color: white;
+  }
+</style>
+
+<section class="our-dashbord dashbord" style="margin-top: 0">
+  <div class="container">
+    <div class="row">
+      {% include 'buyer/nav-desktop.html' %}
+      <div class="col-lg-9 col-xl-9">
+        {% include 'buyer/nav-mobile.html' %}
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="account_user_deails pl40 pl0-lg">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h2 class="title mb30">Shipping & Billing Address</h2>
+                </div>
+                <!-- Button trigger modal -->
+
+                <div class="dropdown mb20">
+                  <!-- <button type="button" class="btn btn-lg btn-success dropdown-toggle"data-bs-toggle="dropdown">Add New Address<span class="caret"></span></button> -->
+                  <a
+                    href="#openModal-about"
+                    class="btn purple-btn"
+                    style="font-size: 12px"
+                  >
+                    Add New Shipping Address</a
+                  >
+                  <a href="#openModal-billing" class="btn border" style="font-size: 12px" >Add New Billing Address</a>
+
+                  <div id="openModal-billing" class="modalDialog">
+                    <div>
+                      <h3 class="m-3">Add New Billing Address</h3>
+                      <form class="m-3" action="{% url 'core:add_billing_address' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                 <label for="fm1" class="form-label">Full Name</label>
+                                 {{billing_form.full_name}}
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="fm1" class="form-label"
+                                  >Email Address</label
+                                >
+                                {{billing_form.email}}
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="fm1" class="form-label">Mobile</label>
+                                {{billing_form.mobile}}
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="fm1" class="form-label"
+                                  >Country</label
+                                >
+                                {{billing_form.country}}
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="fm1" class="form-label">State</label>
+                                {{billing_form.state}}
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="fm1" class="form-label"
+                                  >Town or City</label
+                                >
+                                {{billing_form.town_city}}
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="fm1" class="form-label"
+                                  >Address</label
+                                >
+                                {{billing_form.address}}
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label for="fm1" class="form-label">ZIP</label>
+                                {{billing_form.zip}}
+                              </div>
+                            </div>
+                            
+                          </div>
+                        <div class="form-group py-2">
+                          <button type="submit" class="btn purple-btn">
+                            Create Billing Addreas
+                          </button>
+                          <a href="#close" title="Close" class="close">X</a>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <!-- New Shipping Address -->
+                  <div id="openModal-about" class="modalDialog">
+                    <div>
+                      <h3 class="m-3">Add New Shipping Address</h3>
+                      <form class="m-3" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="fm1" class="form-label"
+                                >Full Name</label
+                              >
+                              {{form.full_name}}
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="fm1" class="form-label"
+                                >Email Address</label
+                              >
+                              {{form.email}}
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="fm1" class="form-label">Mobile</label>
+                              {{form.mobile}}
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="fm1" class="form-label"
+                                >Country</label
+                              >
+                              {{form.country}}
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="fm1" class="form-label">State</label>
+                              {{form.state}}
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="fm1" class="form-label"
+                                >Town or City</label
+                              >
+                              {{form.town_city}}
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="fm1" class="form-label"
+                                >Address</label
+                              >
+                              {{form.address}}
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="fm1" class="form-label">ZIP</label>
+                              {{form.zip}}
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                           <div class="form-group">
+                             <label for="fm1" class="form-label">Same as billing address</label>
+                             {{form.same_as_billing_address}}
+                           </div>
+                         </div>
+                        </div>
+
+                        <div class="form-group py-2">
+                          <button type="submit" class="btn purple-btn">
+                            Create Shipping Addreas
+                          </button>
+                          <a href="#close" title="Close" class="close">X</a>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  
+                </div>
+                <hr>
+                <div class="col-lg-6 mb30 border-bottom p-2">
+                  <h4>Shipping Address</h4>
+                  <div class="row">
+                    {% for a in address %}
+                    <div class="col-lg-4 shadow p-3 m-2">
+                      <div class="dboard_address mb30-md">
+                        <h4 class="title mb15">
+                           #{{forloop.counter}}
+                        </h4>
+                        <p>{{a.full_name|title}}</p>
+                        <p>{{a.address|title}}</p>
+                        <p>{{a.city|title}}</p>
+                        <p>{{a.state|title}}</p>
+                        <p>{{a.country|title}}</p>
+                        
+                        {% if a.same_as_billing_address == True %}
+                        <p class="mt30" style="color: green;"><small>Same as billing Address <i class="fas fa-check-circle"></i></small> </p>
+                        {% else %}
+                        <p class="mt30" style="color: red;"><small>Same as billing Address <i class="bi bi-x-circle-fill"></i></small> </p>
+                        {% endif %}
+                           
+                        <p class="mt30">{{a.email}}</p>
+                        <p>{{a.mobile}}</p>
+                      </div>
+                      <br>
+                      <span class="float-start mb-2"><a href="{% url 'core:buyer-edit-address' a.id %}" class="btn border ms-2"><i class="bi bi-pencil-square"></i></a></span>
+                      <span class="float-start mb-2"><a href="{% url 'core:buyer-delete-address' a.id %}" style="margin-left: 5px; margin-right: 5px;" class="btn border ms-2"><i class="bi bi-trash3-fill"></i></a></span>
+                      {% if a.status %}
+                        <button data-address-id="{{ a.id }}" class="btn btn-success check{{ a.id }} check" >Default <i class="fas fa-check-circle  ms-2 "></i></button>
+                        <button data-address-id="{{ a.id }}" style="display: none" style="margin-left: 5px; margin-right: 5px;" class="btn purple-btn make-default-address button{{ a.id }} action_btn  ms-2 " >Make Default</button>
+                      {% else %}
+                        <button data-address-id="{{ a.id }}" style="display: none;" class="btn btn-success check{{ a.id }} check  ms-2 " >Default <i class="fas fa-check-circle"></i></button>
+                        <button data-address-id="{{ a.id }}" class="btn purple-btn make-default-address button{{ a.id }} action_btn  ms-2 " >Make Default</button>
+                      {% endif %}
+                    </div>
+                    {% empty %}
+                    <h6>No Shipping Address Yet</h6>
+
+                    {% endfor %}
+                  </div>
+                </div>
+
+                <div class="col-lg-6 mb30 border-bottom p-2">
+                  <h4>Billing Address</h4>
+
+                  <div class="row">
+                    {% for a in billing_address %}
+                    <div class="col-lg-4 shadow p-3 m-2">
+                      <div class="dboard_address mb30-md">
+                        <h4 class="title mb15">
+                          #{{forloop.counter}}
+                        </h4>
+                        <p>{{a.full_name|title}}</p>
+                        <p>{{a.address|title}}</p>
+                        <p>{{a.city|title}}</p>
+                        <p>{{a.state|title}}</p>
+                        <p>{{a.country|title}}</p>
+                        <p class="mt30" style="color: rgba(255, 255, 255, 0);"><small>Same as billing Address </small> </p>
+                        <p class="mt30">{{a.email}}</p>
+                        <p>{{a.mobile}}</p>
+
+
+                      </div>
+                      <br>
+                        <span class="float-start mb-2"><a href="{% url 'core:buyer-edit-billing-address' a.id %}" class="btn border ms-2 mr-2 ml-2"><i class="bi bi-pencil-square"></i></a></span>
+                        <span class="float-start mb-2"><a href="{% url 'core:buyer_delete_billing_address' a.id %}" style="margin-left: 5px; margin-right: 5px;" class="btn border ms-2 mr-2 ml-2"><i class="bi bi-trash3-fill"></i></a></span>
+                      {% if a.status %}
+                        <button data-billing-id="{{ a.id }}" class="btn btn-success check2{{ a.id }} check2" >Default <i class="fas fa-check-circle ms-2 "></i></button>
+                        <button data-billing-id="{{ a.id }}" style="display: none" class="btn purple-btn make-default-billing-address button2{{ a.id }} ms-2 action_btn2" >Make Default</button>
+                      {% else %}
+                        <button data-billing-id="{{ a.id }}" style="display: none;" class="btn btn-success check2 check2{{ a.id }} ms-2 " >Default <i class="fas fa-check-circle"></i></button>
+                        <button data-billing-id="{{ a.id }}" class="btn purple-btn make-default-billing-address button2{{ a.id }} ms-2  action_btn2" >Make Default</button>
+                      {% endif %}
+                    </div>
+                    {% empty %}
+                    <h6>No Billing Address Yet</h6>
+                    {% endfor %}
+                  </div>
+                </div>
+                <h4 style="color: green" id="address-alert"></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

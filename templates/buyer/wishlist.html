@@ -1,0 +1,180 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}
+  Wishlist
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="our-dashbord dashbord">
+   <div class="container">
+      <div class="row">
+         {% include 'buyer/nav-desktop.html' %}
+         <div class="col-lg-9 col-xl-9">
+            {% include 'buyer/nav-mobile.html' %}
+               <div class="row">
+               <div class="col-xl-12">
+                  <div class="account_user_deails pl40 pl0-md">
+                     <h2 class="title mb30">My Wishlist</h2>
+                     <div class="ui_kit_tab style2">
+                      
+                        <div class="tab-content pt20 row" id="myTabContent">
+                           <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <div class="order_table table-responsive">
+                                  <table class="table">
+                                    <thead class="table-light">
+                                      <tr>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Add To Cart</th>
+                                        <th scope="col">Delete</th>
+                                      </tr>
+                                    </thead>
+                                    
+                                    {% if wishlist %}
+                                      
+                                    <tbody>
+                                        {% for w in wishlist %}
+                                        <tr>
+                                        <th scope="row">
+                                            <a href="{% url 'store:product-detail' w.product.slug %}">
+                                                <img src="{{w.product.image.url}}" style="width: 100px; height: 100px; border-radius: 10px; object-fit: cover;" alt="">
+
+                                            </a>
+                                        </th>
+                                        <!-- <td>{{o.product}}</td> -->
+                                        <td><small><a href="{% url 'store:product-detail' w.product.slug %}">{{w.product.title|title|truncatechars:30}}</a></small></td>
+                                        <td>{{ cs }}{{ w.product.price }}</td>
+
+                                        <input type="hidden" class="product-tax-fee-{{ w.product.id }}" value="{{ new_rate_|floatformat:2 }}">
+                                        <input type="hidden" class="product-processing-fee-{{ w.product.id }}" value="{{ service_fee_rate_ }}">
+                                        <input type="hidden" class="product-vendor-{{ w.product.id }}" value="{{ w.vendor.id }}">
+                                        <input type="hidden" class="product-vendor-name-{{ w.product.id }}" value="{{ w.product.vendor.shop_name }}">
+
+                                        <input type="hidden" class="product-shipping_amount-{{ w.product.id }}" value="{{ w.product.shipping_amount }}">
+                                        <input class="product-quantity-{{ w.product.id }}" type="hidden" value="1" id="product-quantity" class="w-25 mb-10 product-quantity-{{ w.product.id }}">
+                                        <input type="hidden" class="product-price-{{ w.product.id }}" value="{{ w.product.price }}">
+                                        <input type="hidden" class="product-pid-{{ w.product.id }}" value="{{ w.product.pid }}">
+                                        <input type="hidden" class="product-image-{{ w.product.id }}" value="{{ w.product.image.url }}">
+                                        <input type="hidden" class="product-id-{{ w.product.id }}" value="{{ w.product.id }}">
+                                        <input type="hidden" class="product-title-{{ w.product.id }}" value="{{ w.product.title }}">
+                                        <input type="hidden" class="product-slug-{{ w.product.id }}" value="{{ w.product.slug }}">
+
+                                        {% if w.product.type == "auction" %}
+                                        <td class="shop_item_cart_btn d-gdrid"><a class="btn btn-th purple-btn"  href="{% url 'store:product-detail' w.product.slug %}">Join the Bidding</a></td>
+                                        {% endif %}
+
+                                        {% if w.product.type == "offer" %}
+                                        <td class="shop_item_cart_btn d-gdrid"><a class="btn btn-th purple-btn" href="{% url 'store:product-detail' w.product.slug %}">Submit Offer</a></td>
+                                        {% endif %}
+
+                                        {% if w.product.type == "regular" %}
+                                        <td class="shop_item_cart_btn d-gdrid"><a class="btn btn-fthm purple-btn button-add-to-cart add-to-cart-btn" data-index="{{ w.product.id }}" id="add-to-cart-btn">Add to Cart</a></td>
+                                        {% endif %}
+                                        <!-- <td class="status"><span class="style4"><a href="">Add to cart</a></span></td> -->
+                                        <td class="status"><span class="style2"><a href="{% url 'core:delete-wishlist' w.id %}">Delete</a></span></td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td><h4>Nothing here yet</h4></td>
+                                        </tr>
+                                        <h4>No Items In Wishlist Yet...</h4>
+                                        {% endfor %}
+                                    </tbody>
+                                    {% endif %}
+
+                                  </table>
+                                </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-lg-12" id="baby" role="tabpanel" aria-labelledby="baby-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <h2 class="title mb30">Shipped</h2>
+                                <div class="order_table table-responsive">
+                                  <table class="table">
+                                    <thead class="table-light">
+                                      <tr>
+                                        <th scope="col">ID</th>
+                                        <!-- <th scope="col">Product</th> -->
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Payment</th>
+                                        <th scope="col">Delivery Status</th>
+                                        <th scope="col">Order Status</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for o in shipped %}
+                                        <tr>
+                                        <th scope="row">{{o.oid}}</th>
+                                        <!-- <td>{{o.product}}</td> -->
+                                        <td><small>{{o.date}}</small></td>
+                                        <td class="text-success">{{o.payment_status|title}}</td>
+                                        <td class="status"><span class="stylde4">{{o.delivery_status|title}}</span></td>
+                                        <td class="status"><span class="stdyle4">{{o.order_status|title}}</span></td>
+                                        <td>{{ cs }}{{ o.total }}</td>
+                                        <td class="status"><span class="style4"><a href="{% url 'core:buyer-order-detail' o.oid %}">View Detail</a></span></td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td><h4>No Orders Yet</h4></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-xl-12" id="furniture" role="tabpanel" aria-labelledby="furniture-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <h2 class="title mb30">Delivered Orders</h2>
+                                <div class="order_table table-responsive">
+                                  <table class="table">
+                                    <thead class="table-light">
+                                      <tr>
+                                        <th scope="col">ID</th>
+                                        <!-- <th scope="col">Product</th> -->
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Payment</th>
+                                        <th scope="col">Delivery Status</th>
+                                        <th scope="col">Order Status</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for o in collected %}
+                                        <tr>
+                                        <th scope="row">{{o.oid}}</th>
+                                        <!-- <td>{{o.product}}</td> -->
+                                        <td><small>{{o.date}}</small></td>
+                                        <td class="text-success">{{o.payment_status|title}}</td>
+                                        <td class="status"><span class="stylde4">{{o.delivery_status|title}}</span></td>
+                                        <td class="status"><span class="stdyle4">{{o.order_status|title}}</span></td>
+                                        <td>{{ cs }}{{ o.total }}</td>
+                                        <td class="status"><span class="style4"><a href="{% url 'core:buyer-order-detail' o.oid %}">View Detail</a></span></td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td><h4>No Orders Yet</h4></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              
+                           </div>
+                        </div>
+                        <!-- nav tab contents End -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock content %}

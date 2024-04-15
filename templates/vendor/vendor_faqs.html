@@ -1,0 +1,214 @@
+
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    th,td {
+        white-space: nowrap;
+    }
+    
+</style>
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+        {% include 'vendor/dashboard-nav.html' %}
+      
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Product FAQs</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-xxl-6">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">All FAQs</div>
+                  <div class="title">{{faqs.count}} <span class="badge style1 text-center"></span></div>
+                </div>
+                <div class="icon text-center mt-4"><i class="fas fa-circle-question"></i></div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xxl-6">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Active FAQs</div>
+                  <div class="title">{{active_faqs.count}}</div>
+                </div>
+                <div class="icon text-center mt-4"><i class="fas fa-check-circle"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            
+          </div>
+         
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="application_statics">
+                <h4 class="title pl30 mb30">FAQs</h4>
+                <div class="account_user_deails dashboard_page">
+                    
+                  <div class="order_table table-responsive">
+                    <table class="table ">
+                      <thead class="table-light">
+                        <tr>
+                          <th scope="col">Product</th>
+                          <th scope="col">User</th>
+                          <th scope="col">Question</th>
+                          <th scope="col">Answer Status</th>
+                          <th scope="col">Active Status<button type="button" style="border: none; background: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="This questions become active to the public when the admin approves the question."><i class="bi bi-exclamation-circle-fill"></i></button></th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for r in faqs %}
+
+                        <tr class="">
+                          <td class="d-none" id="reviewproduct{{r.id}}">{{r.product.title}}</td>
+                          <td class="d-none" id="user{{r.id}}">{{ r.user.username|title }}</td>
+                          <td class="d-none" id="question{{r.id}}">{{ r.question }}</td>
+                          <td class="d-none" id="answer{{r.id}}">{{ r.answer }}</td>
+                          <td class="d-none" id="date{{r.id}}">{{ r.date }}</td>
+
+
+                          <th scope="row" ><a href="">{{r.product.title|truncatechars:27}}</a></th>
+                          <td >{{ r.user.username|title }}</td>
+                          <td >{{r.question}}</td>
+                          <!-- <td>{{r.answer}}<i class="fas fa-star text-warning" style="font-size: 13px;"></i> </td> -->
+                          {% if r.answer == None or r.answer == "" %}
+                            <td class=answerstatus{{r.id}}">No Answer Yet</td>
+                          {% else %}
+                          <td style="color: green;">Answered</td>
+                          {% endif %}
+
+                          {% if r.active == False %}
+                            <td style="color: red;">In-active</td>
+                          {% endif %}
+                          {% if r.active == True %}
+                            <td style="color: green;">Active</td>
+                          {% endif %}
+                          <td>{{r.date|date:"d M, Y"}}</td>
+                            
+                          <td class="action d-flex justify-content-center align-items-center p-1">
+                            
+                            <button type="button" id="modal-btn" class="btn btn-primary modal-btn{{r.id}} mr-2 ml-2 ms-2 me-2" data-modal-btn="{{r.id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              <i class="fas fa-eye "></i>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-title"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <h5 id="modal-review"></h5>
+                                    <h5 id="modal-rating"></h5>
+                                    <h5 id="modal-reply"></h5>
+                                    <h5 id="modal-date"></h5>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="dropleft">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu" style="margin-bottom: 50px;" aria-labelledby="dropdownMenuButton1">
+                                  
+                                  <form action="" id="reply-form" class="d-flex p-1">
+                                    <input type="text" class="form-control ms-2 ml-2 mr-2" placeholder="Write Answer..." name="" data-answer="{{r.id}}" id="answer_text{{r.id}}">
+                                    <button data-answer-btn="{{r.id}}" id="answer-btn" class="btn answer-btn{{r.id}}"><i class="bi bi-send"></i></button>
+                                  </form>
+                                    
+                                </ul>
+                              </div>
+                          </td>
+                        </tr>
+                        {% empty %}
+                        <h2>No Orders Yet</h2>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" ></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+
+  $(document).on("click", "#modal-btn", function(e){
+    e.preventDefault()
+    let btn_id = $(this).attr("data-modal-btn")
+    let review_product = $("#reviewproduct"+btn_id).text()
+    let question = $("#question"+btn_id).text()
+    let answer = $("#answer"+btn_id).text()
+    let date = $("#date"+btn_id).text()
+
+    
+    $("#modal-title").text(review_product)
+    $("#modal-review").text("Question: " + question)
+    $("#modal-rating").text("Answer: " + answer)
+    $("#modal-date").text("Date: " + date)
+    
+
+})
+
+
+
+
+$(document).on("click", "#answer-btn", function(e){
+    e.preventDefault()
+    let btn_id = $(this).attr("data-answer-btn")
+    let input_id = $("#answer_text"+btn_id).val()
+
+    
+    console.log("input_id:", input_id);    
+    console.log("btn_id:", btn_id);  
+
+    $.ajax({
+        url: "/vendor/send_answer/",
+        data: {
+            "id":btn_id,
+            "answer":input_id
+        },
+        dataType: "json",
+        success: function(response){
+            if (response.data.bool === true) {
+                $(".answerstatus"+btn_id).text("Answered")
+                $(".answerstatus"+btn_id).css({'color':'green'})
+                
+                Swal.fire(
+                    'Question Answered',
+                    'successfully.',
+                    'success'
+                  )
+            }
+        }
+    })
+
+})
+</script>
+  
+{% endblock content %}

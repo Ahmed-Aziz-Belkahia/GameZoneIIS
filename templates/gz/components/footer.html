@@ -1,0 +1,149 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "gz/styles/components/footer.css" %}">
+
+<div class="footer flexCenter">
+
+    <div class="footer__div flexCenter">
+
+        <div class="footer__column footer__column1 flexCenter">
+            
+            <div class="column__title">Jeux video</div>
+
+            <div class="column__links flexCenter">
+                <a href='{% url 'store:product-detail' meta_title="xbox" %}' class="links__link">Playstation Plus</a>
+                <a href='catalog?manufacturer=2' class="links__link">Nintendo Eshop</a>
+                <a href='catalog?manufacturer=2' class="links__link">Calendrier Des Sorties</a>
+                <a href="#browseByCategory" class="links__link">Autre Categorie</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer__column footer__column2 flexCenter">
+            
+            <div class="column__title">À propos</div>
+
+            <div class="column__links flexCenter">
+
+                <a href='{% url "addons:terms_and_conditions" %}' class="links__link">Conditions Generales de vente</a>
+                <a href='{% url "addons:privacy_policy" %}' class="links__link">Politique de Confidentialite</a>
+                <a href='{% url "addons:return_policy" %}' class="links__link">Expedition & retour</a>
+                <a href='{% url "addons:secure_purchases" %}' class="links__link">Achats securises</a>
+                <a href="{% url "core:profile" %}orders" class="links__link">Statut de la commande</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer__column footer__column3 flexCenter">
+            
+            <div class="column__title">INFORMATIONS DE CONTACT</div>
+
+            <div class="column__links flexCenter">
+
+                <a href="tel:29220545" class="links__link">+216 22921771</a>
+                <a class="links__link">Demande De Devis</a>
+                <a class="links__link">GameZone, Tunis , Ariana</a>
+                <a class="links__link">Site Map</a>
+                <a class="links__link">A Droit</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer__column footer__column4 flexCenter">
+            
+            <div class="column__title">Sign Up</div>
+
+            <div class="column__singup flexCenter">
+
+                <div class="signup__text">Get Exclusive Promotions, Coupons, and the Latest Events
+                </div>
+
+                <form id="emailForm">
+                    {% csrf_token %}
+                    <div class="signup__input flexCenter">
+
+                        <div class="input__input">
+    
+                            <input type="email" id="email-opt-in" class="form-control" placeholder="Your email address" id="news-letter-input"/>
+    
+                        </div>
+                        <div class="submitButton input__button flexCenter">Join</div>
+    
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="column__socials flexCenter">
+
+                <div class="socials__text">CONNECT WITH US</div>
+
+                <div class="socials__icons flexCenter">
+
+                    <a href='{{company.facebook}}' class="icons__icon"><i class="fa-brands fa-facebook"></i></a>
+                    {% comment %} <a  class="icons__icon"><i class="fa-brands fa-twitter"></i></a>
+                    <a class="icons__icon"><i class="fa-brands fa-youtube"></i></a> {% endcomment %}
+                    <a href="{{company.instagram}}" class="icons__icon"><i class="fa-brands fa-instagram"></i></a>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="footer__bottom flexCenter">
+        <div class="bottom__text">© 2024 {{company.name}}. All rights reserved</div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var submitButton = document.querySelector(".submitButton");
+    
+        submitButton.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+            email = document.querySelector("#email-opt-in").value
+            $.ajax({
+                type: 'POST',
+                url: "{% url "addons:subscribe_to_newsletter" %}",
+                data: {"email": email}, // Use the plain object
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response.success !== false) {
+                        submitButton.disabled = true; // Disable the submit button
+                        submitButton.innerText = "DONE";
+                    }
+                    // You can optionally update the UI here if needed
+                },
+                error: function(error) {
+                    console.error('Error sending form data:', error);
+                }
+            });
+        });
+    });
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>

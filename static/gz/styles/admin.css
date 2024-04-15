@@ -1,0 +1,13 @@
+.logo-img {
+    box-shadow: none !important;
+    /* or */
+    /* elevation: none !important; */
+}
+
+.img-circle {
+    border-radius: 0;
+}
+
+#logo-img {
+    box-shadow: none;
+}

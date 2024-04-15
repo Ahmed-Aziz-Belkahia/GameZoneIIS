@@ -1,0 +1,54 @@
+
+{% extends "partials/base.html" %}
+{% load static %}
+{% block content %}
+  
+  <div class="body_content_wrapper position-relative">
+  <!-- Inner Page Breadcrumb -->
+  <section class="inner_page_breadcrumb">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="breadcrumb_content">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Electronics</a></li>
+              <li class="breadcrumb-item active"><a href="#">Computers</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	<section class="our-order-tracking pt0">
+		<div class="container">
+			<div class="row">
+                <div class="col-lg-6">
+                    <div class="order_tracdking_thumb animate_content">
+            <img class="animate_thumb" src="https://media.istockphoto.com/id/894875516/vector/exclamation-point-sign-in-red-triangle-vector-icon.jpg?s=612x612&w=0&k=20&c=AYMHwOnNCaWz8j3ubjC24cBrlk_ei_oCB3kS-UwvZtU=" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-5 offset-xl-1">
+          <div class="order_tracking_content">
+            <div class="login_form tracking_page pt100 pt50-lg">
+              <form method="POST">
+                {% csrf_token %}
+                <h1 class="title">Report Product</h2>
+                <p class="mb30">Please give us a detail information on why you are reporting this product.</p>
+                <div class="form-group">
+                  <label class="form-label">Why are you reporting this product</label>
+                  <textarea name="message" id="message" type="text" cols="60" rows="40" class="form-control"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-track btn-thm w100">Send Reports</button>
+              </form>
+            </div>
+          </div>
+        </div>
+			</div>
+		</div>
+	</section>
+
+  </div>
+{% endblock content %}

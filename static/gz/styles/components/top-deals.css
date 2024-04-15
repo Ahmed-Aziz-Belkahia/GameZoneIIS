@@ -1,0 +1,279 @@
+.main__top-deals {
+    width: 100%;
+    height: 100vh;
+    max-height: 1080px;
+    background-color: white;
+    padding:  0 9rem;
+}
+
+.main__top-deals .top-deals__div {
+    width: 100%;
+    max-width: 1920px;
+    padding: 0 3rem ;
+    flex-flow: column nowrap;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    gap: 1rem;
+    box-shadow: 0 0 4px #00000045;
+}
+
+.main__top-deals .top-deals__layer {
+    width: 100%;
+    height: 30%;
+}
+
+.main__top-deals .top-deals__layer1 {
+}
+
+.main__top-deals .layer1__text {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+}
+.main__top-deals .layer2__cards > a{
+    height: -webkit-fill-available;
+}
+.main__top-deals .text__title {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.main__top-deals .text__slogan {
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.main__top-deals .top-deals__layer2 {
+    height: 50%;
+}
+
+.main__top-deals .layer2__cards {
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
+}
+
+.main__top-deals .cards__card {
+    width: 350px;
+    height: 450px;
+    border-radius: 15px;
+    transition: all .5s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: column nowrap;
+    overflow: hidden;
+    box-shadow: 0 0 8px 0px #00000030;
+}
+
+.main__top-deals .card__upper {
+    width: 100%;
+    height: 15%;
+    background-color: white;
+    z-index: 1;
+    font-weight: 700;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+}
+
+.main__top-deals .card__lower {
+    width: 100%;
+    height: 85%;
+    background-color: #ffffff;
+}
+
+.main__top-deals .lower__div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.main__top-deals .lower__img {
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.main__top-deals .lower__img img {
+    z-index: 100;
+    pointer-events: none;
+    width: 100%;
+    height: auto;
+    transition: all .5s ease-in-out;
+    z-index: 1;
+}
+
+
+.main__top-deals .cards__card:hover img {
+    width: 68%;
+    height: auto;
+    transform: translateY(75.5px);
+}
+
+.main__top-deals .lower__content {
+    
+    flex-flow: column;
+    z-index: 0;
+    width: 350px;
+    height: 135px;
+    position: absolute;
+    transition: .5s;
+    transform: translateY(-500px);
+    transform-style: preserve-3d;
+    opacity: 0;
+}
+
+.main__top-deals .cards__card:hover .lower__content {
+    transform: translateY(-381px);
+    opacity: 1;
+}
+
+.content__price {
+    font-size: x-large;
+    color: #031117;
+}
+
+.content__text {
+    font-size: larger;
+    color: #031117;
+}
+
+
+
+
+
+
+
+
+.main__top-deals .top-deals__layer3 {
+    padding: 1rem 2rem;
+}
+
+.main__top-deals .layer__CTA {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.main__top-deals .layerCTA__div {
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.main__top-deals .layerCTA__img {
+    width: 100%;
+    height: 100%;
+}
+
+@media only screen and (max-width: 1824px) {
+        .main__top-deals .cards__card {
+        width: 100%;
+        border-radius: 15px;
+        transition: all .5s ease-in-out;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-flow: column nowrap;
+        height: 300px;
+        overflow: hidden;
+    }
+    .main__top-deals .cards__card:hover .lower__content {
+        transform: translateY(-277px);
+        opacity: 1;
+    }
+    .main__top-deals .lower__content {
+        flex-flow: column;
+        z-index: 0;
+        width: 100%;
+        height: 135px;
+        position: absolute;
+        transition: .5s;
+        transform: translateY(-500px);
+        transform-style: preserve-3d;
+        opacity: 0;
+    }
+
+    .main__top-deals .layer2__cards{
+        margin: 1rem 0;
+    }
+     .layer2__cards > a{
+        height: -webkit-fill-available;
+    width: 100%;
+    border-radius: 15px;
+    transition: all .5s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: column nowrap;
+    overflow: hidden;
+    }
+    .main__top-deals .text__title{
+        font-size: 3rem;
+    }
+
+}
+
+
+@media screen and (max-width: 1024px) {
+    .main__top-deals{
+        padding: 0 2rem;
+    }
+    .main__top-deals .top-deals__div{
+        padding: 3rem;
+    }
+    .main__top-deals .layer__CTA{
+        height: auto;
+    }
+    .main__top-deals .cards__card {
+        height: auto;
+    }
+}
+@media screen and (max-width: 768px) {
+    .main__top-deals .text__title{
+        font-size: 2rem;
+    }
+    .main__top-deals .layer1__text{
+        padding: 0;
+    }
+    .main__top-deals .layer2__cards{
+        flex-direction: column;
+        height: fit-content;
+    }
+    .main__top-deals .layer2__cards > a{
+        height: fit-content;
+    }
+    .main__top-deals {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        padding: 0 1rem;
+        display: block;
+        max-height: initial;
+        margin: 1rem 0;
+    }
+    .main__top-deals .cards__card{
+    height: auto;
+    }
+    .main__top-deals .top-deals__layer2{
+        height: fit-content;
+    }
+    .main__top-deals .top-deals__layer1{
+    }
+    .main__top-deals .top-deals__layer3{
+        padding: 0;
+        height: auto;
+    }
+    .main__top-deals .top-deals__div{
+        padding: 1rem;
+    }
+    .main__top-deals .cards__card:hover img {
+        width: 100%;
+        height: auto;
+        transform: translateY(0px);
+    }
+}

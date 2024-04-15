@@ -1,0 +1,356 @@
+{% extends "vendor/vendor-base.html" %}
+
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<style>
+           
+
+  #id_identity_image{
+      background-color: #270041;
+      border-radius: 4px;
+      height: 50px;
+      width: 100%;
+      color: #ffffff;
+  }
+  #id_identity_image::file-selector-button{
+      border: none;
+      border-radius: 7px;
+      color: 432f9f;
+      background-color: #ffffff;
+      height: 30px;
+      cursor: pointer;
+      transition: all .25s ease-in;
+      margin-top: 10px;
+      margin-left: 10px;
+  }
+
+
+  #id_shop_cover_image{
+    background-color: #270041;
+    border-radius: 4px;
+    height: 50px;
+    width: 100%;
+    color: #ffffff;
+}
+#id_shop_cover_image::file-selector-button{
+    border: none;
+    border-radius: 7px;
+    color: 432f9f;
+    background-color: #ffffff;
+    height: 30px;
+    cursor: pointer;
+    transition: all .25s ease-in;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+
+#id_image{
+    background-color: #270041;
+    border-radius: 4px;
+    height: 50px;
+    width: 100%;
+    color: #ffffff;
+  }
+  #id_image::file-selector-button{
+    border: none;
+    border-radius: 7px;
+    color: 432f9f;
+    background-color: #ffffff;
+    height: 30px;
+    cursor: pointer;
+    transition: all .25s ease-in;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+
+#id_shop_image{
+  background-color: #270041;
+  border-radius: 4px;
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+}
+#id_shop_image::file-selector-button{
+  border: none;
+  border-radius: 7px;
+  color: 432f9f;
+  background-color: #ffffff;
+  height: 30px;
+  cursor: pointer;
+  transition: all .25s ease-in;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+  
+  </style>
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+      {% include 'vendor/dashboard-nav.html' %}
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Edit Product</h2>
+                <p class="para">Read our <a href=""><b>policy and guide</b></a> to creating a better product.</p>
+              </div>
+              <a href="{% url 'store:product-detail' product.pid %}" class="btn btn-primary">View Product</a>
+              
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                <strong>{{form.errors}}</strong>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="dashboard_setting_box">
+                <div class="ui_kit_tab style2">
+                  <!-- nav tab Nav List Start -->
+                  <div class="tab-content pt20 row" id="myTabContent">
+                    <div class="tab-pane fade show active col-lg-12" id="editprofile" role="tabpanel" aria-labelledby="editprofile-tab">
+                      <div class="account_details_page form_grid">
+                        
+                        <form class="contact_form" method="POST" enctype="multipart/form-data" novalidate>
+                          {% csrf_token %}
+                          <div style="display: none;">
+                            {{form.media}}
+                             {{form}}
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Product Title</label>
+                                {{form.title}}
+
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Product Image(Thumbnail)</label>
+                                {{form.image}}
+
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Product Image(Thumbnail)</label> <br>
+                                <img src="{{ product.image.url }}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 10px;" alt="">
+
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Product Description</label>
+                                {{form.description}}
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Product Price</label>
+                               {{form.price}}
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Old Product Price</label>
+                                {{form.old_price}} 
+                                <span class="text-muted"><small>NOTE: Add a price slightly larger than the current product selling price</small></span> <br>
+                                <span class="text-muted"><small><i>Do you want to show the old price for this product?</i> {{ form.show_old_price }}</small></span>
+
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+                                  <label class="form-label">Shipping Amount ({{cs}})</label>
+                                  {{form.shipping_amount}}
+                                  <span class="text-muted"><small>Enter an estimated flat rate amount in {{ca}} to ship this product to the buyer</small></span>
+  
+                                </div>
+                              </div>
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Stock Quantity</label>
+                                {{form.stock_qty}}
+                                <span class="text-muted"><small>How many of this product do you have in stock?</small></span>
+
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Category</label>
+                                {{form.category}}
+
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Brand</label>
+                                {{form.brand}}
+
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-lg-12">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Tags</label>
+                                {{form.tags}}
+
+                              </div>
+                            </div>
+                            <div class="col-sm-12">
+                              <div class="form-group d-grid d-sm-flex mb0">
+                                <button type="submit" class="style2 btn btn-thm me-3 mb15-520">Edit Product</button>
+                                <a href="{% url 'vendor:products' %}" class="style2 btn btn-white">Cancel</a>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade col-xl-6" id="password" role="tabpanel" aria-labelledby="password-tab">
+                      <div class="account_details_page form_grid">
+                        <form class="contact_form" name="contact_form" action="#" method="post" novalidate>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Current password</label>
+                                <input class="form-control" type="text" placeholder="Your Password">
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group mb-4">
+                                <label class="form-label">New password</label>
+                                <input class="form-control" type="text" placeholder="Your Password">
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group mb30">
+                                <label class="form-label">Confirm New Password</label>
+                                <input class="form-control email" type="email" placeholder="Your Email">
+                              </div>
+                            </div>
+                            <div class="col-sm-12">
+                              <div class="form-group d-grid d-sm-flex mb0">
+                                <button type="button" class="style2 btn btn-thm me-3 mb15-520">Update Password</button>
+                                <button type="button" class="style2 btn btn-white">Cancel</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade col-xl-8" id="socialprofile" role="tabpanel" aria-labelledby="socialprofile-tab">
+                      <div class="account_details_page form_grid">
+                        <form class="contact_form" name="contact_form" action="#" method="post" novalidate>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Facebook</label>
+                                <input class="form-control" type="text" placeholder="Facebook">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Twitter</label>
+                                <input class="form-control" type="text" placeholder="Twitter">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Intagram</label>
+                                <input class="form-control" type="text" placeholder="Intagram">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group mb30">
+                                <label class="form-label">Linkedin</label>
+                                <input class="form-control" type="text" placeholder="Linkedin">
+                              </div>
+                            </div>
+                            <div class="col-sm-12">
+                              <div class="form-group d-grid d-sm-flex mb0">
+                                <button type="button" class="style2 btn btn-thm me-3 mb15-520">Update Social Profile</button>
+                                <button type="button" class="style2 btn btn-white">Cancel</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade col-xl-8" id="closeaccount" role="tabpanel" aria-labelledby="closeaccount-tab">
+                      <div class="account_details_page form_grid">
+                        <form class="contact_form" name="contact_form" action="#" method="post" novalidate>
+                          <div class="row">
+                            <div class="col-md-10">
+                              <h5>Close account</h5>
+                              <p class="fz15 heading-color">Warning: If you close your account, you will be unsubscribed from all your 5 courses, and will lose access forever.</p>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="form-group mb30">
+                                <label class="form-label">Enter Password</label>
+                                <input class="form-control" type="text" placeholder="Enter Password">
+                              </div>
+                            </div>
+                            <div class="col-sm-12">
+                              <div class="form-group d-grid d-sm-flex mb0">
+                                <button type="button" class="style2 btn btn-thm me-3 mb15-520">Close Account</button>
+                                <button type="button" class="style2 btn btn-white">Cancel</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- nav tab contents End -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="dashboard_footer pt30 pb30">
+          <div class="container">
+            <div class="row items-center justify-content-center justify-content-md-between">
+              <div class="col-auto">
+                <div class="copyright-widget text-center text-lg-start d-block d-lg-flex mb15-md">
+                  <p class="me-4">© 2022 Zeomart. All Rights Reserved</p>
+                  <p><a href="#">Privacy</a>  ·  <a href="#">Terms</a>  ·  <a href="#">Sitemap</a></p>
+                </div>
+              </div>
+              <div class="col-auto">
+          <div class="footer_bottom_right_widgets text-center text-lg-end">
+            <ul class="mb0">
+              <li class="list-inline-item mb20-340">
+                      <select class="selectpicker show-tick">
+                        <option>Currency : USD</option>
+                        <option>Euro</option>
+                        <option>Pound</option>
+                      </select>
+                    </li>
+                    <li class="list-inline-item">
+                      <select class="selectpicker show-tick">
+                        <option>Language: English</option>
+                        <option>Frenc</option>
+                        <option>Italian</option>
+                        <option>Spanish</option>
+                        <option>Turkey</option>
+                      </select>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>
+{% endblock content %}
+

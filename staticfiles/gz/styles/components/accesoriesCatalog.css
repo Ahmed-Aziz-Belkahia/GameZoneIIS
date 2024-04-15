@@ -1,0 +1,98 @@
+.main__accesoriesCatalog {
+    width: 100%;
+    height: 40vh;
+    /* --------------------- */
+   margin: 2rem 0;
+}
+
+.main__accesoriesCatalog .accesoriesCatalog__div {
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    justify-content: space-around;
+    flex-flow: column nowrap;
+    
+}
+
+
+.accesoriesCatalog__text {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.accesoriesCatalog__items {
+    gap: 2rem;
+}
+.accesoriesCatalog__list{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.main__accesoriesCatalog .accesoriesCatalog__item {
+    background-color: white;
+    width: 200px;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.main__accesoriesCatalog .accesoriesCatalog__item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box-shadow effect */
+}
+
+.main__accesoriesCatalog .item__div {
+    width: 100%;
+    height: 100%;
+    flex-flow: column nowrap;
+}
+
+.main__accesoriesCatalog .item__img {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+.main__accesoriesCatalog .item__info {
+    flex-flow: column nowrap;
+    width: 100%;
+    height: 20%;
+    margin: 1rem;
+    justify-content: space-between;
+}
+
+.main__accesoriesCatalog .info__price {
+    height: 100%;
+    font-weight: 800;
+}
+.main__accesoriesCatalog .info__price span {
+    font-weight: 600;
+    font-size: .75rem;
+    padding-left: .1rem;
+}
+
+.main__accesoriesCatalog .info__title {
+    font-weight: 700;
+}
+.main__accesoriesCatalog .item__div:hover .info__price{
+    color: var(--MS-C);
+}
+.main__accesoriesCatalog .item__div:hover .info__title{
+    color: var(--MS-C);
+}
+@media only screen and (max-width: 1824px) {
+    .main__accesoriesCatalog{
+          height: 100%;
+    }
+    .main__accesoriesCatalog .accesoriesCatalog__div{
+            gap: 20px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .accesoriesCatalog__list{
+        flex-direction: column;
+        gap: 0;
+    }
+}

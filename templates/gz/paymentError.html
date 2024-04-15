@@ -1,0 +1,43 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "gz/styles/paymentError.css" %}">
+{% block title %}
+<title>GameZone | Payment Failed</title>
+{% endblock title %}
+{% endblock head %}
+
+
+{% block header %}
+{% include "gz/components/navigation.html" %}
+{% endblock header %}
+
+{% block main %}
+<div class="main">
+    <div class="completation-container">
+        <div class="order-titles">
+          <span class="h1-text">Order Failed To Pass</span>
+          <span class="h2-text">Please try again and verify payment</span>
+          <div class="tracking-infos">
+          </div>
+        </div>
+        <img src="{% static "gz/assets/6988473.webp" %}" alt="Order Error" width="450px" height="450px"/>
+    </div>
+</div>
+{% endblock main %}
+{% block scripts %}
+<script>
+    // Redirect function
+    function redirectToPage() {
+        window.location.href = '/cart/'; // Replace with your desired URL
+    }
+
+    // Redirect after 5 seconds
+    setTimeout(redirectToPage, 5000); // 5000 milliseconds = 5 seconds
+
+</script>
+{% endblock scripts %}
+{% block footer %}
+    {% include "gz/components/footer.html" %}
+{% endblock footer %}

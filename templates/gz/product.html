@@ -1,0 +1,359 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "gz/styles/product.css" %}">
+    {% block title %}<title>{{product.title}}</title>{% endblock title %}
+    
+
+{% endblock head %}
+
+
+{% block header %}
+    {% include 'gz/components/navigation.html' %}
+{% endblock header %}
+
+
+
+{% block main %}
+    <div class="main__product">
+
+        <div class="product__div">
+
+            <div class="product__product flexCenter">
+
+                <div class="product__url">{{product.subcategories}}</div>
+
+                <div class="product__info flexCenter">
+                   <div class="left__pictures-container flexCenter">
+                        <div class="pictures-container__sideImages">
+                            <div class="sideImages__div flexCenter">
+                                <div class="sideImages__sideImage flexCenter">
+                                    <img src="{{product.image.url}}" alt="">
+                                </div>
+                                {% for subImage in product.subImages.all %}
+                                <div class="sideImages__sideImage flexCenter">
+                                    <img src="{{ subImage.image.url }}" alt="">
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="pictures-container__mainImage" id="mainImageContainer">
+                            <img src="{{product.image.url}}" alt="" id="mainImage">
+                            <div class="zoom-circle" id="zoomCircle"></div>
+                        </div>
+                    </div> 
+
+                    
+                    
+                    <div class="info__right">
+
+                        <div class="right__title">{{product.title}}</div>
+
+                        <div class="right__manufacturer">{{product.manufacturer}}</div>
+
+                        <div class="right__reviews flexCenter">
+
+                            <div class="reviews__stars">
+                                {% for star in "xxxxx"|make_list %}
+                                
+                                    {% if forloop.counter <= reviews %}
+                                        <div class="stars__star"><i class="fa-solid fa-star"></i></div>
+                                    {% else %}
+                                        <div class="stars__star"><i class="fa-regular fa-star"></i></div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="reviews__numbers"><a href="#"> 4.5 (15)</a></div>
+
+                        </div>
+
+                        <div class="right__price flexCenter">
+
+                            {% comment %} <div class="price__old">850</div> {% endcomment %}
+                            <div class="price__current">{{product.price}} TND</div>
+
+                        </div>
+                        <div class="points">
+                            <div class="points__div">You will collect {{product.points}} GZ Coins</div>
+                        </div>
+                        {% comment %} <div class="right__sizes">
+
+                            <div class="sizes__label">size: XXLx99</div>
+                            <div class="sizes__divs">
+
+                                <div class="divs__div size active flexCenter"><img src="{% static "gz/assets/box.png" %}" alt=""></div>
+                                <div class="divs__div size flexCenter"><img src="{% static "gz/assets/box.png" %}" alt=""></div>
+                                <div class="divs__div size flexCenter"><img src="{% static "gz/assets/box.png" %}" alt=""></div>
+
+                            </div>
+
+                        </div> {% endcomment %}
+
+                        {% for type in product.types.all %}
+                            <div class="right__choices">
+
+                                <div class="choices__label">
+                                    {{type.name}}: <span></span>
+                                </div>
+
+                                <form id="choiceForm" method="POST" action="">
+                                    {% csrf_token %}
+                                    <div class="choices__divs">
+                                        {% for choice in type.choices.all %}
+                                            <div class="divs__div choice flexCenter" data-choice-id="{{ choice.name }}">
+                                                <img src="{{choice.img.url}}" alt="{{ choice.name }}">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <input type="hidden" id="selectedChoiceInput" name="selected_choice" value="">
+                                </form>
+
+
+                            </div>
+                        {% endfor %}
+
+                        <div class="right__shipping">
+                            <div class="shipping__div">FREE shipping on Orders 300TND+</div>
+                            <div class="shipping__div">3-7 Day Shipping</div>
+                        </div>
+
+                        <div class="right__button flexCenter">
+
+                            <a class="add-to-cart">Add to Cart</a>
+                            <a class="buy-now">Buy Now</a>
+
+                        </div>
+
+                        
+                        
+                    </div>
+
+
+
+
+                </div>
+                <div class="info__left">
+
+
+
+                    <div class="bottom__desctiption">
+
+                        <div class="description__features">
+                            <div class="features__title">Features:</div>
+                            <ul class="features__container">
+                                {% for feature in product.feature_set.all %}
+                                    <li class="features__div">
+                                        <strong>{{ feature.title }}</strong><p>{{feature.description}}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="description__full-description">
+                            <div class="full-description__title">Product Description:</div>
+                            <div class="full-description__content">{{product.description}}</div>
+                        </div>
+
+                        <div class="Specifications">
+                            <div class="features__title">Specifications:</div>
+                            <div class="product-accordion-panel">
+                                {% for spec in product.specification_set.all %}
+                                <div class="product-attribute-redesign">
+                                    <h3 class="product-attribute-group-name">{{ spec.title }}</h3>
+                                    <div class="col specifications js-productFeatures">
+                                        <table class="product-attribute-table-redesign">
+                                            <tbody>
+                                                {% for value in spec.value_set.all %}
+                                                <tr>
+                                                    <th>{{ value.title }}</th>
+                                                    <td>{{ value.description }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        {% comment %} <div class="description__details">
+
+                            details here
+
+                        </div> {% endcomment %}
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            {% comment %} --- make related catalog --- {% endcomment %}
+            {% include 'gz/components/relatedProductsCatalog.html' %}
+
+
+        </div>
+
+    </div>
+{% endblock main %}
+
+{% block footer %}
+    {% include "gz/components/footer.html" %}
+{% endblock footer %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const mainImage = document.getElementById("mainImage");
+        const zoomCircle = document.getElementById("zoomCircle");
+        const mainImageContainer = document.getElementById("mainImageContainer");
+        const sideImages = document.querySelectorAll(".sideImages__sideImage img");
+    
+        // Function to change main image and reset zoom on side image click
+        function changeMainImage(imageSrc) {
+            mainImage.src = imageSrc;
+            mainImage.style.backgroundPosition = "0 0"; // Reset background position for zoom
+            zoomCircle.style.display = "none"; // Hide zoom circle
+        }
+    
+        // Event listener for side image click
+        sideImages.forEach(function(sideImage) {
+            sideImage.addEventListener("click", function() {
+                const newImageSrc = sideImage.src;
+                changeMainImage(newImageSrc);
+            });
+        });
+    });
+    
+    $(document).ready(function() {
+        // Function to handle choice selection
+        $(".divs__div.choice").click(function() {
+            var $selectedChoice = $(this);
+            var selectedChoiceId = $selectedChoice.data("choice-id");
+    
+            // Remove 'selected' class from all choices within the same container
+            $selectedChoice.siblings().removeClass("selected");
+            // Add 'selected' class to the clicked choice
+            $selectedChoice.addClass("selected");
+    
+            // Set the selected choice ID to the hidden input within the same container
+            $selectedChoice.closest(".right__choices").find("#selectedChoiceInput").val(selectedChoiceId);
+        });
+    
+        // Set the first choice as selected by default
+        $(".right__choices").each(function() {
+            $(this).find(".divs__div.choice:first").addClass("selected");
+            var selectedChoiceId = $(this).find(".divs__div.choice:first").data("choice-id");
+            $(this).find("#selectedChoiceInput").val(selectedChoiceId);
+        });
+    
+        // Prevent form submission on button click if no choice is selected
+        $("form#choiceForm").submit(function(e) {
+            var $selectedInput = $(this).find("#selectedChoiceInput");
+            if ($selectedInput.val() === "") {
+                e.preventDefault();
+                alert("Please select a choice before submitting.");
+            }
+        });
+    
+        $(document).ready(function() {
+            // Handle "Add to Cart" button click
+            $(".add-to-cart").click(function(e) {
+                e.preventDefault();
+                var types = []; // Corrected the declaration of the types array
+        
+                // Iterate over each type's selected choice
+                $(".right__choices").each(function() {
+                    var selectedChoiceId = $(this).find("#selectedChoiceInput").val();
+                    var typeName = $(this).find(".choices__label").text().trim();
+                    
+                    // Corrected the syntax for adding objects to the types array
+                    types.push({ [typeName]: selectedChoiceId });
+                    
+                    // Log the selected choice ID and type name (you can modify this to send to the server)
+                    console.log("Type: " + typeName + ", Selected Choice ID: " + selectedChoiceId);
+                });
+        
+                $.ajax({
+                    type: 'POST',
+                    url: '/add-to-cart/',
+                    data: {
+                        "product_id": {{product.id}},
+                        "types": JSON.stringify(types) // Convert types array to a JSON string
+                    },
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        window.location.reload()
+                    },
+                    error: function(error) {
+                        console.error('Error :', error);
+                        window.location.href= "/login/"
+                    }
+                });
+        
+            });
+
+
+            $(".buy-now").click(function(e) {
+                e.preventDefault();
+                var types = []; // Corrected the declaration of the types array
+        
+                // Iterate over each type's selected choice
+                $(".right__choices").each(function() {
+                    var selectedChoiceId = $(this).find("#selectedChoiceInput").val();
+                    var typeName = $(this).find(".choices__label").text().trim();
+                    
+                    // Corrected the syntax for adding objects to the types array
+                    types.push({ [typeName]: selectedChoiceId });
+                    
+                    // Log the selected choice ID and type name (you can modify this to send to the server)
+                    console.log("Type: " + typeName + ", Selected Choice ID: " + selectedChoiceId);
+                });
+        
+                $.ajax({
+                    type: 'POST',
+                    url: '/add-to-cart/',
+                    data: {
+                        "product_id": {{product.id}},
+                        "types": JSON.stringify(types) // Convert types array to a JSON string
+                    },
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        window.location.href= "/cart/"
+                    },
+                    error: function(error) {
+                        console.error('Error :', error);
+                        window.location.href= "/login/"
+                    }
+                });
+        
+            });
+        });
+    });
+    
+    
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock scripts %}

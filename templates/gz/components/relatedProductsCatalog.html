@@ -1,0 +1,26 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "gz/styles/components/relatedProductsCatalog.css" %}">
+
+<div class="main__consoleCatalog flexCenter">
+    <div class="consoleCatalog__div flexCenter">
+        <div class="consoleCatalog__text">
+            Shop Related Products
+        </div>
+        <div class="consoleCatalog__items flexCenter">
+            {% for product in product.related_products.all %}
+            <a href="/detail/{{product.meta_title}}" class="consoleCatalog__item flexCenter">
+                <div class="item__div flexCenter">
+                    <div class="item__img flexCenter">
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                    </div>
+                    <div class="item__info flexCenter">
+                        <div class="info__price">{{ product.price }}<span>DT</span></div>
+                        <div class="info__title">{{ product.title }}</div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

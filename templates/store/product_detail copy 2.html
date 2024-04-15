@@ -1,0 +1,2153 @@
+{% extends "partials/base.html" %} {% load static %} {% block content %} {% load
+crispy_forms_tags %}
+<!-- {% crispy review_form %} -->
+
+<style>
+  ul,
+  li {
+    list-style: none;
+  }
+</style>
+
+<!-- <div class="body_content_wrapper position-relative"> -->
+<!-- Custom Shop Category List Menu -->
+<section class="p0 bb1 overflow-hidden">
+  <div class="container">
+    <div class="row"></div>
+  </div>
+</section>
+
+<!-- Inner Page Breadcrumb -->
+<section class="inner_page_breadcrumb">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-6">
+        <div class="breadcrumb_content">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Product</a></li>
+
+            {% if product.brand %}
+            <li class="breadcrumb-item"><a href="#">{{product.brand}}</a></li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">
+              <a href="#">{{product.title|title|truncatechars:20}}</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Shop Single Content -->
+<section class="shop-single-content pb80 pt0 ovh">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="shop_single_natabmenu">
+          <div class="d-block">
+            <div class="tab-content" id="v-pills-tabContent">
+              {% for g in product_images %}
+              <div
+                class="tab-pane fade"
+                id="v-pills-{{g.gid}}"
+                role="tabpanel"
+                aria-labelledby="v-pills-{{g.gid}}-tab"
+              >
+                <div class="shop_single_navmenu_content mb-3 text-center">
+                  <a class="product_popup popup-img" href="{{g.image.url}}"
+                    ><span class="bi bi-fullscreen"></span
+                  ></a>
+                  <div class="zoomimg_wrapper">
+                    <img
+                      class="zoom-img product-detail-img"
+                      id="zoom_02"
+                      src="{{g.image.url}}"
+                      data-zoom-image="{{g.image.url}}"
+                      width="350"
+                      alt="Shop Single Image"
+                    />
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+
+              <div
+                class="tab-pane fade show active"
+                id="v-pills-{{product.pid}}"
+                role="tabpanel"
+                aria-labelledby="v-pills-{{product.pid}}-tab"
+              >
+                <div class="shop_single_navmenu_content mb-3 text-center">
+                  <div class="zoomimg_wrapper">
+                    <img
+                      class="zoom-img product-detail-img"
+                      id="zoom_03"
+                      src="{{product.image.url}}"
+                      data-zoom-image="{{product.image.url}}"
+                      width="350"
+                      alt="Shop Single Image"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="nav d-flex nav-pills me-3 mb-3"
+              id="v-pills-tab2"
+              role="tablist"
+              aria-orientation="vertical"
+            >
+              <button
+                class="nav-link mb-0 me-3 active"
+                id="v-pills-{{product.pid}}-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-{{product.pid}}"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-{{product.pid}}"
+                aria-selected="true"
+              >
+                <img
+                  src="{{ product.image.url }}"
+                  class="product-detail-img-list"
+                  alt=""
+                />
+              </button>
+              {% for g in product_images %}
+              <button
+                class="nav-link mb-0 me-3"
+                id="v-pills-{{g.gid}}-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-{{g.gid}}"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-{{g.gid}}"
+                aria-selected="true"
+              >
+                <img
+                  src="{{ g.image.url }}"
+                  class="product-detail-img-list"
+                  alt=""
+                />
+              </button>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-5">
+        <div
+          class="shop_single_product_details shop_single3_style ps-0 ps-xl-4 mt-4 mt-xl-0"
+        >
+          <ul class="d-flex">
+            <li class="mx-3">
+              <div class="sspd_review">
+                <ul class="mb0">
+                  {% if product.rating_count == 0 %}
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  {% endif %} {% if product.product_rating >= 1 and
+                  product.product_rating < 2 %}
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  {% endif %} {% if product.product_rating >= 2 and
+                  product.product_rating < 3 %}
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  {% endif %} {% if product.product_rating >= 3 and
+                  product.product_rating < 4 %}
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  {% endif %} {% if product.product_rating >= 4 and
+                  product.product_rating < 5 %}
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  {% endif %} {% if product.product_rating >= 5 and
+                  product.product_rating < 6 %}
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fas fa-star"></i></a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </li>
+            {% if product.rating_count == 0 %}
+            <li>0/5 (0)</li>
+            {% else %}
+            <li>{{product.product_rating|floatformat:1}}/5.0</li>
+            {% endif %}
+            <li class="mx-3">
+              {{product.rating_count}}
+              review{{product.rating_count|pluralize:"s"}}
+            </li>
+          </ul>
+          <h4 class="title mb15">{{ product.title }}</h4>
+          <hr />
+          <div class="sspd_price mt20">
+            {{cs}}{{product.price}}
+            <small><del class="mr10">{{cs}}{{product.old_price}}</del></small>
+          </div>
+          <div class="sspd_pfrice" style="font-size: 13px">
+            <small
+              ><b
+                >{{cs}}{{tax_rate_amount|floatformat:2}}+ {{tax.custom_name}}</b
+              ></small
+            >
+          </div>
+          <div class="sspd_pfrice" style="font-size: 13px">
+            <small
+              ><b
+                >{{cs}}{{product.shipping_amount|floatformat:2}} Shipping Fee</b
+              ></small
+            >
+          </div>
+          <div class="sspd_pfrice mb15" style="font-size: 13px">
+            <small
+              ><b
+                >{{cs}}{{processing_fee|floatformat:2}} Processing Fee</b
+              ></small
+            >
+          </div>
+          <div class="sspd_pfrice mb15" style="font-size: 13px">
+            <small><b>Total: {{cs}}{{total_price|floatformat:2}} </b></small>
+          </div>
+          <hr />
+          <div class="shop_single_table style3 table-responsive">
+            <table class="table table-borderless">
+              <thead>
+                {% if product.brand %}
+                <tr>
+                  <th scope="col">Brand</th>
+                  <th scope="col">{{product.brand.title|title}}</th>
+                </tr>
+                {% endif %}
+
+                <tr>
+                  <th scope="col">Country</th>
+
+                  {% if roduct.vendor.country == None %}
+                  <th><small>Not Available Yet...</small></th>
+                  {% else %}
+                  <th scope="col">{{product.vendor.country}}</th>
+                  {% endif %}
+                </tr>
+
+                <tr>
+                  <th scope="col">Category</th>
+                  <th scope="col">
+                    {% for c in product.category.all|slice:"0:5" %}
+                    <span
+                      class="shadow p-1"
+                      style="border-radius: 4px; font-size: 10px"
+                      ><a
+                        href="{% url 'store:category_detail' c.cid %}"
+                        target="_blank"
+                        >{{c.title|title}}</a
+                      ></span
+                    >
+                    {% endfor %}
+                  </th>
+                </tr>
+                <tr>
+                  <th scope="col">Views</th>
+                  <th scope="col">{{product.views}}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Orders</th>
+                  <th scope="col">{{product.order_count}}</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <hr class="mb-4" />
+          <ul class="sspd_sku mb30">
+            {% if product.tag %}
+            <li>
+              <a href="#">
+                Tags: {% for t in product.tags.all %} #<b>{{ t }}</b>
+                {% endfor %}
+              </a>
+            </li>
+            {% endif %}
+
+            <li class="d-flex mt-3">
+              <a href="#">Share</a>
+              <span class="social_icons">
+                <ul class="mb0">
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  </li>
+                </ul>
+              </span>
+            </li>
+            <li class="d-flex mt-1">
+              <a href="{% url 'reports:product-report' product.pid %}"
+                >Report <i class="bi bi-exclamation-triangle-fill"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-xl-3">
+        {% if product.type == "auction" %} {% if product.bidding_ended == False
+        %} {% if request.user.is_authenticated %}
+        <div
+          class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0"
+        >
+          {% if make_bid == True %}
+          <h4 class="ssfpd_price mb25 text-center">
+            Starting Price - {{cs}}{{product.price}}
+          </h4>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <ul class="cart_btns ui_kit_button mb15">
+              <li>
+                <div class="cart_btn home_page_sidebar mb10">
+                  <div class="quantity-block home_page_sidebar">
+                    <input
+                      class="quantity-num2 shop_single_page_sidebar"
+                      name="bidding_amount"
+                      type="number"
+                      value="{{product.price}}"
+                    />
+                  </div>
+                </div>
+              </li>
+              <li>
+                <button type="submit" class="w100 btn-custom">Bid Now</button>
+              </li>
+            </ul>
+          </form>
+          {% else %}
+          <h4 class="ssfpd_price mb25 text-center">
+            My Bid Amount - {{cs}}{{my_bid_obj.price}}
+          </h4>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <ul class="cart_btns ui_kit_button mb15">
+              <li>
+                <div class="cart_btn home_page_sidebar mb10">
+                  <div class="quantity-block home_page_sidebar">
+                    <input
+                      class="quantity-num2 shop_single_page_sidebar"
+                      name="bidding_amount_update"
+                      type="number"
+                      value="{{my_bid_obj.price}}"
+                    />
+                  </div>
+                </div>
+              </li>
+              <li>
+                <button type="submit" class="w100 btn-custom">
+                  Update Bid Amount
+                </button>
+              </li>
+            </ul>
+          </form>
+          {% endif %}
+          <ul class="shop_single_wishlist_area d-flex justify-content-center">
+            <li style="cursor: pointer" class="pe-2 ms-2 ms-sm-0">
+              <a class="add-to-wishlist" data-product-item="{{product.id}}"
+                ><span class="fas fa-heart me-2"></span>Add to Wishlist</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        {% else %}
+        <div
+          class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0"
+        >
+          <h4 class="ssfpd_price mb25 text-center">
+            Starting Price - {{cs}}{{product.price}}
+          </h4>
+          <div class="alert alert-warning text-center">
+            <strong
+              ><a href="{% url 'userauths:sign-in' %}" class="dashed-custom"
+                >Login</a
+              >
+              or
+              <a href="{% url 'userauths:sign-up' %}" class="dashed-custom"
+                >Sign Up</a
+              >
+              to bid.</strong
+            >
+          </div>
+        </div>
+        {% endif %}
+        <div class="shop_single_countdown mb-2 mt-3">
+          <h5 class="title color-light-green text-center" id="bidding-text">
+            Bidding Ending In:
+          </h5>
+          <div class="event_counter_plugin_container" id="date-div">
+            <div class="event_counter_plugin_content">
+              <ul>
+                <li class="text-center text-uppercase">
+                  <span id="dayss"></span>days
+                </li>
+                <li class="text-center text-uppercase">
+                  <span id="hourss"></span>Hours
+                </li>
+                <li class="text-center text-uppercase">
+                  <span id="minutess"></span>Minutes
+                </li>
+                <li class="text-center text-uppercase">
+                  <span id="secondss"></span>Seconds
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 mt-4 mt40">
+          <div class="contact_page_content float-endd" style="margin-top: 50px">
+            <div class="main-title">
+              <h4 class="mtitle">Top 3 Bidder(s)</h4>
+            </div>
+            <div class="contact_icon_box mt30">
+              {% for b in bidders %}
+              <div
+                class="contact_iconbox d-flex mb30 shadow p-3 {% if b.user == winner.user and winner.winner == True %} alert-success{% endif %}"
+                style="border-radius: 10px"
+              >
+                <div class="icon">
+                  <img
+                    src="{{b.user.profile.image.url}}"
+                    style="
+                      width: 40px;
+                      height: 40px;
+                      object-fit: cover;
+                      border-radius: 50%;
+                    "
+                    alt=""
+                  />
+                </div>
+                <div class="details ms-4">
+                  <h4 class="title">
+                    {{b.user.username|title}} {% if b.user == winner.user and
+                    winner.winner == True %}(Winner
+                    <i class="bi bi-trophy-fill"></i>) {% endif %}
+                  </h4>
+                  <a href="#">{{cs}}{{ b.price|floatformat:2 }}</a>
+                </div>
+              </div>
+              {% empty %}
+              <h5>No Bidders Yet</h5>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="shop_single_countdown mb-2 mt-3">
+          <h5 class="title color-light-green" id="bidding-text">
+            Bidding Ending In:
+          </h5>
+          <div class="event_counter_plugin_container" id="date-div">
+            <div class="event_counter_plugin_content">
+              <ul>
+                <li class="text-center text-uppercase">
+                  <span id="dayss"></span>days
+                </li>
+                <li class="text-center text-uppercase">
+                  <span id="hourss"></span>Hours
+                </li>
+                <li class="text-center text-uppercase">
+                  <span id="minutess"></span>Minutes
+                </li>
+                <li class="text-center text-uppercase">
+                  <span id="secondss"></span>Seconds
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="contact_page_content float-endd" style="margin-top: 50px">
+          <div class="main-title">
+            <h5 class="mtitle">Top 3 Bidder(s)</h5>
+          </div>
+          <div class="contact_icon_box mt30">
+            {% for b in bidders %}
+            <div
+              class="contact_iconbox d-flex mb30 shadow p-3 {% if b.winner == True %} alert-success{% endif %}"
+              style="border-radius: 10px"
+            >
+              <div class="icon">
+                <img
+                  src="{{b.user.profile.image.url}}"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                  "
+                  alt=""
+                />
+              </div>
+              <div class="details ms-4">
+                <h4 class="title">
+                  {{b.user.username|title}} {% if b.user == winner.user and
+                  winner.winner == True %}(Winner
+                  <i class="bi bi-trophy-fill"></i>) {% endif %}
+                </h4>
+                <a href="#">{{cs}}{{ b.price|floatformat:2 }}</a>
+              </div>
+            </div>
+            {% empty %}
+            <h5>No Bidders Yet</h5>
+            {% endfor %}
+            <div class="row mt10">
+              <div class="col-xl-12">
+                <div class="shortcode_widget_accprdons px-0">
+                  <div class="faq_according text-start">
+                    <div class="accordion" id="accordionExample">
+                      <div class="card">
+                        <div class="card-header" id="headingOne">
+                          <h2 class="mb-0">
+                            <button
+                              class="btn btn-link text-start"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              data-bs-target="#collapseOne"
+                              aria-expanded="true"
+                              aria-controls="collapseOne"
+                            >
+                              <span
+                                style="
+                                  font-size: 24px;
+                                  border-bottom: dashed 1px black;
+                                "
+                                >View All Bidders</span
+                              >
+                            </button>
+                          </h2>
+                        </div>
+                        <div
+                          id="collapseOne"
+                          class="collapse mt-4"
+                          aria-labelledby="headingOne"
+                          data-parent="#accordionExample"
+                        >
+                          {% for b in all_bidders %}
+                          <div class="card-body">
+                            <div
+                              class="contact_iconbox d-flex mb30 shadow p-3 {% if b.winner == True %} alert-success{% endif %}"
+                              style="border-radius: 10px"
+                            >
+                              <div class="icon">
+                                <img
+                                  src="{{b.user.profile.image.url}}"
+                                  style="
+                                    width: 40px;
+                                    height: 40px;
+                                    object-fit: cover;
+                                    border-radius: 50%;
+                                  "
+                                  alt=""
+                                />
+                              </div>
+                              <div class="details ms-4">
+                                <h4 class="title">
+                                  {{b.user.username|title}} {% if b.user ==
+                                  winner.user and winner.winner == True
+                                  %}(Winner <i class="bi bi-trophy-fill"></i>)
+                                  {% endif %}
+                                </h4>
+                                <a href="#"
+                                  >{{cs}}{{ b.price|floatformat:2 }}</a
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          {% empty %}
+                          <h5>No Bidders Yet</h5>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %} {% endif %} {% if product.type == "offer" %} {% if
+        make_offer == True %}
+        <div
+          class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0"
+        >
+          <div class="sspd_price mb25">
+            Enter a custom price and submit offer now.
+          </div>
+          <ul class="cart_btns ui_kit_button mb15">
+            <form action="" method="POST">
+              {% csrf_token %}
+              <li>
+                <div class="carft_btn home_pagef_sidebar mb10">
+                  <div class="quantity-blfock home_page_sidebar">
+                    <input
+                      class="quantity-num2 shop_single_page_sidebar"
+                      placeholder="Starting at {{product.price}}"
+                      name="offer_amount"
+                      type="number"
+                    />
+                    <!-- <div class="card-headedr" id="headingOne">
+                          <h2 class="mb-0">
+                            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><span style="font-size: 14px; border-bottom: dashed 1px black;">Write message to vendor</span></button>
+                          </h2>
+                        </div>
+                        <div id="collapseOne" class="collapse mt-4" aria-labelledby="headingOne" data-parent="#accordionExample">
+                          <input type="text" class="form-control" name="custom_message" placeholder="Write message to vendor...">
+                        </div> -->
+                  </div>
+                </div>
+              </li>
+              <li class="text-center">NOTE: Currency is in {{ ca }}({{cs}})</li>
+              <li>
+                <button
+                  type="submit"
+                  class="btn btn-fthm purple-btn w100"
+                  style="color: #fff"
+                >
+                  Submit Price Offer
+                </button>
+              </li>
+            </form>
+            <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>Add to cart</button> -->
+          </ul>
+          <ul class="shop_single_wishlist_area d-flex justify-content-center">
+            <li class="pe-2 ms-2 ms-sm-0">
+              <a class="add-to-wishlist" data-product-item="{{product.id}}"
+                ><span class="fas fa-heart me-2"></span>Add to Wishlist</a
+              >
+            </li>
+          </ul>
+        </div>
+        {% else %} {% if my_offer_obj.status == "accept" %}
+        <div
+          class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0"
+        >
+          <div class="sspd_price mb25 text-center">
+            Offer Accepted <i class="fas fa-check-circle"></i>
+          </div>
+          <ul class="cart_btns ui_kit_button mb15">
+            <input
+              type="hidden"
+              class="product-tax-fee-{{ product.id }}"
+              value="{{ new_rate|floatformat:2 }}"
+            />
+            <input
+              type="hidden"
+              class="product-processing-fee-{{ product.id }}"
+              value="{{ service_fee_rate }}"
+            />
+            <input
+              type="hidden"
+              class="product-vendor-{{ product.id }}"
+              value="{{ product.vendor.id }}"
+            />
+            <input
+              type="hidden"
+              class="product-shipping_amount-{{ product.id }}"
+              value="{{ product.shipping_amount }}"
+            />
+            <input
+              type="hidden"
+              class="product-price-{{ product.id }}"
+              value="{{ my_offer_obj.price }}"
+            />
+            <input
+              type="hidden"
+              class="product-pid-{{ product.id }}"
+              value="{{ product.pid }}"
+            />
+            <input
+              type="hidden"
+              class="product-image-{{ product.id }}"
+              value="{{ product.image.url }}"
+            />
+            <input
+              type="hidden"
+              class="product-id-{{ product.id }}"
+              value="{{ product.id }}"
+            />
+            <input
+              type="hidden"
+              class="product-title-{{ product.id }}"
+              value="{{ product.title }}"
+            />
+            <li>
+              <button
+                type="button"
+                class="btn purple-btn w100 button-add-to-cart add-to-cart-btn"
+                data-index="{{ product.id }}"
+                id="add-to-cart-btn"
+                style="color: #fff"
+              >
+                Add to cart
+              </button>
+            </li>
+          </ul>
+          <ul
+            class="shop_single_wishlist_area d-flex justify-content-center"
+          ></ul>
+        </div>
+        {% endif %} {% if my_offer_obj.status == "pending" %}
+        <div
+          class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0"
+        >
+          <div class="sspd_price mb25">Update Offer Price</div>
+          <ul class="cart_btns ui_kit_button mb15">
+            <form action="" method="POST">
+              {% csrf_token %}
+              <li>
+                <div class="cart_btn home_page_sidebar mb10">
+                  <div class="quantity-block home_page_sidebar">
+                    <input
+                      class="quantity-num2 shop_single_page_sidebar"
+                      name="offer_amount_update"
+                      type="number"
+                      value="{{my_offer_obj.price}}"
+                    />
+                  </div>
+                </div>
+              </li>
+              <li class="text-center">NOTE: Currency is in {{ ca }}({{cs}})</li>
+              <li>
+                <button
+                  type="submit"
+                  class="btn btn-fthm purple-btn w100"
+                  style="color: #fff"
+                >
+                  Update Price
+                </button>
+              </li>
+            </form>
+            <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>Add to cart</button> -->
+          </ul>
+          <ul class="shop_single_wishlist_area d-flex justify-content-center">
+            <li class="pe-2 ms-2 ms-sm-0">
+              <a class="add-to-wishlist" data-product-item="{{product.id}}"
+                ><span class="fas fa-heart me-2"></span>Add to Wishlist</a
+              >
+            </li>
+          </ul>
+        </div>
+        {% endif %} {% if my_offer_obj.status == "reject" %}
+
+        <div
+          class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0"
+        >
+          <div class="sspd_price mb25 text-center">Offer Rejected</div>
+          <ul class="cart_btns ui_kit_button mb15">
+            <li>
+              <button
+                type="button"
+                class="btn d-thm purple-btn w100"
+                style="color: #fff"
+              >
+                Keep Shopping
+              </button>
+            </li>
+          </ul>
+          <ul
+            class="shop_single_wishlist_area d-flex justify-content-center"
+          ></ul>
+        </div>
+
+        {% endif %} {% endif %} {% endif %} {% if product.type == "regular" %}
+        <div
+          class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0"
+        >
+          <div class="sspd_price mb25">
+            {{cs}}{{product.price}}
+            <small><del class="mr10">{{cs}}{{product.old_price}}</del></small>
+          </div>
+          <ul class="cart_btns ui_kit_button mb15">
+            <li>
+              <div class="cart_btn home_page_sidebar mb10">
+                <div class="quantity-block home_page_sidebar">
+                  <button
+                    class="quantity-arrow-minus2 shop_single_page_sidebar"
+                    id="decrease-btn"
+                  >
+                    <img src="{% static 'images/icons/minus.svg' %}" alt="" />
+                  </button>
+                  <input
+                    type="hidden"
+                    class="product-image-{{ product.id }}"
+                    value="{{ product.image.url }}"
+                  />
+                  <input
+                    class="quantity-num2 shop_single_page_sidebar product-quantity-{{ product.id }}"
+                    type="number"
+                    value="1"
+                    id="product-quantity"
+                    class="w-25 mb-10 product-quantity-{{ product.id }}"
+                  />
+                  <button
+                    class="quantity-arrow-plus2 shop_fsingle_page_sidebar"
+                    id="increase-btn"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+
+            <!-- <input type="hidden" class="product-new-rate{{ product.id }}" value="{{ new_rate }}"> -->
+            <input
+              type="hidden"
+              class="product-tax-fee-{{ product.id }}"
+              value="{{ new_rate|floatformat:2 }}"
+            />
+            <input
+              type="hidden"
+              class="product-processing-fee-{{ product.id }}"
+              value="{{ service_fee_rate }}"
+            />
+            <input
+              type="hidden"
+              class="product-vendor-{{ product.id }}"
+              value="{{ product.vendor.id }}"
+            />
+            <input
+              type="hidden"
+              class="product-shipping_amount-{{ product.id }}"
+              value="{{ product.shipping_amount }}"
+            />
+            <input
+              type="hidden"
+              class="product-price-{{ product.id }}"
+              value="{{ product.price }}"
+            />
+            <input
+              type="hidden"
+              class="product-pid-{{ product.id }}"
+              value="{{ product.pid }}"
+            />
+            <input
+              type="hidden"
+              class="product-image-{{ product.id }}"
+              value="{{ product.image.url }}"
+            />
+            <input
+              type="hidden"
+              class="product-id-{{ product.id }}"
+              value="{{ product.id }}"
+            />
+            <input
+              type="hidden"
+              class="product-title-{{ product.id }}"
+              value="{{ product.title }}"
+            />
+
+            <li>
+              <button
+                type="button"
+                class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn"
+                data-index="{{ product.id }}"
+                id="add-to-cart-btn"
+                style="color: #fff"
+              >
+                Add to cart
+              </button>
+            </li>
+            <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>Add to cart</button> -->
+          </ul>
+          <ul class="shop_single_wishlist_area d-flex justify-content-center">
+            <li class="pe-2 ms-2 ms-sm-0">
+              <a class="add-to-wishlist" data-product-item="{{product.id}}"
+                ><span class="fas fa-heart me-2"></span>Add to Wishlist</a
+              >
+            </li>
+            <!-- <li class="pe-2 ms-2"><a href="#"><span class="flaticon-graph me-2"></span>Compare</a></li> -->
+          </ul>
+          <hr />
+          <!-- <div class="vendor_iconbox style2 d-block d-sm-flex mb-1">
+                  <span class="icon fz30 heading-color"><span class="bi bi-truck"></span></span>
+                  <div class="details ms-0 ms-sm-4 mt-2 mt-sm-0">
+                    <p class="heading-color">Free shipping, <span class="fw500">arrives by Thu, Jun 2</span> to Sacramento, 95829 <span class="fw500">Want it faster?</span> <span class="tdu">Add an address</span> to see options <a class="tdu" href="">More options</a></p>
+                  </div>
+                </div> -->
+          <!-- <div class="vendor_iconbox style2 d-block d-sm-flex mb-1">
+                  <span class="icon fz30 heading-color"><span class="bi bi-shop"></span></span>
+                  <div class="details ms-0 ms-sm-4 mt-2 mt-sm-0">
+                    <p class="heading-color">Sold and shipped by</p>
+                    <h5 ><a class="dashed-custom" href="{% url 'vendor:vendor_shop_view_page' product.vendor.vid %}">{{product.vendor.shop_name|title}}</a></h5>
+                  </div>
+                </div> -->
+          <!-- <div class="vendor_iconbox style2 d-block d-sm-flex mb-0">
+                  <span class="icon fz30 heading-color"><span class="bi bi-box"></span></span>
+                  <div class="details ms-0 ms-sm-4 mt-2 mt-sm-0">
+                    <p class="heading-color">Free 15-Day returns <a class="tdu" href="">Details</a></p>
+                  </div>
+                </div> -->
+
+          {% comment %}
+          <hr />
+          <div class="shop_single_siderbar_mini_content mt-4">
+            <h4>More seller options (2)</h4>
+            <p>Starting from $1,249.00</p>
+            <a class="tdu" href="#">Compare all sellers</a>
+          </div>
+          {% endcomment %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mt30">
+      <div class="col-lg-12">
+        <div class="shop_single3_style ui_kit_tab style2">
+          <!-- nav tab Nav List Start -->
+          <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5 active"
+                id="description-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#description"
+                type="button"
+                role="tab"
+                aria-controls="description"
+                aria-selected="true"
+              >
+                Description
+              </button>
+            </li>
+            <!-- <li class="nav-item" role="presentation">
+                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="false">Details & Specs</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="included-tab" data-bs-toggle="tab" data-bs-target="#included" type="button" role="tab" aria-controls="included" aria-selected="false">What's Included</button>
+                </li> -->
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5"
+                id="vendor-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#vendor"
+                type="button"
+                role="tab"
+                aria-controls="vendor"
+                aria-selected="false"
+              >
+                Vendor
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5"
+                id="returnpolicy-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#returnpolicy"
+                type="button"
+                role="tab"
+                aria-controls="returnpolicy"
+                aria-selected="false"
+              >
+                Policy
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5"
+                id="qna-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#qna"
+                type="button"
+                role="tab"
+                aria-controls="qna"
+                aria-selected="false"
+              >
+                Questions and Answers
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link mt-3 mt-xl-0 mb-0"
+                id="customerreview-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#customerreview"
+                type="button"
+                role="tab"
+                aria-controls="customerreview"
+                aria-selected="false"
+              >
+                Customer Reviews
+              </button>
+            </li>
+          </ul>
+          <!-- nav tab Nav List End -->
+          <!-- nav tab contents Start -->
+          <div class="tab-content pt20 row" id="myTabContent">
+            <div
+              class="tab-pane fade show active col-lg-12"
+              id="description"
+              role="tabpanel"
+              aria-labelledby="description-tab"
+            >
+              <div class="shop_single_description">
+                <p class="para">{{product.description|safe}}</p>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade col-xl-8"
+              id="details"
+              role="tabpanel"
+              aria-labelledby="details-tab"
+            >
+              <div class="shop_single_table table-responsive">
+                <table class="table table-striped table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col">Brand</th>
+                      <th class="ps-2" scope="col">Apple</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Model Name</th>
+                      <td>MacBook Pro</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Screen Size</th>
+                      <td>16.2 Inches</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Color Space</th>
+                      <td>Space Gray</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Hard Disk Size</th>
+                      <td>1 TB</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">CPU Model</th>
+                      <td>Apple M1</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Ram Memory Installed Size</th>
+                      <td>16 GB</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Operating System</th>
+                      <td>Mac OS</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Graphics Card Description</th>
+                      <td>Integrated</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Graphics Coprocessor</th>
+                      <td>M1 Pro</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade col-xl-8"
+              id="included"
+              role="tabpanel"
+              aria-labelledby="included-tab"
+            >
+              <div class="shop_item_list_features shop_single_style">
+                <ul class="mb0 order_list list-style-type-bullet">
+                  <li><a href="#">16-inch MacBook Pro</a></li>
+                  <li><a href="#">140W USB‑C Power Adapter</a></li>
+                  <li><a href="#">USB‑C to MagSafe 3 Cable (2 m)</a></li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade col-xl-12"
+              id="vendor"
+              role="tabpanel"
+              aria-labelledby="vendor-tab"
+            >
+              <div class="card mb-4" style="width: 18rem">
+                <img
+                  class="card-img-top"
+                  src="{{vendor.shop_image.url}}"
+                  style="
+                    width: 100%;
+                    height: 150px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                  "
+                  alt="Card image cap"
+                />
+                <div class="card-body">
+                  <h3>{{ product.vendor.shop_name }}</h3>
+                  <p class="card-text">
+                    {{ product.vendor.shop_description|safe }}
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <button class="btn purple-btn" style="color: #fff">
+                    Visit Vendor Store
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade col-xl-12"
+              id="returnpolicy"
+              role="tabpanel"
+              aria-labelledby="returnpolicy-tab"
+            >
+              <p class="shipping_return_para mb-0 mt-3">
+                {{ product.vendor.shop_policy|safe }}
+              </p>
+            </div>
+            <div
+              class="tab-pane fade col-xl-12"
+              id="qna"
+              role="tabpanel"
+              aria-labelledby="qna-tab"
+            >
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="shop_single_qna">
+                    <div class="search_field mt-3">
+                      {% if request.user.is_authenticated %}
+                      <div class="blog_search_widget">
+                        <div class="input-group" id="question-div">
+                          <input
+                            type="text"
+                            id="question-input"
+                            class="form-control"
+                            placeholder="Have a question? Ask now"
+                            aria-label="Recipient's username"
+                          />
+                          <button
+                            class="btn btn-thfm purple-btn"
+                            data-pid="{{ product.id }}"
+                            id="question-btn"
+                            type="button"
+                            style="color: #fff"
+                          >
+                            Send
+                          </button>
+                        </div>
+                        <p id="q-alert"></p>
+                      </div>
+                      {% else %}
+                      <h4>
+                        Hey, you need to
+                        <a
+                          href="{% url 'userauths:sign-in' %}?next={{request.path}}"
+                          class="dashed-custom"
+                          >Login</a
+                        >
+                        to ask a question or make an enquiry.
+                      </h4>
+                      {% endif %}
+                    </div>
+                    {% for q in questions_answers %}
+                    <div class="question_with_poster mt-3">
+                      <h5 class="title">Q: {{q.question}}?</h5>
+                      <p class="author">
+                        Asked by {{q.user.username|title}} - {{q.date|date:"d M,
+                        Y"}}
+                      </p>
+                    </div>
+                    <div class="question_with_answer mt-3 ms-3">
+                      <h5 class="title">A: {{q.answer}}</h5>
+                      <p class="author mb-0">
+                        Answered by {{q.product.vendor.name|title}}
+                      </p>
+                    </div>
+                    {% endfor %}
+
+                    <!-- <div class="more_btn mt30 text-center">
+                          <a href="#" class="btn btn-lg btn-white bdr_thm">Explore all questions</a>
+                        </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade col-xl-12"
+              id="customerreview"
+              role="tabpanel"
+              aria-labelledby="customerreview-tab"
+            >
+              <div class="row">
+                <div class="col-lg-6 col-xl-4">
+                  <div class="review_average mb30">
+                    <div class="d-flex align-items-center">
+                      <div class="flex-shrink-0">
+                        {% if product.rating_count == 0 %}
+                        <div class="title">0/5</div>
+                        {% else %}
+                        <div class="title">
+                          {{product.product_rating|floatformat:1}}
+                        </div>
+                        {% endif %}
+                      </div>
+                      <div class="flex-grow-1 ms-3">
+                        <div class="sspd_postdate">
+                          <div class="sspd_review">
+                            <ul class="mb0">
+                              {% if product.rating_count == 0 %}
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              {% endif %} {% if product.product_rating >= 1 and
+                              product.product_rating < 2 %}
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              {% endif %} {% if product.product_rating >= 2 and
+                              product.product_rating < 3 %}
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              {% endif %} {% if product.product_rating >= 3 and
+                              product.product_rating < 4 %}
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              {% endif %} {% if product.product_rating >= 4 and
+                              product.product_rating < 5 %}
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              {% endif %} {% if product.product_rating >= 5 and
+                              product.product_rating < 6 %}
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="#"><i class="fas fa-star"></i></a>
+                              </li>
+                              {% endif %}
+                            </ul>
+                          </div>
+                        </div>
+
+                        {% if product.rating_count == 0 %}
+                        <div class="total_review">0 review(s)</div>
+                        {% else %}
+                        <div class="total_review">
+                          {{ product.rating_count }} review(s)
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center single_line_review pr30 pr0-lg mb10"
+                  >
+                    <div class="me-1">5 star</div>
+                    <div class="progress-bar mx-3">
+                      <div class="progress-bar__bg"></div>
+                      <div class="progress-bar__bar-100"></div>
+                    </div>
+                    <div class="heading-color">{{ five_star }}</div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center single_line_review pr30 pr0-lg mb10"
+                  >
+                    <div class="me-1">4 star</div>
+                    <div class="progress-bar mx-3">
+                      <div class="progress-bar__bg"></div>
+                      <div class="progress-bar__bar-80"></div>
+                    </div>
+                    <div class="heading-color">{{ four_star }}</div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center single_line_review pr30 pr0-lg mb10"
+                  >
+                    <div class="me-1">3 star</div>
+                    <div class="progress-bar mx-3">
+                      <div class="progress-bar__bg"></div>
+                      <div class="progress-bar__bar-60"></div>
+                    </div>
+                    <div class="heading-color">{{ three_star }}</div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center single_line_review pr30 pr0-lg mb10"
+                  >
+                    <div class="me-1">2 star</div>
+                    <div class="progress-bar mx-3">
+                      <div class="progress-bar__bg"></div>
+                      <div class="progress-bar__bar-40"></div>
+                    </div>
+                    <div class="heading-color">{{ two_star }}</div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center single_line_review pr30 pr0-lg mb30"
+                  >
+                    <div class="me-1">1 star</div>
+                    <div class="progress-bar mx-3">
+                      <div class="progress-bar__bg"></div>
+                      <div class="progress-bar__bar-20"></div>
+                    </div>
+                    <div class="heading-color">{{ one_star }}</div>
+                  </div>
+                  <!-- <div class="all_review_btn mb30">
+                        <a href="#" class="btn btn-lg btn-white bdr_thm">Write Your Review</a>
+                      </div> -->
+                </div>
+                <div class="col-xl-8">
+                  <h4 class="text-success" id="review-res"></h4>
+                  {% if request.user.is_authenticated %} {% if make_review %}
+
+                  <div class="bsp_reveiw_wrt">
+                    {% if "any_authenticated_user" in basic_addon.review_type %}
+                    <form
+                      class="comments_form"
+                      method="POST"
+                      action="{% url 'store:add-review' product.id %}"
+                      id="commentForm"
+                    >
+                      {% csrf_token %}
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h4 class="title mb20">Add a Review</h4>
+                          <h5 class="mb0">Your rating of this product</h5>
+                          <div class="sspd_postdate vendor_single">
+                            <div class="sspd_review">
+                              {{review_form.rating }}
+                            </div>
+                          </div>
+                          <div class="form-group mt-4">
+                            <label class="heading-color mb10"
+                              >Your review</label
+                            >
+                          </div>
+                        </div>
+                        <div class="form-group">{{review_form.review}}</div>
+
+                        <div class="col-md-12">
+                          <br />
+                          <button
+                            type="submit"
+                            class="btn btnf-thm purple-btn"
+                            style="color: #fff"
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    {% endif %} {% if "only_purchased_user" in
+                    basic_addon.review_type %} {% if reviewer_status == True %}
+                    <form
+                      class="comments_form"
+                      method="POST"
+                      action="{% url 'store:add-review' product.id %}"
+                      id="commentForm"
+                    >
+                      {% csrf_token %}
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h4 class="title mb20">Add a Review</h4>
+                          <h5 class="mb0">Your rating of this product</h5>
+                          <div class="sspd_postdate vendor_single">
+                            <div class="sspd_review">
+                              {{review_form.rating }}
+                            </div>
+                          </div>
+                          <div class="form-group mt-4">
+                            <label class="heading-color mb10"
+                              >Your review</label
+                            >
+                          </div>
+                        </div>
+                        <div class="form-group">{{review_form.review}}</div>
+
+                        <div class="col-md-12">
+                          <br />
+                          <button
+                            type="submit"
+                            class="btn btnf-thm purple-btn"
+                            style="color: #fff"
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    {% endif %} {% if reviewer_status == False %}
+                    <div class="alert-warning p-4">
+                      <strong
+                        >You must purchase this product before you can
+                        review</strong
+                      >
+                    </div>
+                    {% endif %} {% endif %}
+                  </div>
+                  {% endif %} {% else %}
+                  <h4>
+                    Hey, you need to
+                    <a
+                      href="{% url 'userauths:sign-in' %}?next={{request.path}}"
+                      class="dashed-custom"
+                      >Login</a
+                    >
+                    to add a review for this product
+                  </h4>
+                  {% endif %}
+
+                  <div class="product_single_content mb30">
+                    <div class="mbp_pagination_comments">
+                      <h5 class="mb30">
+                        {{reviews.count}} Review(s) For This Product
+                      </h5>
+                      {% for r in reviews %}
+                      <div class="border border-rounded-cus p-3 mb-3">
+                        <div class="mbp_first d-flex align-items-center mb20">
+                          <div class="flex-shrink-0">
+                            <img
+                              src="{{r.user.profile.image.url}}"
+                              style="
+                                object-fit: cover;
+                                border-radius: 50%;
+                                width: 60px;
+                                height: 60px;
+                              "
+                              class="mr-3"
+                              alt="reviewer2.png"
+                            />
+                          </div>
+                          <div class="flex-grow-1 ms-4">
+                            <div class="d-block d-md-flex">
+                              <div class="sspd_postdate me-2 mb10-sm">
+                                <div class="sspd_review">
+                                  <ul class="mb0">
+                                    {% if r.rating == 1 %}
+                                    <li class="list-inline-item">
+                                      <a href="#"
+                                        ><i class="fas fa-star"></i
+                                      ></a>
+                                    </li>
+                                    {% endif %} {% if r.rating == 2 %}
+                                    <li class="list-inline-item">
+                                      <a href="#"
+                                        ><i class="fas fa-star"></i
+                                      ></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                      <a href="#"
+                                        ><i class="fas fa-star"></i
+                                      ></a>
+                                    </li>
+                                    {% endif %}
+                                  </ul>
+                                </div>
+                              </div>
+                              <h5 class="sub_title">
+                                {{r.product.title|title|truncatechars:"20"}}
+                              </h5>
+                            </div>
+                            <div class="review_post_meta">
+                              Reviewed by {% if r.user.profile.full_name == None
+                              or r.user.profile.full_name == "" %}{{
+                              r.user.username|title }}{% else %}{{
+                              r.user.profile.full_name|title }}{% endif %} -
+                              {{r.date|date:"d M, Y"}}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="review_content_para mb30">
+                          <p class="mt15 mb30">{{ r.review }}</p>
+                        </div>
+
+                        <div class="review_cansel_btns d-flex mb30">
+                          {% if request.user in r.helpful.all %}
+                          <button
+                            class="btn me-2 helpful{{r.id}}"
+                            data-id="{{r.id}}"
+                            id="helpful"
+                          >
+                            <i
+                              class="fa-solid fa-thumbs-down"
+                              style="color: #912121"
+                            ></i>
+                          </button>
+                          {% else %}
+                          <button
+                            class="btn me-2 helpful{{r.id}}"
+                            data-id="{{r.id}}"
+                            id="helpful"
+                          >
+                            <i
+                              class="fa-solid fa-thumbs-up"
+                              style="color: #2b5191"
+                            ></i>
+                          </button>
+
+                          <button
+                            class="btn me-2 helpful{{r.id}}"
+                            data-id="{{r.id}}"
+                            id="helpful"
+                          >
+                            <i
+                              class="fa-solid fa-thumbs-down"
+                              style="color: #912121"
+                            ></i>
+                          </button>
+                          {% endif %}
+                        </div>
+                        <p class="text-success">
+                          {{ r.helpful.all.count }} Found this review helpful
+                        </p>
+                        <p class="text-success" id="alert{{r.id}}"></p>
+                      </div>
+
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- nav tab contents End -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- </div> -->
+<section class="deliver-divider pb40">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="main-title text-center text-sm-start mb80-520 mb25-414">
+          <h2 class="title">Top Selling Products</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div
+          class="navi_pagi_topr_right shop_item_5grid_slider owl-theme owl-carousel px-2"
+        >
+          {% for p in relatedproduct %}
+          <div class="item ml-2 mr-2" style="padding-left: 10px">
+            <div
+              class="shop_item small_style hvr_bdr1 home2_style border border-rounded-cus"
+            >
+              <div class="thumb pb30">
+                <a href="{% url 'store:product-detail' p.slug %}">
+                  <img
+                    src="{{p.image.url}}"
+                    style="
+                      height: 150px;
+                      width: 100%;
+                      object-fit: cover;
+                      border-radius: 3px;
+                    "
+                    class="product-img-avatar"
+                    alt="Best Seller Item"
+                  />
+                </a>
+                <div class="thumb_info">
+                  <ul class="mb0">
+                    <li>
+                      <a
+                        class="action-btn add-to-wishlist"
+                        data-product-item="{{p.id}}"
+                        ><span class="fas fa-heart"></span
+                      ></a>
+                    </li>
+                  </ul>
+                </div>
+                <input
+                  type="hidden"
+                  class="product-tax-fee-{{ p.id }}"
+                  value="{{ new_rate_|floatformat:2 }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-processing-fee-{{ p.id }}"
+                  value="{{ service_fee_rate_ }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-vendor-{{ p.id }}"
+                  value="{{ p.vendor.id }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-shipping_amount-{{ p.id }}"
+                  value="{{ p.shipping_amount }}"
+                />
+                <input
+                  class="product-quantity-{{ p.id }}"
+                  type="hidden"
+                  value="1"
+                  id="product-quantity"
+                  class="w-25 mb-10 product-quantity-{{ p.id }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-price-{{ p.id }}"
+                  value="{{ p.price }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-pid-{{ p.id }}"
+                  value="{{ p.pid }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-image-{{ p.id }}"
+                  value="{{ p.image.url }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-id-{{ p.id }}"
+                  value="{{ p.id }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-title-{{ p.id }}"
+                  value="{{ p.title }}"
+                />
+
+                {% if p.type == "auction" %}
+                <div class="shop_item_cart_bftn d-grid mt-2">
+                  <a
+                    class="btn purple-btn"
+                    href="{% url 'store:product-detail' p.slug %}"
+                    >Join Bidding Now</a
+                  >
+                </div>
+                {% endif %} {% if p.type == "offer" %}
+                <div class="shop_item_cart_bftn d-grid mt-2">
+                  <a
+                    class="btn purple-btn"
+                    href="{% url 'store:product-detail' p.slug %}"
+                    >Submit Price Offer</a
+                  >
+                </div>
+                {% endif %} {% if p.type == "regular" %}
+                <div class="shop_item_cart_bftn d-grid">
+                  <a
+                    class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2"
+                    data-index="{{ p.id }}"
+                    id="add-to-cart-btn"
+                    >Add to Cart</a
+                  >
+                </div>
+                {% endif %}
+              </div>
+              <div class="details">
+                <div class="title mt-0 mb0 mb-0 mt0">
+                  <a href="{% url 'store:product-detail' p.slug %}"
+                    >{{p.title|title|truncatechars:27}}</a
+                  >
+                </div>
+                <div class="sub_title mt-0 mb0 mb-0 mt0">
+                  <a
+                    href="{% url 'vendor:vendor_shop_view_page' p.vendor.vid %}"
+                    class="dashed-custom"
+                    >By {{p.vendor.shop_name}}</a
+                  >
+                </div>
+                <div class="review d-block">
+                  <ul class="mb0 me-2">
+                    {% if p.rating_count == 0 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 1 and p.product_rating
+                    < 2 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 2 and p.product_rating
+                    < 3 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 3 and p.product_rating
+                    < 4 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 4 and p.product_rating
+                    < 5 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 5 and p.product_rating
+                    < 6 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                  {% if p.rating_count == 0 %}
+                  <div class="review_count">
+                    <a href="#"
+                      >0/5 (0 review{{p.rating_count|pluralize:"s"}})</a
+                    >
+                  </div>
+                  {% else %}
+                  <div class="review_count">
+                    <a href="#"
+                      >{{p.product_rating|floatformat:1}}/5.0
+                      ({{p.rating_count}}
+                      review{{p.rating_count|pluralize:"s"}})</a
+                    >
+                  </div>
+                  {% endif %}
+                </div>
+                <div class="si_footer">
+                  <div class="price">
+                    {{cs}}{{p.price}}
+                    <small><del>{{ cs }}{{p.old_price}}</del></small>
+                  </div>
+                  <!-- <a class="action-btn add-to-wishlist" data-product-item="{{p.id}}"><span class="fas fa-heart"></span></a> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="deliver-divider pb40">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="main-title text-center text-sm-start mb80-520 mb25-414">
+          <h2 class="title">
+            You might also like <i class="fas fa-caret-down"></i>
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div
+          class="navi_pagi_topr_right shop_item_5grid_slider owl-theme owl-carousel px-2"
+        >
+          {% for p in youmightlike %}
+          <div class="item ml-2 mr-2" style="padding-left: 10px">
+            <div
+              class="shop_item small_style hvr_bdr1 home2_style border border-rounded-cus"
+            >
+              <div class="thumb pb30">
+                <a href="{% url 'store:product-detail' p.slug %}">
+                  <img
+                    src="{{p.image.url}}"
+                    style="
+                      height: 150px;
+                      width: 100%;
+                      object-fit: cover;
+                      border-radius: 3px;
+                    "
+                    class="product-img-avatar"
+                    alt="Best Seller Item"
+                  />
+                </a>
+                <div class="thumb_info">
+                  <ul class="mb0">
+                    <li>
+                      <a
+                        class="action-btn add-to-wishlist"
+                        data-product-item="{{p.id}}"
+                        ><span class="fas fa-heart"></span
+                      ></a>
+                    </li>
+                  </ul>
+                </div>
+                <input
+                  type="hidden"
+                  class="product-tax-fee-{{ p.id }}"
+                  value="{{ new_rate_|floatformat:2 }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-processing-fee-{{ p.id }}"
+                  value="{{ service_fee_rate_ }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-vendor-{{ p.id }}"
+                  value="{{ p.vendor.id }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-shipping_amount-{{ p.id }}"
+                  value="{{ p.shipping_amount }}"
+                />
+                <input
+                  class="product-quantity-{{ p.id }}"
+                  type="hidden"
+                  value="1"
+                  id="product-quantity"
+                  class="w-25 mb-10 product-quantity-{{ p.id }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-price-{{ p.id }}"
+                  value="{{ p.price }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-pid-{{ p.id }}"
+                  value="{{ p.pid }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-image-{{ p.id }}"
+                  value="{{ p.image.url }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-id-{{ p.id }}"
+                  value="{{ p.id }}"
+                />
+                <input
+                  type="hidden"
+                  class="product-title-{{ p.id }}"
+                  value="{{ p.title }}"
+                />
+
+                {% if p.type == "auction" %}
+                <div class="shop_item_cart_bftn d-grid mt-2">
+                  <a
+                    class="btn purple-btn"
+                    href="{% url 'store:product-detail' p.slug %}"
+                    >Join Bidding Now</a
+                  >
+                </div>
+                {% endif %} {% if p.type == "offer" %}
+                <div class="shop_item_cart_bftn d-grid mt-2">
+                  <a
+                    class="btn purple-btn"
+                    href="{% url 'store:product-detail' p.slug %}"
+                    >Submit Price Offer</a
+                  >
+                </div>
+                {% endif %} {% if p.type == "regular" %}
+                <div class="shop_item_cart_bftn d-grid">
+                  <a
+                    class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2"
+                    data-index="{{ p.id }}"
+                    id="add-to-cart-btn"
+                    >Add to Cart</a
+                  >
+                </div>
+                {% endif %}
+              </div>
+              <div class="details">
+                <div class="title mt-0 mb0 mb-0 mt0">
+                  <a href="{% url 'store:product-detail' p.slug %}"
+                    >{{p.title|title|truncatechars:27}}</a
+                  >
+                </div>
+                <div class="sub_title mt-0 mb0 mb-0 mt0">
+                  <a
+                    href="{% url 'vendor:vendor_shop_view_page' p.vendor.vid %}"
+                    class="dashed-custom"
+                    >By {{p.vendor.shop_name}}</a
+                  >
+                </div>
+                <div class="review d-block">
+                  <ul class="mb0 me-2">
+                    {% if p.rating_count == 0 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 1 and p.product_rating
+                    < 2 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 2 and p.product_rating
+                    < 3 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 3 and p.product_rating
+                    < 4 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 4 and p.product_rating
+                    < 5 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %} {% if p.product_rating >= 5 and p.product_rating
+                    < 6 %}
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                  {% if p.rating_count == 0 %}
+                  <div class="review_count">
+                    <a href="#"
+                      >0/5 ({{p.rating_count}}
+                      review{{p.rating_count|pluralize:"s"}})</a
+                    >
+                  </div>
+                  {% else %}
+                  <div class="review_count">
+                    <a href="#"
+                      >{{p.product_rating|floatformat:1}}/5.0
+                      ({{p.rating_count}}
+                      review{{p.rating_count|pluralize:"s"}})</a
+                    >
+                  </div>
+                  {% endif %}
+                </div>
+                <div class="si_footer">
+                  <div class="price">
+                    {{cs}}{{p.price}}
+                    <small><del>{{ cs }}{{p.old_price}}</del></small>
+                  </div>
+                  <!-- <a class="action-btn add-to-wishlist" data-product-item="{{p.id}}"><span class="fas fa-heart"></span></a> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  var dayss = document.getElementById("dayss")
+  var hourss = document.getElementById("hourss")
+  var minutess = document.getElementById("minutess")
+  var secondss = document.getElementById("secondss")
+
+  var countDownDate = new Date({{product.ending_date|date:"U"}} * 1000);
+  var x = setInterval(function() {
+  var now = new Date().getTime();
+
+  var distance = countDownDate - now;
+
+
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+  <!-- document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s "; -->
+
+  dayss.innerHTML = days
+  hourss.innerHTML = hours
+  minutess.innerHTML = minutes
+  secondss.innerHTML = seconds
+
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("date-div").classList.add("d-none");
+    document.getElementById("bidding-text").innerHTML = "Bidding Ended";
+    document.getElementById("bidding-text").style.color = "red";
+    }
+  }, 1000);
+</script>
+
+<script>
+  $(document).on("click", "#increase-btn", function () {
+    var input_value = $("#product-quantity").val();
+
+    if (input_value >= 0) {
+      input_value++;
+      $("#product-quantity").val(input_value);
+    }
+  });
+
+  $(document).on("click", "#decrease-btn", function () {
+    var input_value = $("#product-quantity").val();
+
+    if (input_value > 0) {
+      input_value--;
+      $("#product-quantity").val(input_value);
+    }
+
+    if (input_value === 0) {
+      $("#product-quantity").val(1);
+    }
+  });
+</script>
+{% endblock content %}

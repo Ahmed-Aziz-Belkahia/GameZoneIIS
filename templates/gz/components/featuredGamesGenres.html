@@ -1,0 +1,19 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "gz/styles/components/featuredGamesCategorys.css" %}">
+
+<div class="main__featuredGamesCategorys flexCenter">
+
+
+    <div class="featuredGamesCategorys__div flexCenter">
+
+        
+        {% for genre in featured_genres %}
+            <a href="shop?genre={{genre.meta_title}}" class="featuredGamesCategorys__game flexCenter">
+                <img src="{{genre.featured_image.url}}" alt="{{genre.title}}">
+            </a>
+        {% endfor %}
+
+    </div>
+
+</div>

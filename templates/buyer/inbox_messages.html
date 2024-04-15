@@ -1,0 +1,566 @@
+{% extends "partials/base.html" %} {% load static %} {% load crispy_forms_tags %}
+{% block title %}
+  Inbox 
+{% endblock title %}
+{% block content %}
+<style>
+  .modalDialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 100ms ease-in;
+    -moz-transition: opacity 100ms ease-in;
+    transition: opacity 100ms ease-in;
+    pointer-events: none;
+  }
+  .modalDialog:target {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modalDialog > div {
+    max-width: 800px;
+    width: 90%;
+    height: 80%;
+    position: relative;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 13px;
+    background: #fff;
+  }
+  .close {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #b331ff;
+    color: #fff;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 34px;
+    height: 34px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+    padding-top: 5px;
+  }
+  .close:hover {
+    background: #b331ff;
+    color: white;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .mobile-div {
+      display: none;
+    }
+    .show-mobile-div {
+      display: block;
+    }
+  }
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (max-width: 600px) {
+    .mobile-div {
+      display: none;
+    }
+    .show-mobile-div {
+      display: block;
+    }
+  }
+
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (max-width: 768px) {
+    .mobile-div {
+      display: none;
+    }
+    .show-mobile-div {
+      display: block;
+    }
+  }
+
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    .example {
+      background: orange;
+    }
+    .show-mobile-div {
+      display: none;
+    }
+  }
+
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    .example {
+      background: pink;
+    }
+    .show-mobile-div {
+      display: none;
+    }
+  }
+</style>
+<section class="our-dashbord dashbord" style="margin-top: 0">
+  <div class="container">
+    <div class="row">
+      {% include 'buyer/nav-desktop.html' %}
+      <div class="col-lg-9 col-xl-9">
+        {% include 'buyer/nav-mobile.html' %}
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="account_user_deails pl40 pl0-md">
+              <div class="ui_kit_tab style2">
+                <div class="row pb50">
+                  <div class="col-lg-12">
+                    <div class="dashboard_title_area">
+                      <h2>Messages</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-xxl-5 show-mobile-div">
+                    <div class="message_container">
+                      <div class="inbox_user_list">
+                        <div class="iu_heading">
+                          <div class="candidate_revew_search_box">
+                            <form
+                              class="row-cols-lg-aufto g-3 align-items-center d-flex p-3 m-2"
+                              action="{% url 'core:search_users' %}"
+                              method="GET"
+                            >
+                              {% csrf_token %}
+                              <input
+                                class="form-control"
+                                type="search"
+                                name="q"
+                                placeholder="Search For Someone..."
+                                aria-label="Search"
+                              />
+                              <button class="btn border p-2 ms-2" type="submit">
+                                <span class="fas fa-search"></span>
+                              </button>
+                            </form>
+                          </div>
+                          <div class="candidate_revew_search_box">
+                            <a
+                              href="#openModal-about"
+                              class="btn purple-btn row-cols-lg-aufto g-3 align-items-center d-flex p-3 m-2"
+                              style="font-size: 12px"
+                            >
+                              View All Messages</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-xxl-5 mobile-div">
+                    <div class="message_container">
+                      <div class="inbox_user_list">
+                        <div class="iu_heading">
+                          <div class="candidate_revew_search_box">
+                            <form
+                              class="row-cols-lg-aufto g-3 align-items-center d-flex p-3 m-2"
+                              action="{% url 'core:search_users' %}"
+                              method="GET"
+                            >
+                              {% csrf_token %}
+                              <input
+                                class="form-control"
+                                type="search"
+                                name="q"
+                                placeholder="Search For Someone..."
+                                aria-label="Search"
+                              />
+                              <button class="btn border p-2 ms-2" type="submit">
+                                <span class="fas fa-search"></span>
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                        <ul class="p-3">
+                          {% for message in message_list %} {% if request.user == message.sender %}
+                          <a
+                            href="{% url 'core:inbox-detail' message.reciever.username %}"
+                          >
+                            <li class="contact pt3">
+                              <div
+                                class="wrap shadow p-3 {% if request.path == '/vendor/inbox/{{message.sender.username}}/' %}active-chat{% endif %}"
+                                style="border-radius: 10px"
+                              >
+                                <img
+                                  class="img-fluid"
+                                  src="{{message.reciever.profile.image.url}}"
+                                  style="
+                                    width: 50px;
+                                    height: 50px;
+                                    object-fit: cover;
+                                  "
+                                  alt="ms1.jpg"
+                                />
+
+                                <div class="child-wrap df">
+                                  <div class="meta">
+                                    {% if message.reciever.profile.full_name %}
+                                    <h5 class="name">
+                                      {{message.reciever.profile.full_name|title}}
+                                    </h5>
+                                    {% else %}
+                                    <h5 class="name">
+                                      {{message.reciever.username|title}}
+                                    </h5>
+                                    {% endif %}
+                                    <p class="preview">
+                                      {{message.message|truncatechars:27}}
+                                    </p>
+                                  </div>
+                                  <div class="iul_notific">
+                                    <small class="" style="font-size: 10px"
+                                      >{{message.date|timesince}} ago</small
+                                    >
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          </a>
+                          {% endif %} 
+                          {% if request.user == message.reciever %}
+                          <a
+                            href="{% url 'core:inbox-detail' message.sender.username %}"
+                          >
+                            <li class="contact pt3">
+                              <div
+                                class="wrap shadow p-3 {% if reciever_id.username == message.sender.username %}active-chat{% endif %}"
+                                style="border-radius: 10px"
+                              >
+                                <img
+                                  class="img-fluid"
+                                  src="{{message.sender.profile.image.url}}"
+                                  style="
+                                    width: 50px;
+                                    height: 50px;
+                                    object-fit: cover;
+                                  "
+                                  alt="ms1.jpg"
+                                />
+
+                                <div class="child-wrap df">
+                                  <div class="meta">
+                                    {% if message.sender.profile.full_name %}
+                                    <h5 class="name mt-3 mb-3">
+                                      {{message.sender.profile.full_name|title}}
+                                    </h5>
+                                    {% else %}
+                                    <h5 class="name mt-3 mb-3">
+                                      {{message.sender.username|title}}
+                                    </h5>
+                                    {% endif %}
+                                    <p class="preview">
+                                      {{message.message|truncatechars:27}}
+                                    </p>
+                                  </div>
+                                  <div class="iul_notific">
+                                    <small class="" style="font-size: 10px"
+                                      >{{message.date|timesince}} ago</small
+                                    >
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          </a>
+                          {% endif %} {% empty %}
+                          <h4>No Chats Yet...</h4>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-xxl-7">
+                    <div class="message_container mt30-md">
+                      <div class="user_heading">
+                        <div class="wrap">
+                          <span class="contact-status online"></span>
+
+                          <img
+                            class="img-fluid mr10"
+                            src="{{reciever_id.profile.image.url}}"
+                            style="width: 40px; height: 40px; object-fit: cover"
+                            alt="mm1.jpg"
+                          />
+
+                          <div class="meta">
+                            <!-- <a class="text-thm3 tdu float-end fz14" href="#">Delete Conversation</a> -->
+
+                            {% if reciever_id.profile.full_name %}
+                            <h4 class="name pt-2">
+                              {{ reciever_id.profile.full_name|title }}
+                            </h4>
+                            {% else %}
+                            <h4 class="name pt-2">
+                              {{ reciever_id.username|title }}
+                            </h4>
+                            {% endif %}
+
+                            <!-- <p class="preview">Active</p> -->
+                          </div>
+                        </div>
+                      </div>
+                      <div class="inbox_chatting_box chat_container">
+                        <ul
+                          class="chatting_content chatting_content_new chaft_container"
+                        >
+                          {% for m in message_detail %} {% if m.sender != request.user %}
+                          <li class="sent">
+                            <div class="df">
+                              <!-- <img class="img-fluid align-self-start me-3" src="{{m.sender.profile.image.url}}" style="width: 30px; height: 30px; object-fit: cover;" alt="{{m.reciever.profile.full_name|title}}"/> -->
+                              <h5 class="title">
+                                <small
+                                  class=""
+                                  style="color: rgba(199, 199, 199, 0.664)"
+                                  >{{m.date|timesince}}</small
+                                >
+                              </h5>
+                              <!-- <h5 class="title">{{m.reciever.profile.full_name|title}} <small class="body-color ml15">{{m.date|timesince}}</small></h5> -->
+                            </div>
+                            <p>{{m.message}}</p>
+                          </li>
+                          {% endif %} {% if m.sender == request.user %}
+                          <li class="reply first">
+                            <div class="df justify-content-end">
+                              <h5 class="title">
+                                <small
+                                  class=""
+                                  style="color: rgba(199, 199, 199, 0.664)"
+                                  >{{m.date|timesince}}</small
+                                >
+                              </h5>
+                              <!-- <a href="{{m.sender.profile.image.url}}" target="_blank">
+                                                      <img class="img-fluid align-self-end ms-3" src="{{m.sender.profile.image.url}}" style="width: 30px; height: 30px; object-fit: cover;" alt="my image"/>
+                                                  </a> -->
+                            </div>
+                            <p>{{m.message}}</p>
+                          </li>
+                          {% endif %} {% endfor %}
+                        </ul>
+                      </div>
+                      <div class="message_input">
+                        <form
+                          class="row-cols-lg-auto g-3 align-items-center"
+                          id="message-form"
+                          method="POST"
+                        >
+                          {% csrf_token %}
+                          <input
+                            class="form-control"
+                            type="search"
+                            id="messagee"
+                            placeholder="Type a Message"
+                            aria-label="Search"
+                          />
+                          <button
+                            id="send-message-btn"
+                            class="btn purple-btn"
+                            style="color: white"
+                            type="submit"
+                          >
+                            Send
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="openModal-about" class="modalDialog">
+  <div>
+    <a href="#close" title="Close" class="close">X</a>
+    <h1>Message(s)</h1>
+    <hr />
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="account_user_deails pl40 pl0-md">
+          <div class="ui_kit_tab style2">
+            <div class="row">
+              <div class="col-lg-12 col-xxl-12">
+                <div class="message_container">
+                  <div class="inbox_user_list">
+                    <div class="iu_heading">
+                      <div class="candidate_revew_search_box">
+                        <form
+                          class="row-cols-lg-aufto g-3 align-items-center d-flex p-3 m-2"
+                          action="{% url 'core:search_users' %}"
+                          method="GET"
+                        >
+                          {% csrf_token %}
+                          <input
+                            class="form-control"
+                            type="search"
+                            name="q"
+                            placeholder="Search For Someone..."
+                            aria-label="Search"
+                          />
+                          <button class="btn border p-2 ms-2" type="submit">
+                            <span class="fas fa-search"></span>
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                    <ul class="p-3" style="height: 350px">
+                      {% for message in message_list %} {% if request.user == message.sender %}
+                      <a
+                        href="{% url 'core:inbox-detail' message.reciever.username %}"
+                      >
+                        <li class="contact pt3">
+                          <div
+                            class="wrap shadow p-3 {% if request.path == '/vendor/inbox/{{message.sender.username}}/' %}active-chat{% endif %}"
+                            style="border-radius: 10px"
+                          >
+                            <img
+                              class="img-fluid"
+                              src="{{message.reciever.profile.image.url}}"
+                              style="
+                                width: 50px;
+                                height: 50px;
+                                object-fit: cover;
+                              "
+                              alt="ms1.jpg"
+                            />
+
+                            <div class="child-wrap df">
+                              <div class="meta">
+                                {% if message.reciever.profile.full_name %}
+                                <h5 class="name">
+                                  {{message.reciever.profile.full_name|title}}
+                                </h5>
+                                {% else %}
+                                <h5 class="name">
+                                  {{message.reciever.username|title}}
+                                </h5>
+                                {% endif %}
+                                <p class="preview">
+                                  {{message.message|truncatechars:27}}
+                                </p>
+                              </div>
+                              <div class="iul_notific">
+                                <small class="" style="font-size: 10px"
+                                  >{{message.date|timesince}} ago</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </a>
+                      {% endif %} {% if request.user == message.reciever %}
+                      <a
+                        href="{% url 'core:inbox-detail' message.sender.username %}"
+                      >
+                        <li class="contact pt3">
+                          <div
+                            class="wrap shadow p-3 {% if reciever_id.username == message.sender.username %}active-chat{% endif %}"
+                            style="border-radius: 10px"
+                          >
+                            <img
+                              class="img-fluid"
+                              src="{{message.sender.profile.image.url}}"
+                              style="
+                                width: 50px;
+                                height: 50px;
+                                object-fit: cover;
+                              "
+                              alt="ms1.jpg"
+                            />
+
+                            <div class="child-wrap df">
+                              <div class="meta">
+                                {% if message.sender.profile.full_name %}
+                                <h5 class="name mt-3 mb-3">
+                                  {{message.sender.profile.full_name|title}}
+                                </h5>
+                                {% else %}
+                                <h5 class="name mt-3 mb-3">
+                                  {{message.sender.username|title}}
+                                </h5>
+                                {% endif %}
+                                <p class="preview">
+                                  {{message.message|truncatechars:27}}
+                                </p>
+                              </div>
+                              <div class="iul_notific">
+                                <small class="" style="font-size: 10px"
+                                  >{{message.date|timesince}} ago</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </a>
+                      {% endif %} {% empty %}
+                      <h4>No Chats Yet...</h4>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).on("click", "#send-message-btn", function (e) {
+    e.preventDefault();
+    let messagee = $("#messagee").val();
+
+    $.ajax({
+      url: "{% url 'core:send_message_ajax' reciever_id.username %}",
+      dataType: "json",
+      data: {
+        messagee: messagee,
+      },
+      success: function (res) {
+        let _html =
+          ' <li class="reply first">\
+                        <div class="df justify-content-end">\
+                            <h5 class="title"><small class="body-color mr15">{{m.date|timesince}}</small></h5>\
+                        </div>\
+                        <p>' +
+          messagee +
+          "</p>\
+                        </li>\
+                        ";
+        $(".chatting_content_new").append(_html);
+        // Scroll to last message
+        $(".chat_container").scrollTop(100000000);
+        $("#message-form")[0].reset();
+      },
+    });
+  });
+
+</script>
+
+<script>
+  $(document).ready(function() {
+    $(".chat_container").scrollTop(100000000);
+    
+  });
+</script>
+
+{% endblock content %}

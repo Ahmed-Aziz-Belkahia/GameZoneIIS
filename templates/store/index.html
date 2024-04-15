@@ -1,0 +1,740 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block title %}
+    Welcome to Desphixs
+{% endblock title %}
+    
+{% block content %}
+{% load humanize %}
+<style>
+    ul,
+    li {
+        list-style: none;
+    }
+</style>
+<div class="body_content_wrapper position-relative">
+    
+    
+        
+ 
+
+    <!-- {% if homepage.homepage_type == "2" %}
+        {% for h in home_two %}
+            <section class="home10-about pt-1  border-bottom" style="margin-top: 20px;">
+                <div class="container maxw1800">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5">
+                            <div class="home10_about mb-5 mb-lg-0">
+                                <h2 class="title">{{h.main_title}}</h2>
+                                <p class="fz16 heading-color my-4">{{ h.sub_title }}</p>
+                                <a href="{{h.button_url}}"
+                                    class="btn btn-deffault btn-transfparent hom10_transparent_btn"
+                                    style="background-color: #5d06ff ; color: white;">{{h.button_text}}</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 offset-lg-1">
+                            <div class="home10_about ">
+                                <div class="thumb"><img src="{{h.image.url}}"
+                                        style="height: 500px; width: 100%; border-radius: 10px; object-fit: cover;"
+                                        alt="25.jpg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+    {% endif %}
+
+    {% if homepage.homepage_type == "1" %}
+
+    <section class="home-one" style="margin-top: 40px; margin-bottom: 20px;">
+        <div class="container maxw1800">
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="navi_pagi_bottom_left athome8 main-banner-wrapper home1_style bdrs6 ovh mb-4 mb-xl-0">
+                        <div class="banner-style-one owl-theme owl-carousel">
+                            <div class="slide slide-one banner_home8_slider" style="background-color: #eff6f9; background-position: center; height: 570px;">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-7 ps-3 ps-sm-5">
+                                            <span class="tag home8_style">{{home_one_first.small_title}}</span>
+                                            <h3 class="banner-title">
+                                                <span class="fw400">{{home_one_first.main_title}}</span>
+                                            </h3>
+                                            <p class="heading-color">
+                                                {{home_one_first.sub_title}}
+                                            </p>
+                                            <a href="{{home_one_first.button_url}}" class="btn banner-btn home8_banner_btn btn-thm1">{{home_one_first.button_text}}</a>
+                                        </div>
+                                        <div class="col-lg-5 d-none d-lg-block">
+                                            <div class="animate_content text-center text-xl-start zi1">
+                                                <div class="animate_thumb"><img src="{{home_one_first.image.url}}" style="border-radius: 10px; " alt="{{home_one_first.main_title|truncatechars:10}}'s Img." /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            
+                            {% for h in home_one %}
+                            <div class="slide slide-one banner_home8_slider" style="background-color: #eff6f9; background-position: center; height: 570px;">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-7 ps-3 ps-sm-5">
+                                            <span class="tag home8_style">{{h.small_title}}</span>
+                                            <h3 class="banner-title">
+                                                <span class="fw400">{{h.main_title}}</span>
+                                            </h3>
+                                            <p class="heading-color">
+                                                {{h.sub_title}}
+                                            </p>
+                                            <a href="{{h.button_url}}" class="btn banner-btn home8_banner_btn btn-thm1">{{h.button_text}}</a>
+                                        </div>
+                                        <div class="col-lg-5 d-none d-lg-block">
+                                            <div class="animate_content text-center text-xl-start zi1">
+                                                <div class="animate_thumb"><img src="{{h.image.url}}" style="border-radius: 50px; margin-top: 50px;" alt="{{home_one_first.main_title|truncatechars:10}}'s Img." /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                                
+                        </div>
+                    </div>
+                </div>
+               <div class="col-xl-4">
+                    {% for p in featured_products_2 %}
+                    
+                    <div class="banner_one home1_style color2 mb30">
+                        <div class="thumb style1">
+                            <img class="float-end" src="{{p.image.url}}" alt="SmartDevice" style="height: 270px; border-radius: 15px;" />
+                            <div class="off_banner"><img src="{% static 'images/banner/off-banner.png' %}" style="height: 100px;" alt="img" /></div>
+                        </div>
+                        <div class="details">
+                            <p class="para color-light-blue">Starting from <span class="fw500"> {{ cs }}{{ p.price|intcomma }}</span></p>
+                            <h5 class="tlitle"><a href="{% url 'store:product-detail' p.slug %}">{{ p.title|truncatechars:30 }}</a></h5>
+                            <a href="page-shop-list-v1.html" class="shop_btn">Add To Cart</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div> 
+
+                <div class="col-lg-12 col-md-12 col-xl-4"> 
+                    <div class="home2_right_slider" >
+                        <div class="bestseller_sidebar_slider dots_none home8_style">
+                            {% for p in featured_products_2 %}
+
+                            <div class="item">
+                                <div class="banner_one home1_style home2_home_style color1 before_none">
+                                    <div class="details">
+                                        <p class="para color-light-blue">Starting from<span class="fw500"> {{ cs }}{{ p.price|intcomma }}</span></p>
+                                        <h4 class="titfle">{{ p.title|truncatechars:30 }}</h4>
+                                    </div>
+                                    <div class="thumb text-center mb-3"><img src="{{p.image.url}}" style="height: 360px; object-fit: cover; border-radius: 15px;" alt="Home 2 banner Side Item" /></div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %} -->
+
+
+    <section class="home-one mt50">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="main-banner-wrapper home1_style at_home6 bdrs6 ovh mb-4 mb-xl-0">
+                        <div class="banner-style-one owl-theme owl-carousel owl-loaded">
+                            <div class="owl-stage-outer">
+                                <div class="owl-stage" style="transform: translate3d(-1472.05px, 0px, 0px); transition: all 0s ease 0s; width: 4416.14px;">
+                                    <div class="owl-item cloned" style="width: 736.023px; margin-right: 0px;">
+                                        <div class="slide slide-one" style="background-image: url(images/background/home6-bg1.png); background-position: center; height: 510px;">
+                                            <div class="container">
+                                                <div class="row home-content">
+                                                    <div class="col-lg-5 pl60">
+                                                        <span class="tag home6_style">Special Offer</span>
+                                                        <h3 class="banner-title color-white">
+                                                            <span class="fw400">Immersive</span><br />
+                                                            Entertainment
+                                                        </h3>
+                                                        <p class="color-white">Discover our new items. Up to<span class="fw500">25% Off !</span></p>
+                                                        <a href="page-shop-cart.html" class="btn banner-btn home6_style btn-white btn-thm bdrs6">Shop Now</a>
+                                                    </div>
+                                                    <div class="col-lg-7 px-0 d-none d-lg-block">
+                                                        <div class="animate_content text-center text-xl-start">
+                                                            <div class="animate_thumb"><img src="images/home/home6-item.png" alt="Home 6 Product" /></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="owl-item cloned" style="width: 736.023px; margin-right: 0px;">
+                                        <div class="slide slide-one" style="background-image: url(images/background/home6-bg1.png); background-position: center; height: 510px;">
+                                            <div class="container">
+                                                <div class="row home-content">
+                                                    <div class="col-lg-5 pl60">
+                                                        <span class="tag home6_style">Special Offer</span>
+                                                        <h3 class="banner-title color-white">
+                                                            <span class="fw400">Immersive</span><br />
+                                                            Entertainment
+                                                        </h3>
+                                                        <p class="color-white">Discover our new items. Up to<span class="fw500">25% Off !</span></p>
+                                                        <a href="page-shop-cart.html" class="btn banner-btn home6_style btn-white btn-thm bdrs6">Shop Now</a>
+                                                    </div>
+                                                    <div class="col-lg-7 px-0 d-none d-lg-block">
+                                                        <div class="animate_content text-center text-xl-start">
+                                                            <div class="animate_thumb"><img src="images/home/home6-item.png" alt="Home 6 Product" /></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="owl-item active" style="width: 736.023px; margin-right: 0px;">
+                                        <div class="slide slide-one" style="background-image: url(images/background/home6-bg1.png); background-position: center; height: 510px;">
+                                            <div class="container">
+                                                <div class="row home-content">
+                                                    <div class="col-lg-5 pl60">
+                                                        <span class="tag home6_style">Special Offer</span>
+                                                        <h3 class="banner-title color-white">
+                                                            <span class="fw400">Immersive</span><br />
+                                                            Entertainment
+                                                        </h3>
+                                                        <p class="color-white">Discover our new items. Up to<span class="fw500">25% Off !</span></p>
+                                                        <a href="page-shop-cart.html" class="btn banner-btn home6_style btn-white btn-thm bdrs6">Shop Now</a>
+                                                    </div>
+                                                    <div class="col-lg-7 px-0 d-none d-lg-block">
+                                                        <div class="animate_content text-center text-xl-start">
+                                                            <div class="animate_thumb" style="transform: perspective(500px) translateZ(0px) rotateX(3.73338deg) rotateY(11.2528deg); transition: none 0s ease 0s;">
+                                                                <img src="images/home/home6-item.png" alt="Home 6 Product" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="owl-item" style="width: 736.023px; margin-right: 0px;">
+                                        <div class="slide slide-one" style="background-image: url(images/background/home6-bg1.png); background-position: center; height: 510px;">
+                                            <div class="container">
+                                                <div class="row home-content">
+                                                    <div class="col-lg-5 pl60">
+                                                        <span class="tag home6_style">Special Offer</span>
+                                                        <h3 class="banner-title color-white">
+                                                            <span class="fw400">Immersive</span><br />
+                                                            Entertainment
+                                                        </h3>
+                                                        <p class="color-white">Discover our new items. Up to<span class="fw500">25% Off !</span></p>
+                                                        <a href="page-shop-cart.html" class="btn banner-btn home6_style btn-white btn-thm bdrs6">Shop Now</a>
+                                                    </div>
+                                                    <div class="col-lg-7 px-0 d-none d-lg-block">
+                                                        <div class="animate_content text-center text-xl-start">
+                                                            <div class="animate_thumb"><img src="images/home/home6-item.png" alt="Home 6 Product" /></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="owl-item cloned" style="width: 736.023px; margin-right: 0px;">
+                                        <div class="slide slide-one" style="background-image: url(images/background/home6-bg1.png); background-position: center; height: 510px;">
+                                            <div class="container">
+                                                <div class="row home-content">
+                                                    <div class="col-lg-5 pl60">
+                                                        <span class="tag home6_style">Special Offer</span>
+                                                        <h3 class="banner-title color-white">
+                                                            <span class="fw400">Immersive</span><br />
+                                                            Entertainment
+                                                        </h3>
+                                                        <p class="color-white">Discover our new items. Up to<span class="fw500">25% Off !</span></p>
+                                                        <a href="page-shop-cart.html" class="btn banner-btn home6_style btn-white btn-thm bdrs6">Shop Now</a>
+                                                    </div>
+                                                    <div class="col-lg-7 px-0 d-none d-lg-block">
+                                                        <div class="animate_content text-center text-xl-start">
+                                                            <div class="animate_thumb"><img src="images/home/home6-item.png" alt="Home 6 Product" /></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="owl-item cloned" style="width: 736.023px; margin-right: 0px;">
+                                        <div class="slide slide-one" style="background-image: url(images/background/home6-bg1.png); background-position: center; height: 510px;">
+                                            <div class="container">
+                                                <div class="row home-content">
+                                                    <div class="col-lg-5 pl60">
+                                                        <span class="tag home6_style">Special Offer</span>
+                                                        <h3 class="banner-title color-white">
+                                                            <span class="fw400">Immersive</span><br />
+                                                            Entertainment
+                                                        </h3>
+                                                        <p class="color-white">Discover our new items. Up to<span class="fw500">25% Off !</span></p>
+                                                        <a href="page-shop-cart.html" class="btn banner-btn home6_style btn-white btn-thm bdrs6">Shop Now</a>
+                                                    </div>
+                                                    <div class="col-lg-7 px-0 d-none d-lg-block">
+                                                        <div class="animate_content text-center text-xl-start">
+                                                            <div class="animate_thumb"><img src="images/home/home6-item.png" alt="Home 6 Product" /></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="owl-controls">
+                                <div class="owl-nav">
+                                    <div class="owl-prev" style="">prev</div>
+                                    <div class="owl-next" style="">next</div>
+                                </div>
+                                <div class="owl-dots" style="">
+                                    <div class="owl-dot active"><span></span></div>
+                                    <div class="owl-dot"><span></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="banner_one home1_style at_home6_home_area color1 mb30">
+                        <div class="thumb style1"><img class="float-end" src="images/banner/smartwatch.png" alt="smartwatch" /></div>
+                        <div class="details">
+                            <p class="para color-light-blue">Starting from<span class="fw500">$899.</span></p>
+                            <h3 class="title">Health Care Monitor</h3>
+                            <a href="page-shop-list-v1.html" class="shop_btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="banner_one home1_style at_home6_home_area color2 mb30">
+                        <div class="thumb style1"><img class="float-end" src="images/banner/hanpicked.png" alt="EarPhone" /></div>
+                        <div class="details">
+                            <p class="para color-light-blue">Starting from<span class="fw500">$899.</span></p>
+                            <h3 class="title">Stainless Steel Scissors</h3>
+                            <a href="page-shop-list-v1.html" class="shop_btn">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="features pt0 pb20">
+        <div class="container bb1">
+            <div class="row">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="icon_boxes d-flex">
+                        <div class="icon"><span class="flaticon-fast-delivery"></span></div>
+                        <div class="details">
+                            <h5 class="title">Free Shipping</h5>
+                            <p class="para">Free Shipping for orders over $200</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="icon_boxes d-flex">
+                        <div class="icon"><span class="flaticon-shield"></span></div>
+                        <div class="details">
+                            <h5 class="title">Money Guarantee</h5>
+                            <p class="para">Within 30 days for an exchange.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="icon_boxes d-flex">
+                        <div class="icon"><span class="flaticon-headphones"></span></div>
+                        <div class="details">
+                            <h5 class="title">Online Support</h5>
+                            <p class="para">24 hours a day, 7 days a week</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="icon_boxes d-flex">
+                        <div class="icon"><span class="flaticon-credit-card"></span></div>
+                        <div class="details">
+                            <h5 class="title">Flexible Payment</h5>
+                            <p class="para">Pay with Multiple Credit Cards</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    {% if category %}
+    <section class="top-category maxw1800 pb30 pt30">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-title text-center text-sm-start">
+                        <h2>Explore Our Categories </h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="main-title text-center text-sm-end mb-5"><a class="title_more_btn mt10"
+                            href="{% url 'store:category' %}">See All</a></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop_item_8grid_slider nav_none dots_none">
+                        {% for c in category %}
+
+                        <div class="item">
+                            <a href="{% url 'store:category_detail' c.cid %}">
+                                <div class="iconbox home2_style">
+                                    <div class="icon"><img src="{{c.image.url}}" alt="{{c.title}}"></div>
+                                    <div class="details">
+                                        <h5 class="title">{{c.title}}</h5>
+                                        <p class="subtitle">{{c.product_count}} item(s)</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% empty %}
+                        <div class="item">
+                            <h4>No Category</h4>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    
+    {% if featured_hot_deals %}
+        <section class="bg-img-png-home2 maxw1800 m-auto bdrs6">
+            <div class="container">
+                <div class="row bg-img-png-home2 p-3">
+                    <div class="col-lg-4">
+                        <div class="home2_text_widgets mt15d0 mt0-md mb-4 md-lg-0">
+                            <h2 class="title color-white">Hot and Trending Deals 🔥</h2>
+                            <p class="para mt-3 mb-4 color-white">
+                                Check out the latest hot deals today <br class="d-none d-xl-block" />
+                                by our popular vendors!
+                            </p>
+                            <a href="{% url 'store:hot_deals' %}" class="btn btn-thm">View More</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="shop_item_4grid_slider dots_none owl-theme owl-carousel">
+                            
+                            {% for p in featured_hot_deals %}
+                                {% include 'store/product_list.html' %}
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+   
+
+    <!-- <section class="home-one">
+        <div class="container maxw1f700">
+           <div class="row">
+            
+            {% for p in featured_products %}
+              <div class="col-lg-4 col-xl-4">
+                 <div class="banner_one home1_style title_wa mb30">
+                    <div class="thumb"><img class="float-end" src="{{p.image.url}}" style="height: 270px; border-radius: 15px;" alt="img"></div>
+                    <div class="details">
+                       <p class="para text-thm1">Starting from<span class="fw500">$899.</span></p>
+                       <h3 class="title">Shoes 20%<br>Off</h3>
+                       <a href="page-shop-list-v1.html" class="shop_btn">Shop Now</a>
+                    </div>
+                 </div>
+              </div>
+            {% endfor %}
+
+              
+           </div>
+        </div>
+     </section> -->
+    
+   
+
+
+    {% if products %}
+    <section class="deliver-divider ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="main-title text-center text-sm-start ">
+                        <h2 class="title">Featured Products</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop_item_4grid_slider dots_none owl-theme owl-carousel">
+                        {% for p in products %}
+                            {% include 'store/product_list.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    {% endif %}
+
+
+    {% if top_selling_products %}
+    <section class="deliver-divider">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="main-title text-center text-sm-start ">
+                        <h2 class="title">Top Selling Products</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop_item_4grid_slider dots_none owl-theme owl-carousel">
+                        {% for p in top_selling_products %}
+                            {% include 'store/product_list.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt40">
+                <div class="col-lg-12 col-xl-12 pl50 pl15-md">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="main-title pbg10">
+                                <h2 class="title">All Products</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row">
+                            {% for p in all_products %}
+                            <div class="col-sm-6 col-lg-3 col-xl-3 mb-3 mb3 p0 pl15-520">
+                                {% include 'store/product_list.html' %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <div class="row mt-4">
+                            <div class="col-lg-12 text-center">
+                                <a href="{% url 'store:shop' %}" class="purple-btn btn">View More Products</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+
+    <!-- {% if hot_deal %}
+    <section class="our-blog pt0 pb60">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-title text-center text-sm-start">
+                        <h2>Deals Hot of the Day</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-9">
+                    <div class="shop_single_item_home10_style p30 bdr1 bdrs6 mb-4 mb-xl-0 pb-4 pb-xl-0">
+                        <div class="shop_single_natabmenu">
+                            <div class="d-block d-lg-flex align-items-start">
+
+                                <div>
+                                    <img src="{{hot_deal.image.url}}"
+                                        style="height: 300px; width: 100%; padding: 10px; border-radius: 10px; object-fit: cover;"
+                                        alt="">
+                                </div>
+
+                                <br>
+                                <div class="shop_single_product_details home10_style mt30 mt30-xl px-0">
+                                    <ul class="d-flex">
+                                        <li class="mx-3">
+                                            <div class="sspd_review">
+                                                <ul class="mb0">
+
+
+                                                    {% if hot_deal.rating_count == 0 %}
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    {% endif %}
+
+                                                    {% if hot_deal.product_rating >= 1 and hot_deal.product_rating < 2 %}
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    {% endif %}
+
+                                                    {% if hot_deal.product_rating >= 2 and hot_deal.product_rating < 3 %}
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    {% endif %}
+
+                                                    {% if hot_deal.product_rating >= 3 and hot_deal.product_rating < 4 %}
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    {% endif %}
+
+                                                    {% if hot_deal.product_rating >= 4 and hot_deal.product_rating < 5 %}
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    {% endif %}
+
+                                                    {% if hot_deal.product_rating >= 5 and hot_deal.product_rating < 6 %}
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    <li class="list-inline-item"><a href="#"><i
+                                                                class="fas fa-star"></i></a></li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        {% if hot_deal.rating_count == 0 %}
+                                        <li>0/5 (0)</li>
+                                        {% else %}
+                                        <li>{{hot_deal.product_rating|floatformat:1}}/5.0 </li>
+                                        {% endif %}
+                                        <li class="mx-3">{{hot_deal.rating_count}}
+                                            review{{hot_deal.rating_count|pluralize:"s"}} </li>
+                                    </ul>
+                                    <h4 class="title mb15">{{hot_deal.title}}</h4>
+                                    <div class="sspd_price mb30 mt20">{{ cs }}{{hot_deal.price}}<small><del
+                                                class="mr10">{{cs}}{{hot_deal.old_price}}</del></small></div>
+                                    <div class="shop_item home10_style p-0 mb10">
+                                        <div class="details">
+                                            <div class="si_footer">
+                                                <div class="linde mt20"></div>
+                                                <div class="sell_stock mt10">
+                                                    <div class="sell">Sold {{hot_deal.order_count}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" class="product-vendor-{{ hot_deal.id }}"
+                                            value="{{ hot_deal.vendor.id }}">
+                                        <input type="hidden" class="product-shipping_amount-{{ hot_deal.id }}"
+                                            value="{{ hot_deal.shipping_amount }}">
+                                        <input type="hidden" class="product-price-{{ hot_deal.id }}"
+                                            value="{{ hot_deal.price }}">
+                                        <input type="hidden" class="product-pid-{{ hot_deal.id }}"
+                                            value="{{ hot_deal.pid }}">
+                                        <input type="hidden" class="product-image-{{ hot_deal.id }}"
+                                            value="{{ hot_deal.image.url }}">
+                                        <input type="hidden" class="product-id-{{ hot_deal.id }}"
+                                            value="{{ hot_deal.id }}">
+                                        <input type="hidden" class="product-title-{{ hot_deal.id }}"
+                                            value="{{ hot_deal.title }}">
+
+                                        {% if hot_deal.type == "auction" %}
+                                        <div class="shop_item_cart_bftn d-grid"><a class="btn purple-btn"
+                                                href="{% url 'store:product-detail' hot_deal.pid %}">Join Bidding
+                                                Now</a></div>
+                                        {% endif %}
+
+                                        {% if hot_deal.type == "offer" %}
+                                        <div class="shop_item_cart_bftn d-grid"><a class="btn purple-btn"
+                                                href="{% url 'store:product-detail' hot_deal.pid %}">Submit Price
+                                                Offer</a></div>
+                                        {% endif %}
+
+                                        {% if hot_deal.type == "regular" %}
+                                        <div class="shop_item_cart_bftn d-grid"><a
+                                                class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn"
+                                                data-index="{{ hot_deal.id }}" id="add-to-cart-btn">Add to Cart</a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-xl-3">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %} -->
+
+
+    {% if posts %}
+
+
+    <section class="our-blog pt0 pb60">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-title text-center text-sm-start">
+                        <h2>Featured Posts</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for p in posts %}
+                <div class="col-md-6 col-xl-3 border p-3">
+                    <div class="for_blog">
+                        <div class="thumb">
+                            <a href="{% url 'blog:blog-detail' p.pid %}">
+                                <img class="img-whp" src="{{p.image.url}}"
+                                    style="width: 100%; height: 150px; object-fit: cover;" alt="26.jpg"></div>
+                        </a>
+                        <div class="details">
+                            <div class="tc_content pt-4">
+                                <h4 class="title mt-0"><a
+                                        href="{% url 'blog:blog-detail' p.pid %}">{{p.title|truncatechars:27}}</a></h4>
+                                <span class="subtitle">{{p.content|safe|truncatechars:40}}</span> <br>
+                                <a href="{% url 'blog:blog-detail' p.pid %}" class="purple-btn btn mt-3">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="our-features pt0 pb70">
+        <div class="container">
+            {% include 'addons/footer_benefits.html' %}
+        </div>
+    </section>
+</div>
+{% endblock content %}

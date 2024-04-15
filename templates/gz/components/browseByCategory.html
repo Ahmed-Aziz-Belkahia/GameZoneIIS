@@ -1,0 +1,25 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "gz/styles\components\browseByCategory.css" %}">
+
+<div id="browseByCategory"class="main__broweByCategory flexCenter">
+
+    <div class="broweByCategory__div flexCenter">
+
+        <div class="broweByCategory__categorys flexCenter">
+            {% for category in categories %}
+            <a href="/shop/category/{{ category.meta_title }}" class="categorys__category flexCenter">
+                <div class="category__img flexCenter">
+                    <div class="img__div flexCenter">
+                        <img src="{{ category.image.url }}" alt="{{ category.title }}">
+                    </div>
+                </div>
+                {% comment %} <div class="category__title flexCenter">{{ category.product_count }} products</div> {% endcomment %}
+                <div class="category__title flexCenter">{{ category.title }}</div>
+            </a>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>

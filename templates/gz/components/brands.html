@@ -1,0 +1,16 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "gz/styles/components/brands.css"%}">
+
+<div class="main__brands flexCenter">
+    <h1 class="gme-v3-global-heading">Top Brands. <span>Take Your Pick.</span></h1>
+    <div class="brands__div flexCenter">
+        {% for brand in brands %}
+        <a href="shop?brand={{ brand.meta_title }}" class="brands__brand">
+            <div class="brand__img">
+                <img src="{{ brand.image.url }}" alt="{{ brand.title }}">
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>

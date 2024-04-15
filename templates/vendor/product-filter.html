@@ -1,0 +1,62 @@
+<div class="row d-block d-sm-flex justify-content-center justify-content-sm-between">
+    <div class="col-sm-6 col-lg-3">
+      <div class="dashboard_page header_search_widget mb30 mb15-520">
+          <form action="" method="GET">
+              <div class="input-group" >
+                  <input type="text" class="form-control" name="q" placeholder="Search product" aria-label="Recipient's username">
+                  <div class="input-group-append">
+                      <button class="btn" type="submit"><span class="fa fa-search"></span></button>
+                  </div>
+              </div>
+          </form>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="dashboard_page sidebar_location_filter mb30 mb5-520">
+        <div class="form-group">
+          <!-- <div class="checkout_country_form actegory"> -->
+              <div class="dropdown">
+                      <button class="dropdown-toggle btn btn-new btn-lg btn-thm w100" style="height: 53px;" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                          Filter By Status
+                      </button>
+                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                      <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'published' %}">Published</a></li>
+                      <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'in_review' %}">In Review</a></li>
+                      <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'draft' %}">Draft</a></li>
+                      <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'disabled' %}">Disabled</a></li>
+                      <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'rejected' %}">Rejected</a></li>
+                  </ul>
+              </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-6 col-lg-3">
+      <div class="dashboard_page sidebar_location_filter mb30 mb5-520">
+        <div class="form-group">
+          <!-- <div class="checkout_country_form actegory"> -->
+              <div class="dropdown">
+                      <button class="dropdown-toggle btn btn-new btn-lg btn-thm w100" style="height: 53px;" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                          Filter By Category
+                        </button>
+                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                      {% for c in category %}
+                          <li><a class="dropdown-item" href="{% url 'vendor:product-category' c.cid %}">{{c.title|title}}</a></li>
+                      {% empty %}
+                      <li>No Category</li>
+                      {% endfor %}
+
+                  </ul>
+              </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="dashboard_page_add_listing text-center text-lg-end mb30 mb15-520 d-grid">
+        <a href="{% url 'vendor:create_product' %}" class="btn btn-new btn-lg btn-thm">Add New Products</a>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,93 @@
+{% load static %}
+<link rel="stylesheet" href="{% static "gz/styles/components/xbox.css" %}">
+
+<div class="main__xbox">
+    <div class="xbox__div flexCenter">
+        <div class="xbox__layer1 xbox__layer">
+            <div class="layer1__text">
+                <div class="text__title">Nintendo Deals</div>
+                <div class="text__slogan">
+                    Save big on stuff you love
+                </div>
+            </div>
+        </div>
+        
+        <div class="xbox__layer3 xbox__layer">
+            <div class="layer__CTA">
+                <a href="/detail/{{nintendo_banner.product.meta_title}}" class="layerCTA__div flexCenter">
+                    <div class="layerCTA__img">
+                        {% comment %} <img src="{{nintendo_banner.banner.url}}" alt="{{nintendo_banner.product.title}}"> {% endcomment %}
+                        <picture>
+                            <!-- WebP format for screens 768px and above -->
+                            <source media="(min-width: 768px)" type="image/webp" srcset="{{nintendo_banner.banner.url}}">
+                        
+                            <!-- WebP format for screens below 768px -->
+                            <source type="image/webp" srcset="{{nintendo_banner.banner_mobile.url}}">
+                        
+                            <!-- Fallback for browsers that do not support <picture> or WebP -->
+                            <img alt="{{nintendo_banner.product.title}}" class="gme-v3-carousel-hero__img lazyloaded" src="{{nintendo_banner.banner.url}}" fetchpriority="high">
+                        </picture>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+      <!-- <div class="xbox__layer2 xbox__layer">
+            <div class="layer2__cards flexCenter">
+                <!--<a href="/detail/{{ xbox_deals.deal_1.product.meta_title }}"> 
+                    <div class="cards__card">
+                        <div class="card__upper flexCenter">{{ xbox_deals.deal_1.product.title }}</div>
+                        <div class="card__lower flexCenter">
+                            <div class="lower__div">
+                                <div class="lower__img flexCenter">
+                                    <img src="{{ xbox_deals.deal_1.image.url }}" alt="Deal 1 Image">
+                                </div>
+                                <div class="lower__content flexCenter">
+                                    <div class="content__price">{{ xbox_deals.deal_1.product.price }}</div>
+                                    <div class="content__text">{{ xbox_deals.deal_1.description }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+               <a href="/detail/{{ xbox_deals.deal_2.product.meta_title }}">
+                    <div class="cards__card">
+                        <div class="card__upper flexCenter">{{ xbox_deals.deal_2.product.title }}</div>
+                        <div class="card__lower flexCenter">
+                            <div class="lower__div">
+                                <div class="lower__img flexCenter">
+                                    <img src="{{ xbox_deals.deal_2.image.url }}" alt="Deal 2 Image">
+                                </div>
+                                <div class="lower__content flexCenter">
+                                    <div class="content__price">{{ xbox_deals.deal_2.product.price }}</div>
+                                    <div class="content__text">{{ xbox_deals.deal_2.description }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>-->
+        <div class="xbox__layer2 xbox__layer">
+            <div class="layer2__cards flexCenter">
+                
+                {% for product in nintendo_deals %}
+                    <a href="/detail/{{ product.meta_title }}">
+                        <div class="cards__card">
+                            <div class="card__upper flexCenter">{{ product.title }}</div>
+                            <div class="card__lower flexCenter">
+                                <div class="lower__div">
+                                    <div class="lower__img flexCenter">
+                                        <img src="{{ product.deal_image.url }}" alt="Deal 1 Image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>

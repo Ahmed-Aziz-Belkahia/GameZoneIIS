@@ -1,0 +1,122 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block content %}
+  
+  <section class="inner_page_breadcrumb">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="breadcrumb_content">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a>Blog Posts</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	<section class="blog_post_container pt30 pb80">
+		<div class="container">
+      <div class="row">
+        <div class="col-lg-6 m-auto">
+          <div class="main-title text-center">
+            
+            {% if query == "" or query == None %}
+            <h2 class="title">Trending Posts 🔥</h2>
+            {% else %}
+            <h2 class="title">Showing Results for "{{query}}"</h2>
+            {% endif %}
+                
+          </div>
+        </div>
+      </div>
+			<div class="row mt50">
+        <div class="col-lg-4 col-xl-3">
+          <div class="sidebar_search_widget mb30">
+            <form action="" method="GET">
+                <div class="blog_search_widget">
+                    <div class="input-group">
+                      <input name="q" type="text" class="form-control" placeholder="Search Articles..." aria-label="Recipient's username">
+                      <button style="border: 1px solid rgba(128, 128, 128, 0.247); background: none;"><i class="fas fa-search"></i></button>
+                    </div> 
+                  </div>
+            </form>
+          </div>
+          <div class="terms_condition_widget">
+            <h4 class="title">Categories</h4>
+            <div class="widget_list">
+              <ul class="list_details">
+                {% for c in categories %}
+                    <li><a href="{% url 'blog:category_detail' c.slug %}">{{c.title}}</a></li>
+                {% endfor %}
+                
+              </ul>
+            </div>
+          </div>
+          <div class="sidebar_feature_listing">
+            <h4 class="title">Featured Posts</h4>
+            {% for p in featured_blog %}
+            <a href="{% url 'blog:blog-detail' p.pid %}">
+            <div class="d-flex shadow p-2 mb-3 mt-1" style="border-radius: 8px;">
+              <div class="flex-shrink-0">
+                <img class="align-self-start mr-3" src="{{p.image.url}}" style="width: 40px; height: 40px; object-fit: cover;" alt="s1.jpg">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h5 class="post_title">{{p.title|truncatechars:27}}</a></h5>
+                <a href="{% url 'blog:blog-detail' p.pid %}">{{p.date|date:"d M, Y"}}
+              </div>
+            </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+				<div class="col-lg-8 col-xl-9">
+          <div class="row">
+            {% for p in blog %}
+            <div class="col-md-6 col-xl-4">
+              <div class="for_blog">
+                <div class="thumb">
+                  <img class="img-whp" src="{{p.image.url}}" style="width: 100%; height: 240px; object-fit: cover;" alt="{{p.title}}">
+                </div>
+                <div class="details">
+                  <div class="tc_content">
+                    <span class="subtitle">{{p.category.title}}</span>
+                    <h4 class="title"><a href="{% url 'blog:blog-detail' p.pid %}">{{p.title|truncatechars:60}}</a></h4>
+                    <span class="post_date">{{p.date|date:"d M, Y"}}</span> <br>
+                    <a href="{% url 'blog:blog-detail' p.pid %}" class="purple-btn btn mt-3">Read More</a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mbp_pagination mt30 text-center">
+                <ul class="page_navigation">
+                  {% if blog.has_previous %}
+                    <li class="page-item">
+                    <a class="page-link" href="{% url 'blog:blog-list' %}?page={{blog.previous_page_number}}" tabindex="-1" aria-disabled="true"> <span class="fas fa-angle-left"></span></a>
+                    </li>
+                {% endif %}
+                
+                {% if blog.has_next %}
+                    <li class="page-item">
+                    <a class="page-link" href="{% url 'blog:blog-list' %}?page={{blog.next_page_number}}"><span class="fas fa-angle-right"></span></a>
+                    </li>
+                {% endif %}
+                </ul>
+                <p class="mt20 pagination_page_count text-center">{{blog_count.count}} Article(s) Found</p>
+              </div>
+            </div>
+          </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+    {% endblock content %}

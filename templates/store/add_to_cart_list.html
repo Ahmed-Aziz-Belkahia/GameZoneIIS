@@ -1,0 +1,24 @@
+<input type="hidden" class="product-tax-fee-{{ p.id }}" value="{{ new_rate_|floatformat:2 }}" />
+<input type="hidden" class="product-processing-fee-{{ p.id }}" value="{{ service_fee_rate_ }}" />
+<input type="hidden" class="product-vendor-{{ p.id }}" value="{{ p.vendor.id }}" />
+<input type="hidden" class="product-vendor-name-{{ p.id }}" value="{{ p.vendor.shop_name }}" />
+<input type="hidden" class="product-brand-{{ p.id }}" value="{{ p.brand }}" />
+
+<input type="hidden" class="product-types_choices-{{ p.id }}" value="here the json of selected choices" />
+
+
+
+<input type="hidden" class="product-gz_coins-{{ p.id }}" value="{{ p.gz_coins }}" />
+<input type="hidden" class="product-shipping_amount-{{ p.id }}" value="{{ p.shipping_amount }}" />
+<input type="hidden" class="product-quantity-{{ p.id }}" value="1" id="product-quantity" class="w-25 mb-10 product-quantity-{{ p.id }}" />
+<input type="hidden" class="product-price-{{ p.id }}" value="{{ p.price }}" />
+<input type="hidden" class="product-pid-{{ p.id }}" value="{{ p.pid }}" />
+<input type="hidden" class="product-image-{{ p.id }}" value="{{ p.image.url }}" />
+<input type="hidden" class="product-id-{{ p.id }}" value="{{ p.id }}" />
+<input type="hidden" class="product-title-{{ p.id }}" value="{{ p.title }}" />
+<input type="hidden" class="product-meta_title-{{ p.id }}" value="{{ p.meta_title }}" />
+<input type="hidden" class="product-slug-{{ p.id }}" value="{{ p.slug }}" />                      
+<input type="hidden" class="product-vendor-slug-{{ p.id }}" value="{{ p.vendor.slug }}" />
+
+<input type="hidden" class="product-stock-qty-{{ p.id }}" value="{{ p.stock_qty }}" />
+<input type="hidden" class="product-in-stock-{{ p.id }}" value="{{ p.in_stock }}" />

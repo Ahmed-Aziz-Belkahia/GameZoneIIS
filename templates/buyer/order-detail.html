@@ -1,0 +1,144 @@
+{% extends "partials/base.html" %} {% load static %} 
+{% block title %}
+  Order Detail
+{% endblock title %}
+{% block content %}
+<div class="body_content_wrapper position-relative">
+  <!-- Inner Page Breadcrumb -->
+  <section class="shop-cart pt30">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="order_complete_message text-center">
+            <div class="icon bgc-thm1">
+              <span class="fa fa-shopping-cart color-white"></span>
+            </div>
+            <h2 class="title">Order ID: #{{ order.oid }}</h2>
+            {% if order.payment_status == "paid" %}
+            <p class="para">
+              <a href="" style="border-bottom: 1px dashed"
+                >View Order Invoice</a
+              >
+            </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-8 offset-xl-2">
+          <div class="shop_order_box mt25">
+            <div class="order_list_raw text-center">
+              <ul>
+                <li class="list-inline-item">
+                  <p>Order ID</p>
+                  <h5>{{order.oid}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Date</p>
+                  <h5>{{order.date}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Total</p>
+                  <h5>${{order.total}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Payment Method</p>
+                  <h5>{{order.payment_method}}</h5>
+                </li>
+              </ul>
+            </div>
+            <div class="order_details">
+              <h4 class="title mb25">Order Details</h4>
+              <div class="od_content">
+                <ul>
+                  <li class="subtitle bb1 mb15">
+                    <p>Product <span class="float-end">Subtotal</span></p>
+                  </li>
+                  {% for p in products %}
+                  <li>
+                    <p class="product_name_qnt">
+                      {{p.product|truncatechars:27}}
+                      <span class="float-end"
+                        >{{ cs }}{{p.price}} * {{ p.qty }} =
+                        <b>{{ p.total }}</b></span
+                      >
+                    </p>
+                  </li>
+                  {% empty %}
+                  <h6>No Products...</h6>
+                  {% endfor %}
+
+                  <li class="subtitle bt1 bb1 mb10 mt15 pt10">
+                    <p>
+                      Sub Total
+                      <span class="float-end">{{ cs }}{{ order.price }}</span>
+                    </p>
+                  </li>
+                  <li class="subtitle bb1 mb10">
+                    <p>
+                      Shipping
+                      <span class="float-end free_shipping"
+                        >{{order.shipping}}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle bb1 mb10">
+                    <p>
+                      VAT
+                      <span class="float-end totals"
+                        >{{ cs }}{{ order.vat }}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle bb1 mb10">
+                    <p>
+                      Payment Status
+                      <span class="float-end fwn_bd_color"
+                        >{{order.payment_status|title}}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle bb1 mb10">
+                    <p>
+                      Payment Status
+                      <span class="float-end fwn_bd_color"
+                        >{{order.payment_method}}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Discount
+                      <span class="float-end totals"
+                        >-{{ cs }}{{ order.saved }}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Total
+                      <span class="float-end totals"
+                        >{{ cs }}{{ order.total }}</span
+                      >
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            {% if order.payment_status == "paid" %}
+            <a
+            href="{% url 'core:cancel_order' order.oid %}"
+            class="btn btn-danger mt-4"
+            >Want to Cancel Order?</a
+          >
+            {% endif %}
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock content %}

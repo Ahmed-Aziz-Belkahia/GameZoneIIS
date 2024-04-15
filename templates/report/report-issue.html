@@ -1,0 +1,129 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block content %}
+    <!-- Inner Page Breadcrumb -->
+    <section class="inner_page_breadcrumb">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="breadcrumb_content">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Account</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">Report An Issue</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Contact -->
+    <section class="our-contact pt55 pb30">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="contact_page_content">
+              <div class="main-title">
+                <h2 class="mtitle">Report an issue <br class="d-none d-md-block"> <span style="color: red;">NOW!</span></h2>
+                <p>You can also talk to one of our agent concerning any issue you are facing <br class="d-none d-md-block"></p>
+              </div>
+              <div class="contact_icon_box mt30">
+                <div class="contact_iconbox d-flex mb30">
+                  <div class="icon"><span class="fas fa-phone"></span></div>
+                  <div class="details ms-4">
+                    <h4 class="title">{{support_details.working_days}}: {{support_details.open_time}} - {{ support_details.closing_time }}</h4>
+                    <a href="#">{{support_details.phone}}</a>
+                  </div>
+                </div>
+                <div class="contact_iconbox d-flex">
+                  <div class="icon"><span class="fas fa-envelope"></span></div>
+                  <div class="details ms-4">
+                    <h4 class="title">Need help with your order or something else?</h4>
+                    <a href="#">{{support_details.email}}</a>
+                  </div>
+                </div>
+              </div>
+              <div class="footer_social_widget mt30 mb30-md">
+                <h4 class="title mb0">Follow us</h4>
+                <div class="social_icon_list mt10">
+                  <ul class="mb20">
+                    <li class="list-inline-item"><a href="{{company.facebook}}"><i class="fab fa-facebook"></i></a></li>
+                    <li class="list-inline-item"><a href="{{company.twitter}}"><i class="fab fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="{{company.instagram}}"><i class="fab fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="{{company.linkedin}}"><i class="fab fa-linkedin-in"></i></a></li>
+                    <li class="list-inline-item"><a href="{{company.youtube}}"><i class="fab fa-youtube"></i></a></li>
+                    <li class="list-inline-item"><a href="{{company.telegram}}"><i class="fab fa-telegram"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form_grid">
+              <div class="wrapper">
+                <form class="contact_form" name="contact_form" action="#" method="POST" novalidate>
+                  {% csrf_token %}
+                  <div class="row">
+                    
+                    
+                    <div class="col-sm-12">
+                      <div class="form-group mb-4">
+                        <label class="form-label">Write your report!</label>
+                        <textarea name="message" id="" cols="30" class="form-control" rows="10"></textarea>
+                      </div>
+                      <div class="form-group mb3 mb-3 mt-3">
+                        <button type="submit" class="btn btn-thm" style="color: aliceblue;">Send Report</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Accordion Item #1
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Accordion Item #2
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Accordion Item #3
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% include 'addons/footer_benefits.html' %}
+      </div>
+    </section>
+
+{% endblock content %}

@@ -1,0 +1,286 @@
+.main__xbox {
+    width: 100%;
+    /* height: 100vh; */
+    max-height: 1080px;
+    background-color: white;
+}
+
+.main__xbox .xbox__div {
+    width: 100%;
+    height: 100%;
+    padding: 3rem 6rem;
+    flex-flow: column nowrap;
+    background-color: #E80015;
+    gap: 1rem;
+}
+
+.main__xbox .xbox__layer {
+    width: 100%;
+    color: white;
+}
+
+.main__xbox .xbox__layer1 {
+}
+
+.main__xbox .layer1__text {
+    width: 100%;
+    height: 100%;
+    padding: 0 2rem;
+}
+
+.main__xbox .text__title {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.main__xbox .text__slogan {
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.main__xbox .xbox__layer2 {
+    height: 50%;
+}
+
+.main__xbox .layer2__cards {
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
+    padding: 0 2rem;
+}
+
+.main__xbox .cards__card {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    transition: all .5s ease-in-out;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    flex-flow: column nowrap;
+    overflow: hidden;
+    box-shadow: 0 1px 6px 0 rgba(0,0,0,.15) !important;
+}
+
+.main__xbox .card__upper {
+    width: 100%;
+    /* height: 15%; */
+    background-color: white;
+    z-index: 1;
+    font-weight: 700;
+    color: black;
+    padding: 1rem;
+}
+
+.main__xbox .card__lower {
+    width: 100%;
+    height: 100%;
+    background-color: var(--MP-C);
+}
+
+.main__xbox .lower__div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.main__xbox .lower__img {
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.main__xbox .lower__img img {
+    z-index: 100;
+    pointer-events: none;
+    width: 100%;
+    height: auto;
+    transition: all .5s ease-in-out;
+    z-index: 1;
+}
+
+
+
+.main__xbox .lower__content {
+    flex-flow: column;
+    width: 60%;
+    height: 400px;
+    position: absolute;
+    transition: .5s;
+    transform: translate(-360px, -383px);
+    transform-style: preserve-3d;
+    opacity: 1;
+}
+@media screen and (min-width: 1440px) {
+/*     .main__xbox{
+        max-width: 1920px;
+
+    } */
+    
+}
+
+
+
+
+
+
+.main__xbox .xbox__layer3 {
+    padding: 1rem 2rem;
+    height: 20%;
+}
+
+.main__xbox .layer__CTA {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.main__xbox .layerCTA__div {
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.main__xbox .cards__card:hover {
+    -webkit-box-shadow: 0 9px 22px 20px rgba(0,0,0,.2) !important
+}
+.main__xbox .cards__card:hover .card__upper{
+    color: var(--MS-C);
+}
+
+.main__xbox .layerCTA__img {
+    width: 100%;
+    height: 100%;
+}
+@media only screen and (max-width: 1824px) {
+
+}
+@media screen and (max-width: 1024px) {
+    .main__xbox{
+        max-height: 100%;
+    }
+    .main__xbox .xbox__div{
+        padding: 1rem 0;
+    }
+    .main__xbox{
+        max-height: 100%;
+    }
+    .main__xbox .cards__card {
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        transition: all .5s ease-in-out;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-flow: column nowrap;
+        overflow: hidden;
+    }
+    
+    .main__xbox .card__upper {
+        /* width: 100%; */
+        /* height: 15%; */
+        background-color: white;
+        z-index: 1;
+        font-weight: 700;
+        color: black;
+        width: 100%;
+        padding: 1rem 0;
+    }
+    
+    .main__xbox .card__lower {
+        width: 100%;
+        height: 85%;
+        background-color: var(--MP-C);
+    }
+    
+    .main__xbox .lower__div {
+        display: flex;
+        flex-direction: row-reverse;
+        height: 50%;
+        align-items: center;
+    }
+    
+    .main__xbox .lower__img {
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        margin: 0 auto;
+    }
+    
+    .main__xbox .lower__img img {
+        z-index: 100;
+        pointer-events: none;
+        width: fit-content;
+        height: -webkit-fill-available;
+        transition: all .5s ease-in-out;
+        z-index: 1;
+    }
+    
+    
+    .main__xbox .lower__content {
+        flex-flow: column;
+        width: 100%;
+        height: 100%;
+        /* transition: .5s; */
+        transform: none;
+        transform-style: unset;
+        opacity: 1;
+        position: unset;
+        padding: 1rem 0;
+    }
+    
+    .content__price {
+        font-size: 2rem;
+        color: white;
+        font-weight: 700;
+    }
+    .content__text {
+        font-size: 1.5rem;
+        color: white;
+        font-weight: 400;
+    }
+
+    .layer2__cards{
+        flex-direction: row;
+    }
+    
+}
+@media screen and (max-width: 768px) {
+    .main__xbox .layer2__cards {
+        flex-direction: column;
+    }
+    .main__xbox .card__lower{
+        height: auto;
+    }
+    .main__xbox .lower__div{
+        height: auto;
+    }
+    .main__xbox .lower__img{
+        height: auto;
+    }
+    .main__xbox .lower__img img{
+        height: auto;
+    }
+    .main__xbox .text__title{
+        font-size: 2rem;
+        
+    }
+    .main__xbox .text__slogan{
+        font-size: 1.5rem;
+    }
+}
+@media screen and (max-width: 1440px) {
+    .main__xbox .card__lower, .main__xbox .cards__card{
+        min-height: auto;
+    }
+
+}
+@media screen and (max-width: 375px) {
+    .main__xbox .text__title {
+        font-size: 27px;
+    }
+    .main__xbox .text__title{
+        font-size: 37px;
+    }
+}

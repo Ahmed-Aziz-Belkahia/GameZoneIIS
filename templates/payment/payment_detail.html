@@ -1,0 +1,80 @@
+
+{% extends "partials/base.html" %}
+{% load static %}
+{% block content %}
+<section class="inner_page_breadcrumb">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="breadcrumb_content">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	<!-- Order Tracking -->
+	<section class="our-order-tracking pt0">
+		<div class="container">
+			<div class="row">
+        
+        <div class="col-lg-6 col-xl-5 offset-xl-1">
+          <div class="order_tracking_content">
+            <div class="login_form tracking_page pt100 pt50-lg">
+                <h2 class="title">Choose Payment Method</h2>
+                <input type="email" name="email" id="email" value="{{request.user.email}}">
+                <button id="checkout-button" class="btn btn-track btn-thm w100 mt20">Pay {{ cs }}{{object.total}} Now</button>
+            </div>
+          </div>
+        </div>
+        
+	</section>
+
+<div class="container mt-4">
+
+   
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe('{{ stripe_publishable_key }}');
+    var checkoutButton = document.getElementById('checkout-button');
+
+    checkoutButton.addEventListener('click', function () {
+
+        var email = document.getElementById('email').value;
+        if (email.length == 0) {
+            alert("Please enter your email address.");
+            return;
+        }
+
+        // Create a new Checkout Session using the server-side endpoint you
+        // created in step 3.
+        fetch("{% url 'store:api_checkout_session' id=order.oid %}", {
+            method: 'POST',
+            body: JSON.stringify(
+                { email: email }
+            )
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.sessionId });
+            })
+            .then(function (result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    });
+</script>
+{% endblock content %}

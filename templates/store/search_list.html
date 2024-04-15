@@ -1,0 +1,66 @@
+{% extends "partials/base.html" %}
+ {% load static %} 
+ 
+ {% block title %}
+  Result for {{query}}
+ {% endblock title %}
+  
+ {% block content %}
+<style>
+  ul,
+  li {
+    list-style: none;
+  }
+</style>
+<!-- Listing Grid View -->
+<section class="our-listing pt0">
+  <div class="container">
+    <div class="row mt60">
+      <div class="col-lg-12 col-xl-12 pl50 pl15-md">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-title bb1 pb10">
+              <h2 class="title">Search: "{{query}}"</h2>
+              <h4>We found {{product_count.count}} results for your search.</h4>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row">
+            {% for p in products %}
+            <div class="col-sm-6 col-lg-3 col-xl-3 p0 pl15-520 mb3 mb-3">
+              {% include 'store/product_list.html' %}
+            </div>
+            {% endfor %}
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mbp_pagination mt30 text-center">
+                <ul class="page_navigation">
+                  {% if products.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link"
+                      href="{% url 'store:search' %}?page={{products.previous_page_number}}&q={{query}}" tabindex="-1"
+                      aria-disabled="true">
+                      <span class="fas fa-angle-left"></span></a>
+                  </li>
+                  {% endif %} {% if products.has_next %}
+                  <li class="page-item">
+                    <a class="page-link"
+                      href="{% url 'store:search' %}?page={{products.next_page_number}}&q={{query}}"><span
+                        class="fas fa-angle-right"></span></a>
+                  </li>
+                  {% endif %}
+                </ul>
+                <p class="mt20 pagination_page_count text-center">
+                  Pages {{products.number }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

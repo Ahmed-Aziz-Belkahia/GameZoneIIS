@@ -1,0 +1,108 @@
+{% extends "vendor/vendor-base.html" %} {% load static %} {% block content %}
+<div class="dashboard_content_wrapper">
+  <div class="dashboard dashboard_wrapper pr30 pr0-md">
+    {% include 'vendor/dashboard-nav.html' %}
+
+    <div class="dashboard__main pl0-md">
+      <div class="dashboard__content bgc-gmart-gray">
+        <div class="row pb50">
+          <div class="col-lg-12">
+            <div class="dashboard_title_area">
+              <h2>Product Offers</h2>
+              <!-- <p class="para">You have a total of <b>{{ order.count }}  orders</b></p> -->
+            </div>
+          </div>
+        </div>
+        <div
+          class="row d-block d-sm-flex justify-content-center justify-content-sm-between"
+        >
+          <div class="col-sm-6 col-lg-12">
+            <div class="dashboard_page header_search_widget mb30 mb15-520">
+              <form action="" method="GET">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="q"
+                    placeholder="Search Offers by ID"
+                    aria-label="Recipient's username"
+                  />
+                  <div class="input-group-append">
+                    <button class="btn" type="submit">
+                      <span class="fa fa-search"></span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-xxl-12">
+            <div class="d-flex justify-content-between statistics_funfact">
+              <div class="details">
+                <div class="subtitle1">All Products</div>
+                <div class="title">
+                  {{products.count}}
+                  <span class="badge style1 text-center"></span>
+                </div>
+              </div>
+              <div class="icon text-center mt-4">
+                <i class="bi bi-cart-check-fill"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="application_statics">
+              <h4 class="title pl30 mb30">All Offer Based Product</h4>
+              <div class="account_user_deails dashboard_page">
+                <div class="order_table table-responsive">
+                  <table class="table">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">S/N</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Offers</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for o in products %}
+
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                          <a
+                            href="{% url 'store:product-detail' o.pid %}"
+                            style="border-bottom: 1px dashed black"
+                            >{{o.title|truncatechars:27}}</a
+                          >
+                        </td>
+                        <td>{{o.product_offer.all.count}}</td>
+                        <th scope="row">
+                          <a
+                            href="{% url 'vendor:product_offer_detail' o.pid %}"
+                            class="btn purple-btn"
+                            >View Offer</a
+                          >
+                        </th>
+                      </tr>
+                      {% empty %}
+                      <h4>No Auctioned Product Yet</h4>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

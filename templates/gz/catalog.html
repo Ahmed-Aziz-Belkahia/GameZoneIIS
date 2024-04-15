@@ -1,0 +1,537 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+    {% block title %}<title>Catalog</title>{% endblock title %}
+    <link rel="stylesheet" href="{% static "gz/styles/catalog.css" %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
+    <!-- Include jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <title>GameZone | Catalog</title>
+
+    {% endblock head %}
+
+{% block header %}
+{% include "gz/components/navigation.html" %}
+{% endblock header %}
+
+{% block main %}
+
+<div class="main__catalog flexCenter">
+    <div class="catalog__header">
+        <div class='products-catalog-pattren'>
+            <a href="/catalog?category={{parent_category.id}}">{{parent_category.name}}</a>{% if parent_category %}/{% endif %}
+            {% for subcategory in full_full_path %}
+                <a href="/catalog?subcategory={{ subcategory.1 }}">{{ subcategory.0 }}</a>/
+            {% endfor %}
+        </div>
+        <h1 class="catalog__h1">Catalog</h1>
+        <p class='products-count'>{{products.all.count}} Results</p>
+        <div class="filter__div">
+            <button class="filter__button"><i class="fa-solid fa-filter"></i>Filter</button>
+            <div class="filter_box">
+                <button id='sortButton' class="filter__button sort__button"><i class="fa-solid fa-sort"></i> Sort</button>
+                <div class="dropdown-menu sort-dropdown-menu show" aria-labelledby="sortby-dropdown" style="display:none;">
+                    <span class="sort-by-up-arrow"></span>
+                    <a class="dropdown-item price-low-to-high" data-id="price-low-to-high">Price Low To High</a>
+                    <a class="dropdown-item price-high-to-low" data-id="price-high-to-low">Price High to Low</a>
+                    {% comment %} <a href="{% url "catalog" %}?sort_by=price_high_to_low" class="dropdown-item most-popular" data-id="most-popular">Most Popular</a> {% endcomment %}
+                </div>
+            </div>
+        </div>
+        <form class="catalog__filter" method="post">
+            {% csrf_token %}
+            <!-- Manufacturers -->
+            <div class="catalog_header">
+                <button type="button" class="toggleFilters">
+                    <h3>Filter Menu</h3>
+                    <i class="fa-solid fa-xmark closefilter"></i>
+                </button>
+            </div>
+            <div class="catalog_container">
+                <div class="catalog_header">
+                    <button type="button" class="toggleFilters">
+                        <h3>Manufacturers</h3>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="catalog_filters catalogFilters">
+                    <ul>
+                        <!-- Manufacturer Checkbox Options -->
+                        {% for manufacturer in form.manufacturer.field.queryset %}
+                        <li>
+                            <div class="rating__container">
+                                <input type="checkbox" name="manufacturer" id="manufacturer_{{ manufacturer.id }}" value="{{ manufacturer.id }}">
+                                <label for="manufacturer_{{ manufacturer.id }}">{{ manufacturer.name }}</label>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        
+            <!-- Categories -->
+            <div class="catalog_container">
+                <div class="catalog_header">
+                    <button type="button" class="toggleFilters">
+                        <h3>Categories</h3>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="catalog_filters catalogFilters">
+                    <ul>
+                        <!-- Category Checkbox Options -->
+                        {% for category in form.category.field.queryset %}
+                        <li>
+                            <div class="rating__container">
+                                <input type="checkbox" name="category" id="category_{{ category.id }}" value="{{ category.id }}">
+                                <label for="category_{{ category.id }}">{{ category.name }}</label>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        
+            <!-- Genres -->
+            <div class="catalog_container">
+                <div class="catalog_header">
+                    <button type="button" class="toggleFilters">
+                        <h3>Genres</h3>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="catalog_filters catalogFilters">
+                    <ul>
+                        <!-- Genre Checkbox Options -->
+                        {% for genre in form.genre.field.queryset %}
+                        <li>
+                            <div class="rating__container">
+                                <input type="checkbox" name="genre" id="genre_{{ genre.id }}" value="{{ genre.id }}">
+                                <label for="genre_{{ genre.id }}">{{ genre.name }}</label>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        
+            <!-- Colors -->
+            <div class="catalog_container">
+                <div class="catalog_header">
+                    <button type="button" class="toggleFilters">
+                        <h3>Colors</h3>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="catalog_filters catalogFilters">
+                    <ul>
+                        <!-- Color Checkbox Options -->
+                        {% for color in form.colors.field.queryset %}
+                        <li>
+                            <div class="rating__container">
+                                <input type="checkbox" name="colors" id="color_{{ color.id }}" value="{{ color.id }}">
+                                <label for="color_{{ color.id }}">{{ color.name }}</label>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        
+            <!-- Sizes -->
+            <div class="catalog_container">
+                <div class="catalog_header">
+                    <button type="button" class="toggleFilters">
+                        <h3>Sizes</h3>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="catalog_filters catalogFilters">
+                    <ul>
+                        <!-- Size Checkbox Options -->
+                        {% for size in form.sizes.field.queryset %}
+                        <li>
+                            <div class="rating__container">
+                                <input type="checkbox" name="sizes" id="size_{{ size.id }}" value="{{ size.id }}">
+                                <label for="size_{{ size.id }}">{{ size.name }}</label>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        
+            <!-- Price Range -->
+            <div class="catalog_container">
+                <div class="catalog_header">
+                    <button type="button" class="toggleFilters">
+                        <h3>Price</h3>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="catalog_filters catalogFilters">
+                    <ul>
+                        <li>
+                            <div class="rating__container">
+                                <div class="price-range-slider">
+                                    <p class="range-value">
+                                        <label for="amount">Price Range:</label>
+                                        <input type="text" id="amount" readonly>
+                                    </p>
+                                    <div id="slider-range" class="range-bar"></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+            <!-- Buttons Group -->
+            <div class="buttons-group">
+                <input type="submit" class="done-btn">
+            </div>
+        
+        </form>
+    </div>
+    <div class="catalog__div">
+        
+        <div class="catalog__products">
+
+            <div class="products__div">
+
+            
+                {% for product in products %}
+                <div class="catalog__product product-grid-tile-wrapper" data-position="4" data-list-item-type="Product list">
+                    <div id="product-grid-tile-grid-item" name="tile-render" class="product grid-tile" style="height:100%;">
+                        <div name="product-tile" id="403500" class="product-tile product-detail gme-card gme-card--shadow product-tile-render loaded" data-pid="403500">
+                            <a class="product-tile-link render-tile-link pdp-link" href="{% url 'store:product-detail' meta_title=product.meta_title %}">
+                                <div id="render-tile-image" class="render-tile-image" style="background-image: url({{product.image.url}});" title="Super Smash Bros. Series Sora (Kingdom Hearts) amiibo"></div>
+                                <div id="render-tile-body" class="render-tile-body">
+                                    <div id="render-tile-header" class="render-tile-header">
+                                        <div id="render-tile-name" class="render-tile-name">{{product.title}}</div>
+                                    </div>
+                                    <div class="product-tile-availability">{{product.manufacturer}}</div>
+                                    <div id="render-tile-price" class="render-tile-price">
+                                        <div id="render-base-group" class="render-base-group">
+                                            <div id="render-sale-price" class="render-sale-price">{{product.price}}</div>
+                                            <div id="render-base-price" class="render-base-price"></div>
+                                        </div>
+                                        <div id="render-pro-group" class="render-pro-group">
+                                            <div id="render-pro-price" class="render-pro-price"></div>
+                                        </div>
+                                    </div>
+                                    <div class="render-tile-release-date" style="display: none;"></div>
+                                    <div class="render-tile-bops-copy">
+                                        <div style="margin-top: 10px; font-size: 14px">
+                                            <strong>FREE $25 OFF</strong>
+                                            your online order when you pick up in store. (orders $250+)
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="render-promotion-badge-container"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            </div>
+
+        </div>
+
+</div>
+
+{% endblock main %}
+
+{% block scripts %}
+
+    <script >
+        VanillaTilt.init(document.querySelectorAll(".catalog__product"), {
+            speed: 400,
+            glare: true,
+            "max-glare": 0.05,
+            max: 4,
+          });
+          
+          var catalog__swiper = new Swiper(".catalog__swiper-container", {
+            slidesPerView: 4, // Show 3 slides at a time
+            slidesPerGroup: 4, // Group the slides by 5 for navigation
+            speed: 1500,
+            pagination: {
+              el: ".swiper-pagination", // Use the container element you defined in HTML
+              type: "bullets", // Set pagination type to bullets
+              clickable: true, // Allow clicking on the pagination bullets to navigate
+              bulletClass: "my-bullet-class", // Set custom class name for bullets (optional)
+              bulletActiveClass: "my-bullet-active-class", // Set custom class name for active bullet (optional)
+              renderBullet: function (index, className) {
+                return '<span class="' + className + '">' + '<h3 class=bullet__h3>' + (index + 1) + '</h3>' + "</span>";
+              },
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+          });
+          
+          minMaxValues = []
+          //-----JS for Price Range slider-----
+          $(function() {
+        
+            $( "#slider-range" ).slider({
+                range: true,
+                min: {{min_price}},
+                max: {{max_price}},
+                values: [ 0, 10000 ],
+                slide: function( event, ui ) {
+                    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+                    // Update minMaxValues array
+                    minMaxValues = [ui.values[0], ui.values[1]]
+                    console.log( minMaxValues);
+                }
+            });
+        
+            // Initialize the amount input field with default values
+            $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+                " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+        });
+
+
+
+
+
+
+
+        
+          
+          
+          const form = document.querySelector(".catalog__filter");
+          const submitButton = form.querySelector(".done-btn");
+          
+          submitButton.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default form submission behavior
+            console.log( minMaxValues, "hggggggggggggggggggggggggggggggggggg" );
+            const formData = new FormData(form);
+            
+            // Add minMaxValues to the FormData
+            formData.append('min_price', parseInt(minMaxValues[0] || 0));
+            formData.append('max_price', parseInt(minMaxValues[1] || 99999));
+        
+            // Log form data for debugging
+            for (const entry of formData.entries()) {
+                console.log(entry);
+            }
+        
+            $.ajax({
+                type: 'POST',
+                url: '/filter/',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                },
+                success: function(response) {
+                    console.log(response.products);
+                    displayFilteredProducts(response.products); // Render filtered products
+                },
+                error: function(error) {
+                    console.error('Error filtering products:', error);
+                }
+            });
+        });
+
+
+
+
+
+
+
+        const sortButtons = document.querySelectorAll(".dropdown-item");
+
+        // Loop through each sort button
+        sortButtons.forEach(function(sortButton) {
+            // Add click event listener to each sort button
+            sortButton.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default form submission behavior
+            
+                // Assuming minMaxValues is defined elsewhere in your code
+                console.log(minMaxValues, "hggggggggggggggggggggggggggggggggggg");
+            
+                const formData = new FormData(form); // Assuming 'form' is defined somewhere
+
+                // Add minMaxValues to the FormData
+                formData.append('min_price', parseInt(minMaxValues[0] || 0));
+                formData.append('max_price', parseInt(minMaxValues[1] || 99999));
+                formData.append('sort_by', sortButton.getAttribute("data-id"));
+            
+                // Log form data for debugging
+                for (const entry of formData.entries()) {
+                    console.log(entry);
+                }
+            
+                $.ajax({
+                    type: 'POST',
+                    url: '/filter/',
+                    data: formData, // No need to wrap formData in an object
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                    },
+                    success: function(response) {
+                        console.log(response.products);
+                        displayFilteredProducts(response.products); // Render filtered products
+                    },
+                    error: function(error) {
+                        console.error('Error filtering products:', error);
+                    }
+                });
+            });
+        });
+          
+          function displayFilteredProducts(products) {
+            productsCountP = document.querySelector(".products-count").innerText = `${products.length} Results`
+
+            const productsContainer = document.querySelector('.products__div');
+            productsContainer.innerHTML = ''; // Clear existing products
+        
+            products.forEach(product => {
+                // Create HTML elements for each product
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('catalog__product', 'product-grid-tile-wrapper');
+        
+                // Add product details
+                productDiv.innerHTML = `
+                <div id="product-grid-tile-grid-item" name="tile-render" class="product grid-tile" style="height:100%;">
+                    <div name="product-tile" id="403500" class="product-tile product-detail gme-card gme-card--shadow product-tile-render loaded" data-pid="403500">
+                        <a class="product-tile-link render-tile-link pdp-link" href="/detail/${product.meta_title}">
+                            <div id="render-tile-image" class="render-tile-image" style="background-image: url(${product.image_url});" title="Super Smash Bros. Series Sora (Kingdom Hearts) amiibo"></div>
+                            <div id="render-tile-body" class="render-tile-body">
+                                <div id="render-tile-header" class="render-tile-header">
+                                    <div id="render-tile-name" class="render-tile-name">${product.title}</div>
+                                </div>
+                                <div class="product-tile-availability">${product.manufacturer}</div>
+                                <div id="render-tile-price" class="render-tile-price">
+                                    <div id="render-base-group" class="render-base-group">
+                                        <div id="render-sale-price" class="render-sale-price">${product.price}</div>
+                                        <div id="render-base-price" class="render-base-price"></div>
+                                    </div>
+                                    <div id="render-pro-group" class="render-pro-group">
+                                        <div id="render-pro-price" class="render-pro-price"></div>
+                                    </div>
+                                </div>
+                                <div class="render-tile-release-date" style="display: none;"></div>
+                                <div class="render-tile-bops-copy">
+                                    <div style="margin-top: 10px; font-size: 14px">
+                                        <strong>FREE $25 OFF</strong>
+                                        your online order when you pick up in store. (orders $250+)
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="render-promotion-badge-container"></div>
+                    </div>
+                </div>`;
+        
+                productsContainer.appendChild(productDiv); // Append product to container
+            });
+        
+            VanillaTilt.init(document.querySelectorAll(".catalog__product"), {
+                speed: 400,
+                glare: true,
+                "max-glare": 0.05,
+                max: 4,
+            });
+        }
+          
+          
+          function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+          }
+          
+        
+          document.addEventListener("DOMContentLoaded", function() {
+            const filters = document.querySelector(".filter__button"); // Added "." for class selector
+            const menu = document.querySelector(".catalog__filter"); // Added "." for class selector
+            const body = document.querySelector("body");
+            const closefilter = document.querySelector(".closefilter");
+
+            // Toggle menu when button is clicked
+            filters.addEventListener("click", function() {
+                menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+                body.style.overflowY = menu.style.display === "none" ? "auto" : "hidden";
+            });
+        
+            closefilter.addEventListener("click", function() {
+                menu.style.display = "none";
+                body.style.overflowY = "auto";
+            });
+
+            // Close menu when clicking outside of it
+            document.addEventListener("click", function(event) {
+                if (!menu.contains(event.target) && !filters.contains(event.target)) {
+                    menu.style.display = "none";
+                    body.style.overflowY = "auto";
+                }
+            });
+        });
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            var toggleButtons = document.querySelectorAll(".toggleFilters");
+        
+            toggleButtons.forEach(function(toggleButton) {
+                toggleButton.addEventListener("click", function() {
+                    var filtersDiv = toggleButton.parentElement.nextElementSibling;
+                    filtersDiv.classList.toggle("show");
+                    toggleButton.querySelector("i").classList.toggle("fa-plus");
+                    toggleButton.querySelector("i").classList.toggle("fa-minus");
+                });
+            });
+        });
+        
+        
+        
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const button = document.querySelector(".sort__button");
+            const menu = document.querySelector(".sort-dropdown-menu");
+        
+            // Toggle menu when button is clicked
+            button.addEventListener("click", function () {
+                menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+            });
+        
+            // Close menu when clicking outside of it
+            document.addEventListener("click", function (event) {
+                if (!menu.contains(event.target) && !button.contains(event.target)) {
+                    menu.style.display = "none";
+                }
+            });
+        });
+    
+    </script>
+
+    <script src="{% static "js\custom.js" %}"></script>
+    
+{% endblock scripts %}
+
+{% block footer %}
+    {% include "gz/components/footer.html" %}
+{% endblock footer %}

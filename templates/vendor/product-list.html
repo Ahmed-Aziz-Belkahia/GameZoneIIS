@@ -1,0 +1,84 @@
+<div class="order_table table-responsive">
+  <table class="table">
+    <thead class="table-light">
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Shipping Amount</th>
+        <th scope="col">Stock Qty</th>
+        <th scope="col">Status</th>
+        <th scope="col">Orders</th>
+        <th scope="col">Type</th>
+        <th scope="col">Views</th>
+        <th scope="col">Date</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in products %}
+      <tr>
+        <th scope="row" style="width: 50px">
+          <img
+            src="{{ p.image.url }}"
+            style="
+              width: 30px;
+              height: 30px;
+              object-fit: cover;
+              border-radius: 7px;
+            "
+            alt=""
+          />
+        </th>
+        <th scope="row">
+          <a href="{% url 'store:product-detail' p.slug %}"
+            >{{ p.title|truncatechars:20 }}</a
+          >
+        </th>
+        <td>{{ cs }}{{p.price|floatformat:2}}</td>
+        <td>{{ cs }}{{p.shipping_amount|floatformat:2}}</td>
+        <td>{{ p.stock_qty }}</td>
+
+        {% if p.status == "published" %}
+        <td class="status"><span class="style4">{{p.status|title}}</span></td>
+        {% endif %} {% if p.status == "draft" %}
+        <td class="status"><span class="style1">{{p.status|title}}</span></td>
+        {% endif %} {% if p.status == "disabled" %}
+        <td class="status"><span class="style">{{p.status|title}}</span></td>
+        {% endif %} {% if p.status == "in_review" %}
+        <td class="status">
+          <span class="style3">{{p.status.title|title}}</span>
+        </td>
+        {% endif %} {% if p.status == "rejected" %}
+        <td class="status"><span class="style2">{{p.status|title}}</span></td>
+        {% endif %}
+
+        <td>{{ p.order_count }}</td>
+        <td>{{p.type.title|title}}</td>
+        <td class="action"><span>{{p.views}}</span></td>
+        <td class="action"><span>{{p.date|date:"d M, Y"}}</span></td>
+        <td class="editing_list align-middle">
+          <ul>
+            <li class="list-inline-item mb-1">
+              <a
+                href="{% url 'vendor:update_product' p.id %}"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Edit"
+                data-bs-original-title="View"
+                aria-label="View"
+                ><span class="fas fa-edit"></span
+              ></a>
+              <!-- <a href="{% url 'vendor:edit-product' p.pid %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="View" aria-label="View"><span class="fas fa-edit"></span></a> -->
+            </li>
+          </ul>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <li>No Products</li>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

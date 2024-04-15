@@ -1,0 +1,61 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "gz/styles/login.css" %}">
+    {% block title%}
+    <title>GameZone | Login</title>
+    {% endblock title%}
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+{% endblock head %}
+
+
+
+{% block main %}
+
+<section>
+    <div class="logo">
+        <img src="{% static "gz/assets/logo/logo_white.png" %}" alt="">
+    </div>
+    <div class="form-box">
+                <!-- Error message container -->
+                <div id="errorMessage"></div>
+        <div class="form-value">
+            <form method="post">
+                {% csrf_token %}
+                {{ signUpForm.non_field_errors }}
+                <h2>Login</h2>
+                <div class="inputbox">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    {{logInForm.username}}
+                    <label for="">Username</label>
+                </div>
+                <div class="inputbox">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    {{logInForm.password}}
+                    <label for="">Password</label>
+                </div>
+                <div class="forget">
+                    <a href="{% url "reset_password" %}">Forget Password</a>
+                  
+                </div>
+                <button id='signinSubmit'>Log in</button>
+                <div class="register">
+                    <p>Don't have a account <a href="{% url "register" %}">Register</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+{% endblock main %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+
+    <script src="{% static "gz/js/login.js" %}"></script>
+{% endblock scripts %}

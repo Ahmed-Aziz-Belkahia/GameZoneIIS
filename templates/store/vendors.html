@@ -1,0 +1,109 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block title %}
+  Vendors
+{% endblock title %}
+  
+{% block content %}
+
+<style>
+  ul,li{
+     list-style: none;
+  }
+</style>
+    
+    
+    <!-- Inner Page Breadcrumb -->
+    <section class="inner_page_breadcrumb">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="breadcrumb_content">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">Vendors</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  	<!-- Main Blog Post Content -->
+  	<section class="blog_post_container pt30 pb80">
+  		<div class="container">
+        <div class="row">
+          <div class="col-lg-6 m-auto">
+            <div class="main-title text-center">
+              <h2 class="title">Vendors</h2>
+            </div>
+            <form action="" class="form-group d-flex" method="GET">
+                <input name="q" type="text" class="form-control" placeholder="Search Vendors with Shop Names and Email Address...">
+                <button style="border: 1px solid rgba(0, 0, 0, 0.199); background: none; border-radius: 6px;" ><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+  			<div class="row mt50">
+          
+  				<div class="col-lg-12 col-xl-12 pl50 pl15-lg">
+                    <div class="row">
+                    {% for v in vendors %}
+                        <div class="col-md-6 col-xl-3">
+                        <div class="vendor_grid">
+                        <div class="thumb">
+                            <img src="{{v.shop_image.url}}" style="width: 100%; height: 250px; object-fit: cover;" alt="Vendor 1 Image">
+                        </div>
+                        <div class="details">
+                            <h5 class="title">{{v.shop_name}}</h5>
+                            <div class="flex-grow-1 mb15">
+                            <div class="d-block d-block">
+                                <h6 class="sub_title mb0">{{v.rating_count}} seller review(s)</h6> <br>
+                                <h6 class="sub_title mt0">{{v.product_count}} Products</h6>
+                            </div>
+                            </div>
+                            <div class="vendor_address mb20">
+                            <ul class="mb0">
+                                
+                                {% if v.show_email_address_in_store == True %}
+                                    <li><a href="#">{{v.shop_email}}</a></li>
+                                {% endif %}
+                                
+                                    
+                            </ul>
+                            </div>
+                            <div class="d-flex">
+                              <a class="btn btn-whifte bdr_thmd purple-btn ml mr-2 ms-2 me-2 w-75" href="{% url 'vendor:vendor_shop_view_page' v.vid %}">Visit Store</a>
+                            <a class="btn btn-success bdr_thmd purpdle-btn mt-3r w-25" href="{% url 'core:inbox-detail' v.user.username %}"><i class="bi bi-chat-right-dots-fill"></i></a>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    {% endfor %}
+                    
+                    </div>
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="mbp_pagination text-center">
+                        <ul class="page_navigation">
+                            {% if vendors.has_previous %}
+                            <li class="page-item">
+                            <a class="page-link" href="?page={{vendors.previous_page_number}}" tabindex="-1" aria-disabled="true"> <span class="fas fa-angle-left"></span></a>
+                            </li>
+                        {% endif %}
+                        
+                        {% if vendors.has_next %}
+                            <li class="page-item">
+                            <a class="page-link" href="?page={{vendors.next_page_number}}"><span class="fas fa-angle-right"></span></a>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    <p class="mt20 pagination_page_count text-center">{{vendors}} -- {{vendors_count}} properties found</p>
+                    </div>
+                </div>
+                </div>
+  				</div>
+  			</div>
+  		</div>
+  	</section>
+{% endblock content %}

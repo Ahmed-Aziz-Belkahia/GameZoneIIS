@@ -1,0 +1,45 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "gz/styles/add_address.css" %}">
+    {% block title %}<title>GameZone - add address</title>{% endblock title %}
+    
+{% endblock head %}
+
+
+{% block header %}
+{% endblock header %}
+
+
+
+{% block main %}
+<div class="container">
+    <h2>Add Address</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock main %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+
+{% endblock scripts %}

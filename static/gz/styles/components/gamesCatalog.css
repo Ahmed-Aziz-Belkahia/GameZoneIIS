@@ -1,0 +1,89 @@
+.main__gamesCatalog {
+    width: 100%;
+    height: 40vh;
+    /* --------------------- */
+   margin: 2rem 0;
+}
+
+.main__gamesCatalog .gamesCatalog__div {
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    justify-content: space-around;
+    flex-flow: column nowrap;
+    
+}
+
+
+.gamesCatalog__text {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.gamesCatalog__items {
+    gap: 2rem;
+}
+
+.main__gamesCatalog .gamesCatalog__item {
+    background-color: white;
+    width: 200px;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.main__gamesCatalog .gamesCatalog__item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box-shadow effect */
+}
+
+.main__gamesCatalog .item__div {
+    width: 100%;
+    height: 100%;
+    flex-flow: column nowrap;
+}
+
+.main__gamesCatalog .item__img {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+.main__gamesCatalog .item__info {
+    flex-flow: column nowrap;
+    width: 100%;
+    height: 20%;
+    margin: 1rem;
+    justify-content: space-between;
+}
+
+.main__gamesCatalog .info__price {
+    height: 100%;
+    font-weight: 800;
+}
+.main__gamesCatalog .info__price span {
+    font-weight: 600;
+    font-size: .75rem;
+    padding-left: .1rem;
+}
+
+.main__gamesCatalog .info__title {
+    font-weight: 700;
+    text-align: center;
+}
+@media only screen and (max-width: 1824px) {
+    .main__gamesCatalog{
+        height: 100%;
+    }
+    .main__gamesCatalog .gamesCatalog__div{
+        gap: 20px;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .gamesCatalog__items{
+        flex-wrap: wrap;
+    }
+    
+}

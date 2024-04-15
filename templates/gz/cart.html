@@ -1,0 +1,198 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "gz/styles/cart.css" %}">
+<title>GameZone | Cart</title>
+{% endblock head %}
+
+{% block title %}
+<title>Cart</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'gz/components/navigation.html' %}
+{% endblock header %}
+
+{% block main %}
+<div class="main__cart">
+    <div class="cart__div">
+        {% if cart %}
+            <ul id="cart__list">
+                {% for item in items %}
+                    <li class="list__item">
+
+                        <div class="item__img item__col">
+                            <img class="cart-item-image" src="{{ item.product.image.url }}" alt="">
+                        </div>
+
+                        <div class='item__title item__col'>
+                            <div class="title__title">{{ item.product.title }}</div>
+                        </div>
+
+                        <div class="item__shipping item__col">
+                            <div>
+                                <input type="checkbox" id="type1" name="type1" value="true" data-shipping-cost="7">
+                                <label for="type1">Deliver to home</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="type2" name="type2" value="false" data-shipping-cost="0">
+                                <label for="type2">pick it from store</label>
+                            </div>
+                        </div>
+
+                        <div class="item__quantity item__col">
+                            <div class="quantity__div">
+                                <div class="value-button" id="decrease" data-item-id="{{ item.id }}" value="Decrease Value">-</div>
+                                <input type="number" id="number{{ item.id }}" value="{{item.quantity}}" />
+                                <div class="value-button" id="increase" data-item-id="{{ item.id }}" value="Increase Value">+</div>
+                            </div>
+                            
+                            
+                        </div>
+
+                        <div class="item__price item__col">
+                            <span class="price__price">{{ item.product.price }} TND</span>
+                        </div>
+                        
+                        <!-- Add dataset attribute on delete button -->
+                        <div class="item__delete">
+                            <button class="delete-item-btn delete__delete" data-item-id="{{ item.id }}">X</button>
+                        </div>
+                        
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="cart-buttons">
+                <a href="{% url 'catalog' %}" class="back-to-shopping-btn">Back to Shopping</a>
+                <a href="{% url 'checkout' %}" class="checkout-btn">Checkout</a>
+            </div>
+        {% else %}
+        {% endif %}
+    </div>
+</div>
+{% endblock main %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Uncheck all other checkboxes
+                checkboxes.forEach(cb => {
+                    if (cb !== this) {
+                        cb.checked = false;
+                    }
+                });
+            });
+        });
+
+
+
+
+
+
+
+
+        increaseButtons = document.querySelectorAll('#increase')
+        increaseButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.dataset.itemId;
+                increaseValue(itemId);
+            });
+        });
+
+        decreaseButtons = document.querySelectorAll('#decrease')
+        decreaseButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.dataset.itemId;
+                decreaseValue(itemId);
+            });
+        });
+        
+        function UpdateQuantity(itemId, value) {
+            $.ajax({
+                type: 'POST',
+                url: '/update-cart-item-quantity/',
+                data: {itemId: itemId, quantity: value}, // Pass the item ID in the request data
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                },
+                success: function (response) {
+                    console.log(response);                    
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error deleting cart item:', error);
+                }
+            });
+        }
+
+        function increaseValue(itemId) {
+          var value = parseInt(document.getElementById(`number${itemId}`).value, 10);
+          value = isNaN(value) ? 0 : value;
+          value++;
+          UpdateQuantity(itemId, value)
+          document.getElementById(`number${itemId}`).value = value;
+        }
+        
+        function decreaseValue(itemId) {
+            var value = parseInt(document.getElementById(`number${itemId}`).value, 10);
+            console.log('Decreasing value:', value);
+            value = isNaN(value) ? 0 : value;
+            value = Math.max(1, value - 1); // Ensure minimum value is 1
+            UpdateQuantity(itemId, value)
+            document.getElementById(`number${itemId}`).value = value;
+        }
+
+        // Add event listeners to all delete buttons
+        const deleteButtons = document.querySelectorAll('.delete-item-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = button.dataset.itemId; // Access dataset attribute of the button
+    
+                // Send a POST request to delete the cart item
+                $.ajax({
+                    type: 'POST',
+                    url: '/delete-cart-item/',
+                    data: { itemId: itemId }, // Pass the item ID in the request data
+                    beforeSend: function (xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        // Remove the cart item from the HTML on success
+                        const cartItem = button.closest('.list__item');
+                        cartItem.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error deleting cart item:', error);
+                    }
+                });
+            });
+        });
+    });
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock scripts %}

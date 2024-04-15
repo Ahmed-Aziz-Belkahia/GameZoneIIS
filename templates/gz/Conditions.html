@@ -1,0 +1,67 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+    {% block title %}<title>GameZone | Conditions Générales de vente</title>{% endblock title %}
+    <link rel="stylesheet" href="{% static "gz/styles/Conditions.css" %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
+    <!-- Include jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    
+
+{% endblock head %}
+
+{% block header %}
+{% include "gz/components/navigation.html" %}
+{% endblock header %}
+
+{% block main %}
+<main class="main">
+    <div class="container " style="margin-top: 0px; margin-bottom: 0px; padding-top: 30px; padding-bottom: 30px;">
+        <h2 class="heading-title">Conditions d'utilisation</h2>
+    </div>
+    <div class="container " style="margin-top: 0px; margin-bottom: 0px; padding-top: 30px; padding-bottom: 30px;">
+        <div class="html-content">
+            <p><b>Introduction</b></p>
+            <p>Les présentes conditions d'utilisation régissent l'accès et l'utilisation de notre site ecommerce. En utilisant notre site, vous acceptez ces conditions dans leur intégralité. Si vous n'êtes pas d'accord avec ces conditions, vous ne devez pas utiliser notre site.</p>
+            <p><br></p>
+            <p><b>Utilisation du site</b></p>
+            <p>Vous êtes autorisé à utiliser notre site pour votre usage personnel et non commercial. Vous ne pouvez pas utiliser notre site à des fins illégales ou pour causer un préjudice à une personne ou une entreprise. Vous ne pouvez pas copier, modifier ou distribuer le contenu de notre site sans notre autorisation écrite.</p>
+            <p><br></p>
+            <p><b>Contenu du site</b></p>
+            <p>Nous nous réservons le droit de modifier ou de supprimer tout contenu de notre site à tout moment, sans préavis. Nous ne garantissons pas l'exactitude, l'exhaustivité ou la pertinence de tout contenu présent sur notre site. Nous déclinons toute responsabilité pour toute perte ou tout dommage subi en raison de l'utilisation de notre site.</p>
+            <p><br></p>
+            <p><b>Propriété intellectuelle</b></p>
+            <p>Notre site et son contenu sont protégés par les lois sur la propriété intellectuelle et les marques de commerce. Toute reproduction, distribution ou modification du contenu de notre site sans notre autorisation écrite est interdite.</p>
+            <p><br></p>
+            <p><b>Liens vers d'autres sites</b></p>
+            <p>Notre site peut contenir des liens vers d'autres sites web. Nous ne sommes pas responsables du contenu de ces sites ou des dommages qui pourraient résulter de leur utilisation.</p>
+            <p><br></p>
+            <p><b>Limitation de responsabilité</b></p>
+            <p>Nous déclinons toute responsabilité pour toute perte ou tout dommage résultant de l'utilisation de notre site ou de son contenu. Nous ne sommes pas responsables des erreurs ou des omissions dans le contenu de notre site. Nous ne garantissons pas que notre site sera exempt d'interruptions, d'erreurs ou de virus.</p>
+            <p><br></p>
+            <p><b>Modification des conditions d'utilisation</b></p>
+            <p>Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Votre utilisation continue de notre site après la modification de ces conditions constitue votre acceptation de ces modifications.</p>
+            <p><br></p>
+            <p><b>Loi applicable</b></p>
+            <p>Les présentes conditions d'utilisation sont régies par les lois de la Tunisie. Tout litige découlant de l'utilisation de notre site sera soumis à la juridiction exclusive des tribunaux compétents de la Tunisie.</p>
+        </div>
+    </div>
+</main>
+
+
+{% endblock main %}
+
+{% block scripts %}
+
+    
+{% endblock scripts %}
+
+{% block footer %}
+    {% include "gz/components/footer.html" %}
+{% endblock footer %}

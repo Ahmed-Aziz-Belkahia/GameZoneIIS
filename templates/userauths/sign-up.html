@@ -1,0 +1,388 @@
+
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}
+  Sign Up
+{% endblock title %}
+{% block content %}
+{% load crispy_forms_tags %}
+<!-- {% crispy form %} -->
+
+<style>
+  #id_captcha_1{
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.356),
+  }
+</style>
+
+{% if signup_form == "classic" %}
+<section class="our-log-reg bgc-f5">
+    <div class="container">
+      {% if form.errors %}
+    <div class="alert alert-danger">
+      <strong>{{form.errors}}</strong>
+    </div>
+    {% endif %}
+        <div class="row">
+    <div class="col-lg-6 col-xl-5 col-xxl-4 m-auto">
+      <div class="log_reg_form mt70-992">
+        <h2 class="title">Create an account</h2>
+        <div class="login_form">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="mb-2 mr-sm-2">
+              <label class="form-label">Full Name</label>
+              {{form.full_name}}
+            </div>
+            <div class="mb-2 mr-sm-2">
+              <label class="form-label">Email address</label>
+              {{form.email}}
+            </div>
+            <div class="mb-2 mr-sm-2">
+                <label class="form-label">Username</label>
+                {{form.username}}
+              </div>
+            <div class="form-group mb5">
+              <label class="form-label">Password</label>
+              {{form.password1}}
+            </div>
+            <div class="form-group mb5">
+                <label class="form-label">Confirm Password</label>
+                {{form.password2}}
+              </div>
+              <br>
+              <!-- <div class="form-group mb5">
+                <label class="form-label">Enter the code below</label> <br>
+                {{form.captcha}}
+              </div> -->
+            
+            <button type="submit" class="btn btn-log btn-thm mt20">Create Account</button>
+            <p class="text-center mb25 mt10">Already have an account? <a href="{% url 'userauths:sign-in' %}" class="dashed-custom">Login Now</a></p>
+            <div class="hr_content">
+            </div>
+
+            <!-- <ul class="login_with_social text-center mt30 mb0">
+              <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
+              <li class="list-inline-item"><a href="#"><i class="fab fa-google"></i></a></li>
+              <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+              <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
+            </ul> -->
+          </form>
+        </div>
+      </div>
+    </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if signup_form == "dynamic" %}
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
+
+main {
+  height: 60vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.stepper {
+  width: 40rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 5%;
+}
+
+.step--1,
+.step--2,
+.step--3,
+.step--4 {
+  width: 5rem;
+  padding: 0.5rem 0.3rem;
+  background: #443297;
+  color: #fff;
+  text-align: center;
+  border-radius: 7px;
+  margin-left: 10px;
+}
+.step--1,
+.step--2,
+.step--3 {
+  border-right: 1px solid #6449dd;
+}
+
+.form {
+  background: #fff;
+  text-align: center;
+  position: absolute;
+  width: 25rem;
+  box-shadow: 0.2rem 0.2rem 0.5rem rgba(51, 51, 51, 0.2);
+  display: none;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.form--header-container {
+  background: linear-gradient(to right, #443297, #7a3297);
+  color: #fff;
+  height: 6rem;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.form--header-title {
+  font-size: 1.4rem;
+}
+
+.form--header-text {
+  padding: 0.5rem 0;
+}
+
+input[type='text'] {
+  padding: 0.8rem;
+  margin: auto;
+  margin-top: 0.5rem;
+  width: 20rem;
+  display: block;
+  border-radius: 0.5rem;
+  outline: none;
+  border: 1px solid #4432979d;
+}
+
+.btn__btn__btn{
+  padding: 0.8rem;
+  margin: auto;
+  margin-top: 0.5rem;
+  width: 20rem;
+  display: block;
+  border-radius: 0.5rem;
+  outline: none;
+  border: 1px solid #4432979d;
+}
+
+.form__btn {
+  background: #443297;
+  color: #fff;
+  outline: none;
+  border: none;
+  padding: 0.5rem 0.7rem;
+  width: 9rem;
+  margin: 1rem auto;
+  border-radius: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out;
+}
+.form--message-text {
+  width: 25rem;
+  background: #fff;
+  color: #444;
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 1.4rem;
+  box-shadow: 0.2rem 0.2rem 0.5rem rgba(51, 51, 51, 0.2);
+  animation: fadeIn 0.8s;
+  border-radius: 1rem;
+}
+
+.form-active {
+  z-index: 1000;
+  display: block;
+}
+.form-active-animate {
+  animation: moveRight 1s;
+}
+.form-inactive {
+  display: block;
+  animation: moveLeft 1s;
+}
+
+.step-active {
+  background: #ffffff;
+  color: #443297;
+  border: 1px solid #443297;
+  box-shadow: 0.2rem 0.2rem 0.5rem rgba(51, 51, 51, 0.2);
+
+}
+@keyframes moveRight {
+  0% {
+    transform: translateX(-30rem) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0rem) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translateX(0rem) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(27rem) scale(0.9);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+</style>
+<section class="our-log-reg bgc-f5">
+  
+  <div class="container">
+    
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      <strong>{{form.errors}}</strong>
+    </div>
+    {% endif %}
+      <div class="row">
+        <div class="col-lg-6 col-xl-6 col-xxl-6 m-auto">
+          <form action="" method="POST">
+          <main>
+
+            <div class="stepper">
+              <div class="step--1 step-active">Step 1</div>
+              <!-- <div class="step--2">Step 2</div> -->
+              <!-- <div class="step--3">Step 3</div> -->
+              <div class="step--2">Finish</div>
+            </div>
+              {% csrf_token %}
+            <div class="form form-active" method="POST">
+              {% csrf_token %}
+              <div class="form--header-container">
+                <h1 class="form--header-title" style="color: #fff; ">
+                  Personal Info
+                </h1>
+              </div>
+              {{form.full_name}}
+              {{form.username}}
+              {{form.email}}
+              <button class="form__btn" id="btn-1">Next</button>
+            </div>
+            <div class="form">
+              <div class="form--header-container">
+                <h1 class="form--header-title" style="color: #fff;">
+                  Choose Password
+                </h1>
+
+                <p class="form--header-text" style="color: #fff;">
+                  The stronger your password the safer
+                </p>
+              </div>
+
+              {{form.password1}}
+              {{form.password2}}
+              <!-- <hr> -->
+              <!-- <label for="" class="text-left">Enter Captcha Below</label>
+              {{form.captcha}} -->
+              
+              <button class="form__btn" id="btn-2-prev">Previous</button>
+              <button class="form__btn d-none" id="btn-2-next">Next</button>
+              <button class="form__btn" id="btn-2-nexft" type="submit">Create Account</button>
+            </div>
+
+            <div class="form">
+              <div class="form--header-container">
+                <h1 class="form--header-title">
+                  Social account
+                </h1>
+
+                <p class="form--header-text">
+                  Tell us more about your social account.
+                </p>
+              </div>
+              <input type="text" placeholder="Linkedin" />
+              <input type="text" placeholder="Twitter" />
+              <input type="text" placeholder="Github" />
+              <button class="form__btn" id="btn-3">Submit</button>
+            </div>
+            <div class="form--message"></div>
+          </main>
+        </form>
+
+        </div>
+        <div class="col-lg-6 col-xl-6 col-xxl-6 m-auto">
+          <img src="https://imageio.forbes.com/specials-images/imageserve/638a98b6a088e5ce47202972/0x0.jpg?format=jpg&width=1200" style="border-radius: 10px;" alt="">
+
+        </div>
+      </div>
+  </div>
+</section>
+<script>
+  const formBtn1 = document.querySelector('#btn-1');
+const formBtnPrev2 = document.querySelector('#btn-2-prev');
+const formBtnNext2 = document.querySelector('#btn-2-next');
+const formBtn3 = document.querySelector('#btn-3');
+
+// Button listener of form 1
+formBtn1.addEventListener('click', function(e) {
+  gotoNextForm(formBtn1, formBtnNext2, 1, 2);
+  e.preventDefault();
+});
+
+// Next button listener of form 2
+formBtnNext2.addEventListener('click', function(e) {
+  gotoNextForm(formBtnNext2, formBtn3, 2, 3);
+  e.preventDefault();
+});
+
+// Previous button listener of form 2
+formBtnPrev2.addEventListener('click', function(e) {
+  gotoNextForm(formBtnNext2, formBtn1, 2, 1);
+  e.preventDefault();
+});
+
+// Button listener of form 3
+formBtn3.addEventListener('click', function(e) {
+  document.querySelector(`.step--3`).classList.remove('step-active');
+  document.querySelector(`.step--4`).classList.add('step-active');
+  formBtn3.parentElement.style.display = 'none';
+  document.querySelector('.form--message').innerHTML = `
+   <h1 class="form--message-text">Your account is successfully created </h1>
+   `;
+  e.preventDefault();
+});
+
+const gotoNextForm = (prev, next, stepPrev, stepNext) => {
+  // Get form through the button
+  const prevForm = prev.parentElement;
+  const nextForm = next.parentElement;
+  const nextStep = document.querySelector(`.step--${stepNext}`);
+  const prevStep = document.querySelector(`.step--${stepPrev}`);
+  // Add active/inactive classes to both previous and next form
+  nextForm.classList.add('form-active');
+  nextForm.classList.add('form-active-animate');
+  prevForm.classList.add('form-inactive');
+  // Change the active step element
+  prevStep.classList.remove('step-active');
+  nextStep.classList.add('step-active');
+  // Remove active/inactive classes to both previous an next form
+  setTimeout(() => {
+    prevForm.classList.remove('form-active');
+    prevForm.classList.remove('form-inactive');
+    nextForm.classList.remove('form-active-animate');
+  }, 1000);
+};
+
+</script>
+{% endif %}
+
+
+{% endblock content %}

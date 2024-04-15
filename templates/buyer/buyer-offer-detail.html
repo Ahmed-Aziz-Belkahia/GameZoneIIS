@@ -1,0 +1,138 @@
+{% extends "partials/base.html" %} {% load static %} 
+{% block title %}
+  Offer Detail
+{% endblock title %}
+{% block content %}
+<div class="body_content_wrapper position-relative" style="margin-top: 0px">
+  <!-- Inner Page Breadcrumb -->
+  <section class="shop-cart pt30">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="order_complete_message text-center">
+            <div class="icon bgc-thm1">
+              <span class="fa fa-shopping-cart color-white"></span>
+            </div>
+            <h2 class="title">Offer ID: #{{ offer.oid }}</h2>
+            {% if offer.status == "accept" %}
+
+            <input
+              class="product-quantity-{{ offer.product.id }}"
+              type="hidden"
+              value="1"
+              id="product-quantity"
+              class="w-25 mb-10 product-quantity-{{ offer.product.id }}"
+            />
+            <input
+              type="hidden"
+              class="product-vendor-{{ offer.product.id }}"
+              value="{{ offer.product.vendor.id }}"
+            />
+            <input
+              type="hidden"
+              class="product-shipping_amount-{{ offer.product.id }}"
+              value="{{ offer.product.shipping_amount }}"
+            />
+            <input
+              type="hidden"
+              class="product-price-{{ offer.product.id }}"
+              value="{{ offer.price }}"
+            />
+            <input
+              type="hidden"
+              class="product-pid-{{ offer.product.id }}"
+              value="{{ offer.product.pid }}"
+            />
+            <input
+              type="hidden"
+              class="product-image-{{ offer.product.id }}"
+              value="{{ offer.product.image.url }}"
+            />
+            <input
+              type="hidden"
+              class="product-id-{{ offer.product.id }}"
+              value="{{ offer.product.id }}"
+            />
+            <input
+              type="hidden"
+              class="product-title-{{ offer.product.id }}"
+              value="{{ offer.product.title }}"
+            />
+            <input type="hidden" class="product-slug-{{ offer.product.id }}" value="{{ offer.product.slug }}">
+
+            <li>
+              <button
+                type="button"
+                class="btn btn-thm w100 button-add-to-cart add-to-cart-btn hide-button"
+                onclick="showbtn()"
+                data-index="{{ offer.product.id }}"
+                id="add-to-cart-btn"
+              >
+                Add to cart
+              </button>
+            </li>
+            <!-- <p class="para"><a href="" style="border-bottom: 1px dashed ;">Checkout Now</a></p> -->
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-8 offset-xl-2">
+          <div class="shop_order_box mt25">
+            <div class="order_list_raw text-center">
+              <ul>
+                <li class="list-inline-item">
+                  <p>Offer ID</p>
+                  <h5>{{offer.oid}}</h5>
+                </li>
+                {% if offer.status == "pending" %}
+                <li class="list-inline-item">
+                  <p>Status</p>
+                  <h5>Pending</h5>
+                </li>
+                {% endif %} {% if offer.status == "reject" %}
+                <li class="list-inline-item">
+                  <p>Status</p>
+                  <h5>Rejected</h5>
+                </li>
+                {% endif %} {% if offer.status == "accept" %}
+                <li class="list-inline-item">
+                  <p>Status</p>
+                  <h5>Accepted</h5>
+                </li>
+                {% endif %}
+
+                <li class="list-inline-item">
+                  <p>Date</p>
+                  <h6>{{offer.date}}</h6>
+                </li>
+                <li class="list-inline-item">
+                  <p>Total</p>
+                  <h5>${{offer.price}}</h5>
+                </li>
+              </ul>
+            </div>
+
+            <div class="order_details">
+              <h4 class="title mb25">Offer Details</h4>
+              <h4 class="title mb25">
+                {{offer.product.title|truncatechars:27}}
+              </h4>
+              <div class="od_content">
+                <ul></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+  function showbtn() {
+    var element = document.getElementById("add-to-cart-btn");
+    element.classList.add(" d-none");
+    console.log(element);
+  }
+</script>
+{% endblock content %}

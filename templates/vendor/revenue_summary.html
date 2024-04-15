@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Revenue Summary</title>
+</head>
+<body>
+    <h1>Revenue Summary for 2023</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Revenue</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for month, revenue in revenue_by_month %}
+            <tr>
+                <td>{{ month }}</td>
+                <td>${{ revenue }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

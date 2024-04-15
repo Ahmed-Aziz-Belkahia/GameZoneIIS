@@ -1,0 +1,36 @@
+.main__CTA {
+    width: 100%;
+    padding: 1rem 9rem;
+}
+
+.CTA__div {
+    max-width: 1920px;
+    border-radius: 15px;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .main__CTA {
+        width: 100%;
+        /* height: 25vh; */
+        max-height: 245px;
+        padding: 1rem 1rem;
+    }
+    .CTA__div {
+        max-width: 1920px;
+        border-radius: 15px;
+        width: 100%;
+        height: 100%;
+    }
+    .CTA__div img{
+       /*  height: -webkit-fill-available; */
+        border-radius: 15Px;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .main__CTA{
+        padding: 1rem 2rem;
+    }
+}

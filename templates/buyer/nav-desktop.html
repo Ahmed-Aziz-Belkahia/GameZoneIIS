@@ -1,0 +1,58 @@
+<style>
+   ul,li{
+      list-style: none;
+   }
+   .gz-coins {
+      /* background: #0c0c0c; */
+      width: fit-content;
+      /* padding: 0 1rem; */
+      border-radius: 3px;
+  }
+    .gz-coins > span {
+      -webkit-text-fill-color: transparent;
+      background: linear-gradient(to right top, #1555b5, #008de9, #00bdda, #00e58f, #a2ff00);
+      background-image: linear-gradient(to right top, #1555b5, #008de9, #00bdda, #00e58f, #a2ff00);
+      background-clip: text;
+      -webkit-background-clip: text;
+      font-weight: 700;
+      font-size: 15px;
+      width: fit-content;
+  }
+</style>
+<div class="col-lg-3 col-xl-2 dn-md">
+    <div class="users_account_details extra-dashboard-menu">
+       <div class="account_details_user d-flex pb10 bb1 mb10">
+          <img class="me-3" src="{{request.user.profile.image.url}}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="Generic placeholder image">
+          <div class="content_details text-start">
+             
+             {% if request.user.profile.full_name %}
+             <h5 class="title">{{request.user.profile.full_name|title}}</h5>
+             {% else %}
+             <h5 class="title">{{request.user.username|title}}</h5>
+             {% endif %}
+                
+             <a class="stitle" >{{request.user.email}}</a>
+             <a class="stitle" >Account ID: <b><i>{{request.user.id}}</i></b></a>
+             <div class="gz-coins">
+               <span>{{ request.user.gz_coins }} GZ Coins</span>
+              </div>
+          </div>
+       </div>
+       <div class="ed_menu_list">
+          <ul>
+             {% comment %} DASHBOARD {% endcomment %}
+             {% comment %} <li><a class="active" href="{% url 'core:buyer-dashboard' %}"><span class="bi bi-grid-3x3-gap-fill"></span>Dashboard</a></li> {% endcomment %}
+             <li><a class="active" href="{% url 'core:profile' %}"><span class="fas fa-user"></span>Account Details</a></li>
+             <li><a href="{% url 'core:buyer-orders' %}"><span class="fas fa-list"></span>Order</a></li>
+             {% comment %} <li><a href="{% url 'core:buyer_bids' %}"><span class="fas fa-chart-simple"></span>My Bids</a></li> {% endcomment %}
+             {% comment %} <li><a href="{% url 'core:buyer_offer' %}"><span class="bi bi-shop"></span>My Offers</a></li> {% endcomment %}
+             <li><a href="{% url 'core:buyer_message' %}"><span class="bi bi-chat-right-dots-fill"></span>Message</a></li>
+             <li><a href="{% url 'core:buyer-address' %}"><span class="fas fa-location"></span>Address</a></li>
+             <li><a href="{% url 'core:buyer-wishlist' %}"><span class="fas fa-heart"></span>Wishlist</a></li>
+             <li><a href="{% url 'core:buyer-invoices' %}"><span class="fas fa-file-invoice"></span>Invoices</a></li>
+             <li><a href="{% url 'core:settings' %}"><span class="bi bi-gear-fill"></span>Settings</a></li>
+             <li><a href="{% url 'userauths:sign-out' %}"><span class="fas fa-right-from-bracket"></span>Logout</a></li>
+          </ul>
+       </div>
+    </div>
+ </div>

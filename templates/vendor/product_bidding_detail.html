@@ -1,0 +1,143 @@
+{% extends "vendor/vendor-base.html" %} 
+{% load static %} 
+{% block title %}
+  Bidding Detail
+{% endblock title %}
+{% block content %}
+<div class="dashboard_content_wrapper">
+  <div class="dashboard dashboard_wrapper pr30 pr0-md">
+    {% include 'vendor/dashboard-nav.html' %}
+
+    <div class="dashboard__main pl0-md">
+      <div class="dashboard__content bgc-gmart-gray">
+        <div class="row pb50">
+          <div class="col-lg-12">
+            <div class="dashboard_title_area">
+              <h2>
+                <a
+                  href="{% url 'store:product-detail' product.pid %}"
+                  style="border-bottom: 1px dashed black"
+                  >{{product.title|truncatechars:27}}</a
+                >
+              </h2>
+              <!-- <p class="para">You have a total of <b>{{ order.count }}  orders</b></p> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-xxl-6">
+            <div class="d-flex justify-content-between statistics_funfact">
+              <div class="details">
+                <div class="subtitle1">Bidders</div>
+                <div class="title">
+                  {{bidders.count}}
+                  <span class="badge style1 text-center"></span>
+                </div>
+              </div>
+              <div class="icon text-center mt-4">
+                <i class="bi bi-cart-check-fill"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xxl-6">
+            <div class="d-flex justify-content-between statistics_funfact">
+              <div class="details">
+                <div class="subtitle1">Ending Date</div>
+                <div class="title">
+                  {{product.ending_date}}
+                  <span class="badge style1 text-center"></span>
+                </div>
+              </div>
+              <div class="icon text-center mt-4">
+                <i class="bi bi-clock-fill"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="application_statics">
+              <h4 class="title pl30">All Bidders</h4>
+              <p class="pl30 mb30">From Highest Bidder to Lowest</p>
+              <div class="account_user_deails dashboard_page">
+                <div class="order_table table-responsive">
+                  <table class="table">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">S/N</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Win Status</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for o in bidders %}
+
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                          {% if o.user.profile.full_name %}{{o.user.profile.full_name}}{% else %}{{o.user.username }}{% endif %}
+                        </td>
+                        <td>{{o.user.email}}</td>
+                        <td>{{cs}}{{o.price|floatformat:2}}</td>
+
+                        {% if o.winner == True and o.product.bidding_ended == True %}
+                        <td class="text-success">
+                          Won <i class="bi bi-trophy"></i>
+                        </td>
+                        {% endif %} {% if o.winner == False and o.product.bidding_ended == True %}
+                        <td class="text-success">Lost</td>
+                        {% endif %} {% if o.winner == False and o.product.bidding_ended == False %}
+                        <td class="text-success">Pending...</td>
+                        {% endif %}
+
+                        <td class="">
+                          <!-- <div class="checkout_country_form actegory"> -->
+                          <div class="dropleft">
+                            <button
+                              class="btn btn-secondary dropdown-toggle"
+                              type="button"
+                              id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul
+                              class="dropdown-menu"
+                              style="margin-bottom: 50px"
+                              aria-labelledby="dropdownMenuButton1"
+                            >
+                              <li>
+                                <a
+                                  class="dropdown-item"
+                                  href="{% url 'reports:bidder-report' o.bid %}"
+                                  >Report Bidder</a
+                                >
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                      </tr>
+                      {% empty %}
+                      <h4>No Bidders Yet</h4>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

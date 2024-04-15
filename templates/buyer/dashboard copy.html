@@ -1,0 +1,258 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="our-dashbord dashbord"style="margin-top: 80px;">
+   <div class="container">
+      <div class="row">
+         {% include 'buyer/nav-desktop.html' %}
+         <div class="col-lg-9 col-xl-9">
+            {% include 'buyer/nav-mobile.html' %}
+               <div class="row">
+               <div class="col-xl-12">
+                  <div class="account_user_deails pl40 pl0-md">
+                     <h2 class="title mb30">Account Details</h2>
+                     <div class="ui_kit_tab style2">
+                        <!-- nav tab Nav List Start -->
+                        <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">Profile İnformation</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="baby-tab" data-bs-toggle="tab" data-bs-target="#baby" type="button" role="tab" aria-controls="baby" aria-selected="false">Password</button>
+                           </li>
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="furniture-tab" data-bs-toggle="tab" data-bs-target="#furniture" type="button" role="tab" aria-controls="furniture" aria-selected="false">Permissions</button>
+                           </li>
+                        </ul>
+                        <!-- nav tab Nav List End -->
+                        <!-- nav tab contents Start -->
+                        <div class="tab-content pt20 row" id="myTabContent">
+                           <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
+                              <div class="account_details_page form_grid">
+                                 <div style="display: none;">
+                                    {{p_form}}
+                                 {{u_form}}
+                                 {{p_form.media}}
+                                 </div>
+                                 <form class="contact_form" name="contact_form" novalidate action="#" method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                       {% csrf_token %}
+                                       
+                                       {% if p_form.errors %}
+                                       <div class="alert alert-danger"><strong>{{p_form.errors}}</strong></div>
+                                       {% endif %}
+                                       {% if u_form.errors %}
+                                       <div class="alert alert-danger"><strong>{{u_form.errors}}</strong></div>
+                                       {% endif %}
+                                          
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Full Name</label>
+                                             {{p_form.full_name}}
+                                             
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Email Address</label>
+                                             {{u_form.email}}
+
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Username</label>
+                                             {{u_form.username}}
+
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Bio</label>
+                                             {{p_form.bio}}
+
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Phone</label>
+                                             {{p_form.phone}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Gender</label>
+                                             {{p_form.gender}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Country</label>
+                                             {{p_form.country}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">State</label>
+                                             {{p_form.state}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">City</label>
+                                             {{p_form.city}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Address</label>
+                                             {{p_form.address}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Postal Code</label>
+                                             {{p_form.postal_code}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Identity Card Type</label>
+                                             {{p_form.identity_type}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Identity Card Image</label>
+                                             {{p_form.identity_image}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Facebook</label>
+                                             {{p_form.facebook}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Instagram</label>
+                                             {{p_form.instagram}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Twitter</label>
+                                             {{p_form.twitter}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">WhatsApp</label>
+                                             {{p_form.whatsApp}}
+                                          </div>
+                                       </div>
+                                       <div class="col-md-12">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">About Me</label>
+                                             {{p_form.about_me}}
+                                          </div>
+                                       </div>
+                                       
+                                       <div class="col-sm-12">
+                                          <div class="form-group d-flex mb0">
+                                             <button type="type" class="btn btn-thm me-3">Update</button>
+                                             <button type="type" class="btn btn-white">Cancel</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-xl-6" id="baby" role="tabpanel" aria-labelledby="baby-tab">
+                              <div class="account_details_page form_grid">
+                                 <form class="contact_form" name="contact_form" action="#" method="post" novalidate>
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Current password</label>
+                                             <input class="form-control" type="text" placeholder="Your Password">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-12">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">New password</label>
+                                             <input class="form-control" type="text" placeholder="Your Password">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-12">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Confirm New Password</label>
+                                             <input class="form-control email" type="email" placeholder="Your Email">
+                                          </div>
+                                       </div>
+                                       <div class="col-sm-12">
+                                          <div class="form-group d-flex mb0">
+                                             <button type="button" class="btn btn-thm me-3">Update</button>
+                                             <button type="button" class="btn btn-white">Cancel</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-xl-8" id="furniture" role="tabpanel" aria-labelledby="furniture-tab">
+                              <div class="account_details_page mb20 d-flex justify-content-between bb1">
+                                 <div class="second_step_setup pb10">
+                                    <h5 class="title">SMS</h5>
+                                    <p>Messages to be sent by zenmart to your mobile phone via SMS method</p>
+                                 </div>
+                                 <div class="switch shortcode_widget_switch">
+                                    <div class="ui_kit_whitchbox">
+                                       <div class="form-check form-switch mb10">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                          <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="account_details_page mb20 d-flex justify-content-between bb1">
+                                 <div class="second_step_setup pb10">
+                                    <h5 class="title">Email</h5>
+                                    <p>Messages to be sent by zenmart to your mobile phone via Email method</p>
+                                 </div>
+                                 <div class="switch shortcode_widget_switch">
+                                    <div class="ui_kit_whitchbox">
+                                       <div class="form-check form-switch mb10">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault2" checked>
+                                          <label class="form-check-label" for="flexSwitchCheckDefault2"></label>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="account_details_page d-flex justify-content-between bb1">
+                                 <div class="second_step_setup pb10">
+                                    <h5 class="title">Phone Call</h5>
+                                    <p>Messages to be sent by zenmart to your mobile phone via Phone Call method</p>
+                                 </div>
+                                 <div class="switch shortcode_widget_switch">
+                                    <div class="ui_kit_whitchbox">
+                                       <div class="form-check form-switch mb10">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault3">
+                                          <label class="form-check-label" for="flexSwitchCheckDefault3"></label>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- nav tab contents End -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock content %}

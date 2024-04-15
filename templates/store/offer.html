@@ -1,0 +1,50 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block Offer %}
+  
+{% endblock Offer %}
+  
+{% block content %}
+  
+    <!-- Listing Grid View -->
+    <section class="our-listing pt0">
+      <div class="container">
+        <div class="row mt60">
+          <div class="col-lg-3 col-xl-2 d-none d-lg-block">
+            <div class="sidebar_accordion_widget">
+              <div class="faq_according text-start">
+                <div class="accordion" id="accordionExample">
+                 <!-- Add Filter cards here -->
+
+                 <!-- end Filter cards here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-xl-12 pl50 pl15-md">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="main-title bb1 pb10">
+                  <h2 class="title">Submit a price offer now!</h2>
+                  <p>Submit a price offer today!</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              
+              <div class="row">
+                {% for p in products %}
+                    <div class="col-6 col-lg-4 col-xl-3 p-1">
+                      {% include 'store/product_list.html' %}
+                    </div>
+                {% empty %}
+                <h4>Noting here... </h4>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endblock content %}

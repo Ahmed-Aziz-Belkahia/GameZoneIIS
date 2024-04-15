@@ -1,0 +1,96 @@
+{% extends "vendor/vendor-base.html" %} 
+{% load static %} 
+{% block content %} 
+{% load crispy_forms_tags %}
+<!-- {% crispy form %} -->
+<style>
+  th,
+  td {
+    white-space: nowrap;
+  }
+</style>
+<div class="dashboard_content_wrapper">
+  <div class="dashboard dashboard_wrapper pr30 pr0-md">
+    {% include 'vendor/dashboard-nav.html' %}
+
+    <div class="dashboard__main pl0-md">
+      <div class="dashboard__content bgc-gmart-gray">
+        <div class="row pb50">
+          <div class="col-lg-12">
+            <div class="dashboard_title_area">
+              <h2>Coupons & Discounts</h2>
+              <p class="para"><b>{{ coupon.count }} </b> Total Coupons</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="dashboard_product_list account_user_deails">
+              <div class="row d-block d-sm-flex justify-content-center justify-content-sm-between" >
+                
+              </div>
+              <div class="order_table table-responsive">
+                <form
+                          method="POST"
+                          action=""
+                        >
+                          {% csrf_token %}
+                          <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"
+                              >Enter Coupon - (example: COUPON123)</label
+                            >
+                            {{form.code}}
+                          </div>
+                          <div class="mb-3">
+                            <label
+                              for="exampleInputPassword1"
+                              class="form-label"
+                              >Discount % - (e.g 20)</label
+                            >
+                            {{form.discount}}
+                          </div>
+                          <div class="mb-3">
+                            <label
+                              for="exampleInputPassword1"
+                              class="form-label"
+                              >Valid From</label
+                            >
+                            {{form.valid_from}}
+                          </div>
+
+                          <div class="mb-3">
+                            <label
+                              for="exampleInputPassword1"
+                              class="form-label"
+                              >Valid To</label
+                            >
+                            {{form.valid_to}}
+                          </div>
+
+                          <div class="mb-3 form-check">
+                            {{form.make_public}}
+                            <label class="form-check-label" for="exampleCheck1"
+                              >Make Coupon Public <br />
+                            </label>
+                            <label for=""
+                              ><b
+                                >NOTE: Making coupon public would make this
+                                coupon visible to anyone viewing your
+                                products</b
+                              ></label
+                            >
+                          </div>
+                          <button type="submit" class="btn purple-btn">
+                            Update Coupon Changes
+                          </button>
+                        </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}
+All Categories
+{% endblock title %}
+{% block content %}
+
+
+
+<section class="top-category pb30 pt20">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="d-flex justify-content-between">
+               <div class="main-title">
+                  <h2>All Categories</h2>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row ovh">
+         {% for c in categories_ %}
+         <div class="col-6 col-md-3 col-xl wow fadeInUp" data-wow-duration=".7s">
+            <a href="{% url 'store:category_detail' c.cid %}">
+               <div class="iconbox">
+                  <div class="icon"><img src="{{c.image.url}}" alt="Category Image"></div>
+                  <div class="details">
+                     <h5 class="title">{{c.title|title}}</h5>
+                     <p class="subtitle">{{c.product_count}} item(s)</p>
+                  </div>
+               </div>
+            </a>
+         </div>
+         {% endfor %}
+
+      </div>
+
+   </div>
+</section>
+
+
+{% endblock content %}

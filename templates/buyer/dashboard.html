@@ -1,0 +1,75 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}
+  Dashboard
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="our-dashbord dashbord"style="margin-top: 0;">
+   <div class="container">
+      <div class="row">
+         {% include 'buyer/nav-desktop.html' %}
+         <div class="col-lg-9 col-xl-9">
+            {% include 'buyer/nav-mobile.html' %}
+               <div class="row">
+               <div class="col-xl-12">
+                  <div class="account_user_deails pl40 pl0-md">
+                     <h2 class="title mb30">My Dashboard</h2>
+                     <div class="ui_kit_tab style2">
+                        <!-- nav tab Nav List Start -->
+                        <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
+                           <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">Order Analytics</button>
+                           </li>
+                           
+                        </ul>
+                        <!-- nav tab Nav List End -->
+                        <!-- nav tab contents Start -->
+                        <div class="tab-content pt20 row" id="myTabContent">
+                           <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
+                              <div class="account_details_page form_grid">
+                                 <canvas id="myChartJs" style="height:230px;"></canvas>
+                              </div>
+                           </div>
+                           
+                        </div>
+                        <!-- nav tab contents End -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script type="text/javascript">
+    const labels = {{monthNumber|safe}};
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Orders',
+        backgroundColor: '#b331ff ',
+        borderColor: '#b331ff',
+        data: {{totalOrders}},
+      }]
+    };
+  
+    const config = {
+      type: 'line',
+      data,
+      options: {
+        responsive: true
+      }
+    };
+  
+    var myChart = new Chart(
+        document.getElementById('myChartJs'),
+        config
+      );
+  
+  </script>
+
+{% endblock content %}

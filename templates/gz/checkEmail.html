@@ -1,0 +1,35 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "gz/styles/checkEmail.css" %}">
+{% block title %}<title>GameZone | Check Email</title>{% endblock title %}
+{% endblock head %}
+
+{% block main %}
+<section>
+    <div class="message-box">
+        <div class="message-value">
+            <h2>Check Your Email</h2>
+            <lord-icon
+                src="https://cdn.lordicon.com/tmqaflqo.json"
+                trigger="loop"
+                state="loop-flying"
+                colors="primary:#a5e830,secondary:#ebe6ef,tertiary:#3a3347"
+                style="width:250px;height:250px">
+            </lord-icon>
+            
+            <p>An email has been sent to your address. Please check your inbox and follow the instructions to reset your password.</p>
+            <div class="login">
+                <p>Remembered your password? <a href="{% url "login" %}">Login</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+{% comment %} <script src="{% static "gz/js/checkEmail.js" %}"></script> {% endcomment %}
+{% endblock scripts %}

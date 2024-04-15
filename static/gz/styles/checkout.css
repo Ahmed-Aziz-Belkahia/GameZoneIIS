@@ -1,0 +1,298 @@
+.main{
+    background: #f2f4f7;
+}
+.checkout-header{
+    background: #161616;
+    color: white;
+    padding: 1rem;
+}
+.header-brand{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    max-width: 936px !important;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px !important;
+}
+.header-brand > a > img{
+    width: 150px;
+}
+.checkout-body{
+    display: flex;
+    flex-direction: row;
+    max-width: 936px !important;
+    margin: 0 auto;
+    justify-content: center;
+    margin-top: 48px;
+    max-width: 888px;
+    padding-bottom: 32px;
+    gap: 60px;
+    height: 87vh;
+}
+.checkout-form{
+    min-width: 500px;
+    width: 100%;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,.04);
+    margin-bottom: 24px;
+    padding: 24px;
+}
+h3{
+    color: #777;
+    font-family: Poppins, Open Sans, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -.3px;
+    line-height: 28px;
+    margin: 0 0 6px;
+}
+.checkout-summary{
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    margin-bottom: 2.5rem;
+    /* margin-top: 1rem; */
+    max-width: 325px;
+    position: relative;
+    width: 100%;
+}
+
+.colors__divs {
+    /* width: 100%; */
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 0;
+    justify-content: space-evenly;
+  }
+  
+  .divs__div.color {
+    position: relative;
+    overflow: hidden;
+    align-items: self-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 8px;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 4px;
+    outline: none;
+    width: -webkit-fill-available;
+  }
+  
+  .divs__div.color:hover {
+    outline: 3px solid black;
+  }
+  
+  .divs__div.color:hover::after {
+    position: absolute;
+    content: "";
+    background-color: rgba(128, 128, 128, 0.127);
+    width: 100%;
+    height: 100%;
+  }
+  
+  .divs__div.active {
+    border: 3px solid black;
+  }
+  
+  .divs__div.active::after {
+    position: absolute;
+    content: "";
+    background-color: rgba(128, 128, 128, 0.321);
+    width: 100%;
+    height: 100%;
+  }
+  .shipping_option_container{
+    padding: 1rem;
+  }
+  .shipping_option_container p{
+    font-size: .8125rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0;
+    padding: 1rem 0 0;
+    text-align: left;
+    color: gray;
+  }
+  
+  .divs__div.color.selected p{
+    font-weight: 700;
+    color: black;
+  }
+label{
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0;
+    padding: 1rem 0 0;
+    text-align: left;
+    color: #373737;
+    font-size: large;
+}
+label > i{
+    font-size: large;
+    margin: 0 5px;
+}
+.checkout-form > form{
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.address{
+    text-align: left;
+    border: 1px solid #031117;
+    border-radius: 15px;
+    padding: 2rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+.address > p{
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+#addressForm{
+    padding-left: 1rem;
+    display: flex;
+    gap: 10px;
+    flex-flow: row;
+    justify-content: center;
+    width: 100%;
+}
+.sub-total,.Shipping-total,.tax-total,.summary-total{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 7px 0px;
+}
+.checkout-summary p{
+    color: #212322;
+    font-size: 18px !important;
+    font-weight: 400;
+    letter-spacing: -.48px;
+    line-height: 22px;
+}
+.Shipping-total > p:last-child{
+    color: #007d53;
+}
+.summary-total{
+    border-top: 1px solid lightgray;
+}
+.summary-total > p{
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    letter-spacing: -.3px;
+    line-height: 28px !important;
+    margin: 0 !important;
+    padding: 0;
+    padding-top: 0 !important;
+}
+.btn-place-order{
+    background: #007d53;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -.3px;
+    line-height: 24px;
+    padding: 12px 24px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all .3s ease-in-out;
+    width: 100%;
+}
+.btn-place-order:hover{
+    background: #005f40;
+}
+.checkout-summary > span{
+    color: #212322;
+    font-size: 15px !important;
+    font-weight: 300;
+    letter-spacing: -.48px;
+    line-height: 22px;
+    text-align: center;
+    display: flex;
+}
+/* Hide the default radio button */
+.address input[type="radio"] {
+    display: none;
+}
+
+/* Custom radio button style */
+.address {
+    position: relative;
+    padding-left: 30px; /* Adjust the size of the custom radio button */
+    cursor: pointer;
+    display: block;
+    margin-bottom: 10px;
+    background-color: #fff; /* Default background color */
+    border: 1px solid #ccc; /* Default border color */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Style for the custom radio button when selected */
+input[type="radio"]:checked + .label {
+    background-color: #f0f0f0; /* Change background color when selected */
+    border: 1px solid #007d53; /* Change border color when selected */
+}
+
+/* Address text style */
+.address p {
+    margin: 0;
+    padding-left: 25px; /* Add some space after the custom radio button */
+    font-weight: 400;
+}
+
+/* Hover effect for address */
+.address:hover {
+    background-color: #f9f9f9; /* Change background color on hover */
+}
+.btn-add-address{
+    height: 48px;
+    width: fit-content;
+    background-color: var(--MP-C);
+    color: white;
+    font-size: medium;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    padding: 0 1rem;
+    margin-left: 1rem;
+}
+.address.selected {
+    border: 2px solid black;
+}
+@media screen and (max-width: 768px) {
+    .checkout-body{
+        flex-direction: column;
+        height: auto;
+    }
+    .checkout-summary{
+        margin: 0 auto;
+    }
+    .checkout-form{
+        min-width: auto;
+
+    }
+    #addressForm{
+        flex-direction: column;
+    }
+}

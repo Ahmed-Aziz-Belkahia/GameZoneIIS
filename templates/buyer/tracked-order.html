@@ -1,0 +1,221 @@
+{% extends "partials/base.html" %} {% load static %} {% block content %}
+
+<div class="body_content_wrapper position-relative">
+  <!-- Inner Page Breadcrumb -->
+  <section class="inner_page_breadcrumb" style="margin-top: 100px">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="breadcrumb_content">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item">
+                <a href="{% url 'core:order-tracker' %}">Order Tracker</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                <a>Tracked Order</a>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Order Tracking -->
+  <section class="shop-cart pt30">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="order_complete_message text-center">
+            <div class="icon bgc-thm1">
+              <span class="fa fa-shopping-cart color-white"></span>
+            </div>
+            <h2 class="title">Order ID: #{{ order.oid }}</h2>
+            <p class="para">
+              <a
+                href="{% url 'core:buyer-invoice-detail' order.oid %}"
+                style="border-bottom: 1px dashed"
+                >View Order Invoice</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-8 offset-xl-2">
+          <a href="{% url 'core:order-tracker' %}" class="btn btn-dark"
+            >Go Back</a
+          >
+          <div class="shop_order_box mt25">
+            <div class="order_list_raw text-center">
+              <ul>
+                <li class="list-inline-item">
+                  <p>Order ID</p>
+                  <h5>{{order.oid}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Date</p>
+                  <h5>{{order.date}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Total</p>
+                  <h5>${{order.total}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Payment Method</p>
+                  <h5>{{order.payment_method}}</h5>
+                </li>
+              </ul>
+            </div>
+            <div class="order_details mb10">
+              <div class="od_content">
+                <ul>
+                  <li class="subtitle">
+                    <p>
+                      Sub Total
+                      <span class="float-end free_shipping"
+                        >{{ cs }}{{ order.price }}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      VAT
+                      <span class="float-end free_shipping"
+                        >{{ cs }}{{order.vat}}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Service Fee
+                      <span class="float-end totals"
+                        >{{ cs }}{{ order.service_fee }}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Total
+                      <span class="float-end fwn_bd_color"
+                        >{{ cs }}{{order.total}}</span
+                      >
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            {% for o in order_items %}
+
+            <div class="order_details mb10">
+              <a href="{{o.product_obj.image.url}}" target="_blank"
+                ><img
+                  src="{{o.product_obj.image.url}}"
+                  style="
+                    width: 100px;
+                    height: 50px;
+                    object-fit: cover;
+                    border-radius: 7px;
+                    margin-top: 10px;
+                  "
+                  alt=""
+              /></a>
+              <a href="{% url 'store:product-detail' o.product_obj.pid %}"
+                ><h4 class="titele mb25">
+                  {{o.product_obj.title|truncatechars:27}}
+                </h4></a
+              >
+              <div class="od_content">
+                <ul>
+                  <li class="subtitle">
+                    <p>
+                      Sub Total
+                      <span class="float-end free_shipping"
+                        >{{ cs }}{{ o.price }}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      QTY
+                      <span class="float-end free_shipping">{{ o.qty }}</span>
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Shipping
+                      <span class="float-end free_shipping"
+                        >{{ cs }}{{o.shipping}}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Total
+                      <span class="float-end totals"
+                        >{{ cs }}{{ o.total }}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Delivery Status
+                      <span class="float-end fwn_bd_color"
+                        >{{o.delivery_status|title}}</span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Vendor
+                      <span class="float-end fwn_bd_color"
+                        ><a
+                          href=""
+                          style="
+                            color: rgb(0, 153, 255);
+                            border-bottom: 1px dashed black;
+                          "
+                          >{{o.vendor.shop_name}}
+                          <i class="bi bi-chat-right-dots-fill"></i></a
+                      ></span>
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Courier Service
+                      <span class="float-end totals"
+                        ><a
+                          href="{{o.delivery_couriers.couriers_tracking_website_address}}"
+                          style="color: rgb(0, 153, 255)"
+                          >{{ o.delivery_couriers }}</a
+                        ></span
+                      >
+                    </p>
+                  </li>
+                  <li class="subtitle">
+                    <p>
+                      Tracking ID
+                      <span class="float-end totals"
+                        ><a
+                          href="{{o.delivery_couriers.couriers_tracking_website_address}}"
+                          style="
+                            color: rgb(0, 153, 255);
+                            border-bottom: 1px dashed black;
+                          "
+                          >{{ o.tracking_id }} <i class="bi bi-clipboard"></i
+                        ></a>
+                      </span>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock content %}

@@ -1,0 +1,825 @@
+{% extends "vendor/vendor-base.html" %} {% load static %} {% block content %}
+{%load crispy_forms_tags %}
+<!-- {% crispy form %} -->
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    height: 100%;
+  }
+
+  p {
+    color: grey;
+  }
+
+  #msform {
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+  }
+
+  #msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 20px;
+    position: relative;
+  }
+
+  .form-card {
+    text-align: left;
+  }
+
+  #msform fieldset:not(:first-of-type) {
+    display: none;
+  }
+
+  #msform .action-button {
+    width: 100px;
+    background: #b331ff;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 7px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 0px 10px 5px;
+    float: right;
+  }
+
+  #msform .action-button:hover,
+  #msform .action-button:focus {
+    background-color: #641f8b;
+  }
+
+  #msform .action-button-previous {
+    width: 100px;
+    background: #641f8b;
+    font-weight: bold;
+    color: white;
+    border-radius: 7px;
+
+    border: 0 none;
+    cursor: pointer;
+    padding: 12px 5px;
+    margin: 10px 5px 10px 0px;
+    float: right;
+  }
+
+  .save-changes {
+    width: 100;
+    background: #b331ff;
+    font-weight: bold;
+    color: white;
+    border-radius: 7px;
+
+    border: 0 none;
+    cursor: pointer;
+    padding: 11px 10px;
+    margin: 10px 5px 10px 0px;
+    float: right;
+  }
+
+  #msform .action-button-previous:hover,
+  #msform .action-button-previous:focus {
+    background-color: #2e103f;
+    border-radius: 7px;
+  }
+
+  .card {
+    z-index: 0;
+    border: none;
+    position: relative;
+  }
+
+  .fs-title {
+    font-size: 25px;
+    color: #673ab7;
+    margin-bottom: 15px;
+    font-weight: normal;
+    text-align: left;
+  }
+
+  .purple-text {
+    color: #673ab7;
+    font-weight: normal;
+  }
+
+  .steps {
+    font-size: 20px;
+    color: gray;
+    margin-bottom: 10px;
+    font-weight: normal;
+    text-align: right;
+  }
+
+  .fieldlabels {
+    color: gray;
+    text-align: left;
+  }
+
+  #progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    color: lightgrey;
+  }
+
+  #progressbar .active {
+    color: #673ab7;
+  }
+
+  #progressbar li {
+    list-style-type: none;
+    font-size: 15px;
+    width: 20%;
+    float: left;
+    position: relative;
+    font-weight: 400;
+  }
+
+  #progressbar #account:before {
+    font-family: FontAwesome;
+    content: "\f044";
+  }
+
+  #progressbar #personal:before {
+    font-family: FontAwesome;
+    content: "\f015";
+  }
+
+  #progressbar #payout:before {
+    font-family: FontAwesome;
+    content: "\f058";
+  }
+
+  #progressbar #payment:before {
+    font-family: FontAwesome;
+    content: "\f030";
+  }
+
+  #progressbar #confirm:before {
+    font-family: FontAwesome;
+    content: "\f00c";
+  }
+
+  #progressbar li:before {
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    display: block;
+    font-size: 20px;
+    color: #ffffff;
+    background: lightgray;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    padding: 2px;
+  }
+
+  #progressbar li:after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background: lightgray;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    z-index: -1;
+  }
+
+  #progressbar li.active:before,
+  #progressbar li.active:after {
+    background: #673ab7;
+  }
+
+  .progress {
+    height: 20px;
+  }
+
+  .progress-bar {
+    background-color: #673ab7;
+  }
+
+  .fit-image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  #id_identity_image {
+    /* background-color: #270041; */
+    border: 1px dashed #270041;
+    border-radius: 4px;
+    height: 50px;
+    width: 100%;
+    color: #ffffff;
+  }
+  #id_identity_image::file-selector-button {
+    border: 1px dashed #270041;
+
+    border-radius: 7px;
+    color: 432f9f;
+    background-color: #ffffff;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.25s ease-in;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+  #id_shop_cover_image {
+    border: 1px dashed #270041;
+    align-items: center;
+    border-radius: 4px;
+    height: 60px;
+    width: 100%;
+    color: #ffffff;
+  }
+  #id_shop_cover_image::file-selector-button {
+    border: 1px dashed #270041;
+    align-items: center;
+    text-align: center;
+    border-radius: 7px;
+    color: 432f9f;
+    background-color: #ffffff;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.25s ease-in;
+    margin-top: 14px;
+    margin-left: 10px;
+  }
+
+  #id_shop_image {
+    border: 1px dashed #270041;
+    align-items: center;
+    border-radius: 4px;
+    height: 60px;
+    width: 100%;
+    color: #ffffff;
+  }
+  #id_shop_image::file-selector-button {
+    border: 1px dashed #270041;
+    align-items: center;
+    text-align: center;
+    border-radius: 7px;
+    color: 432f9f;
+    background-color: #ffffff;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.25s ease-in;
+    margin-top: 14px;
+    margin-left: 10px;
+  }
+
+  /* remove default arrow in IE */
+  select::-ms-expand {
+    display: none;
+  }
+</style>
+
+<div class="dashboard_content_wrapper">
+  <div class="dashboard dashboard_wrapper pr30 pr0-md">
+    {% include 'vendor/dashboard-nav.html' %}
+    <div class="dashboard__main pl0-md">
+      <div class="dashboard__content bgc-gmart-gray">
+        <div class="row pb50">
+          <div class="col-lg-12">
+            <div class="dashboard_title_area">
+              {% if '/vendor/update-product/' in request.path %}
+              <h2>Update Product</h2>
+              {% else %}
+              <h2>Setup Your Shop!</h2>
+              {% endif %}
+
+              <p class="para">
+                Fill the forms below to setup your shop and public profile
+              </p>
+            </div>
+            <a
+              href="{% url 'vendor:vendor_shop_view_page' vendor.vid %}"
+              class="purple-btn btn"
+              >Visit Shop</a
+            >
+
+            {% if form.errors %}
+            <div class="alert alert-danger">
+              <strong>{{form.errors}}</strong>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="container-fluid dashboard_setting_box">
+          <div class="row justify-content-center">
+            <div
+              class="col-11 col-sm-10 col-md-10 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2"
+            >
+              <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <form
+                  id="msform"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  novalidate
+                >
+                  {% csrf_token %} {% csrf_token %}
+                  <div style="display: none">{{form.media}} {{form}}</div>
+                  <!-- progressbar -->
+                  <ul id="progressbar">
+                    <li class="active" id="account">
+                      <strong>Basic Details</strong>
+                    </li>
+                    <li id="payment"><strong>Images</strong></li>
+                    <li id="personal"><strong>Address</strong></li>
+                    <li id="payout"><strong>Identity Verification</strong></li>
+                    <li id="confirm"><strong>Finish</strong></li>
+                  </ul>
+                  <div class="progress">
+                    <div
+                      class="progress-bar progress-bar-striped progress-bar-animated"
+                      role="progressbar"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                  <br />
+                  <!-- fieldsets -->
+                  <fieldset>
+                    <div class="form-card">
+                      <div class="row">
+                        <div class="col-7">
+                          <h4 class="fs-tiftle">Basic Product Details</h4>
+                        </div>
+                        <div class="col-5">
+                          <h4 class="steps">Step 1 - 5</h4>
+                        </div>
+                      </div>
+                      <br /><br />
+                      <label class="fieldlabels">Shop Name *</label>
+                      {{form.shop_name}}
+                      <br />
+                      <br />
+                      <label class="fieldlabels">Shop Description *</label>
+                      {{form.shop_description}}
+                      <br />
+
+                      <label class="fieldlabels mt-4">Mobile Number *</label>
+                      <br />
+                      {{form.mobile}} <br />
+
+                      <br />
+                      <label class="fieldlabels mt-4"
+                        >Make Mobile Number Public *</label
+                      >
+                      <br />
+                      <small
+                        >Note: Check the box if you want this mobile number to
+                        be shown publicly.</small
+                      >
+                      {{form.show_mobile_number_in_store}}
+
+                      <label class="fieldlabels">Shop Email *</label> <br />
+                      <small
+                        >Note: Email messages would be sent to this
+                        email.</small
+                      >
+                      {{form.shop_email}}
+                      <br />
+                      <label class="fieldlabels mt-4"
+                        >Make Email Address Public *</label
+                      >
+                      <br />
+                      <small
+                        >Note: Check the box if you want this email address to
+                        be shown publicly.</small
+                      >
+                      {{form.show_email_address_in_store}}
+                    </div>
+                    <button
+                      type="submit"
+                      class="float-start btn purple-btn save-changes"
+                      style=""
+                    >
+                      Save Changes
+                    </button>
+                    <input
+                      type="button"
+                      name="next"
+                      class="next action-button purple-btn"
+                      value="Next"
+                    />
+                  </fieldset>
+                  <fieldset>
+                    <div class="form-card">
+                      <div class="row">
+                        <div class="col-7">
+                          <h4 class="fs-tiftle">
+                            Choose your shop avatar and cover image
+                          </h4>
+                        </div>
+                        <div class="col-5">
+                          <h2 class="steps">Step 2 - 5</h2>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <!-- <br /><br /> -->
+                          <label class="fieldlabels">Shop Avatar*</label>
+                          {{form.shop_image}}
+                          <!-- <br /><br /> -->
+                        </div>
+                        <div class="col-lg-6">
+                          <img
+                            id="frame"
+                            style="
+                              width: 70px;
+                              height: 70px;
+                              object-fit: cover;
+                              border-radius: 50%;
+                              margin-top: 20px;
+                            "
+                            src="{{request.user.vendor.shop_image.url}}"
+                            alt=""
+                          />
+                          <!-- <br /><br /> -->
+                        </div>
+                        <div class="col-lg-6">
+                          <label class="fieldlabels">Shop Cover Image*</label>
+                          {{form.shop_cover_image}}
+                          <!-- <br /><br /> -->
+                        </div>
+                        <div class="col-lg-6">
+                          <img
+                            id="shop_cover_image_preview"
+                            style="
+                              width: 70px;
+                              height: 70px;
+                              object-fit: cover;
+                              border-radius: 50%;
+                              margin-top: 20px;
+                            "
+                            src="{{request.user.vendor.shop_cover_image.url}}"
+                            alt=""
+                          />
+                          <!-- <br /><br /> -->
+                        </div>
+                      </div>
+                      
+                     
+
+                      <button
+                        type="submit"
+                        class="float-start btn purple-btn save-changes"
+                      >
+                        Save Changes
+                      </button>
+                    </div>
+                    <input
+                      type="button"
+                      name="next"
+                      class="next action-button btn purple-btn"
+                      value="Next"
+                    />
+                    <input
+                      type="button"
+                      name="previous"
+                      class="previous action-button-previous"
+                      value="Previous"
+                    />
+                  </fieldset>
+                  <fieldset>
+                    <div class="form-card">
+                      <div class="row">
+                        <div class="col-7">
+                          <h2 class="fs-title">Shop Address</h2>
+                        </div>
+                        <div class="col-5">
+                          <h2 class="steps">Step 3 - 5</h2>
+                        </div>
+                      </div>
+                      <label class="fieldlabels mt-3">Country</label>
+                      {{form.country}}
+                      <br />
+
+                      <label class="fieldlabels mt-3">State</label>
+                      {{form.state}}
+                      <br />
+
+                      <label class="fieldlabels mt-3">Town or City</label>
+                      {{form.city}}
+                      <br />
+
+                      <label class="fieldlabels mt-3">Address</label>
+                      {{form.address}}
+                      <br />
+                    </div>
+                    <button
+                      type="submit"
+                      class="float-start btn purple-btn save-changes"
+                    >
+                      Save Changes
+                    </button>
+
+                    <input
+                      type="button"
+                      name="next"
+                      class="next action-button"
+                      value="Next"
+                    />
+                    <input
+                      type="button"
+                      name="previous"
+                      class="previous action-button-previous"
+                      value="Previous"
+                    />
+                  </fieldset>
+                  <fieldset>
+                    <div class="form-card">
+                      <div class="row">
+                        <div class="col-7">
+                          <h2 class="fs-title">Identity and Verification</h2>
+                        </div>
+                        <div class="col-5">
+                          <h2 class="steps">Step 4 - 5</h2>
+                        </div>
+                      </div>
+                      <label class="fieldlabels mt-3">Identity Type</label>
+                      {{form.identity_type}}
+                      <br />
+
+                      <label class="fieldlabels mt-3">Identity Image</label>
+                      <br />
+                      <small
+                        >NOTE: Upload a clear image of the front and back ID
+                        together <br />
+                        (You can make use of a photo app to combine the two
+                        images together)</small
+                      >
+                      {{form.identity_image}}
+                      <img
+                      id="frame_id"
+                      style="
+                        width: 370px;
+                        height: 170px;
+                        object-fit: cover;
+                        border-radius: 10px;
+                        margin-top: 20px;
+                        margin-bottom: 20px;
+                      "
+                      src="{{request.user.vendor.identity_image.url}}"
+                      alt=""
+                    />
+                    </div>
+                    <button
+                      type="submit"
+                      class="float-start btn purple-btn save-changes"
+                    >
+                      Save Changes
+                    </button>
+
+                    <input
+                      type="button"
+                      name="next"
+                      class="next action-button"
+                      value="Next"
+                    />
+                    <input
+                      type="button"
+                      name="previous"
+                      class="previous action-button-previous"
+                      value="Previous"
+                    />
+                  </fieldset>
+                  <fieldset>
+                    <div class="form-card">
+                      <div class="row">
+                        <div class="col-7">
+                          <h2 class="fs-title">Final Steps</h2>
+                        </div>
+                        <div class="col-5">
+                          <h2 class="steps">Step 5 - 5</h2>
+                        </div>
+                      </div>
+
+                      <label class="fieldlabels">Keywords / Tags</label>
+                      <small
+                        >Seperate keywords with comma e.g tag1, tag2,
+                        tag3</small
+                      >
+                      {{form.keywords}}
+                      <br />
+                    </div>
+                    <button
+                      type="submit"
+                      class="action-button"
+                      style="padding: 12px 15px"
+                    >
+                      Save Shop Updated
+                    </button>
+                    <input
+                      type="button"
+                      name="previous"
+                      class="previous action-button-previous"
+                      value="Previous"
+                    />
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="dashboard_footer pt30 pb30">
+        <div class="container">
+          <div
+            class="row items-center justify-content-center justify-content-md-between"
+          >
+            <div class="col-auto">
+              <div
+                class="copyright-widget text-center text-lg-start d-block d-lg-flex mb15-md"
+              >
+                <p class="me-4">© 2022 Zeomart. All Rights Reserved</p>
+                <p>
+                  <a href="#">Privacy</a> · <a href="#">Terms</a> ·
+                  <a href="#">Sitemap</a>
+                </p>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="footer_bottom_right_widgets text-center text-lg-end">
+                <ul class="mb0">
+                  <li class="list-inline-item mb20-340">
+                    <select class="selectpicker show-tick">
+                      <option>Currency : USD</option>
+                      <option>Euro</option>
+                      <option>Pound</option>
+                    </select>
+                  </li>
+                  <li class="list-inline-item">
+                    <select class="selectpicker show-tick">
+                      <option>Language: English</option>
+                      <option>Frenc</option>
+                      <option>Italian</option>
+                      <option>Spanish</option>
+                      <option>Turkey</option>
+                    </select>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
+<a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+
+<script>
+  $(document).ready(function () {
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var opacity;
+    var current = 1;
+    var steps = $("fieldset").length;
+
+    setProgressBar(current);
+
+    $(".next").click(function () {
+      current_fs = $(this).parent();
+      next_fs = $(this).parent().next();
+
+      //Add Class Active
+      $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+      //show the next fieldset
+      next_fs.show();
+      //hide the current fieldset with style
+      current_fs.animate(
+        { opacity: 0 },
+        {
+          step: function (now) {
+            // for making fielset appear animation
+            opacity = 1 - now;
+
+            current_fs.css({
+              display: "none",
+              position: "relative",
+            });
+            next_fs.css({ opacity: opacity });
+          },
+          duration: 500,
+        }
+      );
+      setProgressBar(++current);
+    });
+
+    $(".previous").click(function () {
+      current_fs = $(this).parent();
+      previous_fs = $(this).parent().prev();
+
+      //Remove class active
+      $("#progressbar li")
+        .eq($("fieldset").index(current_fs))
+        .removeClass("active");
+
+      //show the previous fieldset
+      previous_fs.show();
+
+      //hide the current fieldset with style
+      current_fs.animate(
+        { opacity: 0 },
+        {
+          step: function (now) {
+            // for making fielset appear animation
+            opacity = 1 - now;
+
+            current_fs.css({
+              display: "none",
+              position: "relative",
+            });
+            previous_fs.css({ opacity: opacity });
+          },
+          duration: 500,
+        }
+      );
+      setProgressBar(--current);
+    });
+
+    function setProgressBar(curStep) {
+      var percent = parseFloat(100 / steps) * curStep;
+      percent = percent.toFixed();
+      $(".progress-bar").css("width", percent + "%");
+    }
+
+    $(".submit").click(function () {
+      return false;
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $("select#id_type").change(function () {
+      var product_type = $(this).children("option:selected").val();
+      console.log(product_type);
+      if (product_type === "auction") {
+        $("#date-div").removeClass("d-none");
+      } else {
+        $("#date-div").addClass("d-none");
+      }
+    });
+  });
+</script>
+
+<script>
+    $(document).ready(function () {
+      $("select#id_product_condition").change(function () {
+        var product_condition = $(this).children("option:selected").val();
+        console.log(product_condition);
+        // if (product_type === "auction") {
+        //   $("#date-div").removeClass("d-none");
+        // } else {
+        //   $("#date-div").addClass("d-none");
+        // }
+      });
+    });
+  </script>
+
+<script>
+    function preview() {
+      frame.src = URL.createObjectURL(
+        event.target.files[0]
+      );
+    }
+  </script>
+
+<script>
+    function preview_id() {
+      frame_id.src = URL.createObjectURL(
+        event.target.files[0]
+      );
+    }
+  </script>
+
+  <script>
+    var loadFile = function (event) {
+      var output2 = document.getElementById(
+        "shop_cover_image_preview"
+      );
+      output2.src = URL.createObjectURL(
+        event.target.files[0]
+      );
+      output2.onload = function () {
+        URL.revokeObjectURL(output2.src); // free memory
+      };
+    };
+  </script>
+{% endblock content %}

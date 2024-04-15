@@ -1,0 +1,57 @@
+
+{% extends "partials/base.html" %}
+{% load static %}
+{% block content %}
+  <div class="body_content_wrapper position-relative">
+  <!-- Inner Page Breadcrumb -->
+  <section class="inner_page_breadcrumb">
+    <div class="container">
+      <div class="row">
+        
+      </div>
+    </div>
+  </section>
+
+	<!-- Shop Checkouts Content -->
+	<section class="shop-cart pt30">
+		<div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="order_complete_message text-center">
+            <div class="icon bgc-thm1"><span class="fa fa-triangle-exclamation color-white"></span></div>
+            <h2 class="title">Payment Failed!</h2>
+            <p class="para">Opps...your payment failed to complete, please try again later.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-8 offset-xl-2">
+          <div class="shop_order_box mt25">
+            <div class="order_list_raw text-center">
+              <ul>
+                <li class="list-inline-item">
+                  <p>Order Number</p>
+                  <h5>{{order.oid}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Date</p>
+                  <h5>{{order.date}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Total</p>
+                  <h5>${{order.total}}</h5>
+                </li>
+                <li class="list-inline-item">
+                  <p>Payment Method</p>
+                  <h5>{{order.payment_method}}</h5>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+		</div>
+	</section>
+
+  </div>
+  {% endblock content %}

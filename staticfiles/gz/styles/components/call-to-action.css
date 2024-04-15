@@ -1,0 +1,13 @@
+.main__call-to-action {
+    width: 100%;
+    height: 200px;
+    background-color: aquamarine;
+}
+
+.call-to-action__div {
+    
+    width: 100%;
+    height: 100%;
+    color: black;
+    font-size: 3rem;
+}

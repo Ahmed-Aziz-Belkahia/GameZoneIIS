@@ -1,0 +1,875 @@
+{% extends "vendor/vendor-base.html" %}
+
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<!-- {% crispy form %} -->
+
+<style>
+  * {
+    margin: 0;
+    padding: 0
+}
+
+html {
+    height: 100%
+}
+
+p {
+    color: grey
+}
+
+#heading {
+    text-transform: uppercase;
+    color: #673AB7;
+    font-weight: normal
+}
+
+#msform {
+    text-align: center;
+    position: relative;
+    margin-top: 20px
+}
+
+#msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 20px;
+    position: relative
+}
+
+.form-card {
+    text-align: left
+}
+
+#msform fieldset:not(:first-of-type) {
+    display: none
+}
+
+
+#msform .action-button {
+    width: 100px;
+    background: #673AB7;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 0px 10px 5px;
+    float: right
+}
+
+#msform .action-button:hover,
+#msform .action-button:focus {
+    background-color: #311B92
+}
+
+#msform .action-button-previous {
+    width: 100px;
+    background: #616161;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px 10px 0px;
+    float: right
+}
+
+#msform .action-button-previous:hover,
+#msform .action-button-previous:focus {
+    background-color: #000000
+}
+
+.card {
+    z-index: 0;
+    border: none;
+    position: relative
+}
+
+.fs-title {
+    font-size: 25px;
+    color: #673AB7;
+    margin-bottom: 15px;
+    font-weight: normal;
+    text-align: left
+}
+
+.purple-text {
+    color: #673AB7;
+    font-weight: normal
+}
+
+.steps {
+    font-size: 20px;
+    color: gray;
+    margin-bottom: 10px;
+    font-weight: normal;
+    text-align: right
+}
+
+.fieldlabels {
+    color: gray;
+    text-align: left
+}
+
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    color: lightgrey
+}
+
+#progressbar .active {
+    color: #673AB7
+}
+
+#progressbar li {
+    list-style-type: none;
+    font-size: 15px;
+    width: 25%;
+    float: left;
+    position: relative;
+    font-weight: 400
+}
+
+#progressbar #account:before {
+    font-family: FontAwesome;
+    content: "\f044"
+}
+
+#progressbar #personal:before {
+    font-family: FontAwesome;
+    content: "\f155"
+}
+
+#progressbar #payment:before {
+    font-family: FontAwesome;
+    content: "\f030"
+}
+
+
+
+#progressbar #confirm:before {
+    font-family: FontAwesome;
+    content: "\f00c"
+}
+
+#progressbar li:before {
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    display: block;
+    font-size: 20px;
+    color: #ffffff;
+    background: lightgray;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    padding: 2px
+}
+
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: lightgray;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    z-index: -1
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+    background: #673AB7
+}
+
+.progress {
+    height: 20px
+}
+
+.progress-bar {
+    background-color: #673AB7
+}
+
+.fit-image {
+    width: 100%;
+    object-fit: cover
+}
+
+
+
+
+
+
+#id_identity_image{
+  background-color: #270041;
+  border-radius: 4px;
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+}
+#id_identity_image::file-selector-button{
+  border: none;
+  border-radius: 7px;
+  color: 432f9f;
+  background-color: #ffffff;
+  height: 30px;
+  cursor: pointer;
+  transition: all .25s ease-in;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+
+#id_shop_cover_image{
+background-color: #270041;
+border-radius: 4px;
+height: 50px;
+width: 100%;
+color: #ffffff;
+}
+#id_shop_cover_image::file-selector-button{
+border: none;
+border-radius: 7px;
+color: 432f9f;
+background-color: #ffffff;
+height: 30px;
+cursor: pointer;
+transition: all .25s ease-in;
+margin-top: 10px;
+margin-left: 10px;
+}
+
+
+#id_image{
+background-color: #270041;
+border-radius: 4px;
+height: 50px;
+width: 100%;
+color: #ffffff;
+}
+#id_image::file-selector-button{
+border: none;
+border-radius: 7px;
+color: 432f9f;
+background-color: #ffffff;
+height: 30px;
+cursor: pointer;
+transition: all .25s ease-in;
+margin-top: 10px;
+margin-left: 10px;
+}
+
+
+#id_shop_image{
+background-color: #270041;
+border-radius: 4px;
+height: 50px;
+width: 100%;
+color: #ffffff;
+}
+#id_shop_image::file-selector-button{
+border: none;
+border-radius: 7px;
+color: 432f9f;
+background-color: #ffffff;
+height: 30px;
+cursor: pointer;
+transition: all .25s ease-in;
+margin-top: 10px;
+margin-left: 10px;
+}
+
+table {
+border: 1px solid #ccc;
+border-collapse: collapse;
+margin: 0;
+padding: 0;
+width: 100%;
+table-layout: fixed;
+}
+
+table caption {
+font-size: 1.5em;
+margin: .5em 0 .75em;
+}
+
+table tr {
+background-color: #f8f8f8;
+border: 1px solid #ddd;
+padding: .35em;
+}
+
+table th,
+table td {
+padding: .625em;
+text-align: center;
+}
+
+table th {
+font-size: .85em;
+letter-spacing: .1em;
+text-transform: uppercase;
+}
+
+@media screen and (max-width: 1100px) {
+table {
+border: 0;
+}
+
+table caption {
+font-size: 1.3em;
+}
+
+table thead {
+display: none;
+}
+
+table tr {
+border-bottom: 3px solid #ddd;
+display: block;
+margin-bottom: .625em;
+}
+
+table td {
+border-bottom: 1px solid #ddd;
+display: block;
+font-size: .8em;
+text-align: right;
+}
+
+table td::before {
+/*
+* aria-label has no advantage, it won't be read inside a table
+content: attr(aria-label);
+*/
+content: attr(data-label);
+float: left;
+font-weight: bold;
+text-transform: uppercase;
+}
+
+table td:last-child {
+border-bottom: 0;
+}
+}
+
+.data-img-class{
+background-color: #f8f9fc;
+/* border: 1px solid #e2e9f3; */
+border-radius: 4px;
+height: 50px;
+width: 100%;
+color: #565A90;
+}
+.data-img-class::file-selector-button{
+border: none;
+border-radius: 4px;
+color: white;
+background-color: #595ef1bd;
+/* border: 1px solid #595ef1bd; */
+height: 30px;
+cursor: pointer;
+transition: all .25s ease-in;
+}
+.data-img-class::file-selector-button:hover{
+background-color: #fff;
+color: #565A90;
+transition: all .25s ease-in;
+}
+
+
+#id_image{
+background-color: #f8f9fc;
+/* border: 1px solid #e2e9f3; */
+border-radius: 4px;
+height: 50px;
+width: 100%;
+color: #565A90;
+padding-bottom: 15px;
+
+}
+#id_image::file-selector-button{
+border: none;
+border-radius: 4px;
+color: white;
+background-color: #595ef1bd;
+/* border: 1px solid #595ef1bd; */
+height: 30px;
+cursor: pointer;
+transition: all .25s ease-in;
+}
+#id_image::file-selector-button:hover{
+background-color: rgb(209, 209, 209);
+color: #565A90;
+
+transition: all .25s ease-in;
+}
+
+
+#id_prediction_topic {
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+height: 57px;
+padding: 10px 38px 10px 16px;
+background: #fff url("select-arrows.svg") no-repeat right 16px center;
+background-size: 10px;
+transition: border-color .1s ease-in-out,box-shadow .1s ease-in-out;
+border: 1px solid #ddd;
+border-radius: 3px;
+}
+#id_prediction_topic:hover {
+border: 1px solid #999;
+}
+#id_prediction_topic:focus {
+border: 1px solid #999;
+box-shadow: 0 3px 5px 0 rgba(0,0,0,.2);
+outline: none;
+}
+/* remove default arrow in IE */
+select::-ms-expand {
+display:none;
+}
+
+
+#id_prediction_topic {
+font-family: "Source Sans Pro", sans-serif;
+font-size: 1.6rem;
+}
+
+#id_prediction_topic {
+border: 0 none;
+color: #FFFFFF;
+background: transparent;
+font-size: 20px;
+font-weight: bold;
+padding: 2px 10px;
+width: 378px;
+*width: 350px;
+*background: #58B14C;
+}
+
+#mainselection {
+overflow: hidden;
+width: 350px;
+-moz-border-radius: 9px 9px 9px 9px;
+-webkit-border-radius: 9px 9px 9px 9px;
+border-radius: 9px 9px 9px 9px;
+box-shadow: 1px 1px 11px #330033;
+background: url("arrow.gif") no-repeat scroll 319px 5px #58B14C;
+}
+</style>
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+      {% include 'vendor/dashboard-nav.html' %}
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                
+                {% if '/vendor/update-product/' in request.path %}
+                <h2>Update Product</h2>
+                {% else %}
+                <h2>Add New Product</h2>
+                {% endif %}
+                  
+                <p class="para">Read our <a href=""><b>policy and guide</b></a> to creating a better product</p>
+              </div>
+              
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                <strong>{{form.errors}}</strong>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="container-fluid dashboard_setting_box">
+            <div class="row justify-content-center">
+                <div class="col-11 col-sm-10 col-md-10 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
+                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                        
+                        <form id="msform" method="POST" enctype="multipart/form-data" novalidate>
+                          {% csrf_token %}
+                          {% csrf_token %}
+                          <div style="display: none;">
+                            {{form.media}}
+                             {{form}}
+                          </div>
+                            <!-- progressbar -->
+                            <ul id="progressbar">
+                                <li class="active" id="account"><strong>Basic Details</strong></li>
+                                <li id="payment"><strong>Image</strong></li>
+                                <li id="personal"><strong>Pricing, Shipping & Stock</strong></li>
+                                <li id="confirm"><strong>Finish</strong></li>
+                            </ul>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div> <br> <!-- fieldsets -->
+                            <fieldset>
+                                <div class="form-card">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h4 class="fs-tiftle">Basic Product Details</h4>
+                                        </div>
+                                        <div class="col-5">
+                                            <h4 class="steps">Step 1 - 4</h4>
+                                        </div>
+                                    </div> 
+                                    <br><br>
+                                    <label class="fieldlabels">Product Title: *</label> 
+                                    {{form.title}} 
+                                    <br>
+                                    <br>
+                                    <label class="fieldlabels">Description *</label> 
+                                    {{form.description}}
+                                    <br>
+                                    <br>
+                                    
+                                    <label class="fieldlabels">Product Type *</label> 
+                                    {{form.type}} 
+                                    <br>
+                                    {% if '/vendor/update-product/' in request.path and product.type == "auction" %}
+                                    <div>
+                                        <label class="fieldlabels">Choose a Bidding Ending Date *</label> 
+                                        {{form.ending_date}} 
+                                        <br>
+                                    </div>
+                                    {% else %}
+                                    <div class="d-none" id="date-div">
+                                        <label class="fieldlabels">Choose a Bidding Ending Date *</label> 
+                                        {{form.ending_date}} 
+                                        <br>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <!-- <div class="d-none" id="date-div">
+                                        <label class="fieldlabels">Choose a Bidding Ending Date *</label> 
+                                        {{form.ending_date}} 
+                                        <br>
+                                    </div> -->
+                                    <br>
+                                    <label class="fieldlabels">Product Condition *</label> 
+                                    {{form.product_condition}}
+                                    <br>
+                                    
+                                    {% if '/vendor/update-product/' in request.path and product.product_condition != "new" %}
+                                        <div  id="rating-div">
+                                            <label class="fieldlabels">Rate Product Condition 1 - 10</label> 
+                                            {{form.product_condition_rating}}
+                                            <br>
+                                        </div>
+                                        <div id="condition-div">
+                                            <label class="fieldlabels">Write a detailed description; for the condition of the product *</label> 
+                                            {{form.product_condition_description}} 
+                                            <br>
+                                        </div>
+                                    {% else %}
+                                        <div  class="d-none" id="rating-div">
+                                            <label class="fieldlabels">Rate Product Condition 1 - 10</label> 
+                                            {{form.product_condition_rating}}
+                                            <br>
+                                        </div>
+                                        <div class="d-none" id="condition-div">
+                                            <label class="fieldlabels">Write a detailed description; for the condition of the product *</label> 
+                                            {{form.product_condition_description}} 
+                                            <br>
+                                        </div>
+                                    {% endif %}
+                                </div> 
+                                {% if '/vendor/update-product/' in request.path %}
+                                    <button type="submit" class="float-start" style="padding: 7px; background-color:#18002e; color: #fff; border: none; border-radius: 4px;">Save Changes</button>
+                                {% endif %}
+                                <input type="button" name="next" class="next action-button" value="Next" />
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <div class="row">
+                                        <div class="col-7">
+                                          <h4 class="fs-tiftle">High Quality Images Leads to more sales</h4>
+
+                                        </div>
+                                        <div class="col-5">
+                                            <h2 class="steps">Step 2 - 4</h2>
+                                        </div>
+                                    </div> 
+                                    <br><br>
+                                    <label class="fieldlabels">Product Thumbnail *</label> 
+                                    {{form.image}}
+                                    <br><br>
+
+                                    {% with named_formsets.variants as formset %}
+                                    {{ formset.management_form }}
+                                    <script type="text/html" id="variants-template">  // id="inlineformsetname-template"
+                                        // id='inlineformsetname-__prefix__' 
+                                        <tr id="variants-__prefix__" class= hide_all>
+                                            {% for fields in formset.empty_form.hidden_fields %}
+                                                {{ fields }}
+                                            {% endfor %}
+                                        
+                                            {% for fields in formset.empty_form.visible_fields %}
+                                                <td>{{fields}}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    </script>
+  
+                                    <div class="table-responsive cardd shaddow mt40 mb30">
+                                        <div class="text-center p-3">
+                                            <h4>Add More Product Images</h4>
+                                        </div>
+                                        <table class="table card-header p2 p-2">
+                                            <tbody id="item-variants">  <!-- id="item-inlineformsetname" -->
+                                                <!-- formset non forms errors -->
+                                                {% for error in formset.non_form_errors %}
+                                                    <span style="color: red">{{ error }}</span>
+                                                {% endfor %}
+                                                {{formss.image}}
+                                                {% for formss in formset %}
+                                                    {{ formss.management_form }}
+                                                    <tr id="variants-{{ forloop.counter0 }}" class= hide_all>  <!-- id="inlineformsetname-counter" -->
+                                                        {{ formss.id }}
+                                                        {% for field in formss.visible_fields %}
+                                                            <td>
+                                                                {{field}}
+                                                                {% for error in field.errors %}
+                                                                    <span style="color: red">{{ error }}</span>
+                                                                {% endfor %}
+                                                                
+                                                            </td>
+                                                            {% endfor %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <br>
+                                        <span class="single-btn add-variants mb-4 p-3" type="submit" id="add-variant-button">
+                                            <button type="button" class="cmnf-btn p-2" style="background-color: rgb(58, 58, 58); border-radius: 4px;  border: none; color: white; height: 35px;"><i class="fas fa-plus"></i>Add Another</button>
+                                        </span>
+                                    </div>
+                                {% endwith %}
+                                    
+                                    
+
+                                </div> <input type="button" name="next" class="next action-button" value="Next" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h2 class="fs-title">Enter Pricing</h2>
+                                        </div>
+                                        <div class="col-5">
+                                            <h2 class="steps">Step 3 - 4</h2>
+                                        </div>
+                                    </div> 
+                                    <label class="fieldlabels">Enter Product Price</label> 
+                                    {{form.price}}
+                                    <br>
+                                    <label class="fieldlabels">Enter Old Product Price</label> 
+                                    {{form.old_price}}
+
+                                    <br><br>
+                                    <h2 class="fs-title">Enter Shipping Prices</h2>
+                                    <label class="fieldlabels">Choose Shipping Price</label> 
+                                    {{form.shipping_amount}}
+
+                                    <br><br>
+                                    <h2 class="fs-title">Enter Stock Amount</h2>
+                                    <label class="fieldlabels">How many of this product are available in the stock</label> 
+                                    {{form.stock_qty}}
+
+                                </div> 
+                                <input type="button" name="next" class="next action-button" value="Next" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                            </fieldset>
+                            <fieldset>
+                              <div class="form-card">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Final Steps</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 3 - 4</h2>
+                                    </div>
+                                </div> 
+                                <label class="fieldlabels">Tags</label> 
+                                {{form.tags}}
+                                <small>Seperate tags with comma e.g tag1, tag2, tag3</small>
+                                <br>
+                                    <br>
+                                    <label class="fieldlabels">Category *</label> 
+                                    {{form.category}}
+                                    <br>
+                                    <br>
+                                    <label class="fieldlabels">Brand *</label> 
+                                    {{form.brand}}
+
+                            </div> 
+                              <button type="submit" class="action-button">Create Product</button>
+                              <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+        // when user clicks add more btn of images
+      $('.add-images').click(function(ev) {
+          ev.preventDefault();
+          var count = $('#item-images').children().length;
+          var tmplMarkup = $('#images-template').html();
+          var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+          $('#item-images').append(compiledTmpl);
+  
+          // update form count
+          $('#id_images-TOTAL_FORMS').attr('value', count+1);
+      });
+  });
+
+  $(document).ready(function() {
+    // when user clicks add more btn of variants
+      $('.add-variants').click(function(ev) {
+          ev.preventDefault();
+          var count = $('#item-variants').children().length;
+          var tmplMarkup = $('#variants-template').html();
+          var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+          $('#item-variants').append(compiledTmpl);
+  
+          // update form count
+          $('#id_variants-TOTAL_FORMS').attr('value', count+1);
+      });
+  });
+</script>
+
+<script>
+  $(document).ready(function(){
+
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var opacity;
+    var current = 1;
+    var steps = $("fieldset").length;
+    
+    setProgressBar(current);
+    
+    $(".next").click(function(){
+    
+    current_fs = $(this).parent();
+    next_fs = $(this).parent().next();
+    
+    //Add Class Active
+    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+    
+    //show the next fieldset
+    next_fs.show();
+    //hide the current fieldset with style
+    current_fs.animate({opacity: 0}, {
+    step: function(now) {
+    // for making fielset appear animation
+    opacity = 1 - now;
+    
+    current_fs.css({
+    'display': 'none',
+    'position': 'relative'
+    });
+    next_fs.css({'opacity': opacity});
+    },
+    duration: 500
+    });
+    setProgressBar(++current);
+    });
+    
+    $(".previous").click(function(){
+    
+    current_fs = $(this).parent();
+    previous_fs = $(this).parent().prev();
+    
+    //Remove class active
+    $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+    
+    //show the previous fieldset
+    previous_fs.show();
+    
+    //hide the current fieldset with style
+    current_fs.animate({opacity: 0}, {
+    step: function(now) {
+    // for making fielset appear animation
+    opacity = 1 - now;
+    
+    current_fs.css({
+    'display': 'none',
+    'position': 'relative'
+    });
+    previous_fs.css({'opacity': opacity});
+    },
+    duration: 500
+    });
+    setProgressBar(--current);
+    });
+    
+    function setProgressBar(curStep){
+    var percent = parseFloat(100 / steps) * curStep;
+    percent = percent.toFixed();
+    $(".progress-bar")
+    .css("width",percent+"%")
+    }
+    
+    $(".submit").click(function(){
+    return false;
+    })
+    
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $("select#id_type").change(function(){
+            var product_type = $(this).children("option:selected").val();
+            console.log(product_type);
+            if(product_type === "auction") {
+                $("#date-div").removeClass('d-none');
+            } else {
+                $("#date-div").addClass('d-none');
+            }
+        });
+    });
+    </script>
+
+<script>
+    $(document).ready(function(){
+        $("select#id_product_condition").change(function(){
+            var product_type = $(this).children("option:selected").val();
+            console.log(product_type);
+            if(product_type !== "new") {
+                $("#condition-div").removeClass('d-none');
+                $("#rating-div").removeClass('d-none');
+
+            } else {
+                $("#date-div").addClass('d-none');
+                $("#rating-div").addClass('d-none');
+
+            }
+
+            if(product_type === "new") {
+                $("#condition-div").addClass('d-none');
+                $("#rating-div").addClass('d-none');
+            }
+        });
+    });
+    </script>
+{% endblock content %}
+

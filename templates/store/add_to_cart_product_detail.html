@@ -1,0 +1,21 @@
+<input type="hidden" class="product-tax-fee-{{ product.id }}" value="{{ new_rate_|floatformat:2 }}" />
+<input type="hidden" class="product-processing-fee-{{ product.id }}" value="{{ service_fee_rate_ }}" />
+<input type="hidden" class="product-vendor-{{ product.id }}" value="{{ product.vendor.id }}" />
+<input type="hidden" class="product-vendor-name-{{ product.id }}" value="{{ product.vendor.shop_name }}" />
+<input type="hidden" class="product-brand-{{ product.id }}" value="{{ product.brand }}" />
+
+<input type="hidden" class="product-types_choices-{{ product.id }}" value="{{ product.brand }}" />
+
+<input type="hidden" class="product-shipping_amount-{{ product.id }}" value="{{ product.shipping_amount }}" />
+<input type="hidden" class="product-quantity-{{ product.id }}" value="1" id="product-quantity" class="w-25 mb-10 product-quantity-{{ product.id }}" />
+<input type="hidden" class="product-price-{{ product.id }}" value="{{ product.price }}" />
+<input type="hidden" class="product-pid-{{ product.id }}" value="{{ product.pid }}" />
+<input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}" />
+<input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}" />
+<input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}" />
+<input type="hidden" class="product-meta_title-{{ product.id }}" value="{{ product.meta_title }}" />
+<input type="hidden" class="product-slug-{{ product.id }}" value="{{ product.slug }}" />                      
+<input type="hidden" class="product-vendor-slug-{{ p.id }}" value="{{ product.vendor.slug }}" />
+
+<input type="hidden" class="product-stock-qty-{{ product.id }}" value="{{ product.stock_qty }}" />
+<input type="hidden" class="product-in-stock-{{ product.id }}" value="{{ product.in_stock }}" />

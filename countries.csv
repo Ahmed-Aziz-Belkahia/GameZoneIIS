@@ -1,0 +1,246 @@
+country,rate,custom_name
+Andorra,77,Tax
+United Arab Emirates,54,Tax
+Afghanistan,33,Tax
+Antigua and Barbuda,24,Tax
+Anguilla,33,Tax
+Albania,22,Tax
+Armenia,33,Tax
+Netherlands Antilles,23,Tax
+Angola,11,Tax
+Antarctica,45,Tax
+Argentina,32,Tax
+American Samoa,34,Tax
+Austria,65,Tax
+Australia,77,Tax
+Aruba,54,Tax
+Azerbaijan,33,Tax
+Bosnia and Herzegovina,24,Tax
+Barbados,33,Tax
+Bangladesh,22,Tax
+Belgium,33,Tax
+Burkina Faso,23,Tax
+Bulgaria,11,Tax
+Bahrain,45,Tax
+Burundi,32,Tax
+Benin,34,Tax
+Bermuda,65,Tax
+Brunei,77,Tax
+Bolivia,54,Tax
+Brazil,33,Tax
+Bahamas,24,Tax
+Bhutan,33,Tax
+Bouvet Island,22,Tax
+Botswana,33,Tax
+Belarus,23,Tax
+Belize,11,Tax
+Canada,45,Tax
+Cocos [Keeling] Islands,32,Tax
+Congo [DRC],34,Tax
+Central African Republic,65,Tax
+Congo [Republic],77,Tax
+Switzerland,54,Tax
+Côte d'Ivoire,33,Tax
+Cook Islands,24,Tax
+Chile,33,Tax
+Cameroon,22,Tax
+China,33,Tax
+Colombia,23,Tax
+Costa Rica,11,Tax
+Cuba,45,Tax
+Cape Verde,32,Tax
+Christmas Island,34,Tax
+Cyprus,65,Tax
+Czech Republic,77,Tax
+Germany,54,Tax
+Djibouti,33,Tax
+Denmark,24,Tax
+Dominica,33,Tax
+Dominican Republic,22,Tax
+Algeria,33,Tax
+Ecuador,23,Tax
+Estonia,11,Tax
+Egypt,45,Tax
+Western Sahara,32,Tax
+Eritrea,34,Tax
+Spain,65,Tax
+Ethiopia,77,Tax
+Finland,54,Tax
+Fiji,33,Tax
+Falkland Islands [Islas Malvinas],24,Tax
+Micronesia,33,Tax
+Faroe Islands,22,Tax
+France,33,Tax
+Gabon,23,Tax
+United Kingdom,11,Tax
+Grenada,45,Tax
+Georgia,32,Tax
+French Guiana,34,Tax
+Guernsey,65,Tax
+Ghana,77,Tax
+Gibraltar,54,Tax
+Greenland,33,Tax
+Gambia,24,Tax
+Guinea,33,Tax
+Guadeloupe,22,Tax
+Equatorial Guinea,33,Tax
+Greece,23,Tax
+South Georgia and the South Sandwich Islands,11,Tax
+Guatemala,45,Tax
+Guam,32,Tax
+Guinea-Bissau,34,Tax
+Guyana,65,Tax
+Gaza Strip,77,Tax
+Hong Kong,54,Tax
+Heard Island and McDonald Islands,33,Tax
+Honduras,24,Tax
+Croatia,33,Tax
+Haiti,22,Tax
+Hungary,33,Tax
+Indonesia,23,Tax
+Ireland,11,Tax
+Israel,45,Tax
+Isle of Man,32,Tax
+India,34,Tax
+British Indian Ocean Territory,65,Tax
+Iraq,56,Tax
+Iran,77,Tax
+Iceland,54,Tax
+Italy,33,Tax
+Jersey,24,Tax
+Jamaica,33,Tax
+Jordan,22,Tax
+Japan,33,Tax
+Kenya,23,Tax
+Kyrgyzstan,11,Tax
+Cambodia,45,Tax
+Kiribati,32,Tax
+Comoros,34,Tax
+Saint Kitts and Nevis,65,Tax
+North Korea,77,Tax
+South Korea,54,Tax
+Kuwait,33,Tax
+Cayman Islands,24,Tax
+Kazakhstan,33,Tax
+Laos,22,Tax
+Lebanon,33,Tax
+Saint Lucia,23,Tax
+Liechtenstein,11,Tax
+Sri Lanka,45,Tax
+Liberia,32,Tax
+Lesotho,34,Tax
+Lithuania,65,Tax
+Luxembourg,77,Tax
+Latvia,54,Tax
+Libya,33,Tax
+Morocco,24,Tax
+Monaco,33,Tax
+Moldova,22,Tax
+Montenegro,33,Tax
+Madagascar,23,Tax
+Marshall Islands,11,Tax
+Macedonia [FYROM],45,Tax
+Mali,32,Tax
+Myanmar [Burma],34,Tax
+Mongolia,65,Tax
+Macau,77,Tax
+Northern Mariana Islands,54,Tax
+Martinique,33,Tax
+Mauritania,24,Tax
+Montserrat,33,Tax
+Malta,22,Tax
+Mauritius,33,Tax
+Maldives,23,Tax
+Malawi,11,Tax
+Mexico,45,Tax
+Malaysia,32,Tax
+Mozambique,34,Tax
+Namibia,65,Tax
+New Caledonia,77,Tax
+Niger,54,Tax
+Norfolk Island,33,Tax
+Nigeria,24,Tax
+Nicaragua,33,Tax
+Netherlands,22,Tax
+Norway,33,Tax
+Nepal,23,Tax
+Nauru,11,Tax
+Niue,45,Tax
+New Zealand,32,Tax
+Oman,34,Tax
+Panama,65,Tax
+Peru,77,Tax
+French Polynesia,54,Tax
+Papua New Guinea,33,Tax
+Philippines,24,Tax
+Pakistan,33,Tax
+Poland,22,Tax
+Saint Pierre and Miquelon,33,Tax
+Pitcairn Islands,23,Tax
+Puerto Rico,11,Tax
+Palestinian Territories,45,Tax
+Portugal,32,Tax
+Palau,34,Tax
+Paraguay,65,Tax
+Qatar,77,Tax
+Réunion,54,Tax
+Romania,33,Tax
+Serbia,24,Tax
+Russia,33,Tax
+Rwanda,22,Tax
+Saudi Arabia,33,Tax
+Solomon Islands,23,Tax
+Seychelles,11,Tax
+Sudan,45,Tax
+Sweden,32,Tax
+Singapore,34,Tax
+Saint Helena,65,Tax
+Slovenia,77,Tax
+Svalbard and Jan Mayen,54,Tax
+Slovakia,33,Tax
+Sierra Leone,24,Tax
+San Marino,33,Tax
+Senegal,22,Tax
+Somalia,33,Tax
+Suriname,23,Tax
+São Tomé and Príncipe,11,Tax
+El Salvador,45,Tax
+Syria,32,Tax
+Swaziland,34,Tax
+Turks and Caicos Islands,65,Tax
+Chad,54,Tax
+French Southern Territories,77,Tax
+Togo,54,Tax
+Thailand,33,Tax
+Tajikistan,24,Tax
+Tokelau,33,Tax
+Timor-Leste,22,Tax
+Turkmenistan,33,Tax
+Tunisia,23,Tax
+Tonga,11,Tax
+Turkey,45,Tax
+Trinidad and Tobago,32,Tax
+Tuvalu,34,Tax
+Taiwan,65,Tax
+Tanzania,77,Tax
+Ukraine,54,Tax
+Uganda,33,Tax
+U.S. Minor Outlying Islands,24,Tax
+United States,33,Tax
+Uruguay,22,Tax
+Uzbekistan,33,Tax
+Vatican City,23,Tax
+Saint Vincent and the Grenadines,11,Tax
+Venezuela,45,Tax
+British Virgin Islands,32,Tax
+U.S. Virgin Islands,34,Tax
+Vietnam,65,Tax
+Vanuatu,77,Tax
+Wallis and Futuna,54,Tax
+Samoa,33,Tax
+Kosovo,24,Tax
+Yemen,33,Tax
+Mayotte,22,Tax
+South Africa,33,Tax
+Zambia,23,Tax
+Zimbabwe,11,Tax

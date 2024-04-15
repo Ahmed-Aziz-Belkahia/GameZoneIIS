@@ -1,0 +1,76 @@
+{% load static %}
+<style>
+  ul,li{
+     list-style: none;
+  }
+  
+</style>
+<div class="dashboard__sidebar">
+    <div class="dashboard_sidebar_list">
+      
+      {% if request.user.profile.seller == True %}
+        
+          <div class="sidebar_list_item" >
+            <a href="{% url 'vendor:dashboard' %}" class="items-center {% if request.path == '/vendor/dashboard/' %}-is-active{% endif %}" ><i class="fas fa-house mr15"></i>Dashboard</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:earning' %}" class="items-center {% if request.path == '/vendor/earning/' %}-is-active{% endif %}"><i class="fas fa-dollar-sign mr15"></i>Earning</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:products' %}" class="items-center {% if request.path == '/vendor/products/' %}-is-active{% endif %}"><i class="bi bi-grid-3x3-gap-fill mr15"></i>Products</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:reviews' %}" class="items-center {% if request.path == '/vendor/reviews/' %}-is-active{% endif %}"><i class="bi bi-star-fill mr15"></i>Reviews</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:vendor_faq' %}" class="items-center {% if request.path == '/vendor/vendor_faq/' %}-is-active{% endif %}"><i class="fas fa-circle-question mr15"></i>Product FAQs</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:orders' %}" class="items-center {% if request.path == '/vendor/orders/' %}-is-active{% endif %}"><i class="bi bi-cart-check-fill mr15"></i>Order</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:product_bidding' %}" class="items-center {% if request.path == '/vendor/product_bidding/' %}-is-active{% endif %}"><i class="fas fa-chart-simple mr15"></i>Product Bidding</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:product_offers' %}" class="items-center {% if request.path == '/vendor/product_offers/' %}-is-active{% endif %}"><i class="bi bi-shop mr15"></i>Offers Recieved</a>
+          </div>
+          <!-- <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:dashboard' %}" class="items-center "><i class="bi bi-people-fill mr15"></i>Customer</a>
+          </div> -->
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:create_product' %}" class="items-center {% if request.path == '/vendor/create-product/' %}-is-active{% endif %}"><i class="fas fa-folder-plus mr15"></i>Add New Product</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:vendor-coupon' %}" class="items-center {% if request.path == '/vendor/vendor-coupon/' %}-is-active{% endif %}"><i class="fas fa-tags mr15"></i>Coupon & Discounts</a>
+          </div>
+          <div class="sidebar_list_item ">
+            <a href="{% url 'vendor:create_custom_order_with_items' %}" class="items-center {% if request.path == '/vendor/create_custom_order_with_items/' %}-is-active{% endif %}"><i class="bi bi-plus-circle-fill mr15"></i>Create Custom Invoice</a>
+          </div>
+          <div class="sidebar_list_item ">
+          </div>
+      {% endif %}
+
+      <div class="sidebar_list_item ">
+        <a href="{% url 'vendor:inbox' %}" class="items-center {% if request.path == '/vendor/inbox/' %}-is-active{% endif %}"><i class="bi bi-chat-right-dots-fill mr15"></i>Message</a>
+      </div>
+      {% if request.user.profile.seller == True %}
+
+      <div class="sidebar_list_item ">
+        <a href="{% url 'vendor:vendor_notification' %}" class="items-center {% if request.path == '/vendor/vendor_notification/' %}-is-active{% endif %}"><i class="bi bi-bell-fill mr15"></i>Notifications</a>
+      </div>
+      <div class="sidebar_list_item ">
+        <a href="{% url 'vendor:vendor_payout_update' %}" class="items-center {% if request.path == '/vendor/vendor_payout_update/' %}-is-active purple-btn{% endif %}"><i class="fas fa-wallet mr15"></i>Payout Settings</a>
+      </div>
+      <div class="sidebar_list_item ">
+        <a href="{% url 'vendor:settings' %}" class="items-center {% if request.path == '/vendor/settings/' %}-is-active{% endif %}"><i class="bi bi-gear-wide-connected mr15"></i>Settings</a>
+      </div>
+      <div class="sidebar_list_item ">
+        <a href="{% url 'vendor:vendor_shop_view_page' vendor.vid %}"><i class="fas fa-shop mr15 "></i>Visit Shop <img src="{% static 'images/icons/resize.png' %}" class="ml5" style="height: 15px; width: 15px;" alt=""></a>
+      </div>
+      {% endif %}
+
+      <div class="sidebar_list_item ">
+        <a href="{%  url 'userauths:sign-out' %}" class="items-center"><i class="bi bi-box-arrow-in-right mr15"></i>Logout</a>
+      </div>
+    </div>
+  </div>

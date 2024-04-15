@@ -1,0 +1,38 @@
+.main__featuredGamesCategorys {
+    width: 100%;
+    height: auto;
+}
+
+.featuredGamesCategorys__div {
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    padding: 1rem 16rem;
+    gap: 2rem;
+}
+
+.featuredGamesCategorys__game {
+    border-radius: 15px;
+    overflow: hidden;
+    width: 50%;
+    height: 200px;
+    transition: all .3s ease-in-out;
+}
+
+.featuredGamesCategorys__game:hover {
+    transform: scale(1.05);
+}
+@media screen and (max-width: 1024px) {
+    .featuredGamesCategorys__div {
+        padding: 1rem 1rem;
+        flex-wrap: wrap;
+    }
+    .featuredGamesCategorys__game{
+        width: 100%;
+    }
+    .featuredGamesCategorys__game{
+        height: auto;
+        border-radius: 0;
+    }
+
+}

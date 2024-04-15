@@ -1,0 +1,138 @@
+{% extends "vendor/vendor-base.html" %} {% load static %} {% block content %}
+<div class="dashboard_content_wrapper">
+  <div class="dashboard dashboard_wrapper pr30 pr0-md">
+    {% include 'vendor/dashboard-nav.html' %}
+
+    <div class="dashboard__main pl0-md">
+      <div class="dashboard__content bgc-gmart-gray">
+        <div class="row pb50">
+          <div class="col-lg-12">
+            <div class="dashboard_title_area">
+              <h2>Product Bidding</h2>
+              <!-- <p class="para">You have a total of <b>{{ order.count }}  orders</b></p> -->
+            </div>
+          </div>
+        </div>
+        <div
+          class="row d-block d-sm-flex justify-content-center justify-content-sm-between"
+        >
+          <div class="col-sm-6 col-lg-12">
+            <div class="dashboard_page header_search_widget mb30 mb15-520">
+              <form action="" method="GET">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="q"
+                    placeholder="Search Bidding by ID"
+                    aria-label="Recipient's username"
+                  />
+                  <div class="input-group-append">
+                    <button class="btn" type="submit">
+                      <span class="fa fa-search"></span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- <div class="col-sm-6 col-lg-3">
+              <div class="dashboard_page sidebar_location_filter mb30 mb5-520">
+                <div class="form-group">
+                      <div class="dropdown">
+                              <button class="dropdown-toggle btn btn-new btn-lg btn-thm w100" style="height: 53px;" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Filter By Status
+                              </button>
+                          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                              <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'published' %}">Published</a></li>
+                              <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'in_review' %}">In Review</a></li>
+                              <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'draft' %}">Draft</a></li>
+                              <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'disabled' %}">Disabled</a></li>
+                              <li><a class="dropdown-item" href="{% url 'vendor:product-status' 'rejected' %}">Rejected</a></li>
+                          </ul>
+                      </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="dashboard_page_add_listing text-center text-lg-end mb30 mb15-520 d-grid">
+                <a href="{% url 'vendor:list_custom_order' %}" class="btn btn-new btn-lg btn-thm">View Custom Orders <i class="fas fa-eye"></i></a>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="dashboard_page_add_listing text-center text-lg-end mb30 mb15-520 d-grid">
+                <a href="{% url 'vendor:create_custom_order_with_items' %}" class="btn btn-new btn-lg btn-thm">Create Custom Order <i class="fas fa-plus-circle"></i></a>
+              </div>
+            </div> -->
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-xxl-12">
+            <div class="d-flex justify-content-between statistics_funfact">
+              <div class="details">
+                <div class="subtitle1">All Auctioned Products</div>
+                <div class="title">
+                  {{products.count}}
+                  <span class="badge style1 text-center"></span>
+                </div>
+              </div>
+              <div class="icon text-center mt-4">
+                <i class="bi bi-cart-check-fill"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="application_statics">
+              <h4 class="title pl30 mb30">All Auction Products</h4>
+              <div class="account_user_deails dashboard_page">
+                <div class="order_table table-responsive">
+                  <table class="table">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">S/N</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Ending Date</th>
+                        <th scope="col">Bidders</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for o in products %}
+
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                          <a
+                            href="{% url 'store:product-detail' o.pid %}"
+                            style="border-bottom: 1px dashed black"
+                            >{{o.title|truncatechars:27}}</a
+                          >
+                        </td>
+                        <td>{{o.ending_date}}</td>
+                        <td>{{o.product_bidders.all.count}}</td>
+                        <th scope="row">
+                          <a
+                            href="{% url 'vendor:product_bidding_detail' o.pid %}"
+                            class="btn purple-btn"
+                            >View Bidders</a
+                          >
+                        </th>
+                      </tr>
+                      {% empty %}
+                      <h4>No Auctioned Product Yet</h4>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

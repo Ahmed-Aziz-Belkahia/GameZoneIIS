@@ -1,0 +1,115 @@
+<div class="item border-rounded-cus" style="margin-top: 10px;padding-left: 10px; border-radius: 20px;">
+    <div class="shop_item small_style bdrs6 hvr_bdr1 home2_style border border-rounded-cus">
+        <div class="thumb pb30">
+            <a href="{% url 'store:product-detail' p.meta_title %}">
+                <img src="{{p.image.url}}"
+                    {% comment %} style="height: 200px; width: 100%; object-fit: cover; border-radius: 3px;" {% endcomment %}
+                    class="product-img-avatar" alt="Best Seller Item"
+                >
+            </a>
+            <div class="thumb_info">
+                <ul class="mb0">
+                    <li><a class="action-btn add-to-wishlist" data-product-item="{{p.id}}"><span
+                                class="fas fa-heart"></span></a></li>
+                </ul>
+            </div>
+            {% include 'store/add_to_cart_list.html' %}
+            
+            {% if p.in_stock == True and p.stock_qty != 0 %}
+                {% if p.type == "auction" %}
+                    <div class="shop_item_cart_bftn d-grid mt-2"><a class="btn purple-btn" href="{% url 'store:product-detail' p.meta_title %}">Join Bidding Now</a></div>
+                {% endif %}
+
+                {% if p.type == "offer" %}
+                    <div class="shop_item_cart_bftn d-grid mt-2"><a class="btn purple-btn" href="{% url 'store:product-detail' p.meta_title %}">Submit Price Offer</a></div>
+                {% endif %}
+
+                {% if p.type == "regular" %}
+                    <div class="shop_item_cart_bftn d-grid"><a class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2" data-index="{{ p.id }}" id="add-to-cart-btn">Add to Cart</a></div>
+                {% endif %}  
+            {% else %}
+            <div class="d-grid text-white"><a class="btn btngray mt-2 text-white" style="color: white;">Out of stock</a></div>
+            {% endif %}   
+        </div>
+        <div class="details">
+            <div class="title mt-0 mb0 mb-0 mt0"><a
+                    href="{% url 'store:product-detail' p.meta_title %}">{{p.title|title|truncatechars:27}}</a>
+            </div>
+            <div class="sub_title mt-0 mb0 mb-2 mb2"><a
+                    href="{% url 'vendor:vendor_shop_view_page' p.vendor.vid %}"
+                    class="dashed-custom"><small>By
+                        {{p.brand|truncatechars:20}}</small></a></div>
+            <div class="review d-block">
+                <ul class="mb0 me-2">
+
+                    {% if p.rating_count == 0 %}
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %}
+
+                    {% if p.product_rating >= 1 and p.product_rating < 2 %}
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %}
+
+                    {% if p.product_rating >= 2 and p.product_rating < 3 %}
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %}
+
+                    {% if p.product_rating >= 3 and p.product_rating < 4 %}
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %}
+
+                    {% if p.product_rating >= 4 and p.product_rating < 5 %}
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %}
+
+                    {% if p.product_rating >= 5 and p.product_rating < 6 %}
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+                {% if p.rating_count == 0 %}
+                <div class="review_count"><a><small>Not Rated Yet</small></a></div>
+                {% else %}
+                <div class="review_count"><a><small>{{p.product_rating|floatformat:1}}/5.0
+                            ({{p.rating_count}}
+                            review{{p.rating_count|pluralize:"s"}})</small></a></div>
+                {% endif %}
+
+            </div>
+            <div class="si_footer">
+                <div class="price">{{cs}}{{p.price}} {% if p.old_price != 0.00 %}
+                    <small><del style="text-decoration: line-through;     color: red;
+                        font-weight: 500;">{{ cs }}{{p.old_price}}</del></small>{% endif %}</div>
+                <!-- <a class="action-btn add-to-wishlist" data-product-item="{{p.id}}"><span class="fas fa-heart"></span></a> -->
+
+            </div>
+
+        </div>
+    </div>
+</div>

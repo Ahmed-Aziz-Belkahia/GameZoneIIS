@@ -1,0 +1,60 @@
+
+{% extends "partials/base.html" %}
+
+{% block title %}
+  Order Tracker
+{% endblock title %}
+  
+{% load static %}
+{% block content %}
+  
+  <div class="body_content_wrapper position-relative" style="margin-top: 0;">
+  <!-- Inner Page Breadcrumb -->
+  <section class="inner_page_breadcrumb">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="breadcrumb_content">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'store:shop' %}">Shop</a></li>
+              <li class="breadcrumb-item"><a>Order</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a>Order Tracker</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	<section class="our-order-tracking pt0">
+		<div class="container">
+			<div class="row">
+                <div class="col-lg-6">
+                    <div class="order_tracking_thumb animate_content">
+            <img class="animate_thumb" src="{% static 'images/resource/order-tracking.png' %}" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-5 offset-xl-1">
+          <div class="order_tracking_content">
+            <div class="login_form tracking_page pt100 pt50-lg">
+              <form method="POST">
+                {% csrf_token %}
+                <h2 class="title">Track Your Order</h2>
+                <p class="mb30">To track your order please enter your Order ID in the box below and press the "Track" button. This was given to you on your receipt and in the confirmation email you should have received.</p>
+                <div class="form-group">
+                  <label class="form-label">Order ID</label>
+                  <input name="order_id" id="order_id" type="text" class="form-control">
+                </div>
+                
+                <button type="submit" class="btn btn-track btn-thm">Track</button>
+              </form>
+            </div>
+          </div>
+        </div>
+			</div>
+		</div>
+	</section>
+
+  </div>
+{% endblock content %}

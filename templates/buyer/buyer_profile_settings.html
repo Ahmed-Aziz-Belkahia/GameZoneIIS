@@ -1,0 +1,122 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% crispy u_form %}
+{% block title %}
+  Profile Settings
+{% endblock title %}
+{% crispy p_form %}
+{% block content %}
+<section class="our-dashbord dashbord"style="margin-top: 0;">
+   <div class="container">
+      <div class="row">
+         {% include 'buyer/nav-desktop.html' %}
+         <div class="col-lg-9 col-xl-9">
+            {% include 'buyer/nav-mobile.html' %}
+               <div class="row">
+               <div class="col-xl-12">
+                  <div class="account_user_deails pl40 pl0-md">
+                     <h2 class="title mb30">Settings</h2>
+                     <div class="ui_kit_tab style2">
+                       
+                        <!-- nav tab Nav List End -->
+                        <!-- nav tab contents Start -->
+                        <div class="tab-content pt20 row" id="myTabContent">
+                           <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
+                              <div class="account_details_page form_grid">
+                                 <ul class="list-group">
+                                    <li class="list-group-item purple-btn">General Account Settings</li>
+                                    <li class="list-group-item"> <i class="fas fa-user ms-2 me-2 ml-2"></i> <a href="{% url 'core:profile' %}">Profile Update</a></li>
+                                    <li class="list-group-item"> <i class="fas fa-lock ms-2 me-2 ml-2"></i> <a href="{% url 'change_password' %}">Change Password</a></li>
+                                    <!-- <li class="list-group-item"> <i class="fas fa-user ms-2 me-2 ml-2"></i> <a href="">Profile Update</a></li> -->
+                                    
+                                  </ul>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-xl-6" id="baby" role="tabpanel" aria-labelledby="baby-tab">
+                              <div class="account_details_page form_grid">
+                                 <form class="contact_form" name="contact_form" action="#" method="post" novalidate>
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Current password</label>
+                                             <input class="form-control" type="text" placeholder="Your Password">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-12">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">New password</label>
+                                             <input class="form-control" type="text" placeholder="Your Password">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-12">
+                                          <div class="form-group mb-4">
+                                             <label class="form-label">Confirm New Password</label>
+                                             <input class="form-control email" type="email" placeholder="Your Email">
+                                          </div>
+                                       </div>
+                                       <div class="col-sm-12">
+                                          <div class="form-group d-flex mb0">
+                                             <button type="button" class="btn btn-thm me-3">Update</button>
+                                             <button type="button" class="btn btn-white">Cancel</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-xl-8" id="furniture" role="tabpanel" aria-labelledby="furniture-tab">
+                              <div class="account_details_page mb20 d-flex justify-content-between bb1">
+                                 <div class="second_step_setup pb10">
+                                    <h5 class="title">SMS</h5>
+                                    <p>Messages to be sent by zenmart to your mobile phone via SMS method</p>
+                                 </div>
+                                 <div class="switch shortcode_widget_switch">
+                                    <div class="ui_kit_whitchbox">
+                                       <div class="form-check form-switch mb10">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                          <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="account_details_page mb20 d-flex justify-content-between bb1">
+                                 <div class="second_step_setup pb10">
+                                    <h5 class="title">Email</h5>
+                                    <p>Messages to be sent by zenmart to your mobile phone via Email method</p>
+                                 </div>
+                                 <div class="switch shortcode_widget_switch">
+                                    <div class="ui_kit_whitchbox">
+                                       <div class="form-check form-switch mb10">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault2" checked>
+                                          <label class="form-check-label" for="flexSwitchCheckDefault2"></label>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="account_details_page d-flex justify-content-between bb1">
+                                 <div class="second_step_setup pb10">
+                                    <h5 class="title">Phone Call</h5>
+                                    <p>Messages to be sent by zenmart to your mobile phone via Phone Call method</p>
+                                 </div>
+                                 <div class="switch shortcode_widget_switch">
+                                    <div class="ui_kit_whitchbox">
+                                       <div class="form-check form-switch mb10">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault3">
+                                          <label class="form-check-label" for="flexSwitchCheckDefault3"></label>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- nav tab contents End -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock content %}

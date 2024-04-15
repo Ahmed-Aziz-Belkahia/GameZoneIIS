@@ -1,0 +1,88 @@
+
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
+<style>
+  th,
+  td {
+    white-space: nowrap;
+  }
+  .active-chat {
+    background-color: rgb(229, 224, 245);
+  }
+</style>
+
+<div class="dashboard_content_wrapper">
+  <div class="dashboard dashboard_wrapper pr30 pr0-md">
+    {% include 'vendor/dashboard-nav.html' %}
+
+    <div class="dashboard__main pl0-md">
+      <div class="dashboard__content bgc-gmart-gray">
+        <div class="row pb50">
+          <div class="col-lg-12">
+            <div class="dashboard_title_area">
+              <h2>
+                Showing Results for "<b><i>{{ username }}</i></b> "
+              </h2>
+              <p class="para">Found <b>{{users.count}} </b>Result(s)</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-xxl-12">
+            <div class="message_container">
+              <div class="inbox_user_list">
+                <div class="iu_heading">
+                  <div class="candidate_revew_search_box">
+                    <form class="row-cols-lg-aufto g-3 align-items-center d-flex p-3 m-2" action="{% url 'vendor:search_users' %}" method="GET">
+                      <input class="form-control" type="search" name="q" placeholder="Search For Someone..." aria-label="Search">
+                      <button class="btn border p-2 ms-2"  type="submit"><span class="fas fa-search"></span></button>
+                    </form>
+                  </div>
+                </div>
+                <ul>
+                  {% for message in users %}
+                  <a href="{% url 'vendor:inbox-detail' message.username %}">
+                    <li class="contact pt3">
+                      <div class="wrap shadow p-4" style="border-radius: 10px">
+                        <img
+                          class="img-fluid"
+                          src="{{message.profile.image.url}}"
+                          style="width: 40px; height: 40px; object-fit: cover"
+                          alt="ms1.jpg"
+                        />
+                        <div class="child-wrap df">
+                          <div class="meta">
+                            {% if message.profile.full_name %}
+                            <h5 class="name">
+                              {{message.profile.full_name|title}}
+                            </h5>
+                            {% else %}
+                            <h5 class="name">{{message.username|title}}</h5>
+                            {% endif %}
+                            <p class="preview">
+                              Send Message
+                              <i class="bi bi-chat-right-dots-fill"></i>
+                            </p>
+                          </div>
+                          <div class="iul_notific">
+                            <small class="body-color"></small>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </a>
+
+                  {% empty %}
+                  <h4>No Users Found...</h4>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

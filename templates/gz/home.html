@@ -1,0 +1,74 @@
+{% extends 'gz/base.html' %}
+{% load static %}
+{% block head %}
+    {% block title %}<title>GameZone</title>{% endblock title %}
+    
+{% endblock head %}
+
+{% block header %}
+    {% include 'gz/components/navigation.html' %}
+{% endblock header %}
+
+{% block main %}
+
+<!--<div id="preloader" class="preloader"></div>
+    <div class="main__div">-->
+
+        {% include 'gz/components/hero.html' %}
+        {% include 'gz/components/top-deals.html' %}
+        {% include 'gz/components/CTA.html' %}
+        {% include 'gz/components/pre-owned-deals.html' %}
+        {% include 'gz/components/miniCTA.html' %}
+        {% include 'gz/components/consoleCatalog.html' %}
+        {% include 'gz/components/browseByCategory.html' %}
+        {% include 'gz/components/brands.html' %}
+        {% include 'gz/components/largeCTA.html' %}
+        {% include 'gz/components/playstation.html' %}
+        {% include 'gz/components/xbox.html' %}
+        {% include 'gz/components/gamesCatalog.html' %}
+        {% include 'gz/components/featuredGames.html' %}
+        {% include 'gz/components/featuredGamesCTA.html' %}
+        {% include 'gz/components/featuredGamesGenres.html' %}
+        {% include 'gz/components/accesoriesCatalog.html' %}
+        {% include 'gz/components/secondMiniCTA.html' %}
+
+
+    </div>
+
+{% endblock main %}
+    
+{% block footer %}
+    {% include 'gz/components/newfooter.html' %}
+{% endblock footer %}
+
+{% block scripts %}
+<!--<script>
+ $(document).ready(function() {
+        function preloaderLoad() {
+            if ($('.preloader').length) {
+                $('.preloader').delay(1000).fadeOut(300, function() {
+                    // Fade out complete, set to display none
+                    $('.preloader').css('display', 'none');
+                });
+            }
+            $(".preloader_disabler").on('click', function() {
+                $("#preloader").hide();
+            });
+        }
+    
+        // Call preloaderLoad function when window is fully loaded
+        $(window).on('load', function() {
+            preloaderLoad();
+            
+            // Set timeout to hide after 5000 milliseconds (5 seconds)
+            setTimeout(function() {
+                $('.preloader').fadeOut(300, function() {
+                    $('.preloader').css('display', 'none');
+                });
+            }, 5000);
+        });
+    }); 
+    
+</script>-->
+{% endblock scripts %}
+

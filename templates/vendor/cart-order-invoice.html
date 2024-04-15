@@ -1,0 +1,273 @@
+{% extends "vendor/vendor-base.html" %}
+
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<style>
+           
+
+  #id_identity_image{
+      background-color: #270041;
+      border-radius: 4px;
+      height: 50px;
+      width: 100%;
+      color: #ffffff;
+  }
+  #id_identity_image::file-selector-button{
+      border: none;
+      border-radius: 7px;
+      color: 432f9f;
+      background-color: #ffffff;
+      height: 30px;
+      cursor: pointer;
+      transition: all .25s ease-in;
+      margin-top: 10px;
+      margin-left: 10px;
+  }
+
+
+  #id_shop_cover_image{
+    background-color: #270041;
+    border-radius: 4px;
+    height: 50px;
+    width: 100%;
+    color: #ffffff;
+}
+#id_shop_cover_image::file-selector-button{
+    border: none;
+    border-radius: 7px;
+    color: 432f9f;
+    background-color: #ffffff;
+    height: 30px;
+    cursor: pointer;
+    transition: all .25s ease-in;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+
+#id_image{
+    background-color: #270041;
+    border-radius: 4px;
+    height: 50px;
+    width: 100%;
+    color: #ffffff;
+  }
+  #id_image::file-selector-button{
+    border: none;
+    border-radius: 7px;
+    color: 432f9f;
+    background-color: #ffffff;
+    height: 30px;
+    cursor: pointer;
+    transition: all .25s ease-in;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+
+#id_shop_image{
+  background-color: #270041;
+  border-radius: 4px;
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+}
+#id_shop_image::file-selector-button{
+  border: none;
+  border-radius: 7px;
+  color: 432f9f;
+  background-color: #ffffff;
+  height: 30px;
+  cursor: pointer;
+  transition: all .25s ease-in;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+  
+  </style>
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+      {% include 'vendor/dashboard-nav.html' %}
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Add New Product</h2>
+                <p class="para">Read our <a href=""><b>policy and guide</b></a> to creating a better product</p>
+              </div>
+              
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                <strong>{{form.errors}}</strong>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="dashboard_setting_box">
+                <div class="ui_kit_tab style2">
+                  <!-- nav tab Nav List Start -->
+                  <div class="tab-content pt20 row" id="myTabContent">
+                    <div class="tab-pane fade show active col-lg-12" id="editprofile" role="tabpanel" aria-labelledby="editprofile-tab">
+                      <div class="account_details_page form_grid">
+                        
+                        <form class="contact_form" method="POST" enctype="multipart/form-data" novalidate>
+                          {% csrf_token %}
+                          <div style="display: none;">
+                            {{form.media}}
+                             {{form}}
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Product Title</label>
+                                <input type="text" name="user_id", id="user_id" class="form-control">
+                                {{form}}
+
+                              </div>
+                              {% with named_formsets.variants as formset %}
+                                    {{ formset.management_form }}
+                                    <script type="text/html" id="variants-template">  
+                                        <tr id="variants-__prefix__" class= hide_all>
+                                            {% for fields in formset.empty_form.hidden_fields %}
+                                                {{ fields }}
+                                            {% endfor %}
+                                        
+                                            {% for fields in formset.empty_form.visible_fields %}
+                                                <td>{{fields}}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    </script>
+  
+                                    <div class="table-responsive cardd shaddow mt40 mb30">
+                                        <div class="text-center p-3">
+                                            <h4>Add More Product Images</h4>
+                                        </div>
+                                        <table class="table card-header p2 p-2">
+                                            <tbody id="item-variants">  <!-- id="item-inlineformsetname" -->
+                                                <!-- formset non forms errors -->
+                                                {% for error in formset.non_form_errors %}
+                                                    <span style="color: red">{{ error }}</span>
+                                                {% endfor %}
+                                                {{formss.image}}
+                                                {% for formss in formset %}
+                                                    {{ formss.management_form }}
+                                                    <tr id="variants-{{ forloop.counter0 }}" class= hide_all>  <!-- id="inlineformsetname-counter" -->
+                                                        {{ formss.id }}
+                                                        {% for field in formss.visible_fields %}
+                                                            <td>
+                                                                {{field}}
+                                                                {% for error in field.errors %}
+                                                                    <span style="color: red">{{ error }}</span>
+                                                                {% endfor %}
+                                                                
+                                                            </td>
+                                                            {% endfor %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <br>
+                                        <span class="single-btn add-variants mb-4 p-3" type="submit" id="add-variant-button">
+                                            <button type="button" class="cmnf-btn p-2" style="background-color: rgb(58, 58, 58); border-radius: 4px;  border: none; color: white; height: 35px;"><i class="fas fa-plus"></i>Add Another</button>
+                                        </span>
+                                    </div>
+                                {% endwith %}
+                            </div>
+                            
+                            <button type="submit">Save</button>
+                            <div class="col-sm-12">
+                              <div class="form-group d-grid d-sm-flex mb0">
+                                <button type="submit" class="style2 btn btn-thm me-3 mb15-520">Create Product</button>
+                                <a href="{% url 'vendor:products' %}" class="style2 btn btn-white">Cancel</a>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <!-- nav tab contents End -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="dashboard_footer pt30 pb30">
+          <div class="container">
+            <div class="row items-center justify-content-center justify-content-md-between">
+              <div class="col-auto">
+                <div class="copyright-widget text-center text-lg-start d-block d-lg-flex mb15-md">
+                  <p class="me-4">© 2022 Zeomart. All Rights Reserved</p>
+                  <p><a href="#">Privacy</a>  ·  <a href="#">Terms</a>  ·  <a href="#">Sitemap</a></p>
+                </div>
+              </div>
+              <div class="col-auto">
+          <div class="footer_bottom_right_widgets text-center text-lg-end">
+            <ul class="mb0">
+              <li class="list-inline-item mb20-340">
+                      <select class="selectpicker show-tick">
+                        <option>Currency : USD</option>
+                        <option>Euro</option>
+                        <option>Pound</option>
+                      </select>
+                    </li>
+                    <li class="list-inline-item">
+                      <select class="selectpicker show-tick">
+                        <option>Language: English</option>
+                        <option>Frenc</option>
+                        <option>Italian</option>
+                        <option>Spanish</option>
+                        <option>Turkey</option>
+                      </select>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function() {
+        // when user clicks add more btn of images
+      $('.add-images').click(function(ev) {
+          ev.preventDefault();
+          var count = $('#item-images').children().length;
+          var tmplMarkup = $('#images-template').html();
+          var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+          $('#item-images').append(compiledTmpl);
+  
+          // update form count
+          $('#id_images-TOTAL_FORMS').attr('value', count+1);
+      });
+  });
+
+  $(document).ready(function() {
+    // when user clicks add more btn of variants
+      $('.add-variants').click(function(ev) {
+          ev.preventDefault();
+          var count = $('#item-variants').children().length;
+          var tmplMarkup = $('#variants-template').html();
+          var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+          $('#item-variants').append(compiledTmpl);
+  
+          // update form count
+          $('#id_variants-TOTAL_FORMS').attr('value', count+1);
+      });
+  });
+</script>
+{% endblock content %}
+

@@ -1,0 +1,64 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+    {% block title %}<title>GameZone | Politique de confidentialité</title>{% endblock title %}
+    <link rel="stylesheet" href="{% static "gz/styles/Conditions.css" %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
+    <!-- Include jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    
+
+{% endblock head %}
+
+{% block header %}
+{% include "gz/components/navigation.html" %}
+{% endblock header %}
+
+{% block main %}
+<main class="main">
+    <div class="container" style="margin-top: 0px; margin-bottom: 0px; padding-top: 30px; padding-bottom: 30px;">
+        <h2 class="heading-title">Politique de confidentialité</h2>
+    </div>
+    <div class="container" style="margin-top: 0px; margin-bottom: 0px; padding-top: 30px; padding-bottom: 30px;">
+        <div class="html-content">
+            <p><b>Introduction</b></p>
+            <p>Nous prenons très au sérieux la protection de la vie privée de nos utilisateurs. La présente politique de confidentialité décrit les types d'informations que nous collectons et comment nous les utilisons.</p>
+            <p><br></p>
+            <p><b>Les informations que nous collectons</b></p>
+            <p>Nous collectons les informations que vous nous fournissez, telles que votre nom, votre adresse électronique et votre adresse postale. Nous collectons également des informations sur l'utilisation de notre site, telles que les pages que vous consultez et les liens sur lesquels vous cliquez.</p>
+            <p><br></p>
+            <p><b>Comment nous utilisons les informations collectées</b></p>
+            <p>Nous utilisons les informations que nous collectons pour fournir nos services, pour communiquer avec vous et pour améliorer notre site. Nous pouvons également utiliser ces informations pour vous envoyer des offres promotionnelles et des informations sur nos produits et services.</p>
+            <p><br></p>
+            <p><b>Comment nous protégeons les informations collectées</b></p>
+            <p>Nous prenons des mesures de sécurité appropriées pour protéger les informations collectées contre la perte, l'utilisation abusive et l'accès non autorisé. Nous ne divulguons pas les informations collectées à des tiers, sauf dans les cas où cela est nécessaire pour fournir nos services ou si nous y sommes légalement obligés.</p>
+            <p><br></p>
+            <p><b>Les cookies</b></p>
+            <p>Nous utilisons des cookies pour collecter des informations sur l'utilisation de notre site. Les cookies sont des fichiers texte qui sont stockés sur votre ordinateur et qui nous permettent de reconnaître votre ordinateur lorsque vous visitez notre site ultérieurement.</p>
+            <p><br></p>
+            <p><b>Modification de la politique de confidentialité</b></p>
+            <p>Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. Si nous apportons des modifications importantes à cette politique, nous vous en informerons en publiant une notification sur notre site.</p>
+            <p><br></p>
+            <p><b>Contactez-nous</b></p>
+            <p>Si vous avez des questions ou des préoccupations concernant cette politique de confidentialité, n'hésitez pas à nous contacter.</p>
+        </div>
+    </div>
+</main>
+
+
+{% endblock main %}
+
+{% block scripts %}
+
+    
+{% endblock scripts %}
+
+{% block footer %}
+    {% include "gz/components/footer.html" %}
+{% endblock footer %}

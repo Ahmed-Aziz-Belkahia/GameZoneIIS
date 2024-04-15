@@ -1,0 +1,84 @@
+{% load static %}
+<link rel="stylesheet" href="{% static "gz/styles/components/top-deals.css" %}">
+
+<div class="main__top-deals flexCenter">
+
+    <div class="top-deals__div flexCenter">
+
+        <div class="top-deals__layer1 top-deals__layer">
+            <div class="layer1__text">
+
+                <div class="text__title">New Release</div>
+{% comment %}                 <div class="text__slogan">
+                    Save big on stuff you love
+                </div> {% endcomment %}
+
+            </div>
+
+        </div>
+        <div class="top-deals__layer2 top-deals__layer">
+
+            <div class="layer2__cards flexCenter">
+                
+                {% for product in top_deals %}
+                    <a href="/detail/{{product.meta_title}}">
+                        <div class="cards__card">
+
+                            <div class="card__upper flexCenter">{{product.title}}</div>
+
+                            <div class="card__lower flexCenter">
+                            
+                                <div class="lower__div">
+                                
+                                    <div class="lower__img flexCenter">
+                                        <img src="{{product.deal_image.url}}" alt="{{product.title}}">
+                                    </div>
+                                    <div class="lower__content flexCenter">
+                                    
+                                        <div class="content__price">{{product.price}}TND</div>
+                                        <div class="content__text">{{product.deal_description}}</div>
+                                    
+                                    </div>
+                                
+                                </div>
+                            
+                            </div>
+                        
+                        </div>
+                    </a>
+                {% endfor %}
+                
+
+            </div>
+
+        </div>
+        <div class="top-deals__layer3 top-deals__layer">
+
+            <a href="/detail/{{top_deals_banner.product.meta_title}}">
+                <div class="layer__CTA">
+
+                    <div class="layerCTA__div flexCenter">
+    
+                        <div class="layerCTA__img">
+                            {% comment %} <img src="{{top_deals_banner.banner.url}}" alt="{{top_deals_banner.product.title}}"> {% endcomment %}
+                            <picture>
+                                <!-- WebP format for screens 768px and above -->
+                                <source media="(min-width: 768px)" type="image/webp" srcset="{{top_deals_banner.banner.url}}">
+                            
+                                <!-- WebP format for screens below 768px -->
+                                <source type="image/webp" srcset="{{top_deals_banner.banner_mobile.url}}">
+                            
+                                <!-- Fallback for browsers that do not support <picture> or WebP -->
+                                <img alt="{{top_deals_banner.product.title}}" class="gme-v3-carousel-hero__img lazyloaded" src="{{top_deals_banner.banner.url}}" fetchpriority="high">
+                            </picture>
+                        </div>
+                    </div>
+    
+                </div>
+    
+                </div>
+            </a>
+
+        </div>
+
+</div>

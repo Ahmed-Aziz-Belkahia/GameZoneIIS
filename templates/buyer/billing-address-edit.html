@@ -1,0 +1,26 @@
+{% extends "partials/base.html" %} {% load static %} 
+{% block title %}
+  Edit Billing Address
+{% endblock title %}
+{% block content %}
+<section class="oufr-log-rfeg bgcf-f5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-xl-12 col-xxl-12 m-auto">
+        <div class="log_reg_form mt70-992">
+          <h2 class="title">Update Address</h2>
+          <div class="login_form">
+            <form method="POST">
+              {% csrf_token %}
+              <div class="mb-2 mr-sm-2">{{form.as_p}}</div>
+
+              <button type="submit" class="btn purple-btn btn-thm">Save Update</button>
+              <a href="{% url 'core:buyer-address' %}" class="btn btn-secondary">Go Back</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

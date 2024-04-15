@@ -1,0 +1,68 @@
+
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+        {% include 'vendor/dashboard-nav.html' %}
+      
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Notification</h2>
+                <p class="para">You have a total of <b>{{ notification.count }}  notifications</b></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="application_statics">
+                <h4 class="title pl30 mb30">All Notifications</h4>
+                <div class="account_user_deails dashboard_page">
+                    
+                  <div class="order_table table-responsive">
+                    <table class="table">
+                      <thead class="table-light">
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for n in notification %}
+
+                        <tr>
+                          
+                          {% if n.type == 'new_order' %}
+                            <th scope="row">New Order for <a href="{% url 'vendor:order-detail' n.order.oid %}" class="dashed-custom">{{ n.product.title|truncatechars:50 }}</a></th>
+                          {% endif %}
+                          {% if n.type == 'new_offer' %}
+                            <th scope="row">New Offer for <a href="{% url 'vendor:product_offer_detail' n.offer.oid %}" class="dashed-custom">{{ n.product.title|truncatechars:50 }}</a></th>
+                          {% endif %}
+                          {% if n.type == 'new_bidding' %}
+                          <th scope="row">New Offer for <a href="{% url 'vendor:product_bidding_detail' n.bid.bid %}" class="dashed-custom">{{ n.product.title|truncatechars:50 }}</a></th>
+                          {% endif %}
+                          <td>{{n.date}}</td>
+                          
+                        </tr>
+                        {% empty %}
+                        <h2>No Orders Yet</h2>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+{% endblock content %}

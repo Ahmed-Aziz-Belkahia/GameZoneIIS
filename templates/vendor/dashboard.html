@@ -1,0 +1,205 @@
+
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+        {% include 'vendor/dashboard-nav.html' %}
+      
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Dashboard</h2>
+                <p class="para">Store overview and quicklinks</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-xxl-4">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Total Sales Revenue</div>
+                  
+                  {% if total_sales_revenue.amount == None %}
+                  <div class="title">{{ cs }}0.00 <span class="badge style1 text-center"></span></div>
+                  {% else %}
+                  <div class="title">{{ cs }}{{total_sales_revenue.amount|floatformat:2}} <span class="badge style1 text-center"></span></div>
+                  {% endif %}
+                    
+                </div>
+                <div class="icon text-center mt-4"><i class="fas fa-sack-dollar"></i></div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xxl-4">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Order(s)</div>
+                  <div class="title">{{total_orders.count}}</div>
+                  <div class="subtitle2"><span>{{new_order.count}}</span> Recent Order(s)</div>
+                </div>
+                <div class="icon text-center mt-4"><i class="bi bi-cart-check-fill"></i></div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-6 col-xxl-3">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Customer</div>
+                  <div class="title">{{customer.count}}</div>
+                </div>
+                <div class="icon text-center mt-4"><i class="bi bi-people-fill"></i></div>
+              </div>
+            </div> -->
+            <div class="col-lg-6 col-xxl-4">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Total Payout (Earning + Shipping)</div>
+                  <div class="title">{{cs}}{{total_payout.amount|floatformat:2}} <span class="badge style2 text-center"></span></div>
+                </div>
+                <div class="icon text-center mt-4"><i class="fas fa-wallet"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="application_statics mb30">
+                <div class="report_widget d-block d-sm-flex justify-content-center justify-content-sm-between">
+                  <h4 class="title pl30">Earning Statistics</h4>
+                  <ul class="mb0 ml30-520">
+                    <!-- <li class="list-inline-item report_export mb15-520"><a href="#">Export Report</a></li> -->
+                    <!-- <li class="list-inline-item">
+                      <select class="selectpicker show-tick">
+                        <option>This Week</option>
+                        <option>This Month</option>
+                        <option>This Year</option>
+                        
+                      </select>
+                    </li> -->
+                  </ul>
+                </div>
+                <div>
+                </div>
+                <canvas id="myChartJs" style="height:230px;"></canvas>
+              </div>
+            </div>
+            
+          </div>
+          <div class="row">
+            <div class="col-xl-8">
+              <div class="application_statics">
+                <h4 class="title pl30 mb30">Recent Orders</h4>
+                <div class="account_user_deails dashboard_page">
+                  <div class="order_table table-responsive">
+                    <table class="table">
+                      <thead class="table-light">
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Order Detail</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Payment</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for o in order %}
+
+                        <tr>
+                          <th scope="row">#{{o.oid}}</th>
+                          <th scope="row"><a href="{% url 'vendor:order-detail' o.oid %}" class="btn purple-btn">View Order</a></th>
+                          <td>{{o.date}}</td>
+                          <td>{{o.payment_status|title}}</td>
+                          
+                        </tr>
+                        
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4">
+              <div class="recent_activity_widget">
+                <h4 class="title mb25">Recent Activity</h4>
+                {% for n in notification|slice:"0:5" %}
+                  <div class="dashboard-timeline-label shadow p-3 mb-3 noti{{n.id}}" style="border-radius: 10px;">
+                    <div class="timeline-item pb10">
+                      <!--begin::Label-->
+                      <div class="child-timeline-label"><small>{{n.date}}</small></div>
+                      <!--end::Label-->
+                      <!--begin::Badge-->
+                      <div class="timeline-badge">
+                        <i class="fa fa-genderless"></i> 
+                      </div>
+                      <!--end::Badge-->
+                      <!--begin::Text-->
+                      
+                      {% if n.type == "new_order" %}
+                        <div class="ra_pcontent pl10"><span class="title"><a href="" style="border-bottom: 1px dashed black;"><b>New Order</b></a></span> <br> <span class="subtitle">You have a new order for <b><a href="{% url 'vendor:order-detail' n.order.oid %}" style="border-bottom: 1px dashed black;">{{ n.product.title|truncatechars:20 }}</a></b></span></div>
+                      {% endif %}
+
+                      {% if n.type == "new_offer" %}
+                        <div class="ra_pcontent pl10"><span class="title"><a href="" style="border-bottom: 1px dashed black;"><b>New Offer</b></a></span> <br> <span class="subtitle">You have a new offer for <b><a href="{% url 'vendor:product_offer_detail' n.offer.oid %}" style="border-bottom: 1px dashed black;">{{ n.product.title|truncatechars:20 }}</a></b></span></div>
+                      {% endif %}
+
+                      {% if n.type == "new_bidding" %}
+                        <div class="ra_pcontent pl10">
+                          <span class="title"><a href="{% url 'vendor:product_bidding_detail' n.bid.bid %}" style="border-bottom: 1px dashed black;">
+                            <b>New Bid</b></a>
+                          </span> <br> 
+                        <span class="subtitle">You have a new bidder for <b><a href="{% url 'vendor:product_bidding_detail' n.bid.bid %}" style="border-bottom: 1px dashed black;">{{ n.product.title|truncatechars:20 }}</a></b></span>
+                      </div>
+                    {% endif %}
+
+                      <div class="timeline-badge">
+                        <i class="bi bi-x-square-fill text-danger mark_as_seen{{n.id}}" data-noti="{{n.id}}" id="mark_as_seen"></i> 
+                      </div>
+                      <!--end::Text-->
+                    </div>
+                  </div>
+                  {% empty %}
+                  <div>
+                    <h6>No Recent Activity</h6>
+                  </div>
+                {% endfor %}
+                <h4 ><a href="{% url 'vendor:vendor_notification' %}" style="border-bottom: 1px dashed black;">View All Notification</a></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script type="text/javascript">
+    const labels = {{monthNumber|safe}};
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Orders',
+        backgroundColor: '#b331ff ',
+        borderColor: '#b331ff',
+        data: {{totalOrders}},
+      }]
+    };
+  
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        responsive: true
+      }
+    };
+  
+    var myChart = new Chart(
+        document.getElementById('myChartJs'),
+        config
+      );
+  
+  </script>
+
+
+{% endblock content %}
+

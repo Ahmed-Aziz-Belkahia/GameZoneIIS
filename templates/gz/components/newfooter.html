@@ -1,0 +1,475 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+
+<style>
+    h4, .h4 {
+        font-size: 18px;
+    }
+    h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
+        font-weight: 500;
+    }
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        font-family: "Jost", sans-serif;
+        line-height: 1.4;
+        color: #041e42;
+    }
+    .footer_one.home2 {
+        background-image: url(../../../static/images/background/footer-bg-img-home2.png);
+        background-size: cover;
+    }
+    
+    .parallax {
+        background-position: 50% 0;
+        z-index: 1;
+        position: relative;
+    }
+    .footer_one {
+        {% comment %} padding: 60px 0 0; {% endcomment %}
+    }
+    .pb60 {
+        padding-bottom: 60px;
+    }
+    .mailchimp_widget {
+        position: relative;
+    }
+    .mailchimp_widget .icon {
+        color: #fff;
+        font-size: 50px;
+        margin-right: 20px;
+        margin-top: -12px;
+    }
+    .mailchimp_widget.home2_style .details .title {
+        color: #fff;
+    }
+    
+    .mailchimp_widget .details .title {
+        color: #041e42;
+        font-family: Jost;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 40px;
+        letter-spacing: 0;
+        margin-bottom: 30px;
+    }
+    .footer_social_widget, .footer_mobile_app_widget, .footer_acceped_card_widget {
+        position: relative;
+    }
+    .footer_mailchimp_form {
+        position: relative;
+    }
+    .footer_mailchimp_form .col-auto {
+        border-radius: 6px;
+        display: flex;
+        padding-left: 0;
+        padding-right: 5px;
+        width: 100%;
+    }
+    .footer_mailchimp_form.home2_style .col-auto input.form-control {
+        border: 1px solid #eaeaea;
+        background-color: #fff;
+    }
+    
+    .footer_mailchimp_form .col-auto input.form-control {
+        background-color: #fff;
+        border: 1px solid #eaeaea;
+        border-radius: 6px;
+        color: #041e42;
+        height: 60px;
+        padding-left: 20px;
+    }
+    .footer_mailchimp_form button {
+        border-radius: 6px;
+        color: #041e42;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        height: 60px;
+        letter-spacing: 0;
+        line-height: 30px;
+        outline: none;
+        text-align: center;
+        width: 136px;
+    }
+    .btn-thm {
+        background-color: #94d92f;
+        border: 1px solid #4f7c02;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+    .btn:before, .btn-gray:before, .btn-thm:before, .btn-thm:before, .btn-thm1:before, .btn-thm1:before, .btn-thm2:before, .btn-thm2-light:before, .btn-blue:before, .btn-light-green:before, .btn-transparent:before, .btn-transparent-dark:before {
+        background-color: #0a1c22;
+        content: "";
+        height: 100%;
+        left: -100%;
+        position: absolute;
+        top: 0;
+        width: 0;
+        z-index: -1;
+        -webkit-transform: skew(50deg);
+        -moz-transform: skew(50deg);
+        -o-transform: skew(50deg);
+        transform: skew(50deg);
+        -webkit-transition: width .6s;
+        -moz-transition: width .6s;
+        -o-transition: width .6s;
+        transition: width .6s;
+        transform-origin: top left;
+    }
+    .mt60 {
+        margin-top: 60px;
+    }
+    .footer_contact_widget {
+        position: relative;
+    }
+    .footer_qlink_widget.home2_style h4, .footer_contact_widget.home2_style h4, .footer_social_widget.home2_style h4, .footer_mobile_app_widget.home2_style h4, .footer_acceped_card_widget.home2_style h4, .footer_contact_iconbox.home2_style .details .title, .footer_contact_iconbox.home2_style .icon span, .footer_contact_iconbox.home2_style .details a, .footer_qlink_widget.home2_style li a, .footer_qlink_widget.home2_style li:hover a, .social_icon_list.home2_style li a, .footer_mobile_app_widget.home2_style .mobile_app_list li a, .copyright-widget.home2_style p, .copyright-widget.home2_style p a {
+        color: #fff;
+    }
+    
+    .footer_qlink_widget h4, .footer_contact_widget h4, .footer_social_widget h4, .footer_mobile_app_widget h4, .footer_acceped_card_widget h4, .footer_qlink_widget.home10 h4 {
+        color: #041e42;
+        font-style: normal;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 26px;
+        margin-bottom: 30px;
+        margin-top: 0;
+        text-align: left;
+    }
+    .contact_icon_box .contact_iconbox .icon, .footer_contact_iconbox .icon {
+        position: relative;
+        -webkit-transition: all .3s ease 0;
+        -moz-transition: all .3s ease 0;
+        -o-transition: all .3s ease 0;
+        transition: all .3s ease 0;
+    }
+    .mailchimp_widget.home2_style .details .title {
+        color: #fff;
+    }
+    
+    .mailchimp_widget .details .title {
+        color: #041e42;
+        font-family: Jost;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 40px;
+        letter-spacing: 0;
+        margin-bottom: 30px;
+    }
+    .footer_contact_iconbox .details .title {
+        color: #041e42;
+        font-family: "Jost";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 22px;
+    }
+    .contact_icon_box .contact_iconbox .details a, .footer_contact_iconbox .details a {
+        font-family: "Jost";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 22px;
+        color: #041e42;
+        text-decoration: none;
+        -webkit-font-smoothing: antialiased;
+    }
+    .contact_icon_box .contact_iconbox .icon span, .footer_contact_iconbox .icon span {
+        color: #041e42;
+        font-size: 30px;
+    }
+    .footer_qlink_widget li a, .footer_qlink_widget.home2 li a, .footer_qlink_widget.home10 li a {
+        color: #041e42;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 40px;
+        position: relative;
+        -webkit-transition: all .3s ease 0;
+        -moz-transition: all .3s ease 0;
+        -o-transition: all .3s ease 0;
+        transition: all .3s ease 0;
+        text-decoration: none;
+    }
+    .footer_qlink_widget li:hover a:before {
+        left: 0;
+        width: 100%;
+    }
+
+    .account_user_deails .dboard_address .title span:before, .footer_qlink_widget li a:before {
+        background-color: #443297;
+        bottom: 0;
+        content: "";
+        height: 1px;
+        position: absolute;
+        left: 50%;
+        width: 0;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
+    }
+    .footer_qlink_widget.home2_style li a:before {
+        background-color: #fff;
+    }
+    .pb20 {
+        padding-bottom: 20px;
+    }
+    
+    .pt20 {
+        padding-top: 20px;
+    }
+    .menu_bdrt1 {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .footer_contact_widget, .footer_qlink_widget, .copyright-widget {
+        position: relative;
+    }
+    .copyright-widget p, .copyright-widget p a, .copyright-widget.home10 p {
+        color: #041e42;
+        font-family: "Jost";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 40px;
+        margin-bottom: 0;
+        text-decoration: none;
+    }
+    .footer_mailchimp_form.home2_style .col-auto input.form-control {
+        border: 1px solid #eaeaea;
+        background-color: #fff;
+    }
+    .footer_mailchimp_form .col-auto input.form-control {
+        background-color: #fff;
+        border: 1px solid #eaeaea;
+        border-radius: 6px;
+        color: #041e42;
+        height: 60px;
+        padding-left: 20px;
+    }
+    ul, li {
+        list-style: none;
+    }
+    p, ul, ol, dl, dt, dd, blockquote, address {
+        margin: 0 0 10px;
+    }
+    
+    ul, ol {
+        /* list-style: none; */
+        margin: 0;
+        padding: 0;
+    }
+    .mb20 {
+        margin-bottom: 20px !important;
+    }
+    .acceped_card_list ul li a img {
+        width: 36px;
+    }
+    
+    a img {
+        border: none;
+    }
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+    .footer_qlink_widget {
+        position: relative;
+        padding-left: 50px;
+    }
+    @media only screen and (max-width: 991px){
+        .footer_qlink_widget {
+            padding-left: 0;
+        }
+        .footer_mailchimp_form .col-auto{
+          padding: 0 1rem;
+        }
+    }
+    @media only screen and (max-width: 1199.98px){
+        .footer_qlink_widget {
+            padding-left: 0;
+        }
+    }
+    @media only screen and (max-width: 1366px){
+        .footer_qlink_widget {
+            padding-left: 10px;
+        }
+    }
+    @media only screen and (max-width: 991px){
+        .footer_about_widget, .footer_qlink_widget, .main_blog_post_content, .footer_contact_widget {
+            margin-bottom: 30px;
+        }
+    }    
+    .social_icon_list li a {
+      color: #fff;
+      font-size: 26px;
+      font-style: normal;
+      line-height: 26px;
+      margin-right: 10px;
+      -webkit-transition: all .3s ease 0;
+      -moz-transition: all .3s ease 0;
+      -o-transition: all .3s ease 0;
+      transition: all .3s ease 0;
+  }
+  @media screen and (max-width: 786px) {
+    .footer_contact_widget{
+        text-align: center;
+    }
+    .footer_contact_widget h4{
+        text-align: center;
+    }
+    .footer_contact_widget > .footer_contact_iconbox {
+        justify-content: center;
+    }
+    .footer_qlink_widget {
+        width: fit-content;
+    }
+    .footer_one .col-sm-6{
+        width: fit-content;
+    }
+}
+</style>
+
+
+<section class="footer_one home2 parallax" data-stellar-background-ratio="1.1" style="background-position: 50% 21.9344px;">
+    <div class="container pb60">
+      <div class="row">
+
+      </div>
+      <div class="row mt60 justify-content-center">
+        <div class="col-sm-6 col-md-5 col-lg-3 col-xl-3">
+          <div class="footer_contact_widget home2_style">
+            <h4>Contact Us</h4>
+            <div class="footer_contact_iconbox home2_style d-flex mb-4">
+              <div class="icon"><span class="fas fa-phone"></span></div>
+              <div class="details ms-4">
+                <h5 class="title">
+                  {{support_details.working_days}} :
+                  {{support_details.open_time}} - {{ support_details.closing_time }}
+                </h5>
+                <a href="phone:{{support_details.phone}}">{{support_details.phone}}</a>
+              </div>
+            </div>
+            <div class="footer_contact_iconbox home2_style d-flex">
+              <div class="icon"><span class="fas fa-envelope"></span></div>
+              <div class="details ms-4">
+                <h5 class="title">Need help with your order?</h5>
+                <a href="mailto:{{support_details.email}}">{{support_details.email}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2">
+          <div class="footer_qlink_widget home2_style">
+            <h4>About {{company.name}}</h4>
+            <ul class="list-unstyled">
+              <li>
+                <a href="{% url 'core:order-tracker' %}"
+                >Track Your Order</a
+              >
+              </li>
+              <li>
+                <a href="{% url 'addons:terms_and_conditions' %}">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2">
+          <div class="footer_qlink_widget home2_style">
+            <h4>Customer Support</h4>
+            <ul class="list-unstyled">
+              <li>
+                <a href="{% url 'addons:contact_us' %}">Contact Us</a>
+              </li>
+              <li><a href="{% url 'reports:report-issue' %}">Report Issue</a></li>
+              
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-5 col-lg-3 col-xl-2 justify-content-center">
+          <div class="footer_social_widget home2_style">
+            <h4 class="title">Follow us</h4>
+            <div class="social_icon_list home2_style mt30">
+              <ul class="mb20">
+                <li class="list-inline-item">
+                  <a href="{{company.facebook}}"><i class="fab fa-facebook"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="{{company.instagram}}"><i class="fab fa-instagram"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer_acceped_card_widget home2_style">
+            <h4 class="title mb20">We accept</h4>
+            <div class="acceped_card_list">
+              <ul class="d-flex mb-0">
+                <li class="me-2">
+                  <a href="#"><img src="/static/images/resource/visa-card.png" alt="visa-card"></a>
+                </li>
+                <li class="me-2">
+                  <a href="#"><img src="/static/images/resource/master-card.png" alt="master-card"></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-2 col-xl-3">
+          <div class="col-lg-12">
+            <div class="mailchimp_widget home2_style mb30-md text-center">
+              <div class="icon float-start">
+                <span class="flaticon-email-1"></span>
+              </div>
+              <div class="details">
+                <h3 class="title">Subscribe and stay up to date.</h3>
+              </div>
+            </div>
+            <div class="footer_social_widget">
+              <div class="footer_mailchimp_form home2_style">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <input type="email" class="form-control" placeholder="Your email address" id="news-letter-input"><button class="ms-sm-2 btn-thm" style="color: white;" id="sub-news-letter-btn" type="button">
+                      Subscribe
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container menu_bdrt1 pt20 pb20">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="copyright-widget home2_style text-center text-lg-start d-block d-lg-flex mb15-md">
+            <p class="me-4">
+              © <span id="found-date">2024</span> {{company.name}} All Rights
+              Reserved
+            </p>
+            <p>
+              <a href="{% url 'addons:terms_and_conditions' %}"
+              >Privacy</a
+            >·<a href="{% url 'addons:terms_and_conditions' %}"
+              >Terms</a
+            >·<a href="{% url 'addons:terms_and_conditions' %}"
+              >Sitemap</a>            
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="footer_bottom_right_widgets home2_style text-center text-lg-end">
+            <ul class="mb0">
+              <!-- <li class="list-inline-item mb20-340"><select class="selectpicker show-tick"><option>Currency : USD</option><option>Euro</option><option>Pound</option></select></li> -->
+              <!-- <li class="list-inline-item"><select class="selectpicker show-tick"><option>Language: English</option><option>Frenc</option><option>Italian</option><option>Spanish</option><option>Turkey</option></select></li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

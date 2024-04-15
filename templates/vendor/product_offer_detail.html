@@ -1,0 +1,143 @@
+{% extends "vendor/vendor-base.html" %} 
+{% load static %} 
+
+{% block title %}
+  Offer Detail
+{% endblock title %}
+  
+{% block content %}
+
+
+<div class="dashboard_content_wrapper">
+  <div class="dashboard dashboard_wrapper pr30 pr0-md">
+    {% include 'vendor/dashboard-nav.html' %}
+
+    <div class="dashboard__main pl0-md">
+      <div class="dashboard__content bgc-gmart-gray">
+        <div class="row pb50">
+          <div class="col-lg-12">
+            <div class="dashboard_title_area">
+              <h2>
+                <a
+                  href="{% url 'store:product-detail' product.pid %}"
+                  style="border-bottom: 1px dashed black"
+                  >{{product.title|truncatechars:27}}</a
+                >
+              </h2>
+              <!-- <p class="para">You have a total of <b>{{ order.count }}  orders</b></p> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12 col-xxl-12">
+            <div class="d-flex justify-content-between statistics_funfact">
+              <div class="details">
+                <div class="subtitle1">Offers</div>
+                <div class="title">
+                  {{offers.count}}
+                  <span class="badge style1 text-center"></span>
+                </div>
+              </div>
+              <div class="icon text-center mt-4">
+                <i class="bi bi-cart-check-fill"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="application_statics">
+              <h4 class="title pl30">All Offers</h4>
+
+              <div class="account_user_deails dashboard_page">
+                <div class="order_table table-responsive">
+                  <table class="table">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">S/N</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for o in offers %}
+
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                          {% if o.user.profile.full_name %}{{o.user.profile.full_name}}{% else %}{{ o.user.username }}{% endif %}
+                        </td>
+                        <td>{{o.user.email}}</td>
+                        <td>{{cs}}{{o.price|floatformat:2}}</td>
+                        {% if o.status == "pending" %}
+                        <td id="status{{o.id}}" class="text-success">
+                          Pending...
+                        </td>
+                        {% endif %} {% if o.status == "rejected" %}
+                        <td id="status{{o.id}}" class="text-success">
+                          Rejected
+                        </td>
+                        {% endif %} {% if o.status == "accepted" %}
+                        <td id="status{{o.id}}" class="text-success">
+                          Accepted
+                        </td>
+                        {% endif %}
+                        <td>
+                          <div class="dropleft">
+                            <button
+                              class="btn btn-secondary dropdown-toggle"
+                              type="button"
+                              id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul
+                              class="dropdown-menu"
+                              style="margin-bottom: 50px"
+                              aria-labelledby="dropdownMenuButton1"
+                            >
+                              <li>
+                                <a
+                                  class="dropdown-item accept{{o.id}}"
+                                  style="cursor: pointer"
+                                  id="accept"
+                                  data-accept="{{o.id}}"
+                                  >Accept</a
+                                >
+                              </li>
+                              <li>
+                                <a class="dropdown-item reject{{o.id}}" style="cursor: pointer" id="reject" data-reject="{{o.id}}" >Reject</a>
+                              </li>
+                              <br>
+                              <li>
+                                <a class="dropdown-item" style="cursor: pointer" href="{% url 'reports:report_offer_user' o.oid %}" >Report User</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                      </tr>
+                      {% empty %}
+                      <h4>No Offers Yet</h4>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

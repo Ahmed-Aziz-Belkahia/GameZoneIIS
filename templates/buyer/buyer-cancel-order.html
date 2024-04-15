@@ -1,0 +1,222 @@
+{% extends "partials/base.html" %} {% load static %} 
+{% block title %}
+  Cancel Order
+{% endblock title %}
+{% load crispy_forms_tags %} {% block content %}
+<section class="our-dashbord dashbord" style="margin-top: 0">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-xl-12">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="account_user_deails pl40 pl0-md">
+              <div class="ui_kit_tab style2">
+                <div class="tab-content pt20 row" id="myTabContent">
+                  <div
+                    class="tab-pane fade show active col-lg-12"
+                          id="t20"
+                                role="tabpanel"
+aria-labelledby="t20-tab"
+                  >
+                    <div class="account_user_deails pl40 pl0-lg">
+                      <h2 class="title mb30 text-danger">
+                        Cancel Order #{{ order.oid }}
+                      </h2>
+                      <div class="order_table table-responsive">
+                        <table class="table">
+                          <thead class="table-light">
+                            <tr>
+                              <th scope="col">Product</th>
+                              <th scope="col">Date</th>
+                              <th scope="col">Payment</th>
+                              <th scope="col">Delivery Status</th>
+                              <th scope="col">Total</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for o in orderitems %}
+                            <tr>
+                              <th scope="row">
+                                <a
+                                  href="{% url 'store:product-detail' o.product_obj.pid %}"
+                                  class="dashed-custom"
+                                  >{{o.product_obj.title|truncatechars:27}}</a
+                                >
+                              </th>
+                              <!-- <td>{{o.product}}</td> -->
+                              <td><small>{{o.date}}</small></td>
+
+                              {% if o.paid == True %}
+                              <td class="text-success">Paid</td>
+                              {% else %}
+                              <td class="text-success">Not Paid</td>
+                              {% endif %}
+
+                              <td class="status">
+                                <span class="stylde4"
+                                  >{{o.delivery_status|title}}</span
+                                >
+                              </td>
+                              <td>{{ cs }}{{ o.total }}</td>
+
+                              {% if o.cancelled == True %}
+                              <td class="status">
+                                <a class="btn btn-success disabled"
+                                  >Order Cancelled</a
+                                >
+                              </td>
+                              {% else %}
+                              <td class="status">
+                                <a
+                                  data-order-item="{{o.id}}"
+                                  id="cancel-order"
+                                  class="btn btn-danger orderitem{{o.id}}"
+                                  >Cancel</a
+                                >
+                              </td>
+                              {% endif %}
+                            </tr>
+                            {% empty %}
+                            <tr>
+                              <td><h4>No Orders Yet</h4></td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade col-lg-12"
+                    id="baby"
+                    role="tabpanel"
+                    aria-labelledby="baby-tab"
+                  >
+                    <div class="account_user_deails pl40 pl0-lg">
+                      <h2 class="title mb30">Shipped</h2>
+                      <div class="order_table table-responsive">
+                        <table class="table">
+                          <thead class="table-light">
+                            <tr>
+                              <th scope="col">ID</th>
+                              <!-- <th scope="col">Product</th> -->
+                              <th scope="col">Date</th>
+                              <th scope="col">Payment</th>
+                              <th scope="col">Delivery Status</th>
+                              <th scope="col">Order Status</th>
+                              <th scope="col">Total</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for o in shipped %}
+                            <tr>
+                              <th scope="row">{{o.oid}}</th>
+                              <!-- <td>{{o.product}}</td> -->
+                              <td><small>{{o.date}}</small></td>
+                              <td class="text-success">
+                                {{o.payment_status|title}}
+                              </td>
+                              <td class="status">
+                                <span class="stylde4"
+                                  >{{o.delivery_status|title}}</span
+                                >
+                              </td>
+                              <td class="status">
+                                <span class="stdyle4"
+                                  >{{o.order_status|title}}</span
+                                >
+                              </td>
+                              <td>{{ cs }}{{ o.total }}</td>
+                              <td class="status">
+                                <span class="style4"
+                                  ><a
+                                    href="{% url 'core:buyer-order-detail' o.oid %}"
+                                    >View Detail</a
+                                  ></span
+                                >
+                              </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                              <td><h4>No Orders Yet</h4></td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade col-xl-12"
+                    id="furniture"
+                    role="tabpanel"
+                    aria-labelledby="furniture-tab"
+                  >
+                    <div class="account_user_deails pl40 pl0-lg">
+                      <h2 class="title mb30">Delivered Orders</h2>
+                      <div class="order_table table-responsive">
+                        <table class="table">
+                          <thead class="table-light">
+                            <tr>
+                              <th scope="col">ID</th>
+                              <!-- <th scope="col">Product</th> -->
+                              <th scope="col">Date</th>
+                              <th scope="col">Payment</th>
+                              <th scope="col">Delivery Status</th>
+                              <th scope="col">Order Status</th>
+                              <th scope="col">Total</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for o in collected %}
+                            <tr>
+                              <th scope="row">{{o.oid}}</th>
+                              <!-- <td>{{o.product}}</td> -->
+                              <td><small>{{o.date}}</small></td>
+                              <td class="text-success">
+                                {{o.payment_status|title}}
+                              </td>
+                              <td class="status">
+                                <span class="stylde4"
+                                  >{{o.delivery_status|title}}</span
+                                >
+                              </td>
+                              <td class="status">
+                                <span class="stdyle4"
+                                  >{{o.order_status|title}}</span
+                                >
+                              </td>
+                              <td>{{ cs }}{{ o.total }}</td>
+                              <td class="status">
+                                <span class="style4"
+                                  ><a
+                                    href="{% url 'core:buyer-order-detail' o.oid %}"
+                                    >View Detail</a
+                                  ></span
+                                >
+                              </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                              <td><h4>No Orders Yet</h4></td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- nav tab contents End -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

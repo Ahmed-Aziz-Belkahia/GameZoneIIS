@@ -1,0 +1,226 @@
+<div class="row mt15">
+  <p class="para">
+    You have <span class="cart-list">{{totalcartitems }}</span> items in your
+    cart
+  </p>
+
+  <div class="col-lg-8 col-xl-9">
+    <div class="shopping_cart_table table-responsive">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">PRODUCT</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">QUANTITY</th>
+            <th scope="col">TOTAL</th>
+            <th scope="col">UPDATE</th>
+            <th scope="col">REMOVE</th>
+          </tr>
+        </thead>
+        <tbody class="table_body">
+          {% for product_id, p in cart_data.items %}
+          <tr>
+            <th scope="row">
+              <ul class="cart_list d-block d-xl-flex">
+                <li class="ps-1 ps-sm-4 pe-1 pe-sm-4">
+                  <a href="#"
+                    ><img
+                      src="{{p.image}}"
+                      style="
+                        width: 100px;
+                        height: 80px;
+                        object-fit: cover;
+                        border-radius: 10px;
+                      "
+                      alt="cart1.png"
+                  /></a>
+                </li>
+                <li class="ms-2 ms-md-3">
+                  <a
+                    class="cart_title"
+                    href="{% url 'store:product-detail' p.product_slug %}"
+                  >
+                    <span class="fz16">{{p.title|truncatechars:27}}</span>
+                    <br />
+                    <span class="fz16"
+                      >By: <b><i>{{p.shop_name|title}}</i></b></span
+                    >
+                    <br />
+                  </a>
+                </li>
+              </ul>
+            </th>
+            <td>{{ cs }}{{p.price}}</td>
+            <!-- <input type="hidden" class="product-shipping_amount-{{ product_id }}" value="{{ p.shipping_amount }}"> -->
+            <input
+              type="hidden"
+              class="product-shipping_amount-{{ product_id }}"
+              value="{{ p.shipping_amount }}"
+            />
+            <input
+              type="hidden"
+              class="product-product_processing_fee-{{ product_id }}"
+              value="{{ p.product_processing_fee }}"
+            />
+            <input
+              type="hidden"
+              class="product-product_tax_fee-{{ product_id }}"
+              value="{{ p.product_tax_fee }}"
+            />
+
+            <td>
+              <div class="cart_btn">
+                <div class="quantity-block">
+                  <button
+                    class="quantity-arrow-minus inner_page"
+                    id="decrease-btn"
+                    data-btn="{{product_id}}"
+                    data-cart-index="{{ product_id }}"
+                  >
+                    <span class="fa fa-minus"></span>
+                  </button>
+                  <input
+                    class="quantity-num-{{ product_id }} quantity-num inner_page product-qty-{{ product_id }}"
+                    id="qty{{product_id}}"
+                    type="number"
+                    value="{{p.qty}}"
+                  />
+                  <button
+                    class="quantity-arrow-plus inner_page"
+                    id="increase-btn"
+                    data-btn="{{product_id}}"
+                    data-cart-index="{{ product_id }}"
+                  >
+                    <span class="fas fa-plus"></span>
+                  </button>
+                </div>
+              </div>
+              <!-- <input class="cart_count text-center" placeholder="2" type="number"> -->
+            </td>
+            <td class="">${% widthratio p.price 1 p.qty %}</td>
+            <td class="action text-center" data-title="Remove">
+              <button
+                style="border: none; background: none"
+                class="text-body update-item"
+                data-item="{{ product_id }}"
+              >
+                <i class="bi bi-arrow-clockwise"></i>
+              </button>
+            </td>
+            <td class="action text-center" data-title="Remove">
+              <button
+                style="border: none; background: none"
+                class="text-body delete-item"
+                data-item="{{ product_id }}"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td>Your cart is empty, <a href="">continue shopping</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <!-- <div class="checkout_form mt30">
+        <div class="checkout_coupon posr d-block d-xl-flex">
+          <form class="form_one posr mb10-lg">
+            <input class="form-control coupon_input" type="search" placeholder="Coupon code" aria-label="Search">
+            <a class="btn apply_count_btn" href="#">Apply Coupon</a>
+          </form>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <div class="col-lg-4 col-xl-3">
+    <div class="order_sidebar_widget style2">
+      <h4 class="title">Cart Totals</h4>
+      <ul>
+        <li class="subtitle">
+          <p>
+            Product Subtotal
+            <span class="float-end"
+              >{{ cs }}{{cart_total_amount|floatformat:2}}</span
+            >
+          </p>
+        </li>
+        <!-- <li class="subtitle"><p>Order Discounts <span class="float-end">-$30.01</span></p></li> -->
+        <li class="subtitle">
+          <p>
+            Estimated Shipping
+            <i
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Tooltip on top"
+              class="bi bi-info-circle-fill"
+            ></i>
+            <span class="float-end">{{ cs }}{{total_shipping_amount}}</span>
+          </p>
+        </li>
+        <li class="subtitle">
+          <p>
+            Estimated {{tax_country.custom_name}}
+            <i
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Tooltip on top"
+              class="bi bi-info-circle-fill"
+            ></i
+            ><span class="float-end">{{cs}}{{ total_tax|floatformat:2 }}</span>
+          </p>
+        </li>
+        <li class="subtitle">
+          <p>
+            Service Fee
+            <span class="float-end"
+              >{{ cs }}{{product_processing_fee_|floatformat:2}}</span
+            >
+          </p>
+        </li>
+        <!-- <li class="subtitle"><p>Estimated Taxes <i data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" class="bi bi-info-circle-fill"></i><span class="float-end">{{ cs }}{{total_tax|floatformat:2}}</span></p></li> -->
+        <!-- <li class="subtitle"><p>Service Fee <span class="float-end">{{ cs }}{{service_fee_amount|floatformat:2}}</span></p></li> -->
+        <li class="subtitle"><hr /></li>
+        <li class="subtitle totals">
+          <p>
+            Total
+            <span class="float-end">{{cs}}{{total_amount|floatformat:2}}</span>
+          </p>
+        </li>
+      </ul>
+    </div>
+
+    <a
+      href="{% url 'store:shipping_address' %}"
+      class="btn w100 mt-4 purple-btn"
+      >Continue</a
+    >
+  </div>
+</div>
+
+<script>
+  $(document).on("click", "#increase-btn", function () {
+    let id = $(this).attr("data-btn");
+    var input_value = $("#qty" + id).val();
+
+    if (input_value >= 0) {
+      input_value + 1;
+      $("#qty" + id).val(input_value);
+    }
+  });
+
+  $(document).on("click", "#decrease-btn", function () {
+    let id = $(this).attr("data-btn");
+    var input_value = $("#qty" + id).val();
+
+    if (input_value >= 0) {
+      input_value - 1;
+      $("#qty" + id).val(input_value);
+    }
+
+    if (input_value === 0) {
+      $("#qty" + id).val(1);
+    }
+  });
+</script>

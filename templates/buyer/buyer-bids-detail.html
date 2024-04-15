@@ -1,0 +1,96 @@
+
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}
+  Bids
+{% endblock title %}
+{% block content %}
+  <div class="body_content_wrapper position-relative" style="margin-top: 0;">
+  <!-- Inner Page Breadcrumb -->
+	<section class="shop-cart pt30">
+		<div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="order_complete_message text-center">
+            <div class="icon bgc-thm1"><span class="fa fa-shopping-cart color-white"></span></div>
+            <h2 class="title">Bid ID: #{{ bid.bid }}</h2>
+            {% if bid.winner == True %}
+                  
+                  <input class="product-quantity-{{ bid.product.id }}" type="hidden" value="1" id="product-quantity" class="w-25 mb-10 product-quantity-{{ bid.product.id }}">
+                  <input type="hidden" class="product-tax-fee-{{ bid.product.id }}" value="{{ new_rate_|floatformat:2 }}">
+                  <input type="hidden" class="product-processing-fee-{{ bid.product.id }}" value="{{ service_fee_rate_ }}">
+                  <input type="hidden" class="product-vendor-name-{{ bid.product.id }}" value="{{ bid.product.vendor.shop_name }}">
+                  <input type="hidden" class="product-vendor-{{ bid.product.id }}" value="{{ bid.product.vendor.id }}">
+                  <input type="hidden" class="product-shipping_amount-{{ bid.product.id }}" value="{{ bid.product.shipping_amount }}">
+                  <input type="hidden" class="product-price-{{ bid.product.id }}" value="{{ bid.price }}">
+                  <input type="hidden" class="product-pid-{{ bid.product.id }}" value="{{ bid.product.pid }}">
+                  <input type="hidden" class="product-image-{{ bid.product.id }}" value="{{ bid.product.image.url }}">
+                  <input type="hidden" class="product-id-{{ bid.product.id }}" value="{{ bid.product.id }}">
+                  <input type="hidden" class="product-slug-{{ bid.product.id }}" value="{{ bid.product.slug }}">
+
+                  <input type="hidden" class="product-title-{{ bid.product.id }}" value="{{ bid.product.title }}">
+
+
+                  <li><button type="button" class="btn btn-thm w100 button-add-to-cart add-to-cart-btn hide-button" onclick="showbtn()" data-index="{{ bid.product.id }}" id="add-to-cart-btn">Add to cart</button></li>
+                <!-- <p class="para"><a href="" style="border-bottom: 1px dashed ;">Checkout Now</a></p> -->
+          {% endif %}
+              </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-8 offset-xl-2">
+          <div class="shop_order_box mt25">
+            <div class="order_list_raw text-center">
+              <ul>
+                <li class="list-inline-item">
+                  <p>Bid ID</p>
+                  <h5>{{bid.bid}}</h5>
+                </li>
+                <li class="list-inline-item">
+                    <p>Status</p>
+                    <h5>{% if bid.winner == True %}Won <i class="bi bi-trophy"></i>{% else %}Lost{% endif %}</h5>
+                  </li>
+                <li class="list-inline-item">
+                  <p>Date</p>
+                  <h6>{{bid.date}}</h6>
+                </li>
+                <li class="list-inline-item">
+                  <p>Total</p>
+                  <h5>${{bid.price}}</h5>
+                </li>
+                
+              </ul>
+            </div>
+           
+            <div class="order_details">
+              <h4 class="title mb25">Bid Details</h4>
+              <h4 class="title mb25">{{bid.product.title|truncatechars:27}}</h4>
+              <div class="od_content">
+                <ul>
+                  <li class="subtitle bb1 mb15"><p>Other Bidders <span class="float-end">{{bid.product.title|truncatechars:27}}</span></p></li>
+                  {% for p in others %}
+                    <li><p class="product_name_qnt">{{p.user.username|title}} <span class="float-end">{{ cs }}{{p.price}} </b></span></p></li>
+                  {% endfor %}
+
+                  <li class="subtitle bt1 bfb1 mb10 mt15 pt10"><p>Ending Date <span class="float-end">{{ bid.product.ending_date }}</span></p></li>
+                  
+                    
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+		</div>
+	</section>
+
+  </div>
+  <script>
+    function showbtn(){
+      var element = document.getElementById("add-to-cart-btn");
+      element.classList.add(" d-none")
+      console.log(element)
+
+    }
+  </script>
+  {% endblock content %}

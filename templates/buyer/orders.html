@@ -1,0 +1,357 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}
+  Orders
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block content %}
+
+<style>
+   .modalDialog {
+     position: fixed;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     background: rgba(0, 0, 0, 0.8);
+     z-index: 99999;
+     opacity:0;
+     -webkit-transition: opacity 100ms ease-in;
+     -moz-transition: opacity 100ms ease-in;
+     transition: opacity 100ms ease-in;
+     pointer-events: none;
+ }
+ .modalDialog:target {
+     opacity:1;
+     pointer-events: auto;
+ }
+ .modalDialog > div {
+     max-width: 800px;
+     width: 90%;
+     position: relative;
+     margin: 10% auto;
+     padding: 20px;
+     border-radius: 3px;
+     background: #fff;
+ }
+ .close {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #94d92f;
+  color: #fff;
+  line-height: 25px;
+  position: absolute;
+  right: -12px;
+  text-align: center;
+  top: -10px;
+  width: 34px;
+  height: 34px;
+  text-decoration: none;
+  font-weight: bold;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -moz-box-shadow: 1px 1px 3px #000;
+  /* -webkit-box-shadow: 1px 1px 3px #000; */
+  /* box-shadow: 1px 1px 3px #000; */
+  padding-top: 5px;
+}
+ .close:hover {
+     background: #94d92f;
+     color: white;
+ }
+ /* .modal-backdrop{
+   background-color: #000;
+   z-index: -1;
+ } */
+ 
+ 
+ 
+ 
+ .modal {
+   display: none;
+   position: fixed;
+   z-index: 1;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   overflow: auto;
+   background-color: rgba(0, 0, 0, 0.4);
+ }
+ 
+ .modal-content {
+   background-color: #fefefe;
+   margin: 15% auto;
+   padding: 20px;
+   border: 1px solid #888;
+   width: 80%;
+ }
+ 
+ .close {
+  color: #f8f9fa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+ 
+ .close:hover,
+ .close:focus {
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
+ }
+ 
+ .modal-title {
+   margin-top: 0;
+ }
+ 
+ .modal-content-text {
+   margin-bottom: 0;
+ }
+ .openModal{
+   border: none;
+   background: none;
+   color: #b331ff;
+ }
+ 
+ </style>
+
+<section class="our-dashbord dashbord" style="margin-top: 0;">
+   <div class="container">
+      <div class="row">
+         {% include 'buyer/nav-desktop.html' %}
+         <div class="col-lg-9 col-xl-9">
+            {% include 'buyer/nav-mobile.html' %}
+               <div class="row">
+               <div class="col-xl-12">
+                  <div class="account_user_deails pl40 pl0-md">
+                     <h2 class="title mb30">My Orders</h2>
+                     <div class="ui_kit_tab style2">
+                        <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
+                           <li class="nav-item" role="predsentation">
+                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">All Orders</button>
+                           </li>
+                           <li class="nav-item" role="presedntation">
+                              <button class="nav-link" id="baby-tab" data-bs-toggle="tab" data-bs-target="#baby" type="button" role="tab" aria-controls="baby" aria-selected="false">Shipped</button>
+                           </li>
+                           <li class="nav-item" role="presedntation">
+                              <button class="nav-link" id="furniture-tab" data-bs-toggle="tab" data-bs-target="#furniture" type="button" role="tab" aria-controls="furniture" aria-selected="false">Delivered</button>
+                           </li>
+                        </ul>
+
+                        <div class="tab-content pt20 row" id="myTabContent">
+                           <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <h2 class="title mb30">All Orders</h2>
+                                <div class="order_table table-responsive">
+                                  <table class="table">
+                                    <thead class="table-light">
+                                      <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for o in orders %}
+                                        <tr>
+                                        <th scope="row">{{o.oid}}</th>
+                                        <td>{{ cs }}{{ o.total }}</td>
+                                        <!-- <td class="status"><span class="style4"><a href="{% url 'core:buyer-order-detail' o.oid %}">View Detail</a></span></td> -->
+                                        <td>
+                                          <button 
+                                             class="openModal" 
+                                             data-modal-title="{{ o.oid }}" 
+                                             data-modal-amount="{{ o.original_total|floatformat:2|intcomma }}"
+                                             data-vat="{{ o.vat|intcomma }}"
+                                             data-modal-shipping="{{ o.shipping|intcomma }}"
+                                             data-processing-fee="{{ o.service_fee|intcomma }}"
+                                             data-discount="{{ o.saved|intcomma }}"
+                                             data-payment-status="{{ o.payment_status|title }}"
+                                             data-order-status="{{ o.delivery_status|title }}"
+                                             data-modal-date="{{ o.date|date:'d M, Y' }}"
+                                          ><i class="fas fa-eye"></i></button>
+                                          <a href="{% url 'core:buyer-order-detail' o.oid %}" style="color: #6a1f96; padding: 5px;"><i class="bi bi-file-earmark-text-fill"></i></a>
+                                       </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td><h4>No Orders Yet</h4></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                  </table>
+
+                                  <div class="mbp_pagination mt30 text-center">
+                                    <ul class="page_navigation">
+                                        {% if orders.has_previous %}
+                                          <li class="page-item">
+                                          <a class="page-link" href="{% url 'core:buyer-orders' %}?page={{orders.previous_page_number}}" tabindex="-1" aria-disabled="true"> <span class="fas fa-angle-left"></span></a>
+                                          </li>
+                                      {% endif %}
+                                      
+                                      {% if orders.has_next %}
+                                          <li class="page-item">
+                                          <a class="page-link" href="{% url 'core:buyer-orders' %}?page={{orders.next_page_number}}"><span class="fas fa-angle-right"></span></a>
+                                          </li>
+                                      {% endif %}
+                                      </ul>
+                                    <p class="mt20 pagination_page_count text-center">{{orders}} -- {{orders_count.count}} Orders found</p>
+                                  </div>
+                                </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-lg-12" id="baby" role="tabpanel" aria-labelledby="baby-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <h2 class="title mb30">Shipped</h2>
+                                <div class="order_table table-responsive">
+                                  <table class="table">
+                                    <thead class="table-light">
+                                      <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Payment</th>
+                                        <th scope="col">Delivery Status</th>
+                                        <th scope="col">Order Status</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for o in shipped %}
+                                        <tr>
+                                        <th scope="row">{{o.oid}}</th>
+                                        <td><small>{{o.date}}</small></td>
+                                        <td class="text-success">{{o.payment_status|title}}</td>
+                                        <td class="status"><span class="stylde4">{{o.delivery_status|title}}</span></td>
+                                        <td class="status"><span class="stdyle4">{{o.order_status|title}}</span></td>
+                                        <td>{{ cs }}{{ o.total }}</td>
+                                        <td class="status"><span class="style4"><a href="{% url 'core:buyer-order-detail' o.oid %}">View Detail</a></span></td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td><h4>No Orders Yet</h4></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade col-xl-12" id="furniture" role="tabpanel" aria-labelledby="furniture-tab">
+                            <div class="account_user_deails pl40 pl0-lg">
+                                <h2 class="title mb30">Delivered Orders</h2>
+                                <div class="order_table table-responsive">
+                                  <table class="table">
+                                    <thead class="table-light">
+                                      <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Payment</th>
+                                        <th scope="col">Delivery Status</th>
+                                        <th scope="col">Order Status</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for o in collected %}
+                                        <tr>
+                                        <th scope="row">{{o.oid}}</th>
+                                        <td><small>{{o.date}}</small></td>
+                                        <td class="text-success">{{o.payment_status|title}}</td>
+                                        <td class="status"><span class="stylde4">{{o.delivery_status|title}}</span></td>
+                                        <td class="status"><span class="stdyle4">{{o.order_status|title}}</span></td>
+                                        <td>{{ cs }}{{ o.total }}</td>
+                                        <td class="status"><span class="style4"><a href="{% url 'core:buyer-order-detail' o.oid %}">View Detail</a></span></td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td><h4>No Orders Yet</h4></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+
+<div class="modal">
+   <div class="modal-content">
+     <span class="close">&times;</span>
+     <h2 class="modal-title"></h2>
+     <hr>
+     <h4 class="mt-3">Main Total Price: <b><span class="modal-amount"></span></b> </h4>
+     <hr>
+     <h4 class="mt-3">Paid Total Price: <b><span class="modal-amount"></span></b> </h4>
+     <h4 class="mt-3">VAT: <b><span class="modal-vat"></span></b> </h4>
+     <h4 class="mt-3">Shipping: <b><span class="modal-shipping"></span></b> </h4>
+     <h4 class="mt-3">Processing Fee: <b><span class="modal-processing-fee"></span></b> </h4>
+     <h4 class="mt-3">Discount(Saved): <b><span class="modal-discount"></span></b> </h4>
+     <h4 class="mt-3">Payment Status: <b><span class="modal-payment-status"></span></b> </h4>
+     <h4 class="mt-3">Order Status: <b><span class="modal-order-status"></span></b> </h4>
+     <h4 class="mt-3">Date: <b><span class="modal-date"></span></b> </h4>
+   </div>
+ </div>
+
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+   var modalBtns = document.getElementsByClassName("openModal");
+   var modal = document.querySelector(".modal");
+   var closeBtn = document.querySelector(".close");
+ 
+   for (var i = 0; i < modalBtns.length; i++) {
+     modalBtns[i].addEventListener("click", function() {
+       modal.style.display = "block";
+       var title = this.getAttribute("data-modal-title");
+       var amount = this.getAttribute("data-modal-amount");
+       var vat = this.getAttribute("data-vat");
+       var shipping = this.getAttribute("data-modal-shipping");
+       var processing_fee = this.getAttribute("data-processing-fee");
+       var discount = this.getAttribute("data-discount");
+       var payment_status = this.getAttribute("data-payment-status");
+       var order_status = this.getAttribute("data-order-status");
+       var date = this.getAttribute("data-modal-date");
+ 
+ 
+       document.querySelector(".modal-title").innerHTML = `Order ID - #${title}`;
+       document.querySelector(".modal-amount").innerHTML = `$${amount}`;
+       document.querySelector(".modal-vat").innerHTML = `$${vat}`;
+       document.querySelector(".modal-shipping").innerHTML = `$${shipping}`;
+       document.querySelector(".modal-processing-fee").innerHTML = `$${processing_fee}`;
+       document.querySelector(".modal-discount").innerHTML = `$${discount}`;
+       
+       document.querySelector(".modal-order-status").innerHTML = order_status;
+       document.querySelector(".modal-payment-status").innerHTML = payment_status;
+       document.querySelector(".modal-date").innerHTML = date;
+     });
+   }
+ 
+   closeBtn.addEventListener("click", function() {
+     modal.style.display = "none";
+   });
+ 
+   window.addEventListener("click", function(event) {
+     if (event.target === modal) {
+       modal.style.display = "none";
+     }
+   });
+ });
+ 
+ </script>
+
+
+{% endblock content %}

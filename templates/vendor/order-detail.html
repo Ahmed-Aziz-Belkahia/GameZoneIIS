@@ -1,0 +1,196 @@
+
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+        {% include 'vendor/dashboard-nav.html' %}
+      
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Order ID: #{{order.oid}}</h2>
+                <p class="para">View the complete detail of this order <b><i>{{ order.oid }}</i></b> below</p>
+                
+                {% if order.custom_order == True %}
+                  <a href="{% url 'store:checkout2' order.oid %}" class="btn btn-successf" style="background-color: purple; color: #fff;" >View Invoice</a>
+                {% endif %}
+                  
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1 text-success">Total Amount</div>
+                  <div class="title">{{ cs }}{{total.amount|floatformat:2}} <span class="badge style1 text-center"></span></div>
+                </div>
+                <div class="icon text-center mt-4"><i class="fas fa-sack-dollar"></i></div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Total Shipping Amount</div>
+                  <div class="title">{{ cs }}{{shipping.amount|floatformat:2}} <span class="badge style1 text-center"></span></div>
+                </div>
+                <div class="icon text-center mt-4"><i class="bi bi-cart-check-fill"></i></div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="d-flex justify-content-between statistics_funfact">
+                  <div class="details">
+                    <div class="subtitle1">Earning</div>
+                    <div class="title">{{ cs }}{{earning.amount|floatformat:2}} <span class="badge style1 text-center"></span></div>
+                  </div>
+                  <div class="icon text-center mt-4"><i class="bi bi-cart-check-fill"></i></div>
+                </div>
+              </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xl-8">
+              <div class="application_statics">
+                <h4 class="title pl30 mb30">Order Items</h4>
+                
+                <div class="account_user_deails dashboard_page">
+                  <div class="order_table table-responsive">
+                    <table class="table">
+                      <thead class="table-light">
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Order Detail</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Qty</th>
+                          <th scope="col">Total</th>
+                          <th scope="col">Shipping</th>
+                          <th scope="col">Delivery Status</th>
+                          <th scope="col">Cancelled Status</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody style="height: 180px;">
+                        {% for o in order_items %}
+                          
+                        <tr>
+                          <th scope="row"><img src="{{ o.product_obj.image.url }}" style="width: 30px; height: 30px; border-radius: 6px; object-fit: cover;" alt=""></th>
+                          <th scope="row"><a href="{% url 'store:product-detail' o.product_obj.pid %}">{{o.product_obj.title|truncatechars:20}}</a></th>
+                          <td>{{ cs }}{{o.price}}</td>
+                          <td>{{o.qty}}</td>
+                          <td>{{ cs }}{{o.total|floatformat:2}}</td>
+                          <td>{{ cs }}{{o.shipping|floatformat:2}}</td>
+                          <td id="delivery_status{{o.id}}">{{o.delivery_status|title}}</td>
+                          {% if o.cancelled == True %}
+                          <td class="red-text" style="color: red;">Cancelled</td>
+                          {% else %}
+                          <td style="color: green;">Active</td>
+                          {% endif %}
+                          <!-- <td class="status"><span class="style1">Delivered</span></td> -->
+                          <!-- <td>$56.00</td> -->
+                          <td class="">
+                              <!-- <div class="checkout_country_form actegory"> -->
+                                <div class="dropleft">
+                                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <ul class="dropdown-menu" style="margin-bottom: 50px;" aria-labelledby="dropdownMenuButton1">
+                                    
+                                    {% if o.tracking_id != None %}
+                                    <li><a class="dropdown-item " href="{% url 'vendor:add-trackingID' order.oid o.oid %}">Edit Tracking ID</a></li>
+                                    {% else %}
+                                    <li><a class="dropdown-item " href="{% url 'vendor:add-trackingID' order.oid o.oid %}">Add Tracking ID</a></li>
+                                    {% endif %}
+                                      
+                                    <hr>
+                                    <li><a class="dropdown-item shipped{{o.id}}" id="shipped" data-shipped="{{o.id}}">Mark as Shipped</a></li>
+                                    <li><a class="dropdown-item arrived{{o.id}}" id="arrived" data-arrived="{{o.id}}">Mark as Arrived</a></li>
+                                    <li><a class="dropdown-item delivered{{o.id}}" id="delivered" data-delivered="{{o.id}}">Mark as Delivered</a></li>
+                                  </ul>
+                                </div>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="recent_activity_widget">
+                  <h4 class="title mb25">Buyer Details and Address</h4>
+                  <div class="dashboard-timeline-label">
+                    <div class="timeline-item pb10">
+                      
+                      <!--begin::Text-->
+                    <div class="ra_pcontent pld10">
+                        <span class="subtitle">Name: <b>{{order.full_name}}</b></span> <br> 
+                        <span class="subtitle">Email: <strong>{{order.email}}</strong></span> <br>
+                        <span class="subtitle">Mobile No.: <strong>{{order.mobile}}</strong></span> <br>
+                    
+                    </div>
+                    </div>
+                    <hr>
+                    <div class="timeline-item pb10 mt20">
+                        <!--begin::Text-->
+                        <div class="ra_pcontent pld10">
+                            <span class="subtitle">Home Address: <b>{{ order.address }}</b></span> <br>
+                             <span class="subtitle">Town/City: <strong>{{order.town_city}}</strong></span><br>
+                             <span class="subtitle">State: <strong>{{order.state}}</strong></span><br>
+                             <span class="subtitle">Country: <strong>{{order.country}}</strong></span>
+                            </div>
+                        <!--end::Text-->
+                      </div>
+                      
+                      {% if order.buyer %}
+                      <a href="{% url 'vendor:inbox-detail' order.buyer.username %}" class="btn btn-success"> Send Message to Buyer <i class="fas fa-message"></i></a>
+                      {% endif %}
+                        
+                  </div>
+                  
+                </div>
+              </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+<script>
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      // Pie chart
+      new Chart(document.getElementById("chartjs-dashboard-pie"), {
+        type: "pie",
+        data: {
+          labels: ["Direct", "Affiliate", "E-mail", "Other"],
+          datasets: [{
+            data: [2602, 1253, 541, 1465],
+            backgroundColor: [
+              window.theme.primary,
+              window.theme.warning,
+              window.theme.danger,
+              "#E8EAED"
+            ],
+            borderWidth: 5,
+            borderColor: window.theme.white
+          }]
+        },
+        options: {
+          responsive: !window.MSInputMethodContext,
+          maintainAspectRatio: false,
+          cutoutPercentage: 70,
+          legend: {
+            display: false
+          }
+        }
+      });
+    });
+</script>
+{% endblock content %}

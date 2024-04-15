@@ -1,0 +1,206 @@
+{% extends "gz/base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "gz/styles/checkout.css" %}">
+{% block title%}
+<title>GameZone | Checkout</title>
+{% endblock title %}
+{% endblock head %}
+
+{% block main %}
+<div class="checkout-header">
+    <div class="header-brand">
+        <a href="{% url 'home' %}">
+            <img src="{% static "gz/assets/logo/logo_white.png" %}" alt="GameZone">
+        </a>
+        <h3> Checkout </h3>
+    </div>
+</div>
+<div class="checkout-body">
+    <div class="checkout-options-group">
+        <div class="checkout-form">
+            <h3>Choose Your Payment Method</h3>
+            <form>
+                <div class="form-group">
+                    <!-- Add checked attribute to the Cash on Delivery radio button -->
+                    <input type="radio" id="cash" name="payment-method" value="cash" checked>
+                    <label for="cash">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                        Cash on Delivery
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" id="credit-card" name="payment-method" value="credit-card">
+                    <label for="credit-card"> 
+                        <i class="fa-solid fa-credit-card"></i>
+                        Credit Card
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="checkout-form">
+            <h3>Ship to</h3>
+            <form id="addressForm" method="POST" action="">
+                <input type="hidden" name="csrfmiddlewaretoken" value="5urIwqH8rnoz90Uar1BrzIhlwrzfkNs96ElCtxJNQNqbXP7CKfRQfFqLGlb4oAkv">
+                <!-- Address 1 -->
+                {% for address in user.customuser.addresses.all %}
+                    <div class="address" data-id="{{address.id}}">
+                        <div class="label">
+                            <p>
+                                {{address}}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </form>
+            <button class="btn-add-address btn-primary">Edit Address</button>
+        </div>
+    </div>
+    <div class="checkout-summary">
+        <h3>Order Summary</h3>
+        <div class="sub-total">
+            <p>Subtotal</p>
+            <p>TND {{cart.calculate_total_price}}</p>
+        </div>
+        <div class="Shipping-total">
+            <p>Shipping & Handling</p>
+            <p>{{cart.shippingCost}}</p>
+        </div>
+        <div class="tax-total">
+            <p>Tax</p>
+            <p>TND 0</p>
+        </div>
+        <div class="summary-total">
+            <p>Total</p>
+            <p>TND {{cart.price}}</p>
+        </div>
+        <button class="btn-place-order btn-primary">Place Order</button>
+        <span>By placing your order, you agree to GameZone's privacy notice and conditions of use.</span>
+    </div>
+</div>
+
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const addAddressButton = document.querySelector(".btn-add-address");
+        addAddressButton.addEventListener("click", function () {
+            window.location.href = "/profile/addresses";
+        });
+
+        const addresses = document.querySelectorAll(".address");
+
+        // Function to select the first address by default
+        function selectFirstAddress() {
+            const firstAddress = addresses[0];
+            if (firstAddress) {
+                firstAddress.classList.add("selected");
+                updateHiddenInput(firstAddress);
+            }
+        }
+
+        // Function to update the hidden input with the selected address
+        function updateHiddenInput(address) {
+            const selectedAddressId = address.dataset.id; // Retrieve the address ID from the data-id attribute
+            const hiddenInput = document.createElement("input");
+            hiddenInput.setAttribute("type", "hidden");
+            hiddenInput.setAttribute("name", "selected_address_id");
+            hiddenInput.setAttribute("value", selectedAddressId);
+        
+            // Remove any existing hidden input
+            const existingHiddenInput = document.querySelector("input[name='selected_address_id']");
+            if (existingHiddenInput) {
+                existingHiddenInput.remove();
+            }
+        
+            // Append the new hidden input to the form
+            document.getElementById("addressForm").appendChild(hiddenInput);
+        }
+
+        // Event listener for clicking on addresses
+        addresses.forEach(function (address) {
+            address.addEventListener("click", function () {
+                // Remove selected class from all addresses
+                addresses.forEach(function (addr) {
+                    addr.classList.remove("selected");
+                });
+
+                // Add selected class to the clicked address
+                address.classList.add("selected");
+
+                // Update the border for all addresses
+                addresses.forEach(function (addr) {
+                    if (addr.classList.contains("selected")) {
+                        addr.style.border = "2px solid black";
+                    } else {
+                        addr.style.border = "1px solid transparent";
+                    }
+                });
+
+                // Update the hidden input value with the selected address
+                updateHiddenInput(address);
+            });
+        });
+
+        // Call the function to select the first address by default
+        selectFirstAddress();
+
+        const placeOrderButton = document.querySelector(".btn-place-order");
+        placeOrderButton.addEventListener("click", function () {
+            // Get the selected payment method
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+
+            // Get the selected address ID
+            const selectedAddressInput = document.querySelector("input[name='selected_address_id']");
+            const addressId = selectedAddressInput ? selectedAddressInput.value : 0;
+
+            // Get the shipping method and cart ID from your Django template variables
+            const cartId = "{{ cartID }}";
+
+            // AJAX request to create the order
+            $.ajax({
+                type: 'POST',
+                url: '/create-order/',
+                data: {
+                    "payment_method": paymentMethod,
+                    "address_id": addressId,
+                    "cartId": cartId,
+                },
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                }, 
+                success: function (response) {
+                    console.log(response);
+                    window.location.href = response.url;
+                    // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    // Handle error response
+                }
+            });
+        });
+    });
+
+
+    
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock scripts %}

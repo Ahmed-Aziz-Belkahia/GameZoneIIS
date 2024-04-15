@@ -1,0 +1,251 @@
+{% extends "vendor/vendor-base.html" %}
+
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+   .akudanus{
+        position: absolute;
+        left: 50%;
+        z-index: 1;
+      }
+      button{
+        outline: none;
+        cursor: pointer;
+        font-weight: 500;
+        border-radius: 4px;
+        border: 2px solid transparent;
+        transition: background 0.1s linear, border-color 0.1s linear, color 0.1s linear;
+      }
+    
+      .akudanus{
+        background: #202020;
+        padding: 25px;
+        border-radius: 15px;
+        top: -150%;
+        max-width: 412px;
+        width: 100%;
+        opacity: 0;
+        pointer-events: none;
+        box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
+        transform: translate(-50%, -50%) scale(1.2);
+        transition: top 0s 0.2s ease-in-out,
+        opacity 0.2s 0s ease-in-out,
+        transform 0.2s 0s ease-in-out;
+      }
+      .akudanus.show{
+        top: 50%;
+        opacity: 1;
+        pointer-events: auto;
+        transform:translate(-50%, -50%) scale(1);
+        transition: top 0s 0s ease-in-out,
+        opacity 0.2s 0s ease-in-out,
+        transform 0.2s 0s ease-in-out;
+      
+      }
+      .akudanus :is(header, .insignia, .knopka){
+        display: flex;
+        align-items: left;
+        justify-content: space-between;
+      }
+      .akudanus header{
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ebedf9;
+      }
+      header span{
+        font-size: 21px;
+        font-weight: 600;
+      }
+      header .close, .insignia a{
+        display: flex;
+        align-items: center;
+        border-radius: 50%;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+      }
+      header .close{
+        color: #a30000;
+        font-size: 17px;
+        background: #f2f3fb;
+        height: 33px;
+        width: 33px;
+        cursor: pointer;
+      }
+      header .close:hover{
+        background: #ebedf9;
+      }
+      .akudanus .content{
+        margin: 20px 0;
+      }
+      .akudanus .insignia{
+        margin: 15px 0 20px 0;
+      }
+      .content p{
+        font-size: 16px;
+      }
+      .content .insignia a{
+        height: 50px;
+        width: 50px;
+        font-size: 20px;
+        text-decoration: none;
+        border: 1px solid transparent;
+      }
+   
+      .content .knopka{
+        margin: 12px 0 -5px 0;
+        height: 45px;
+        border-radius: 4px;
+        padding: 0 5px;
+      }
+      .knopka.active{
+        border-color: #7d2ae8;
+      }
+      .knopka i{
+        width: 50px;
+        font-size: 18px;
+        text-align: left;
+      }
+      .knopka.active i{
+        color: #7d2ae8;
+      }
+      .knopka input{
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        font-size: 15px;
+      }
+      .knopka button{
+        color: #f4f5f9;
+        padding: 5px 18px;
+        background: #7d2ae8;
+      }
+      .knopka button:hover{
+        background: #8d39fa;
+      }
+</style>
+<!-- {% crispy tracking_form %} -->
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+      {% include 'vendor/dashboard-nav.html' %}
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Add Tracking ID/Number</h2>
+                <p class="para">Add the tracking ID or Number you got from the couriers service.</p>
+              </div>
+              
+              {% if tracking_form.errors %}
+              <div class="alert alert-danger">
+                <strong>{{tracking_form.errors}}</strong>
+              </div>
+              {% endif %}
+              {% if dc_form.errors %}
+              <div class="alert alert-danger">
+                <strong>{{dc_form.errors}}</strong>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="dashboard_setting_box">
+                <div class="ui_kit_tab style2">
+                  <!-- nav tab Nav List Start -->
+                  <div class="tab-content pt20 row" id="myTabContent">
+                    <div class="tab-pane fade show active col-lg-12" id="editprofile" role="tabpanel" aria-labelledby="editprofile-tab">
+                      <div class="account_details_page form_grid">
+                        
+                        <form class="contact_form" method="POST" enctype="multipart/form-data" novalidate>
+                          {% csrf_token %}
+                          <div style="display: none;">
+                            {{form.media}}
+                             {{form}}
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group mb-4">
+                                <label class="form-label">Select Delivery Couriers</label>
+                                {{tracking_form.delivery_couriers}}
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+                                  <label class="form-label">Enter Tracking Number/ID</label>
+                                  {{tracking_form.tracking_id}}
+                                </div>
+                              </div>
+                            <div class="col-sm-12">
+                              <div class="form-group d-grid d-sm-flex mb0">
+                                <button type="submit" class="style2 btn btn-thm me-3 mb15-520" style="color: white;">Save Tracking ID</button>
+                                <button type="button" class="koges-amulan">Add New Courier</button>
+
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        
+                      </div>
+                    </div>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+                        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+                        <div class="akudanus"  style="color: #fff;">
+                        <header>
+                        <span class="text-white">Add New Courier</span>
+                        <div class="close"><i class="uil uil-times"></i></div>
+                        </header >
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="content">
+                                {{dc_form}}
+                                <div class="knopka w100">
+                                    <button type="submit">Save New Courier Service</button>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                  </div>
+                  <!-- nav tab contents End -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <script>
+    // Get the modal
+    const viewBtn = document.querySelector(".koges-amulan"),
+    akudanus = document.querySelector(".akudanus"),
+    close = akudanus.querySelector(".close"),
+    knopka = akudanus.querySelector(".knopka"),
+    input = knopka.querySelector("input"),
+    copy = knopka.querySelector("button");
+  
+    viewBtn.onclick = ()=>{
+    akudanus.classList.toggle("show");
+    }
+    close.onclick = ()=>{
+    viewBtn.click();
+    }
+  
+    copy.onclick = ()=>{
+    input.select();  
+    if(document.execCommand("copy")){  
+    knopka.classList.add("active");
+    copy.innerText = "Copied";
+    setTimeout(()=>{
+    window.getSelection().removeAllRanges();  
+    knopka.classList.remove("active");
+    copy.innerText = "Copy";
+    }, 3000);
+    }
+    }
+  </script>
+{% endblock content %}
+

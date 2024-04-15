@@ -1,0 +1,88 @@
+{% extends "partials/base.html" %} {% load static %} 
+
+{% block title %}
+  Hot Deal 🔥
+{% endblock title %}
+  
+{% block content %}
+<style>
+  ul,
+  li {
+    list-style: none;
+  }
+</style>
+<!-- Listing Grid View -->
+<section class="our-listing pt0" style="margin-top: 100px;">
+  <div class="container">
+    <div class="row mt50">
+      <div class="col-lg-12">
+        <div class="main-title">
+          <h1 class="title text-center">Hot Deals 🔥</h1>
+        </div>
+        <div class="shop_item_4grid_slider dots_none owl-theme owl-carousel">
+                            
+          {% for p in featured_hot_deals %}
+              {% include 'store/product_list.html' %}
+          {% endfor %}
+          
+      </div>
+      </div>
+    </div>
+    <div class="row mt60">
+      <div class="col-lg-12 col-xl-12 pl50 pl15-md">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-title bb1 pb10">
+              <h2 class="title">All Hot Deals Product</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row">
+            {% for p in products %}
+            <div class="col-sm-6 col-lg-3 col-xl-3 p0 pl15-520 mb-3 mb3">
+              {% include 'store/product_list.html' %}
+            </div>
+            {% empty %}
+            <div>
+              <h4>No Hot Deals Yet...</h4>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mbp_pagination mt30 text-center">
+                <ul class="page_navigation">
+                  {% if products.has_previous %}
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      href="{% url 'store:shop' %}?page={{products.previous_page_number}}"
+                      tabindex="-1"
+                      aria-disabled="true"
+                    >
+                      <span class="fas fa-angle-left"></span
+                    ></a>
+                  </li>
+                  {% endif %} {% if products.has_next %}
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      href="{% url 'store:shop' %}?page={{products.next_page_number}}"
+                      ><span class="fas fa-angle-right"></span
+                    ></a>
+                  </li>
+                  {% endif %}
+                </ul>
+                <p class="mt20 pagination_page_count text-center">
+                  {{products}} -- {{products_couunt.count}} Products found
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

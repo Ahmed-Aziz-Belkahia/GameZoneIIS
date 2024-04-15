@@ -1,0 +1,218 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}
+Checkout
+ {% endblock title %}
+{% block content %}
+<div class="body_content_wrapper position-relative">
+  <style>
+    ul,li{
+       list-style: none;
+    }
+ </style>
+
+   <section class="our-invoice bgc-gmart-gray pb200" style="margin-top: 30px;">
+      <div class="container">
+        <div class="row mb30">
+          <div class="col-lg-12">
+            <div class="float-start w100">
+              <a class="invoice_down_pfrint purple-btn btn clipboard" id="myInput" onclick="myFunction()"> <i class="bi bi-link-45deg"></i> Copy Link </a>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          var $temp = $("<input>");
+          var $url = $(location).attr('href');
+
+          $('.clipboard').on('click', function() {
+            $("body").append($temp);
+            $temp.val($url).select();
+            document.execCommand("copy");
+            $temp.remove();
+            $("#myInput").text("URL copied!");
+          })
+        </script>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="invoice_table">
+              <div class="wrapper">
+                <div class="row mb20">
+                  <div class="col-lg-7">
+                    <div class="main_logo"><span class="logo_title">{{company.name}} <span class="text-thm">.</span></span></div>
+                  </div>
+                  <div class="col-lg-5">
+                    <div class="invoice_deails">
+                      <h4 class="float-start"><b>Invoice ID #{{order.oid}}</b></h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt50">
+                  <div class="col-sm-6 col-lg-7">
+                    <div class="invoice_date mb70">
+                      <div class="title"><b>Invoice date</b></div>
+                      <h5 class="mb0">{{order.date}}</h5>
+                    </div>
+                    <div class="invoice_address">
+                      <h4 class="m0"><b>Vendor</b></h4>
+                      {% for o in order.vendor.all %}
+                      <h5 class="m-0 p-0"><b>Name</b>: {{o.shop_name}}</h5>
+                      <h5 class="m-0 p-0"><b>ID</b>: #{{o.vid}}</h5>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <br><br>
+                  <div class="col-sm-6 col-lg-5">
+                    <div class="invoice_address mt-4 pt-4">
+                      <h4 class="m-0"><strong>Customer</strong></h4>
+                      
+                      <h5>{{order.full_name|title}}</h5>
+                      <p>{{order.address}}, {{order.town_city}} <br> {{order.state}} <br> {{order.country|title}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt50">
+                  <div class="col-lg-12">
+                    <div class="table-responsive invoice_table_list">
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr class="tblh_row">
+                            <th class="tbleh_title" scope="col">Product</th>
+                            <th class="tbleh_title" scope="col">Price</th>
+                            <th class="tbleh_title" scope="col">QTY</th>
+                            <th class="tbleh_title" scope="col">Total</th>
+                            <th class="tbleh_title" scope="col">Shipping</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for i in order_items %}
+                          <tr class="bb1">
+                            <th class="tbl_title d-flex align-items-center" scope="row">
+                              <img src="{{i.product_obj.image.url}}" style="width: 40px; height: 40px; border-radius: 10px; object-fit: cover;" alt="{{ i.product }}">
+                              <p style="padding-left: 10px;"><small>{{ i.product_obj.title }}</small></p>
+                            </th>
+                            <td class="tbl_title">{{ cs }}{{i.price}}</td>
+                            <td class="tbl_title">{{ i.qty }}</td>
+                            <td class="tblpr_title">{{ cs }}{{i.total}}</td>
+                            <td class="tblpr_title">{{ cs }}{{i.shipping}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                  </div>
+                  <br><br>
+                  <div class="col-lg-12 col-xl-12 float-fend">
+                      <div class="order_sidebar_widget checkout_page mb30 mb30">
+                          <h4 class="title">Your Order</h4>
+                          <ul>
+                             <li class="subtitle">
+                                <p>Sub Total <span class="float-end totals">{{ cs }}{{order.price|floatformat:2}}</span></p>
+                             </li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                             <li class="subtitle">
+                                <p>Shipping <span class="float-end totals">{{ cs }}{{ order.shipping|floatformat:2 }}</span></p>
+                             </li>
+                             
+                             <li class="subtitle">
+                              <p>Estimated Tax Fee <span class="float-end totals">{{ cs }}{{ order.vat|floatformat:2 }}</span></p>
+                              </li>
+                              <li class="subtitle">
+                                 <p>Service Fee <span class="float-end totals">{{ cs }}{{ order.service_fee|floatformat:2 }}</span></p>
+                                 </li>
+                             <li class="subtitle">
+                                <p>Total <span class="float-end totals">{{cs}}{{order.total|floatformat:2}}</span></p>
+                             </li>
+                          </ul>
+                           
+                       </div>
+                       <div class="ui_kit_button payment_widget_btn">
+                        <button type="button" id="checkout-button" class="btn btn-track btn-thm w100 mt20">Pay {{ cs }}{{order.total}} Now</button>
+                        <input type="hidden" name="email" id="email" value="{{order.email}}">
+                        <button class="btn btn-track purple-btn w100 mt10" style="height: 80px;">
+                          Pay with PayPal <i class="fab fa-paypal"></i> {{paypal_payment_button.render}}
+                       </button>
+                     </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="invoice_footer">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8">
+                    <div class="invoice_footer_content text-center">
+                      <ul>
+                        <li class="list-inline-item"><a href="{{company.website_address}}">{{company.website_address}}</a></li>
+                        <li class="list-inline-item"><a href="mailto:{{company.email}}">{{company.email}}</a></li>
+                        <li class="list-inline-item"><a href="tel:{{company.phone}}">{{company.phone}}</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+</div>
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe('{{ stripe_publishable_key }}');
+    var checkoutButton = document.getElementById('checkout-button');
+
+    checkoutButton.addEventListener('click', function () {
+
+        var email = document.getElementById('email').value;
+        if (email.length == 0) {
+            alert("Please enter your email address.");
+            return;
+        }
+
+        // Create a new Checkout Session using the server-side endpoint you
+        // created in step 3.
+        fetch("{% url 'store:api_checkout_session' id=order.oid %}", {
+            method: 'POST',
+            body: JSON.stringify(
+                { email: email }
+            )
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.sessionId });
+            })
+            .then(function (result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    });
+</script>
+
+<script>
+  function myFunction() {
+    // Get the text field
+    var copyText = document.getElementById("myInput");
+  
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+  
+     // Copy the text inside the text field
+     copyText.clipboard.writeText(window.location.href);
+     navigator.clipboard.writeText(window.location.href);
+
+    // Alert the copied text
+    alert("Copied the page url: " + window.location.href);
+  }
+</script>
+{% endblock content %}

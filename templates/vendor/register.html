@@ -1,0 +1,108 @@
+
+{% extends "partials/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    #id_captcha_1{
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.356),
+    }
+  </style>
+<section class="our-log-reg bgcd-f5">
+    <div class="container">
+        <div class="row">
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                <strong>{{form.errors}}</strong>
+                </div>
+                {% endif %}
+            <div class="col-lg-8 col-xl-5 col-xxl-4 m-auto">
+            <div class="log_reg_form mt70d-992">
+                <h3 class="title">Create your vendor account</h3>
+                <div class="login_form">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-2 mr-sm-2">
+                        <label class="form-label">Full Name</label>
+                        {{form.full_name}}
+                        </div>
+                    <div class="mb-2 mr-sm-2">
+                    <label class="form-label">Email address</label>
+                    {{form.email}}
+                    </div>
+                    <div class="mb-2 mr-sm-2">
+                        <label class="form-label">Username</label>
+                        {{form.username}}
+                    </div>
+                    <div class="form-group mb5">
+                    <label class="form-label">Password</label>
+                    {{form.password1}}
+                    </div>
+                    <div class="form-group mb5">
+                        <label class="form-label">Confirm Password</label>
+                        {{form.password2}}
+                    </div>
+                    <div class="form-group mb5">
+                        <label class="form-label">Enter the code below</label> <br>
+                        {{form.captcha}}
+                      </div>
+                    
+                    <button type="submit" class="btn btn-log btn-thm mt20">Create Vendor Account</button>
+                    <p class="text-center mb25 mt10">Already have an account? <a href="{% url 'userauths:vendor_sign_in' %}">Login Now</a></p>
+                    <div class="hr_content">
+                    <hr>
+                    <span class="hr_top_text">or</span>
+                    </div>
+                    <!-- <ul class="login_with_social text-center mt30 mb0">
+                    <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
+                    <li class="list-inline-item"><a href="#"><i class="fab fa-google"></i></a></li>
+                    <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
+                    </ul> -->
+                </form>
+                </div>
+            </div>
+            </div>
+            <!-- <div class="col-lg-8 col-xl-5 col-xxl-4 m-auto">
+                <div class="log_reg_form mt70-992">
+                    <h2 class="title">Create an account</h2>
+                    <div class="login_form">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-2 mr-sm-2">
+                        <label class="form-label">Email address</label>
+                        {{form.email}}
+                        </div>
+                        <div class="mb-2 mr-sm-2">
+                            <label class="form-label">Username</label>
+                            {{form.username}}
+                        </div>
+                        <div class="form-group mb5">
+                        <label class="form-label">Password</label>
+                        {{form.password1}}
+                        </div>
+                        <div class="form-group mb5">
+                            <label class="form-label">Confirm Password</label>
+                            {{form.password2}}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-log btn-thm mt20">Create Account</button>
+                        <p class="text-center mb25 mt10">Already have an account? <a href="{% url 'userauths:sign-in' %}">Login Now</a></p>
+                        <div class="hr_content">
+                        <hr>
+                        <span class="hr_top_text">or</span>
+                        </div>
+                        <ul class="login_with_social text-center mt30 mb0">
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-google"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
+                        </ul>
+                    </form>
+                    </div>
+                </div>
+                </div> -->
+        </div>
+    </div>
+</section>
+{% endblock content %}

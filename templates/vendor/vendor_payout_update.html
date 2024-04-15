@@ -1,0 +1,127 @@
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<!-- {% crispy form %} -->
+
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+      {% include 'vendor/dashboard-nav.html' %}
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Payout Settings</h2>
+              </div>
+              
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                <strong>{{form.errors}}</strong>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="dashboard_setting_box">
+                <div class="ui_kit_tab style2">
+                  <div class="tab-content pt20 row" id="myTabContent">
+                    <div class="tab-pane fade show active col-lg-12" id="editprofile" role="tabpanel" aria-labelledby="editprofile-tab">
+                      <div class="account_details_page form_grid">
+                        <form class="contact_form" method="post" enctype="multipart/form-data" novalidate>
+                          {% csrf_token %}
+                          <div class="rorw">
+                            <div class="col-md-6 mt-4">
+                              <div class="form-group mb-4 shadow p-3" style="border-radius: 10px;">
+                                <label class="form-label">Payout Method <i class="fas fa-wallet"></i> </label>
+                                {{form.payout_method}}
+                              </div>
+                            </div>
+                            
+                            {% if request.user.profile.seller == True and not request.user.vendor.stripe_user_id %}
+                            <div class="col-md-6 mt-4 shadow p-3" style="border-radius: 10px;">
+                                <div class="form-group">
+                                  <label class="form-label">Connect Your Stripe Account <i class="fab fa-stripe"></i></label> <br>
+                                  <small>NOTE: If your payout method is paypal, then you need to add a paypal email address</small> <br>
+                                  <a href="{% url 'vendor:authorize' %}" class="button is-info btn btn-success">Connect Stripe  </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <br>
+
+                            <div class="col-md-6 mt-4 shadow p-3" style="border-radius: 10px;">
+                              <div class="form-group ">
+                                <label class="form-label">Connect Your Paypal Account  <i class="fab fa-paypal"></i></label> <br>
+                                <small>NOTE: If your payout method is paypal, then you need to add a paypal email address</small> <br>
+                                <!-- <a href="" class="">Connect Paypal</a> -->
+                                <br>
+                                <div dir="ltr" style="text-align: left;" trbidi="on">
+                                  <script>
+                                    (function(d, s, id) {
+                                      var js, ref = d.getElementsByTagName(s)[0];
+                                      if (!d.getElementById(id)) {
+                                        js = d.createElement(s);
+                                        js.id = id;
+                                        js.async = true;
+                                        js.src = "https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js";
+                                        ref.parentNode.insertBefore(js, ref);
+                                      }
+                                    }(document, "script", "paypal-js"));
+                                
+                                  </script>
+                                  <a data-paypal-button="true" class="button is-info btn btn-success" href="<Action-URL>&displayMode=minibrowser" target="PPFrame">Connect PayPal</a>
+                              </div>
+                            </div>
+
+                            
+                            </div>
+                            <!-- <a href="{% url 'vendor:onboard_view_1' %}" class="btn btn-success">Onboard Seller PAYPAL</a> -->
+                            <br>
+                            
+                            <br>
+                            <div class="col-md-6 mt-4 shadow p-3" style="border-radius: 10px;">
+                              <div class="form-group ">
+                                <label class="form-label">Paypal Email Address <i class="fab fa-paypal"></i></label> <br>
+                                <small>NOTE: If your payout method is paypal, then you need to add a paypal email address</small>
+
+                                {{form.paypal_email_address}}
+                              </div>
+                            </div>
+                            <div class="col-md-6 mt-4 shadow p-3" style="border-radius: 10px;">
+                                <div class="form-group mb-4">
+                                  <label class="form-label">Currency</label>
+                                 {{form.currency}}
+                                </div>
+                              </div>
+                            <div class="col-sm-12 mt-3">
+                              <div class="form-group d-grid d-sm-flex mb0">
+                                <button type="submit" class=" btn purple-btn " style="color: #fff;">Save Changes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+
+                        <!-- <form method="post" class="mt-4 form-group" action="{% url 'vendor:onboard_seller_view_2' %}">
+                          {% csrf_token %}
+                          <label for="name">Name:</label>
+                          <input type="text" id="name" name="name">
+                          <label for="email">Email:</label>
+                          <input type="email" id="email" name="email">
+                          <input type="submit" value="Submit">
+                      </form> -->
+                            <!-- <a href="{% url 'vendor:onboard_seller_view_2' %}" class="btn btn-success">Generate Access Token</a> -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+

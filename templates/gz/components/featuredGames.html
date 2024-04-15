@@ -1,0 +1,19 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "gz/styles/components/featuredGames.css" %}">
+
+<div class="main__featuredGames flexCenter">
+
+
+    <div class="featuredGames__div flexCenter">
+
+        {% for game in featured_games %}
+            <a href="/detail/{{game.meta_title}}" class="featuredGames__game flexCenter">
+                <img src="{{game.featured_game_banner.url}}" alt="{{game.title}}">
+            </a>
+        {% endfor %}
+
+
+    </div>
+
+</div>

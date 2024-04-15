@@ -1,0 +1,149 @@
+
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
+<style>
+  .wrapper{
+    height: 200px;
+    width: 300px;
+  }
+</style>
+  <div class="dashboard_content_wrapper">
+    <div class="dashboard dashboard_wrapper pr30 pr0-md">
+        {% include 'vendor/dashboard-nav.html' %}
+      
+      <div class="dashboard__main pl0-md">
+        <div class="dashboard__content bgc-gmart-gray">
+          <div class="row pb50">
+            <div class="col-lg-12">
+              <div class="dashboard_title_area">
+                <h2>Earning</h2>
+                <p class="para">All your earning and payouts</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Total Sales Revenue</div>
+                  
+                  {% if total_sales_revenue.amount == None %}
+                  <div class="title">{{ cs }}0.00 <span class="badge style1 text-center"></span></div>
+                  {% else %}
+                  <div class="title">{{ cs }}{{total_sales_revenue.amount|floatformat:2}} <span class="badge style1 text-center"></span></div>
+                  {% endif %}
+                    
+                </div>
+                <div class="icon text-center mt-4"><i class="fas fa-sack-dollar"></i></div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Shipping Fees</div>
+                  <div class="title">{{shipping_fees.amount|floatformat:2}}</div>
+                </div>
+                <div class="icon text-center mt-4"><i class="bi bi-truck"></i></div>
+              </div>
+            </div>
+            
+            <div class="col-lg-4 col-xxl-4">
+              <div class="d-flex justify-content-between statistics_funfact">
+                <div class="details">
+                  <div class="subtitle1">Total Payout</div>
+                  <p>Excluding Shipping Fees</p>
+                  <div class="title">{{cs}}{{total_payout.amount|floatformat:2}} <span class="badge style2 text-center"></span></div>
+                </div>
+                <div class="icon text-center mt-4"><i class="fas fa-wallet"></i></div>
+              </div>
+            </div>
+          </div>
+          
+          
+
+          <div class="row">
+            <div class="col-xl-8">
+              <div class="application_statics">
+                <h4 class="title pl30 mb30">Monthly Earning</h4>
+                <div class="account_user_deails dashboard_page">
+                  <div class="order_table table-responsive">
+                    <table class="table">
+                      <thead class="table-light">
+                        <tr>
+                          <th scope="col">Month</th>
+                          <th scope="col">Orders</th>
+                          <th scope="col">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for o in output %}
+
+                        <tr>
+                          {% if o.month == 1 %}<th scope="row">January</th>{% endif %}
+                          {% if o.month == 2 %}<th scope="row">Febuary</th>{% endif %}
+                          {% if o.month == 3 %}<th scope="row">March</th>{% endif %}
+                          {% if o.month == 4 %}<th scope="row">April</th>{% endif %}
+                          {% if o.month == 5 %}<th scope="row">May</th>{% endif %}
+                          {% if o.month == 6 %}<th scope="row">June</th>{% endif %}
+                          {% if o.month == 7 %}<th scope="row">July</th>{% endif %}
+                          {% if o.month == 8 %}<th scope="row">August</th>{% endif %}
+                          {% if o.month == 9 %}<th scope="row">Septemer</th>{% endif %}
+                          {% if o.month == 10 %}<th scope="row">October</th>{% endif %}
+                          {% if o.month == 11 %}<th scope="row">November</th>{% endif %}
+                          {% if o.month == 12 %}<th scope="row">December</th>{% endif %}
+                          <td>{{o.count}}</td>
+                          <td>{{o.total|floatformat:2}}</td>
+                        </tr>
+                        
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4">
+              <div class="circle_chart_box">
+                <h4 class="title mb30">Earning</h4>
+                <canvas id="myCharttt" style="height:300px; ">$56,033</canvas>
+              </div>
+            </div>
+          </div>
+          
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+	const labels = {{monthNumber|safe}};
+	const data = {
+	  labels: labels,
+	  datasets: [{
+	    label: 'Amount Earned $',
+	    backgroundColor: '#b331ff',
+	    borderColor: '#b331ff',
+	    data: {{amountTotal}},
+	  }]
+	};
+
+	const config = {
+	  type: 'bar',
+	  data,
+	  options: {
+      responsive: true
+    }
+	};
+
+	var myChart = new Chart(
+	    document.getElementById('myCharttt'),
+	    config
+  	);
+
+</script>
+
+{% endblock content %}
