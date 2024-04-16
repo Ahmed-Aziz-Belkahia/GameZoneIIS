@@ -24,7 +24,7 @@ def blogList(request):
 
     context = {
         "query": query,
-        "categories": categories,
+        "categoriess": categories,
         "blog_count": blog_count,
         "blog": blog,
         "featured_blog": featured_blog,
@@ -81,6 +81,6 @@ def category_detail(request, slug):
         "query": query,
         "blog": blog,
         "category": category,
-        "categories": categories,
+        "categoriess": categories,
     }
     return render(request, 'blog/category-detail.html', context)

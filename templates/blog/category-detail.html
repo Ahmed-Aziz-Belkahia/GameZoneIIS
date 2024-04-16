@@ -50,7 +50,7 @@
             <h4 class="title">Categories</h4>
             <div class="widget_list">
               <ul class="list_details">
-                {% for c in categories %}
+                {% for c in categoriess %}
                     <li><a href="{% url 'blog:category_detail' c.slug %}">{{c.title}}</a></li>
                 {% endfor %}
                 
