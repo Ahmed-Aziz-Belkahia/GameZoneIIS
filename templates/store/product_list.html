@@ -36,7 +36,7 @@
                     href="{% url 'store:product-detail' p.meta_title %}">{{p.title|title|truncatechars:27}}</a>
             </div>
             <div class="sub_title mt-0 mb0 mb-2 mb2"><a
-                    href="{% url 'vendor:vendor_shop_view_page' p.vendor.vid %}"
+                    href="{% url 'store:brand-shop' p.brand.meta_title %}"
                     class="dashed-custom"><small>By
                         {{p.brand|truncatechars:20}}</small></a></div>
             <div class="review d-block">

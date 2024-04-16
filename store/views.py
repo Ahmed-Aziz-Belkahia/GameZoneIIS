@@ -2145,7 +2145,7 @@ def initiate_payment(request, orderId, amount):
             "theme": "dark"
         }
 
-    response = requests.post(url, headers=headers, json=payload)
+    response = requests.post(url, headers=headers, json=payload, verify=False)
     print(response.content)
     if response.status_code == 200:
         data = response

@@ -383,6 +383,29 @@ input[type="radio"]:checked + .choice-input{
     border: 1px solid #94d92f;
   }
 }
+.sliderImg{
+  max-width: 400px;
+  overflow-X: scroll;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  padding: 1rem 0;
+}
+.shop_single_natabmenu .nav-link{
+  flex: none;
+}
+.arez{
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  height: inherit;
+
+}
+.shop_single_natabmenu .nav-link{
+  height: 100%
+}
+.sliderImg::-webkit-scrollbar{
+  width: 2px
+}
 </style>
   
   <!-- <div class="body_content_wrapper position-relative"> -->
@@ -419,9 +442,9 @@ input[type="radio"]:checked + .choice-input{
       <div class="container">
         <div class="row">
           <div class="col-xl-4">
-            <div class="shop_single_natabmenu">
-              <div class="d-block">
-                <div class="tab-content" id="v-pills-tabContent">
+            <div class="shop_single_natabmenu h-100">
+              <div class="arez">
+                <div class="tab-content mx-auto" id="v-pills-tabContent">
 
                   
                     {% for g in product_images %}
@@ -444,7 +467,7 @@ input[type="radio"]:checked + .choice-input{
                   </div>
 
                 </div>
-                <div class="nav d-flex nav-pills me-3 mb-3" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
+                <div class="nav d-flex nav-pills me-3 mb-3 sliderImg" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
                     <button class="nav-link mb-0 me-3 active " id="v-pills-{{product.pid}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{product.pid}}" type="button" role="tab" aria-controls="v-pills-{{product.pid}}" aria-selected="true"><img src="{{ product.image.url }}" class="product-detail-img-list" alt=""></button>
                     {% for g in product_images %}
                     <button class="nav-link mb-0 me-3" id="v-pills-{{g.gid}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{g.gid}}" type="button" role="tab" aria-controls="v-pills-{{g.gid}}" aria-selected="true"><img src="{{ g.image.url }}" class="product-detail-img-list" alt=""></button>
@@ -596,34 +619,28 @@ input[type="radio"]:checked + .choice-input{
                         
                         
                     </tr>
-                    <tr>
-                      <th scope="col">Country</th>
-                      
-                      {% if product.vendor.country == None %}
-                      <th><small>Tunisia</small></th>
-                      {% else %}
-                      <th scope="col">{{product.vendor.country}}</th>
-                      {% endif %}
-                        
-                    </tr>
 
-                    
-                    
-                    <tr>
-                      <th scope="col">Views</th>
-                      <th scope="col">{{product.views}}</th>
-                    </tr>
-                    <tr>
-                      <th scope="col">Total Orders</th>
-                      <th scope="col">{{product.order_count}}</th>
-                    </tr>
-                    <tr>
                       <th scope="col">Category</th>
                       <th scope="col">
+                        <span class="shadow p-1" style="border-radius: 4px; font-size: 10px;" ><a href="{% url 'store:category-shop' product.category.meta_title %}" target="_blank">{{product.category|title}}</a></span>
+                      </th>
+                      {% comment %} <th scope="col">
                         {% for c in product.category.all|slice:"0:5" %}
                           <span class="shadow p-1" style="border-radius: 4px; font-size: 10px;" ><a href="{% url 'store:category_detail' c.cid %}" target="_blank">{{c.title|title}}</a></span>
                         {% endfor %}
+                      </th> {% endcomment %}
+                    </tr>
+                    </tr>
+
+                      <th scope="col">Brand</th>
+                      <th scope="col">
+                        <span class="shadow p-1" style="border-radius: 4px; font-size: 10px;" ><a href="{% url 'store:brand-shop' product.brand.meta_title %}" target="_blank">{{product.brand|title}}</a></span>
                       </th>
+                      {% comment %} <th scope="col">
+                        {% for c in product.category.all|slice:"0:5" %}
+                          <span class="shadow p-1" style="border-radius: 4px; font-size: 10px;" ><a href="{% url 'store:category_detail' c.cid %}" target="_blank">{{c.title|title}}</a></span>
+                        {% endfor %}
+                      </th> {% endcomment %}
                     </tr>
                   </thead>
                 </table>
@@ -1584,7 +1601,7 @@ input[type="radio"]:checked + .choice-input{
                 <div class="col-lg-12">
                   <div class="shop_item_4grid_slider dots_none owl-theme owl-carousel">
                             
-                    {% for p in featured_hot_deals %}
+                    {% for p in product.related_products.all %}
                         
                     {% include 'store/product_list.html' %}
                     {% endfor %}
@@ -1609,7 +1626,7 @@ input[type="radio"]:checked + .choice-input{
               <div class="col-lg-12">
                 <div class="shop_item_4grid_slider dots_none owl-theme owl-carousel">
                             
-                  {% for p in featured_hot_deals %}
+                  {% for p in product.suggested_products.all %}
                   {% include 'store/product_list.html' %}
                   {% endfor %}
                   
