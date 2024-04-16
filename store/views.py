@@ -2133,10 +2133,10 @@ def initiate_payment(request, orderId, amount):
             "lifespan": 10,
             "checkoutForm": True,
             "addPaymentFeesToAmount": True,
-            "firstName": order.full_name,  # Access user's first name from profile
-            "lastName": order.full_name,    # Access user's last name from profile
-            "phoneNumber": order.mobile,          # Access phone from profile
-            "email": order.email,           # Access user's email from profile
+            "firstName": order.full_name,
+            "lastName": order.full_name, 
+            "phoneNumber": order.mobile, 
+            "email": order.email,        
             "orderId": orderId,
             "webhook": webhook_url,
             "silentWebhook": True,
