@@ -136,9 +136,9 @@ Cart
               <li class="breadcrumb-item">
                 <a href="{% url 'store:home' %}">Home</a>
               </li>
-              <li class="breadcrumb-item"><a>Shop</a></li>
+              <li class="breadcrumb-item"><a>Boutique </a></li>
               <li class="breadcrumb-item active" aria-current="page">
-                <a>Shopping Cart</a>
+                <a>Panier </a>
               </li>
             </ol>
           </div>
@@ -153,15 +153,15 @@ Cart
       <div class="row">
         <div class="col-sm-6 col-lg-4 m-auto">
           <div class="main-title text-center mb50">
-            <h2 class="title">Shopping Cart</h2>
+            <h2 class="title">Panier </h2>
             <!-- <input type="text" name="" id=""> -->
           </div>
         </div>
       </div>
       <div class="row mt15" id="cartList">
         <p class="para">
-          You have <span class="cart-list">{{totalcartitems }}</span> items in
-          your cart
+          Vous avez <span class="cart-list">{{totalcartitems }}</span> des éléments
+          dans votre panier
         </p>
 
         <div class="col-lg-8 col-xl-8">
@@ -169,12 +169,12 @@ Cart
             <table class="table table-borderless">
               <thead>
                 <tr>
-                  <th scope="col">PRODUCT</th>
-                  <th scope="col">PRICE</th>
-                  <th scope="col">QUANTITY</th>
-                  <th scope="col">TOTAL</th>
-                  <th scope="col">UPDATE</th>
-                  <th scope="col">REMOVE</th>
+                  <th scope="col">Produit </th>
+                  <th scope="col">Prix</th>
+                  <th scope="col">QUANTITÉ</th>
+                  <th scope="col">TOTALE</th>
+                  <th scope="col">UMISE À JOUR</th>
+                  <th scope="col">RETIRER</th>
                 </tr>
               </thead>
               <tbody class="table_body">
@@ -204,7 +204,7 @@ Cart
                           <br />
                           <span class="fz16">By: <b><i>{{p.product_brand|title}}</i></b></span>
                           <br />
-                          <span class="fz16">Stock Qty: </a><span id="stock_qty{{product_id}}">{{p.product_stock_qty}}</span></span>
+                          <span class="fz16">Quantité en stock: </a><span id="stock_qty{{product_id}}">{{p.product_stock_qty}}</span></span>
 
                           <br />
                         </a>
@@ -283,8 +283,8 @@ Cart
                 {% empty %}
                 <tr>
                   <td>
-                    Your cart is empty,
-                    <a href="{% url 'store:shop' %}">continue shopping</a>
+                    Votre panier est vide,
+                    <a href="{% url 'store:shop' %}">Continuer vos achats</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -294,7 +294,7 @@ Cart
         </div>
         <div class="col-lg-4 col-xl-4">
           <div class="order_sidebar_widget style2">
-            <h4 class="title">Cart Totals</h4>
+            <h4 class="title">Totaux du panier</h4>
 {% comment %}             <form id="shippingForm" method="POST" action="">
               <p class="shipping_title"></p>
               <div class="colors__divs">
@@ -327,7 +327,7 @@ Cart
             <ul>
               <li class="subtitle">
                 <p>
-                  Product Subtotal
+                  Sous-total du produit
                   <span class="float-end"
                     >{{ cs }}{{cart_total_amount|floatformat:2}}</span
                   >
@@ -336,7 +336,7 @@ Cart
               <!-- <li class="subtitle"><p>Order Discounts <span class="float-end">-$30.01</span></p></li> -->
               <li class="subtitle">
                 <p>
-                  Estimated Shipping
+                  Frais de livraison
                   <i
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -350,7 +350,7 @@ Cart
               </li>
               <li class="subtitle">
                 <p>
-                  Estimated {{tax_country.custom_name}}
+                  Estimé {{tax_country.custom_name}}
                   <i
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -364,7 +364,7 @@ Cart
               </li>
               <li class="subtitle">
                 <p>
-                  Service Fee
+                  Frais de service
                   <span class="float-end"
                     >{{ cs }}{{service_fee_amount|floatformat:2}}</span
                   >
@@ -375,7 +375,7 @@ Cart
               <li class="subtitle"><hr /></li>
               <li class="subtitle totals">
                 <p>
-                  Total
+                  Totale
                   <span class="float-end"
                     >{{cs}}{{total_amount|floatformat:2}}</span
                   >
@@ -383,7 +383,7 @@ Cart
               </li>
 
               {% if coupon_name %}
-              <li><b>{{coupon_name}}</b> Coupon Applied</li>
+              <li><b>{{coupon_name}}</b> Coupon appliqué</li>
               {% endif %} {% for item in coupon_name.items %} hi {% endfor %}
             </ul>
           </div>
@@ -391,7 +391,7 @@ Cart
           <a
             href="{% url 'store:shipping_address' %}"
             class="btn w100 mt-4 purple-btn"
-            >Continue</a
+            >Continuer</a
           >
         </div>
       </div>

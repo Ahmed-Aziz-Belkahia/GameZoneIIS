@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    {% block title %}<title>Catalog</title>{% endblock title %}
+    {% block title %}<title>Catalogue</title>{% endblock title %}
     <link rel="stylesheet" href="{% static "gz/styles/catalog.css" %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
@@ -12,7 +12,7 @@
     <!-- Include jQuery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <title>GameZone | Catalog</title>
+    <title>GameZone | Catalogue</title>
 
     {% endblock head %}
 
@@ -30,16 +30,16 @@
                 <a href="/catalog?subcategory={{ subcategory.1 }}">{{ subcategory.0 }}</a>/
             {% endfor %}
         </div>
-        <h1 class="catalog__h1">Catalog</h1>
-        <p class='products-count'>{{products.all.count}} Results</p>
+        <h1 class="catalog__h1">Catalogue</h1>
+        <p class='products-count'>{{products.all.count}} Résultats</p>
         <div class="filter__div">
-            <button class="filter__button"><i class="fa-solid fa-filter"></i>Filter</button>
+            <button class="filter__button"><i class="fa-solid fa-filter"></i>Filtre</button>
             <div class="filter_box">
                 <button id='sortButton' class="filter__button sort__button"><i class="fa-solid fa-sort"></i> Sort</button>
                 <div class="dropdown-menu sort-dropdown-menu show" aria-labelledby="sortby-dropdown" style="display:none;">
                     <span class="sort-by-up-arrow"></span>
-                    <a class="dropdown-item price-low-to-high" data-id="price-low-to-high">Price Low To High</a>
-                    <a class="dropdown-item price-high-to-low" data-id="price-high-to-low">Price High to Low</a>
+                    <a class="dropdown-item price-low-to-high" data-id="price-low-to-high">Prix croissantsant</a>
+                    <a class="dropdown-item price-high-to-low" data-id="price-high-to-low">Prix décroissant</a>
                     {% comment %} <a href="{% url "catalog" %}?sort_by=price_high_to_low" class="dropdown-item most-popular" data-id="most-popular">Most Popular</a> {% endcomment %}
                 </div>
             </div>
@@ -49,14 +49,14 @@
             <!-- Manufacturers -->
             <div class="catalog_header">
                 <button type="button" class="toggleFilters">
-                    <h3>Filter Menu</h3>
+                    <h3>Filtre Menu</h3>
                     <i class="fa-solid fa-xmark closefilter"></i>
                 </button>
             </div>
             <div class="catalog_container">
                 <div class="catalog_header">
                     <button type="button" class="toggleFilters">
-                        <h3>Manufacturers</h3>
+                        <h3>Fabricant</h3>
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>

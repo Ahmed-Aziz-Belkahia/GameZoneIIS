@@ -8,7 +8,7 @@
         <div class="top-deals__layer1 top-deals__layer">
             <div class="layer1__text">
 
-                <div class="text__title">New Release</div>
+                <div class="text__title">Nouveau produit</div>
 {% comment %}                 <div class="text__slogan">
                     Save big on stuff you love
                 </div> {% endcomment %}
@@ -21,32 +21,28 @@
             <div class="layer2__cards flexCenter">
                 
                 {% for product in top_deals %}
-                    <a href="/detail/{{product.meta_title}}">
-                        <div class="cards__card">
-
-                            <div class="card__upper flexCenter">{{product.title}}</div>
-
-                            <div class="card__lower flexCenter">
-                            
-                                <div class="lower__div">
-                                
-                                    <div class="lower__img flexCenter">
-                                        <img src="{{product.deal_image.url}}" alt="{{product.title}}">
-                                    </div>
-                                    <div class="lower__content flexCenter">
-                                    
-                                        <div class="content__price">{{product.price}}TND</div>
-                                        <div class="content__text">{{product.deal_description}}</div>
-                                    
-                                    </div>
-                                
-                                </div>
-                            
-                            </div>
-                        
-                        </div>
-                    </a>
-                {% endfor %}
+    <a href="/{{ product.meta_title }}">
+        <div class="cards__card">
+            <div class="card__upper flexCenter">{{ product.title }}</div>
+            <div class="card__lower flexCenter">
+                <div class="lower__div">
+                    <div class="lower__img flexCenter">
+                        {% if product.deal_image %}
+                            <img src="{{ product.deal_image.url }}" alt="{{ product.title }}">
+                        {% else %}
+                            <img src="placeholder_image_url.jpg" alt="Placeholder Image">
+                            <!-- Replace placeholder_image_url.jpg with the URL of your placeholder image -->
+                        {% endif %}
+                    </div>
+                    <div class="lower__content flexCenter">
+                        <div class="content__price">{{ product.price }}DT</div>
+                        <div class="content__text">{{ product.deal_description }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+{% endfor %}
                 
 
             </div>
@@ -54,7 +50,7 @@
         </div>
         <div class="top-deals__layer3 top-deals__layer">
 
-            <a href="/detail/{{top_deals_banner.product.meta_title}}">
+            <a href="/{{top_deals_banner.product.meta_title}}">
                 <div class="layer__CTA">
 
                     <div class="layerCTA__div flexCenter">

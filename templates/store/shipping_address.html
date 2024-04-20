@@ -1,381 +1,157 @@
 {% extends "partials/base.html" %}
- {% load static %}
-  
-  {% block title %}
-    Shipping & Billing Details
-  {% endblock title %}
-    
-  {% load crispy_forms_tags %}
-  {% block content %} 
+{% load static %}
+
+{% block title %}
+    Détails d'expédition et de facturation
+{% endblock title %}
+
+{% load crispy_forms_tags %}
+{% block content %}
 
 <!-- {% crispy form %} -->
 <style>
-  ul,
-  li {
-    list-style: none;
-  }
-  .form-label{
-    font-size: medium;
-  }
-  .font-medium{
-    font-size: medium;
-  }
-  .subtitle .form-check-input:checked {
-    background-color: #94d92f;
-    border-color: #86bc42;
-}
-.subtitle .form-check-input:focus{
-  box-shadow: 0 0 0 0.25rem rgb(13 253 60 / 24%);
-}
-.subtitle label{
-  font-weight: 500;
-  color: #000;
-  cursor: pointer;
-  width: 100%;
-}
-.subtitle > div{
-  cursor: pointer;
-  flex-wrap: nowrap;
-}
-.scrollToHome.show{
-  display:none;
-}
-.payment-methods li {
-  cursor: pointer;
-  padding: 10px;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
-.payment-methods li:hover {
-  background-color: #f0f0f0;
-}
-.payment-methods li.selected {
-  background-color: #94d92f;
-  border: 2px solid #94d92f;
-  border-radius: 10px;
-  color: white;
-}
-.payment-methods li.selected label{
-  color: white;
-}
-.shipping-methods > .subtitle{
-  cursor: pointer;
-    padding: 10px;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-.shipping-methods li:hover {
-  background-color: #f0f0f0;
-}
-.shipping-methods li.selected {
-  background-color: #94d92f;
-  border: 2px solid #94d92f;
-  border-radius: 10px;
-  color: white;
-}
-.shipping-methods li.selected label{
-  color: white;
-}
+    ul,
+    li {
+        list-style: none;
+    }
+    .form-label{
+        font-size: medium;
+    }
+    .font-medium{
+        font-size: medium;
+    }
+    .subtitle .form-check-input:checked {
+        background-color: #94d92f;
+        border-color: #86bc42;
+    }
+    .subtitle .form-check-input:focus{
+        box-shadow: 0 0 0 0.25rem rgb(13 253 60 / 24%);
+    }
+    .subtitle label{
+        font-weight: 500;
+        color: #000;
+        cursor: pointer;
+        width: 100%;
+    }
+    .subtitle > div{
+        cursor: pointer;
+        flex-wrap: nowrap;
+    }
+    .scrollToHome.show{
+        display:none;
+    }
+    .payment-methods li {
+        cursor: pointer;
+        padding: 10px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+    .payment-methods li:hover {
+        background-color: #f0f0f0;
+    }
+    .payment-methods li.selected {
+        background-color: #94d92f;
+        border: 2px solid #94d92f;
+        border-radius: 10px;
+        color: white;
+    }
+    .payment-methods li.selected label{
+        color: white;
+    }
+    .shipping-methods > .subtitle{
+        cursor: pointer;
+        padding: 10px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+    .shipping-methods li:hover {
+        background-color: #f0f0f0;
+    }
+    .shipping-methods li.selected {
+        background-color: #94d92f;
+        border: 2px solid #94d92f;
+        border-radius: 10px;
+        color: white;
+    }
+    .shipping-methods li.selected label{
+        color: white;
+    }
 </style>
 <div class="body_content_wrapper position-relative" style="margin-top: 30px">
-  <!-- Inner Page Breadcrumb -->
-  <section class="inner_page_breadcrumb">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-6">
-          <div class="breadcrumb_content">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="{% url 'store:home' %}">Home</a>
-              </li>
-              <li class="breadcrumb-item">
-                <a href="{% url 'store:cart-view' %}">Shop</a>
-              </li>
-              <li class="breadcrumb-item">
-                <a href="{% url 'store:cart-view' %}">My Cart</a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">
-                <a href="#">Shipping Details</a>
-              </li>
-            </ol>
-          </div>
+    <!-- Breadcrumb de la page intérieure -->
+    <section class="inner_page_breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="breadcrumb_content">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'store:home' %}">Accueil</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'store:cart-view' %}">Boutique</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'store:cart-view' %}">Mon Panier</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="#">Détails de l'expédition</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <!-- Contenu de la caisse de magasin -->
+    <section class="shop-cart pt30">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-lg-4 m-auto">
+                    <div class="main-title text-center">
+                        <h2 class="title">Détails de facturation et d'expédition</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="cartList">
+                <div class="col-lg-8 col-xl-9" style="overflow: hidden">
+                    <div class="shopping_cart_table table-responsive" style="overflow: hidden">
+                        <form class="form2" id="coupon_form" name="contact_form" method="POST" style="">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Nom complet *</label>
+                                        {{form.full_name}}
+                                    </div>
+                                </div>
+                                <!-- Plus de champs de formulaire... -->
+                            </div>
+                            <!-- Plus de champs de formulaire... -->
+                            {% if totalcartitems %}
+                            <button type="submit" class="btn purple-btn btn-block h-10">
+                                Passer à la caisse
+                            </button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <!-- Sidebar de commande -->
+                <div class="col-lg-4 col-xl-3">
+                    <div class="order_sidebar_widget style2">
+                        <h4 class="title">Total du panier</h4>
+                        <!-- Contenu du widget de sidebar de commande -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div>
     </div>
-  </section>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-  <!-- Shop Checkouts Content -->
-  <section class="shop-cart pt30">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-6 col-lg-4 m-auto">
-          <div class="main-title text-center">
-            <h2 class="title">Billing & Shipping Details</h2>
-          </div>
-        </div>
-      </div>
-      <div class="row" id="cartList">
-        <div class="col-lg-8 col-xl-9" style="overflow: hidden">
-          <div
-            class="shopping_cart_table table-responsive"
-            style="overflow: hidden"
-          >
-            <form
-              class="form2"
-              id="coupon_form"
-              name="contact_form"
-              method="POST"
-              style=""
-              >
-              {% csrf_token %}
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group mb-3">
-                    <label class="form-label">Full Name *</label>
-                    {{form.full_name}}
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group mb-3">
-                    <label class="form-label">Email Address *</label>
-                    {{form.email}}
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group mb-3">
-                    <label class="form-label">Mobile *</label>
-                    {{form.mobile}}
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <div class="form-group mb-3">
-                    <label class="form-label">Country*</label>
-                    {{form.country}}
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group mb-3">
-                    <label class="form-label">State*</label>
-                    {{form.state}}
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group mb-3">
-                    <label class="form-label">City or Town*</label>
-                    {{form.town_city}}
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group mb-3">
-                    <label class="form-label">Street and Home Address*</label>
-                    {{form.address}}
-                  </div>
-                </div>
-                <!-- <div class="col-sm-6">
-                  <div class="form-group mb-3">
-                    <label class="form-label">Postal Code*</label>
-                    {{form.postal_code}}
-                  </div>
-                </div> -->
-                <div class="col-sm-12">
-                  <div class="form-group mb-3 d-flex align-items-center gap-2">
-                    <label class="form-check-label font-medium" for="efwefwe"
-                      >Is shipping address same as billing address</label
-                    >
-                    <input
-                      type="checkbox"
-                      class="form-check-input checkbox_check"
-                      id="checkboxIdInput"
-                      checked
-                    />
-                  </div>
-                </div>
-
-                <div class="row" hidden id="actions">
-                  <h3>Add Billing Address</h3>
-                  <div class="col-sm-12 col-lg-6">
-                    <div class="form-group mb-3">
-                      <label class="form-label">Select Billing Country</label>
-                      {{form.billing_country}}
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-lg-6">
-                    <div class="form-group mb-3">
-                      <label class="form-label">Select Billing State</label>
-                      {{form.billing_state}}
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-lg-6">
-                    <div class="form-group mb-3">
-                      <label class="form-label">Select Billing Town or City</label>
-                      {{form.billing_town_city}}
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-lg-6">
-                    <div class="form-group mb-3">
-                      <label class="form-label">Select Billing Address</label>
-                      {{form.billing_address}}
-                    </div>
-                  </div>
-                  <!-- <div class="col-sm-12 col-lg-6">
-                    <div class="form-group mb-3">
-                      <label class="form-label">Select Billing Postal Code</label>
-                      {{form.billing_postal_code}}
-                    </div>
-                  </div> -->
-                </div>
-                
-                <h4 class="title">Shipping Method</h4>
-                <ul class="shipping-methods">
-                    <li class="subtitle" data-value="ship_to_home">
-                        <div class="form-check-inline d-flex align-items-center gap-2">
-                            <input type="radio" class="form-check-input" id="shipping_method1" name="shipping_method" value="ship_to_home" checked>
-                            <label class="form-check-label font-medium d-flex align-items-center gap-2" for="shipping_method1">
-                                <i class="fa-solid fa-truck"></i>
-                                Ship to Home
-                            </label>
-                        </div>
-                    </li>
-                    <li class="subtitle" data-value="pick_up_in_store">
-                        <div class="form-check-inline d-flex align-items-center gap-2">
-                            <input type="radio" class="form-check-input" id="shipping_method2" name="shipping_method" value="pick_up_in_store">
-                            <label class="form-check-label font-medium d-flex align-items-center gap-2" for="shipping_method2">
-                                <i class="fa-solid fa-store"></i>
-                                Pick Up in Store
-                            </label>
-                        </div>
-                    </li>
-                </ul>
-                
-                <h4 class="title">Payment Method</h4>
-                <ul class="payment-methods">
-                    <li class="subtitle" data-value="credit_card">
-                        <div class="form-check-inline d-flex align-items-center gap-2">
-                            <input type="radio" class="form-check-input" id="payment_method1" name="payment_method" value="credit_card" checked>
-                            <label class="form-check-label font-medium d-flex align-items-center gap-2" for="payment_method1">
-                                <i class="fa-solid fa-credit-card"></i>
-                                Credit Card
-                            </label>
-                        </div>
-                    </li>
-                    <li class="subtitle" data-value="cash">
-                        <div class="form-check-inline d-flex align-items-center gap-2">
-                            <input type="radio" class="form-check-input" id="payment_method2" name="payment_method" value="cash">
-                            <label class="form-check-label font-medium d-flex align-items-center gap-2" for="payment_method2">
-                                <i class="fa-solid fa-money-bill"></i>
-                                Pay Cash on Delivery
-                            </label>
-                        </div>
-                    </li>
-                </ul>
-
-                {% if totalcartitems %}
-                <button type="submit" class="btn purple-btn btn-block h-10">
-                  Proceed to checkout
-                </button>
-                {% endif %}
-              </div>
-              <a href="{% url 'store:cart-view' %}" class="dashed-custom mt-3 font-medium"
-                >Return to cart</a
-              >
-            </form>
-          </div>
-        </div>
-        <div class="col-lg-4 col-xl-3">
-          <div class="order_sidebar_widget style2">
-            <h4 class="title">Cart Totals</h4>
-            <ul>
-              <li class="subtitle">
-                <p>
-                  Product Subtotal
-                  <span class="float-end"
-                    >{{ cs }}{{cart_total_amount|floatformat:2}}</span
-                  >
-                </p>
-              </li>
-              <li class="subtitle">
-                <p>
-                  Estimated Shipping
-                  <i
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Tooltip on top"
-                    class="bi bi-info-circle-fill"
-                  ></i>
-                  <span class="float-end"
-                    >{{ cs }}{{total_shipping_amount|floatformat:2}}</span
-                  >
-                </p>
-              </li>
-              <li class="subtitle">
-                <p>
-                  Estimated {{tax_country.custom_name}}
-                  <i
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Tooltip on top"
-                    class="bi bi-info-circle-fill"
-                  ></i
-                  ><span class="float-end"
-                    >{{cs}}{{ tax_amount_|floatformat:2 }}</span
-                  >
-                </p>
-              </li>
-              <li class="subtitle">
-                <p>
-                  Service Fee
-                  <span class="float-end"
-                    >{{ cs }}{{service_fee_amount|floatformat:2}}</span
-                  >
-                </p>
-              </li>
-              <li class="subtitle"><hr /></li>
-              <li class="subtitle totals">
-                <p>
-                  Total
-                  <span class="float-end"
-                    >{{cs}}{{total_amount|floatformat:2}}</span
-                  >
-                </p>
-              </li>
-            </ul>
-          </div>
-          {% comment %} <div class="order_sidebar_widget style2 mt-3">
-            <h4 class="title">Payment Method</h4>
-            <ul class="payment-methods">
-              <li class="subtitle" data-value="option1">
-                <div class=" form-check-inline d-flex align-items-center gap-2">
-                  <label class="form-check form-check-label font-medium d-flex align-items-center gap-2" for="payment_method1">
-                    <i class="fa-solid fa-credit-card"></i>
-                     Credit Card
-                  </label>
-                </div>
-              </li>
-              <li class="subtitle" data-value="option2">
-                <div class="form-check-inline d-flex align-items-center gap-2">
-                  <label class="form-check form-check-label font-medium d-flex align-items-center gap-2" for="payment_method2">
-                    <i class="fa-solid fa-truck-ramp-box"></i>
-                     Cash on Delivery
-                  </label>
-                </div>
-              </li>
-            </ul>
-            
-            
-          </div> {% endcomment %}
-                  
-              
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div>
-  </div>
 </div>
 
-
-
 {% endblock content %}
+

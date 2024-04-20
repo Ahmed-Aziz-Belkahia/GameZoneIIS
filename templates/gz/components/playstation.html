@@ -5,16 +5,16 @@
     <div class="playstation__div flexCenter">
         <div class="playstation__layer1 playstation__layer">
             <div class="layer1__text">
-                <div class="text__title">Playstation Deals</div>
+                <div class="text__title">Offres Playstation</div>
                 <div class="text__slogan">
-                    Save big on stuff you love
+                    Restez à jour sur les offres Playstation
                 </div>
             </div>
         </div>
         
         <div class="playstation__layer3 playstation__layer">
             <div class="layer__CTA">
-                <a href="/detail/{{playstation_banner.product.meta_title}}" class="layerCTA__div flexCenter">
+                <a href="/{{playstation_banner.product.meta_title}}" class="layerCTA__div flexCenter">
                     <div class="layerCTA__img">
 {% comment %}                         <img src="{{playstation_banner.banner.url}}" alt="{{playstation_banner.product.title}}">
  {% endcomment %}                        
@@ -75,7 +75,7 @@
         <div class="playstation__layer2 playstation__layer">
             <div class="layer2__cards flexCenter">
                 {% for product in playstation_deals %}
-                    <a href="/detail/{{ product.meta_title }}">
+                    <a href="/{{ product.meta_title }}">
                         <div class="cards__card">
                             <div class="card__upper flexCenter">{{product.title}}</div>
                             <div class="card__lower flexCenter">

@@ -2,7 +2,7 @@
 {% extends "partials/base.html" %}
 {% load static %}
 {% block title %}
-  Sign Up
+S'inscrire
 {% endblock title %}
 {% block content %}
 {% load crispy_forms_tags %}
@@ -26,28 +26,28 @@
         <div class="row">
     <div class="col-lg-6 col-xl-5 col-xxl-4 m-auto">
       <div class="log_reg_form mt70-992">
-        <h2 class="title">Create an account</h2>
+        <h2 class="title">Créer un compte</h2>
         <div class="login_form">
           <form method="POST">
             {% csrf_token %}
             <div class="mb-2 mr-sm-2">
-              <label class="form-label">Full Name</label>
+              <label class="form-label">Nom et prénom</label>
               {{form.full_name}}
             </div>
             <div class="mb-2 mr-sm-2">
-              <label class="form-label">Email address</label>
+              <label class="form-label">adresse e-mail</label>
               {{form.email}}
             </div>
             <div class="mb-2 mr-sm-2">
-                <label class="form-label">Username</label>
+                <label class="form-label">Nom d'utilisateur</label>
                 {{form.username}}
               </div>
             <div class="form-group mb5">
-              <label class="form-label">Password</label>
+              <label class="form-label">mot de passe</label>
               {{form.password1}}
             </div>
             <div class="form-group mb5">
-                <label class="form-label">Confirm Password</label>
+                <label class="form-label">Confirmez le mot de passe</label>
                 {{form.password2}}
               </div>
               <br>
@@ -56,8 +56,8 @@
                 {{form.captcha}}
               </div> -->
             
-            <button type="submit" class="btn btn-log btn-thm mt20">Create Account</button>
-            <p class="text-center mb25 mt10">Already have an account? <a href="{% url 'userauths:sign-in' %}" class="dashed-custom">Login Now</a></p>
+            <button type="submit" class="btn btn-log btn-thm mt20">Créer un compte</button>
+            <p class="text-center mb25 mt10">Vous avez déjà un compte ? <a href="{% url 'userauths:sign-in' %}" class="dashed-custom">Login Now</a></p>
             <div class="hr_content">
             </div>
 
@@ -274,16 +274,16 @@ input[type='text'] {
               {{form.full_name}}
               {{form.username}}
               {{form.email}}
-              <button class="form__btn" id="btn-1">Next</button>
+              <button class="form__btn" id="btn-1">Suivant</button>
             </div>
             <div class="form">
               <div class="form--header-container">
                 <h1 class="form--header-title" style="color: #fff;">
-                  Choose Password
+                  Choisir un mot de passe
                 </h1>
 
                 <p class="form--header-text" style="color: #fff;">
-                  The stronger your password the safer
+                  La sécurité est accrue lorsque votre mot de passe est fort.
                 </p>
               </div>
 

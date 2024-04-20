@@ -9,8 +9,8 @@
           <div class="breadcrumb_content">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'blog:blog-list' %}">Blog Posts</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'blog:blog-list' %}">Category</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'blog:blog-list' %}">Articles de blog</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'blog:blog-list' %}">Catégorie</a></li>
               <li class="breadcrumb-item active" aria-current="page"><a>{{category.title}}</a></li>
             </ol>
           </div>
@@ -26,9 +26,9 @@
           <div class="main-title text-center">
             
             {% if query == "" or query == None %}
-            <h2 class="title">{{category.title}} Category</h2>
+            <h2 class="title">{{category.title}} Catégorie</h2>
             {% else %}
-            <h2 class="title">Showing Results for "{{query}}"</h2>
+            <h2 class="title">Résultats pour "{{query}}"</h2>
             {% endif %}
                 
           </div>
@@ -47,7 +47,7 @@
             </form>
           </div>
           <div class="terms_condition_widget">
-            <h4 class="title">Categories</h4>
+            <h4 class="title">Catégorie</h4>
             <div class="widget_list">
               <ul class="list_details">
                 {% for c in categoriess %}
@@ -71,7 +71,7 @@
                     <span class="subtitle">{{p.category.title}}</span>
                     <h4 class="title"><a href="{% url 'blog:blog-detail' p.pid %}">{{p.title|truncatechars:60}}</a></h4>
                     <span class="post_date">{{p.date|date:"d M, Y"}}</span> <br>
-                    <a href="{% url 'blog:blog-detail' p.pid %}" class="purple-btn btn mt-3">Read More</a>
+                    <a href="{% url 'blog:blog-detail' p.pid %}" class="purple-btn btn mt-3">Lire la suite</a>
 
                   </div>
                 </div>
@@ -96,7 +96,7 @@
                     </li>
                 {% endif %}
                 </ul>
-                <p class="mt20 pagination_page_count text-center">{{blog_count.count}} Article(s) Found</p>
+                <p class="mt20 pagination_page_count text-center">{{blog_count.count}} Article(s) Trouvé</p>
               </div>
             </div>
           </div>

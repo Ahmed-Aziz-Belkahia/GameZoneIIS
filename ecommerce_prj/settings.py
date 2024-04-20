@@ -239,10 +239,10 @@ ANYMAIL = {
 
 
 
-FROM_EMAIL='desphixs@gmail.com'
+FROM_EMAIL='contact@gameszone.tn'
 EMAIL_BACKEND='anymail.backends.mailgun.EmailBackend'
-DEFAULT_FROM_EMAIL='desphixs@gmail.com'
-SERVER_EMAIL='desphixs@gmail.com'
+DEFAULT_FROM_EMAIL='contact@gameszone.tn'
+SERVER_EMAIL='contact@gameszone.tn'
 
 GEOIP_PATH =os.path.join('geoip')
 
@@ -426,7 +426,7 @@ CKEDITOR_5_CONFIGS = {
 
 JAZZMIN_SETTINGS = {
     'site_header': "GameZone",
-    'site_brand': "Your #1 marketplace for gaming.",
+    'site_brand': "Game Zone, le premier spécialiste en consoles et machines de jeux en Tunisie ! Découvrez notre large gamme de produits, incluant les consoles PlayStation 4, PlayStation 5, Nintendo Switch et Xbox. Nous offrons également des services de réparation pour vos appareils. Plongez dans l'univers du jeu avec Game Zone dès aujourd'hui !",
     'site_logo': "images/logo.png",
     'copyright':  "All Right Reserved 2024",
     # "order_with_respect_to": ["store", 'vendor', "addons" , 'core' ,'userauths'],

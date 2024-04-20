@@ -14,7 +14,7 @@
         <div class="row">
           <div class="col-xl-12">
             <div class="account_user_deails pl40 pl0-md">
-              <h2 class="title mb30">My Invoices</h2>
+              <h2 class="title mb30">Mes factures</h2>
               <div class="ui_kit_tab style2">
                 <!-- nav tab Nav List Start -->
                 <div class="tab-content pt20 row" id="myTabContent">
@@ -47,7 +47,7 @@
                             {% empty %}
                             <tr>
                               <td>
-                                <h4>No Orders Yet</h4>
+                                <h4>Pas encore de commandes</h4>
                               </td>
                             </tr>
                             {% endfor %}
@@ -58,7 +58,7 @@
                   </div>
                   <div class="tab-pane fade col-lg-12" id="baby" role="tabpanel" aria-labelledby="baby-tab">
                     <div class="account_user_deails pl40 pl0-lg">
-                      <h2 class="title mb30">Shipped</h2>
+                      <h2 class="title mb30">Expédié</h2>
                       <div class="order_table table-responsive">
                         <table class="table">
                           <thead class="table-light">
@@ -67,8 +67,8 @@
                               <!-- <th scope="col">Product</th> -->
                               <th scope="col">Date</th>
                               <th scope="col">Payment</th>
-                              <th scope="col">Delivery Status</th>
-                              <th scope="col">Order Status</th>
+                              <th scope="col">Statut de livraison</th>
+                              <th scope="col">Statut de la commande</th>
                               <th scope="col">Total</th>
                               <th scope="col">Action</th>
                             </tr>
@@ -84,12 +84,12 @@
                               <td class="status"><span class="stdyle4">{{o.order_status|title}}</span></td>
                               <td>{{ cs }}{{ o.total }}</td>
                               <td class="status"><span class="style4"><a
-                                    href="{% url 'core:buyer-order-detail' o.oid %}">View Detail</a></span></td>
+                                    href="{% url 'core:buyer-order-detail' o.oid %}">Voir le détail</a></span></td>
                             </tr>
                             {% empty %}
                             <tr>
                               <td>
-                                <h4>No Orders Yet</h4>
+                                <h4>Pas encore de commandes</h4>
                               </td>
                             </tr>
                             {% endfor %}
@@ -100,7 +100,7 @@
                   </div>
                   <div class="tab-pane fade col-xl-12" id="furniture" role="tabpanel" aria-labelledby="furniture-tab">
                     <div class="account_user_deails pl40 pl0-lg">
-                      <h2 class="title mb30">Delivered Orders</h2>
+                      <h2 class="title mb30">Commandes livrées</h2>
                       <div class="order_table table-responsive">
                         <table class="table">
                           <thead class="table-light">
@@ -109,8 +109,8 @@
                               <!-- <th scope="col">Product</th> -->
                               <th scope="col">Date</th>
                               <th scope="col">Payment</th>
-                              <th scope="col">Delivery Status</th>
-                              <th scope="col">Order Status</th>
+                              <th scope="col">État de la livraison</th>
+                              <th scope="col">Statut de la commande</th>
                               <th scope="col">Total</th>
                               <th scope="col">Action</th>
                             </tr>
@@ -126,12 +126,12 @@
                               <td class="status"><span class="stdyle4">{{o.order_status|title}}</span></td>
                               <td>{{ cs }}{{ o.total }}</td>
                               <td class="status"><span class="style4"><a
-                                    href="{% url 'core:buyer-order-detail' o.oid %}">View Detail</a></span></td>
+                                    href="{% url 'core:buyer-order-detail' o.oid %}">Voir le détail</a></span></td>
                             </tr>
                             {% empty %}
                             <tr>
                               <td>
-                                <h4>No Orders Yet</h4>
+                                <h4>Pas encore de commandes</h4>
                               </td>
                             </tr>
                             {% endfor %}

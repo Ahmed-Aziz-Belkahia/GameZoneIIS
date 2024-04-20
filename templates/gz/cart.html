@@ -3,11 +3,11 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static "gz/styles/cart.css" %}">
-<title>GameZone | Cart</title>
+<title>GameZone | Panier</title>
 {% endblock head %}
 
 {% block title %}
-<title>Cart</title>
+<title>Panier</title>
 {% endblock title %}
 
 {% block header %}
@@ -33,11 +33,11 @@
                         <div class="item__shipping item__col">
                             <div>
                                 <input type="checkbox" id="type1" name="type1" value="true" data-shipping-cost="7">
-                                <label for="type1">Deliver to home</label>
+                                <label for="type1">Livraison à domicile</label>
                             </div>
                             <div>
                                 <input type="checkbox" id="type2" name="type2" value="false" data-shipping-cost="0">
-                                <label for="type2">pick it from store</label>
+                                <label for="type2">retirer en magasin</label>
                             </div>
                         </div>
 
@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="item__price item__col">
-                            <span class="price__price">{{ item.product.price }} TND</span>
+                            <span class="price__price">{{ item.product.price }} DT</span>
                         </div>
                         
                         <!-- Add dataset attribute on delete button -->
@@ -64,7 +64,7 @@
                 {% endfor %}
             </ul>
             <div class="cart-buttons">
-                <a href="{% url 'catalog' %}" class="back-to-shopping-btn">Back to Shopping</a>
+                <a href="{% url 'catalog' %}" class="back-to-shopping-btn">Retour à Shopping</a>
                 <a href="{% url 'checkout' %}" class="checkout-btn">Checkout</a>
             </div>
         {% else %}

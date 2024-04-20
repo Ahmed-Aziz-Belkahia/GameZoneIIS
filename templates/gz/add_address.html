@@ -16,7 +16,7 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static "gz/styles/add_address.css" %}">
-    {% block title %}<title>GameZone - add address</title>{% endblock title %}
+    {% block title %}<title>GameZone - Ariana</title>{% endblock title %}
     
 {% endblock head %}
 
@@ -32,7 +32,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <button type="submit">Soumettre</button>
     </form>
 </div>
 {% endblock main %}

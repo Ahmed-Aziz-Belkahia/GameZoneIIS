@@ -7,8 +7,8 @@
     <div class="header__navbar">
         <div class="SideMenu">
             <button class="sidemenu_btn">
-            <i class="fa-solid fa-bars"></i>
-            <span>menu</span>
+                <i class="fa-solid fa-bars"></i>
+                <span>menu</span>
             </button>
             <div class="sidemenu_wrapper">
                 <div class="sidemenu_header">
@@ -34,9 +34,9 @@
                             <i class="fa-solid fa-store"></i>
                         </div>
                     </div>
-                    <a href="{% url "core:buyer-orders" %}" class="track_container">
+                    <a href="{% url 'core:buyer-orders' %}" class="track_container">
                         <div class="track_details">
-                            <p>Track Order </p>
+                            <p>Suivi de commande</p>
                         </div>
                         <div class="track_icon">
                             <i class="fa-solid fa-boxes-packing"></i>
@@ -44,17 +44,16 @@
                     </a>
                     <div class="categories_group">
                         <div class="categories_title_header">
-                            <h2>Categories</h2>
-                            <a href="/shop">Shop all </a>
+                            <h2>catégories</h2>
+                            <a href="/shop">Tous les produits</a>
                         </div>
                         <ul class="categories">
                             {% for category in categories %}
-
-                            <li class="category_link" id="playstation-link" data-meta-title="{{ category.meta_title }}">
-                                <a href="/shop/category/{{ category.meta_title }}">{{category.title}} 
-                                <i class="fa-solid fa-chevron-right"></i>
-                                </a>
-                            </li>
+                                <li class="category_link" id="playstation-link" data-meta-title="{{ category.meta_title }}">
+                                    <a href="/shop/category/{{ category.meta_title }}">{{ category.title }} 
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -71,25 +70,25 @@
                     </button>
                 </div>
                 <div class="see_all">
-                    <h2 class="sidemenu_title">Sub Categories</h2>
-                    <a href="" class='shopAllButton'>Shop all</a>
+                    <h2 class="sidemenu_title">sous Categories</h2>
+                    <a href="" class='shopAllButton'>Tous les articles</a>
                 </div>
                 <ul class="Sub_categories">
                     <li class="sub_category_link">
-                        <a href="#">Sub Category 1</a>
+                        <a href="#">sous Category 1</a>
                     </li>
                     <li class="sub_category_link">
-                        <a href="#">Sub Category 2</a>
+                        <a href="#">sous Category 2</a>
                     </li>
                     <!-- Add more sub-categories here as needed -->
                     <li class="sub_category_link">
-                        <a href="#">Sub Category 3</a>
+                        <a href="#">sous Category 3</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="navbar__logo flexCenter">
-            <a href="{% url "store:home" %}"><img src="{{company.logo.url}}" alt="" class="logo__img unselectable"></a>
+            <a href="{% url 'store:home' %}"><img src="{{company.logo.url}}" alt="" class="logo__img unselectable"></a>
         </div>
 
         <div class="navbar__search">
@@ -100,7 +99,7 @@
                 </div>
                 
                 <div class="search__input">
-                    <input type="text" name="search" id="nav_search" placeholder="Search games, consoles & more">
+                    <input type="text" name="search" id="nav_search" placeholder="Rechercher des jeux, des consoles">
                 </div>
 
             </div>
@@ -111,78 +110,59 @@
         <div class="navbar__navigation">
 
             {% if user.is_authenticated == False %}
-                <a href="{% url "userauths:sign-in" %}">
+                <a href="{% url 'userauths:sign-in' %}">
                     <div class="navigation__sign-in navigation__element">
                         <i class="fa-solid fa-user"></i>
-
-                        <div class="sign-in__text">Sign-in</div>
+                        <div class="sign-in__text">S'inscrire</div>
                     </div>
                 </a>
             {% else %}
-            <div class="user__signed">
-                <div class="navigation__sign-in navigation__element">
-                    <i class="fa-solid fa-user"></i>
-
-                    <div class="sign-in__text">{{user.username}}</div>
-                </div>
-                <!--<div class="profile_menu">
-                    <div>
-                        <span>Profile</span>
+                <div class="user__signed">
+                    <div class="navigation__sign-in navigation__element">
                         <i class="fa-solid fa-user"></i>
-                    <div>
-                    <div>
-                        <span>Log out</span>
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    <div>
-                </div> -->
-            </div>
-            <div class="user_sidemenu_wrapper">
-                <div class="sidemenu_header">
-                    <h3 class="title">Account</h3>
-                    <button class="user_sidemenu_close">
-                        <i class="fa-solid fa-times"></i>
-                    </button>
-                </div>
-                <div class="menu_group">
-                    <div class="user_list_group">
-                        <h2>Hi, {{user.username}}</h2>
-                        <ul class="user_options">
-                            <li class="option_link">
-                                <span class="fas fa-user"></span>
-                                <a href="{% url "core:profile" %}">Account Overview 
-                                </a>
-                            </li>
-                            <li class="option_link">
-                                <span class="fas fa-list"></span>
-                                <a href="{% url "core:buyer-orders" %}">Orders 
-                                </a>
-                            </li>
-                            <li class="option_link">
-                                <span class="fas fa-heart"></span>
-                                <a href="{% url "core:buyer-wishlist" %}">Wishlist 
-                                </a>
-                            </li>
-                            <li class="option_link signout">
-                                <span class="fas fa-right-from-bracket"></span>
-                                <a href="{% url "userauths:sign-out" %}">Sign Out</a>
-                            </li>
-                        </ul>
+                        <div class="sign-in__text">{{user.username}}</div>
                     </div>
                 </div>
-            </div>
-
+                <div class="user_sidemenu_wrapper">
+                    <div class="sidemenu_header">
+                        <h3 class="title">Compte</h3>
+                        <button class="user_sidemenu_close">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="menu_group">
+                        <div class="user_list_group">
+                            <h2>Bonjour, {{user.username}}</h2>
+                            <ul class="user_options">
+                                <li class="option_link">
+                                    <span class="fas fa-user"></span>
+                                    <a href="{% url 'core:profile' %}">Aperçu du compte</a>
+                                </li>
+                                <li class="option_link">
+                                    <span class="fas fa-list"></span>
+                                    <a href="{% url 'core:buyer-orders' %}">Commandes</a>
+                                </li>
+                                <li class="option_link">
+                                    <span class="fas fa-heart"></span>
+                                    <a href="{% url 'core:buyer-wishlist' %}">Liste de souhaits</a>
+                                </li>
+                                <li class="option_link signout">
+                                    <span class="fas fa-right-from-bracket"></span>
+                                    <a href="{% url 'userauths:sign-out' %}">Déconnexion</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
 
-            <a href="{% url "store:cart-view" %}">
+            <a href="{% url 'store:cart-view' %}">
                 <div class="navigation__cart navigation__element mobile-cart">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <div class="cart__text cart-items-count">{{request.session.cart_data_obj|length}} Items</div>
-                    {% comment %} <div class="cart__text cart-items-count mobile-cart-items-count">{{request.session.cart_data_obj|length}}</div> {% endcomment %}
-
+                    <div class="cart__text cart-items-count">{{request.session.cart_data_obj|length}} Article</div>
                 </div>
             </a>
             
-
         </div>
 
     </div>
@@ -191,36 +171,32 @@
         <div class="categories__div">
             <div class="categories__div">
                 {% for category in categories %}
-                <div class="category__div">
-                    <a href="/shop/category/{{ category.meta_title }}">{{ category.title }}</a>
-                    <div class="sub-menu">
-                        <span class="sort-by-up-arrow"></span>
-                        {% for subcategory in category.subcategories.all %}
-                            {% if subcategory.parent_subcategory is None %}
-                                <div class="subcategory__div">
-                                    <a href="/shop/category/{{ category.meta_title }}?subcategories={{ subcategory.meta_title }}">{{ subcategory.title }}
+                    <div class="category__div">
+                        <a href="/shop/category/{{ category.meta_title }}">{{ category.title }}</a>
+                        <div class="sub-menu">
+                            <span class="sort-by-up-arrow"></span>
+                            {% for subcategory in category.subcategories.all %}
+                                {% if subcategory.parent_subcategory is None %}
+                                    <div class="subcategory__div">
+                                        <a href="/shop/category/{{ category.meta_title }}?subcategories={{ subcategory.meta_title }}">{{ subcategory.title }}
+                                            {% if subcategory.child_subcategories.all %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+                                            {% endif %}
+                                        </a>
                                         {% if subcategory.child_subcategories.all %}
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+                                            <div class="sub-sub-menu">
+                                                {% for sub_subcategory in subcategory.child_subcategories.all %}
+                                                    <a href="/shop/category/{{ category.meta_title }}?subcategories={{sub_subcategory.meta_title}}">{{ sub_subcategory.title }}</a>
+                                                {% endfor %}
+                                            </div>
                                         {% endif %}
-                                    </a>
-                                    {% if subcategory.child_subcategories.all %}
-                                        <div class="sub-sub-menu">
-                                            {% for sub_subcategory in subcategory.child_subcategories.all %}
-                                                <a href="/shop/category/{{ category.meta_title }}?subcategories={{sub_subcategory.meta_title}}">{{ sub_subcategory.title }}</a>
-                                            {% endfor %}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
-                {% comment %} {% for category in categoriess %}
-                <div class="category__div">
-                    <a href="/category/{{ category.slug }}">{{ category.title }}</a>
-                </div>
-                {% endfor %} {% endcomment %}
+              
                 <div class="right-content">
                     <a href="https://www.gameszone.tn/blog/" class="track_container">
                         <div class="track_details">
@@ -230,9 +206,9 @@
                             <i class="fa-solid fa-blog"></i>
                         </div>
                     </a>
-                    <a href="{% url "core:buyer-orders" %}" class="track_container">
+                    <a href="{% url 'core:buyer-orders' %}" class="track_container">
                         <div class="track_details">
-                            <p>Track Order </p>
+                            <p>Suivi de commande</p>
                         </div>
                         <div class="track_icon">
                             <i class="fa-solid fa-boxes-packing"></i>
@@ -241,12 +217,10 @@
                 </div>
             </div>
         </div>
-        
     </div>
-
 </div>
 
-<script src="{% static "gz\js\components\navigation.js" %}"></script>
+<script src="{% static 'gz/js/components/navigation.js' %}"></script>
 
 <script>
     let lastScrollTop = 0;
@@ -296,60 +270,54 @@
         });
     
         // Handle clicks on category links
-    // Handle clicks on category links
-    subMenuLinks.forEach(function (link) {
-        link.addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent default link behavior
-            menuOverlay.style.display = "block";
-            menuOverlay.setAttribute('data-meta-title', this.getAttribute("data-meta-title")) // Change subcategories overlay data id attribute
-            category = this.getAttribute("data-meta-title")
+        subMenuLinks.forEach(function (link) {
+            link.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent default link behavior
+                menuOverlay.style.display = "block";
+                menuOverlay.setAttribute('data-meta-title', this.getAttribute("data-meta-title")) // Change subcategories overlay data id attribute
+                category = this.getAttribute("data-meta-title")
 
-            // Perform AJAX request to fetch subcategories
-            $.ajax({
-                type: 'GET',
-                url: `/get-subcategories/${this.getAttribute("data-meta-title")}`,
-                processData: false,
-                contentType: false,
-                beforeSend: function(xhr, settings) {
-                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
-                },
-                success: function(response) {
-                    // Clear existing subcategories
-                    subCategoriesDiv.innerHTML = '';
-                    shopAllButton.href = `/shop/category/${category}`;
-                    // Populate subcategories
-                    response.subcategories.forEach(function(subcategory) {
-                        // Create a new list item for each subcategory
-                        let listItem = document.createElement('li');
-                        listItem.classList.add('sub_category_link');
+                // Perform AJAX request to fetch subcategories
+                $.ajax({
+                    type: 'GET',
+                    url: `/get-subcategories/${this.getAttribute("data-meta-title")}`,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                    },
+                    success: function(response) {
+                        // Clear existing subcategories
+                        subCategoriesDiv.innerHTML = '';
+                        shopAllButton.href = `/shop/category/${category}`;
+                        // Populate subcategories
+                        response.subcategories.forEach(function(subcategory) {
+                            // Create a new list item for each subcategory
+                            let listItem = document.createElement('li');
+                            listItem.classList.add('sub_category_link');
 
-                        // Create a link for the subcategory
-                        let subcategoryLink = document.createElement('a');
-                        subcategoryLink.href = `/shop/category/${category}?subcategories=${subcategory.meta_title}`;
-                        subcategoryLink.textContent = subcategory.title;
+                            // Create a link for the subcategory
+                            let subcategoryLink = document.createElement('a');
+                            subcategoryLink.href = `/shop/category/${category}?subcategories=${subcategory.meta_title}`;
+                            subcategoryLink.textContent = subcategory.title;
 
-                        // Append the subcategory link to the list item
-                        listItem.appendChild(subcategoryLink);
+                            // Append the subcategory link to the list item
+                            listItem.appendChild(subcategoryLink);
 
-                        // Append the list item to the subcategories container
-                        subCategoriesDiv.appendChild(listItem);
-                    });
-                },
-                error: function(error) {
-                    console.error('Error fetching subcategories:', error);
-                }
+                            // Append the list item to the subcategories container
+                            subCategoriesDiv.appendChild(listItem);
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error fetching subcategories:', error);
+                    }
+                });
+
+                body.style.overflowY = "hidden";
+                subMenuLinksTitle = link.textContent.trim(); // Get the innerText of the category
+                document.querySelector(".sidemenu_title").textContent = subMenuLinksTitle; // Change subcategories overlay title
             });
-
-            body.style.overflowY = "hidden";
-            subMenuLinksTitle = link.textContent.trim(); // Get the innerText of the category
-            document.querySelector(".sidemenu_title").textContent = subMenuLinksTitle; // Change subcategories overlay title
         });
-    });
-
-    
-        
-    
-        
     
         // Handle clicks on back button
         back.addEventListener("click", function () {
@@ -382,9 +350,6 @@
     });
     
     
-    
-    
-    
     document.addEventListener("DOMContentLoaded", function () {
         var body = document.querySelector("body");
         var user_sidemenu_wrapper = document.querySelector(".user_sidemenu_wrapper");
@@ -414,46 +379,6 @@
     );
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.getElementById("nav_search");
         const searchICO = document.querySelector(".search__ico");
@@ -481,7 +406,7 @@
                             const div = document.createElement('div');
                             div.innerHTML = query["title"];
                             div.addEventListener('click', () => {
-                                window.location.href = `/detail/${encodeURIComponent(query["meta_title"])}`;
+                                window.location.href = `/${encodeURIComponent(query["meta_title"])}`;
                             });
                             searchResult.appendChild(div);
                             if(response.query_list.length > 0){
@@ -569,15 +494,6 @@
         }
         return cookieValue;
       }
-
-
-
-
-
-
-
-
-
 
 
 

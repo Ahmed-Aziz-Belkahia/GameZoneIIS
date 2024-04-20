@@ -194,14 +194,14 @@
     <!-- Listing Grid View -->
     <div class="filter-options">
       <div class="catalog_header">
-        <h3 class="mb-0 d-flex align-items-center">Filter Menu</h3>
+        <h3 class="mb-0 d-flex align-items-center">Menu Filtre</h3>
         <button type="button" class="toggleFilters">
             <i class="fa-solid fa-xmark closefilter"></i>
         </button>
       </div>
       <form method="GET" class="filter-form">
           <!-- Filter by categories -->
-          <h3>Categories</h3>
+          <h3>Catégories</h3>
           <ul>
               {% for category in shop_categories %}
                   <li>
@@ -214,7 +214,7 @@
           </ul>
           
           <!-- Filter by direct subcategories -->
-          <h3>Direct Subcategories</h3>
+          <h3>Sous-catégories</h3>
           <ul>
               {% for subcategory in direct_subcategories %}
                   <li>
@@ -227,7 +227,7 @@
           </ul>
           
           <!-- Filter by rating -->
-          <h3>Ratings</h3>
+          <h3>Notes </h3>
           <ul>
               {% for rating_choice in all_ratings %}
                   <li>
@@ -240,8 +240,8 @@
           </ul>
           
           <!-- Price range filter -->
-          <h3>Price Range</h3>
-          <label for="min_price">Min Price:</label>
+          <h3>Prix </h3>
+          <label for="min_price">Min Prix :</label>
           <input type="number" name="min_price" id="min_price" value="{{ min_price }}">
           
           <label for="max_price">Max Price:</label>
@@ -254,7 +254,7 @@
   </div>
   </div>
   <div class="filter__div container">
-    <button class="filter__button"><i class="fa-solid fa-filter" aria-hidden="true"></i>Filter</button>
+    <button class="filter__button"><i class="fa-solid fa-filter" aria-hidden="true"></i>Filtre </button>
     <div class="filter_box">
         <button id="sortButton" class="filter__button sort__button"><i class="fa-solid fa-sort" aria-hidden="true"></i> Sort</button>
         <div class="dropdown-menu sort-dropdown-menu show" aria-labelledby="sortby-dropdown" style="display:none;">
@@ -270,7 +270,7 @@
           <div class="row">
               <div class="col-lg-10">
               <div class="main-title text-center text-sm-start mb80-520 mb25-414">
-                  <h2 class="title">Top Selling Products</h2>
+                  <h2 class="title">Produits les plus vendus </h2>
               </div>
               </div>
           </div>
@@ -296,7 +296,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <div class="main-title bfb1 pb10">
-                  <h2 class="title">All Products</h2>
+                  <h2 class="title">Tous les produits</h2>
                 </div>
               </div>
             </div>

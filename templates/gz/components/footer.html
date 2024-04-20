@@ -8,13 +8,13 @@
 
         <div class="footer__column footer__column1 flexCenter">
             
-            <div class="column__title">Jeux video</div>
+            <div class="column__title">Jeux vidéo</div>
 
             <div class="column__links flexCenter">
                 <a href='{% url 'store:product-detail' meta_title="xbox" %}' class="links__link">Playstation Plus</a>
                 <a href='catalog?manufacturer=2' class="links__link">Nintendo Eshop</a>
                 <a href='catalog?manufacturer=2' class="links__link">Calendrier Des Sorties</a>
-                <a href="#browseByCategory" class="links__link">Autre Categorie</a>
+                <a href="#browseByCategory" class="links__link">Autre Catégorie</a>
 
             </div>
 
@@ -26,10 +26,10 @@
 
             <div class="column__links flexCenter">
 
-                <a href='{% url "addons:terms_and_conditions" %}' class="links__link">Conditions Generales de vente</a>
-                <a href='{% url "addons:privacy_policy" %}' class="links__link">Politique de Confidentialite</a>
-                <a href='{% url "addons:return_policy" %}' class="links__link">Expedition & retour</a>
-                <a href='{% url "addons:secure_purchases" %}' class="links__link">Achats securises</a>
+                <a href='{% url "addons:terms_and_conditions" %}' class="links__link">Conditions Générales de vente</a>
+                <a href='{% url "addons:privacy_policy" %}' class="links__link">Politique de Confidentialité</a>
+                <a href='{% url "addons:return_policy" %}' class="links__link">Expédition & retour</a>
+                <a href='{% url "addons:secure_purchases" %}' class="links__link">Achats sécurisés</a>
                 <a href="{% url "core:profile" %}orders" class="links__link">Statut de la commande</a>
 
             </div>
@@ -42,11 +42,11 @@
 
             <div class="column__links flexCenter">
 
-                <a href="tel:29220545" class="links__link">+216 22921771</a>
+                <a href="tel:29220545" class="links__link">+216 54373657</a>
                 <a class="links__link">Demande De Devis</a>
                 <a class="links__link">GameZone, Tunis , Ariana</a>
                 <a class="links__link">Site Map</a>
-                <a class="links__link">A Droit</a>
+                <a class="links__link">À Droit</a>
 
             </div>
 
@@ -54,11 +54,11 @@
 
         <div class="footer__column footer__column4 flexCenter">
             
-            <div class="column__title">Sign Up</div>
+            <div class="column__title">S'inscrire</div>
 
             <div class="column__singup flexCenter">
 
-                <div class="signup__text">Get Exclusive Promotions, Coupons, and the Latest Events
+                <div class="signup__text">Obtenez des promotions exclusives, Coupons
                 </div>
 
                 <form id="emailForm">
@@ -67,10 +67,10 @@
 
                         <div class="input__input">
     
-                            <input type="email" id="email-opt-in" class="form-control" placeholder="Your email address" id="news-letter-input"/>
+                            <input type="email" id="email-opt-in" class="form-control" placeholder="Votre adresse e-mail" id="news-letter-input"/>
     
                         </div>
-                        <div class="submitButton input__button flexCenter">Join</div>
+                        <div class="submitButton input__button flexCenter">S'inscrire</div>
     
                     </div>
                 </form>
@@ -79,15 +79,12 @@
 
             <div class="column__socials flexCenter">
 
-                <div class="socials__text">CONNECT WITH US</div>
+                <div class="socials__text">NOUS REJOINDRE</div>
 
                 <div class="socials__icons flexCenter">
 
-                    <a href='{{company.facebook}}' class="icons__icon"><i class="fa-brands fa-facebook"></i></a>
-                    {% comment %} <a  class="icons__icon"><i class="fa-brands fa-twitter"></i></a>
-                    <a class="icons__icon"><i class="fa-brands fa-youtube"></i></a> {% endcomment %}
-                    <a href="{{company.instagram}}" class="icons__icon"><i class="fa-brands fa-instagram"></i></a>
-
+                    <a href='https://www.facebook.com/gamezoneariana' class="icons__icon"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/gamezoneariana/" class="icons__icon"><i class="fa-brands fa-instagram"></i></a>
 
                 </div>
 
@@ -98,7 +95,7 @@
 
     </div>
     <div class="footer__bottom flexCenter">
-        <div class="bottom__text">© 2024 {{company.name}}. All rights reserved</div>
+        <div class="bottom__text">© 2024 Game Zone. Tous droits réservés</div>
     </div>
 
 </div>
@@ -108,25 +105,25 @@
         var submitButton = document.querySelector(".submitButton");
     
         submitButton.addEventListener("click", function(event) {
-            event.preventDefault(); // Prevent the form from submitting
+            event.preventDefault(); // Empêche le formulaire de se soumettre
             email = document.querySelector("#email-opt-in").value
             $.ajax({
                 type: 'POST',
                 url: "{% url "addons:subscribe_to_newsletter" %}",
-                data: {"email": email}, // Use the plain object
+                data: {"email": email}, // Utilisez l'objet simple
                 beforeSend: function(xhr, settings) {
                     xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
                 },
                 success: function(response) {
                     console.log(response);
                     if (response.success !== false) {
-                        submitButton.disabled = true; // Disable the submit button
-                        submitButton.innerText = "DONE";
+                        submitButton.disabled = true; // Désactive le bouton de soumission
+                        submitButton.innerText = "TERMINÉ";
                     }
-                    // You can optionally update the UI here if needed
+                    // Vous pouvez éventuellement mettre à jour l'interface utilisateur ici si nécessaire
                 },
                 error: function(error) {
-                    console.error('Error sending form data:', error);
+                    console.error('Erreur lors de l'envoi des données du formulaire :', error);
                 }
             });
         });
@@ -137,13 +134,4 @@
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-</script>
+                const cookie = cookies

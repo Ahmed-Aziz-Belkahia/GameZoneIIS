@@ -7,36 +7,36 @@
 
 <div class="main__hero">
   <div class="hero__div">
-      <div class="hero__slider swiper mySwiper">
-          <div class="swiper-wrapper">
-              {% for hero in heros %}
-              <div class="swiper-slide unselectable">
-                  <a href="/detail/{{ hero.meta_title }}">{% comment %} <img src="{{ hero.hero_banner.url }}" alt="{{ hero.title }}"> {% endcomment %}
-                    <picture>
-                        <!-- WebP format for screens 768px and above -->
-                        <source media="(min-width: 768px)" type="image/webp" srcset="{{ hero.hero_banner.url }}">
-                    
-                        <!-- WebP format for screens below 768px -->
-                        <source type="image/webp" srcset="{{ hero.hero_banner_mobile.url }}">
-                    
-                        <!-- Fallback for browsers that do not support <picture> or WebP -->
-                        <img alt="{{ hero.title }}" class="gme-v3-carousel-hero__img lazyloaded" src="{{ hero.hero_banner.url }}" fetchpriority="high">
-                    </picture>
+    <div class="hero__slider swiper mySwiper">
+        <div class="swiper-wrapper">
+            {% for hero in heros %}
+                <div class="swiper-slide unselectable">
+                    <a href="/{{ hero.meta_title }}">
+                        <picture>
+                            <!-- WebP format for screens 768px and above -->
+                            <source media="(min-width: 768px)" type="image/webp" srcset="{{ hero.hero_banner.url }}">
+                        
+                            <!-- WebP format for screens below 768px -->
+                            {% if hero.hero_banner_mobile %}
+                                <source type="image/webp" srcset="{{ hero.hero_banner_mobile.url }}">
+                            {% endif %}
+                        
+                            <!-- Fallback for browsers that do not support <picture> or WebP -->
+                            <img alt="{{ hero.title }}" class="gme-v3-carousel-hero__img lazyloaded" 
+                                {% if hero.hero_banner_mobile %}
+                                    src="{{ hero.hero_banner_mobile.url }}"
+                                {% else %}
+                                    src="{{ hero.hero_banner.url }}"
+                                {% endif %}
+                                fetchpriority="high">
+                        </picture>
                     </a>
-              </div>
-              {% endfor %}
-          </div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-pagination"></div>
-          <div class="autoplay-progress">
-              <svg viewBox="0 0 48 48">
-                  <circle cx="24" cy="24" r="20"></circle>
-              </svg>
-              <span></span>
-          </div>
-      </div>
-  </div>
-</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+    
 
 <script src="{% static "gz/js/components/hero.js" %}"></script>

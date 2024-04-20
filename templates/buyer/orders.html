@@ -127,24 +127,24 @@
                <div class="row">
                <div class="col-xl-12">
                   <div class="account_user_deails pl40 pl0-md">
-                     <h2 class="title mb30">My Orders</h2>
+                     <h2 class="title mb30">Mes commandes</h2>
                      <div class="ui_kit_tab style2">
                         <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
                            <li class="nav-item" role="predsentation">
-                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">All Orders</button>
+                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">Toutes commandes</button>
                            </li>
                            <li class="nav-item" role="presedntation">
-                              <button class="nav-link" id="baby-tab" data-bs-toggle="tab" data-bs-target="#baby" type="button" role="tab" aria-controls="baby" aria-selected="false">Shipped</button>
+                              <button class="nav-link" id="baby-tab" data-bs-toggle="tab" data-bs-target="#baby" type="button" role="tab" aria-controls="baby" aria-selected="false">Envoyé</button>
                            </li>
                            <li class="nav-item" role="presedntation">
-                              <button class="nav-link" id="furniture-tab" data-bs-toggle="tab" data-bs-target="#furniture" type="button" role="tab" aria-controls="furniture" aria-selected="false">Delivered</button>
+                              <button class="nav-link" id="furniture-tab" data-bs-toggle="tab" data-bs-target="#furniture" type="button" role="tab" aria-controls="furniture" aria-selected="false">Livré</button>
                            </li>
                         </ul>
 
                         <div class="tab-content pt20 row" id="myTabContent">
                            <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
                             <div class="account_user_deails pl40 pl0-lg">
-                                <h2 class="title mb30">All Orders</h2>
+                                <h2 class="title mb30">Toutes commandes</h2>
                                 <div class="order_table table-responsive">
                                   <table class="table">
                                     <thead class="table-light">
@@ -178,7 +178,7 @@
                                         </tr>
                                         {% empty %}
                                         <tr>
-                                            <td><h4>No Orders Yet</h4></td>
+                                            <td><h4>Pas encore de commande</h4></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -205,7 +205,7 @@
                            </div>
                            <div class="tab-pane fade col-lg-12" id="baby" role="tabpanel" aria-labelledby="baby-tab">
                             <div class="account_user_deails pl40 pl0-lg">
-                                <h2 class="title mb30">Shipped</h2>
+                                <h2 class="title mb30">Envoyé</h2>
                                 <div class="order_table table-responsive">
                                   <table class="table">
                                     <thead class="table-light">
@@ -213,8 +213,8 @@
                                         <th scope="col">ID</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Payment</th>
-                                        <th scope="col">Delivery Status</th>
-                                        <th scope="col">Order Status</th>
+                                        <th scope="col">État de la livraison</th>
+                                        <th scope="col">Statut de la commande</th>
                                         <th scope="col">Total</th>
                                         <th scope="col">Action</th>
                                       </tr>
@@ -232,7 +232,7 @@
                                         </tr>
                                         {% empty %}
                                         <tr>
-                                            <td><h4>No Orders Yet</h4></td>
+                                            <td><h4>Pas encore de commande</h4></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -242,7 +242,7 @@
                            </div>
                            <div class="tab-pane fade col-xl-12" id="furniture" role="tabpanel" aria-labelledby="furniture-tab">
                             <div class="account_user_deails pl40 pl0-lg">
-                                <h2 class="title mb30">Delivered Orders</h2>
+                                <h2 class="title mb30">Ordres livrés</h2>
                                 <div class="order_table table-responsive">
                                   <table class="table">
                                     <thead class="table-light">
@@ -250,8 +250,8 @@
                                         <th scope="col">ID</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Payment</th>
-                                        <th scope="col">Delivery Status</th>
-                                        <th scope="col">Order Status</th>
+                                        <th scope="col">État des livraisons</th>
+                                        <th scope="col">Statut de la commande</th>
                                         <th scope="col">Total</th>
                                         <th scope="col">Action</th>
                                       </tr>
@@ -269,7 +269,7 @@
                                         </tr>
                                         {% empty %}
                                         <tr>
-                                            <td><h4>No Orders Yet</h4></td>
+                                            <td><h4>Pas encore de commande</h4></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

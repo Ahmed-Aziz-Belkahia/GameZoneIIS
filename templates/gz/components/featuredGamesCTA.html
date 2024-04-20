@@ -9,24 +9,41 @@
         <div class="featuredGameCTA__slider swiper mySwiperMini">
             <div class="swiper-wrapper">
                 {% for game in featured_games_sliders %}
-                <a href="/detail/{{ game.meta_title }}" class="swiper-slide unselectable">
-                    {% comment %} <img src="{{ game.featured_game_slider_banner.url }}" alt="{{ game.title }}"> {% endcomment %}
-                    <picture>
-                        <!-- WebP format for screens 768px and above -->
-                        <source media="(min-width: 768px)" type="image/webp" srcset="{{ game.featured_game_slider_banner.url }}">
-                    
-                        <!-- WebP format for screens below 768px -->
-                        <source type="image/webp" srcset="{{game.featured_game_slider_mobile_banner.url}}">
-                    
-                        <!-- Fallback for browsers that do not support <picture> or WebP -->
-                        <img alt="{{ game.title }}" class="gme-v3-carousel-hero__img lazyloaded" src="{{ game.featured_game_slider_banner.url }}" fetchpriority="high">
-                    </picture>
-                </a>
+                    <a href="/{{ game.meta_title }}" class="swiper-slide unselectable">
+                        <picture>
+                            <!-- WebP format for screens 768px and above -->
+                            <source media="(min-width: 768px)" type="image/webp" srcset="{% if game.featured_game_slider_banner %}{{ game.featured_game_slider_banner.url }}{% endif %}">
+                            
+                            <!-- WebP format for screens below 768px -->
+                            {% if game.featured_game_slider_mobile_banner %}
+                                <source type="image/webp" srcset="{{ game.featured_game_slider_mobile_banner.url }}">
+                            {% endif %}
+                            
+                            <!-- Fallback for browsers that do not support <picture> or WebP -->
+                            <img alt="{{ game.title }}" class="gme-v3-carousel-hero__img lazyloaded" 
+                                 {% if game.featured_game_slider_mobile_banner %}
+                                     src="{{ game.featured_game_slider_mobile_banner.url }}"
+                                 {% elif game.featured_game_slider_banner %}
+                                     src="{{ game.featured_game_slider_banner.url }}"
+                                 {% endif %}
+                                 width="232" height="232" fetchpriority="high">
+                        </picture>
+                    </a>
                 {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
             </div>
             <div class="swiper-pagination swiper-paginationMini"></div>
             <div class="autoplay-progress autoplay-progressMini">
                 <svg viewBox="0 0 48 48">
+                    <!-- Your SVG content here -->
+                </svg>
+            </div>
+        </div>
+        
                     <circle cx="24" cy="24" r="20"></circle>
                 </svg>
                 <span></span>

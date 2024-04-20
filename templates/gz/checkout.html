@@ -20,21 +20,21 @@
 <div class="checkout-body">
     <div class="checkout-options-group">
         <div class="checkout-form">
-            <h3>Choose Your Payment Method</h3>
+            <h3>Choisir le mode de paiement</h3>
             <form>
                 <div class="form-group">
                     <!-- Add checked attribute to the Cash on Delivery radio button -->
                     <input type="radio" id="cash" name="payment-method" value="cash" checked>
                     <label for="cash">
                         <i class="fa-solid fa-money-bill-wave"></i>
-                        Cash on Delivery
+                        Paiement à la livraison
                     </label>
                 </div>
                 <div class="form-group">
                     <input type="radio" id="credit-card" name="payment-method" value="credit-card">
                     <label for="credit-card"> 
                         <i class="fa-solid fa-credit-card"></i>
-                        Credit Card
+                        carte de credit
                     </label>
                 </div>
             </form>
@@ -54,29 +54,29 @@
                     </div>
                 {% endfor %}
             </form>
-            <button class="btn-add-address btn-primary">Edit Address</button>
+            <button class="btn-add-address btn-primary">Modifier l'adresse</button>
         </div>
     </div>
     <div class="checkout-summary">
-        <h3>Order Summary</h3>
+        <h3>Résumé de l'ordre</h3>
         <div class="sub-total">
-            <p>Subtotal</p>
-            <p>TND {{cart.calculate_total_price}}</p>
+            <p>Sous total</p>
+            <p>DT {{cart.calculate_total_price}}</p>
         </div>
         <div class="Shipping-total">
-            <p>Shipping & Handling</p>
+            <p>Expédition</p>
             <p>{{cart.shippingCost}}</p>
         </div>
         <div class="tax-total">
-            <p>Tax</p>
-            <p>TND 0</p>
+            <p>Taxe</p>
+            <p>DT 0</p>
         </div>
         <div class="summary-total">
-            <p>Total</p>
-            <p>TND {{cart.price}}</p>
+            <p>Totale</p>
+            <p>DT {{cart.price}}</p>
         </div>
-        <button class="btn-place-order btn-primary">Place Order</button>
-        <span>By placing your order, you agree to GameZone's privacy notice and conditions of use.</span>
+        <button class="btn-place-order btn-primary">Commander</button>
+        <span>En passant votre commande, vous acceptez l'avis de confidentialité et les conditions d'utilisation de GameZone.</span>
     </div>
 </div>
 

@@ -5,12 +5,12 @@
 <div class="main__gamesCatalog flexCenter">
     <div class="gamesCatalog__div flexCenter">
         <div class="gamesCatalog__text">
-            Shop Top Games
+            Top des Jeux
         </div>
         
         <div class="gamesCatalog__items flexCenter">
             {% for game in top_games %}
-            <a href="/detail/{{ game.meta_title }}">
+            <a href="/{{ game.meta_title }}">
                 <div class="gamesCatalog__item flexCenter">
                     <div class="item__div flexCenter">
                         <div class="item__img flexCenter">

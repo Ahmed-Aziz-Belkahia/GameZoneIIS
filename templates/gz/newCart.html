@@ -3,7 +3,7 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static "gz/styles/newCart.css" %}">
-    {% block title %}<title>GameZone | Cart</title>{% endblock title %}
+    {% block title %}<title>GameZone | Panier</title>{% endblock title %}
     
 
 {% endblock head %}
@@ -21,8 +21,8 @@
             <div class="col-md-8 cart">
                 <div class="title">
                     <div class="row">
-                        <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                        <div class="col align-self-center text-right text-muted itemsCount">{{total_items}} items</div>
+                        <div class="col"><h4><b>Panier</b></h4></div>
+                        <div class="col align-self-center text-right text-muted itemsCount">{{total_items}} articles</div>
                     </div>
                 </div>
                 {% if cart %}
@@ -44,8 +44,8 @@
                                         <div class="value-button" id="increase" data-item-id="{{ item.id }}" value="Increase Value">+</div>
                                     </div>
                                 </div>
-                                <div class="col price">TND {{item.product.price}}</div>
-                                <button class="delete-item-btn delete__delete" data-item-id="{{ item.id }}">Remove</button>
+                                <div class="col price">DT {{item.product.price}}</div>
+                                <button class="delete-item-btn delete__delete" data-item-id="{{ item.id }}">Retirer</button>
                             </div>
                         </div>
                     {% endfor %}
@@ -53,24 +53,24 @@
                 {% else %}
                 {% endif %}
                 
-                <div class="back-to-shop"><a href="{% url "catalog" %}">&leftarrow; <span class="text-muted">Back to shop</span></a></div>
+                <div class="back-to-shop"><a href="{% url "catalog" %}">&leftarrow; <span class="text-muted">Retour au magasin</span></a></div>
         </div>
         <div class="col-md-4 summary">
-            <div class="heading">Summary</div>
+            <div class="heading">Résumé</div>
             <hr>
             <div class="row itemsRow">
-                <div class="col" style="padding-left:0;">Subtotal <span class ='itemsCount'> ({{total_items}} items) </span></div>
-                <div class="col text-right totalPrice">TND {{cart.calculate_total_price}}</div>
+                <div class="col" style="padding-left:0;">Sous-total <span class ='itemsCount'> ({{total_items}} articles) </span></div>
+                <div class="col text-right totalPrice">DT {{cart.calculate_total_price}}</div>
             </div>
             <div>
                 <form id="shippingForm" method="POST" action="">
-                    <p class="shipping_title">SHIPPING</p>
+                    <p class="shipping_title">Livraison</p>
                     <div class="colors__divs">
                         <div class="divs__div color flexCenter pick_up_in_store">
                             <div class="shipping_option_container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-store"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
-                                <p>Pick up in store</p>
-                                <p>Available in working time</p>
+                                <p>Retrait en magasin</p>
+                                <p>Disponibles en temps de travail</p>
                             </div>
                         </div>
                 
@@ -78,8 +78,8 @@
 
                             <div class="shipping_option_container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-                                <p>Ship to home</p>
-                                <p>1-2 day shipping</p>
+                                <p>Envoi à domicile</p>
+                                <p>Livraison en 24h</p>
                             </div>
                         </div>
                     </div>
@@ -88,26 +88,26 @@
             </div>
             
             <div>
-                <p class="coupon_title">GIVE CODE</p>
+                <p class="coupon_title">DONNER LE CODE</p>
                 <form id="couponForm" method="POST" action="">
                     <input id="code" name="code" placeholder="Enter your code" type="text">
-                    <button id="applyCouponButton" data-cart-id="{{ cart.id }}">Apply Coupon</button>
+                    <button id="applyCouponButton" data-cart-id="{{ cart.id }}">Appliquer un coupon</button>
                 </form>
             </div>
             <div class="row totalPrices" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div>
-                    <div class="col shippingspan">SHIPPING</div>
-                    <div class="col text-right shippingtotal">TND 7.00</div>
+                    <div class="col shippingspan">Livraison</div>
+                    <div class="col text-right shippingtotal">DT 7.00</div>
                 </div>
                 {% if cart.coupon %}
                     <div>
                         <div class="col shippingspan">COUPON</div>
-                        <div class="col text-right shippingtotal couponInfo">TND </div>
+                        <div class="col text-right shippingtotal couponInfo">DT </div>
                     </div>
                 {% endif %}
                 <div>
-                    <div class="col totalpricespan">TOTAL PRICE</div>
-                    <div class="col text-right total_ttotal">TND {{cart.calculate_total_price}}</div>
+                    <div class="col totalpricespan">PRIX TOTAL</div>
+                    <div class="col text-right total_ttotal">DT {{cart.calculate_total_price}}</div>
                 </div>
                 
             </div>

@@ -18,24 +18,24 @@
 <div class="container">
     <div class="sidebar">
         <ul>
-            <li onclick="showContent('profile')" class="tab active-tab"><i class="fa-solid fa-user"></i> Profile</li>
-            <li onclick="showContent('orders')" class="tab"><i class="fa-solid fa-boxes-stacked"></i> Orders</li> <!-- Changed from my-orders to orders -->
-            <li onclick="showContent('receipts')" class="tab"><i class="fa-solid fa-receipt"></i> Receipts</li>
-            <li onclick="showContent('addresses')" class="tab"><i class="fa-solid fa-location-dot"></i> Addresses</li>
+            <li onclick="showContent('profile')" class="tab active-tab"><i class="fa-solid fa-user"></i> Profil</li>
+            <li onclick="showContent('orders')" class="tab"><i class="fa-solid fa-boxes-stacked"></i> Les commandes</li> <!-- Changed from my-orders to orders -->
+            <li onclick="showContent('receipts')" class="tab"><i class="fa-solid fa-receipt"></i> Reçus</li>
+            <li onclick="showContent('addresses')" class="tab"><i class="fa-solid fa-location-dot"></i> Adresses</li>
         </ul>
     </div>
     <div class="content">
         <div class="profile active">
-            <h1>Profile</h1>
+            <h1>Profil</h1>
             <form id='profile-form' method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="profile-settings">
                         <div class="label-input">
-                            <label for="first_name">First Name</label>
+                            <label for="first_name">Prénom</label>
                             {{profileForm.first_name}}
                         </div>
                         <div class="label-input">
-                            <label for="last_name">Last Name</label>
+                            <label for="last_name">Nom</label>
                             {{profileForm.last_name}}
                         </div>
                         <div class="label-input">
@@ -43,15 +43,15 @@
                             {{profileForm.email}}
                         </div>
                         <div class="label-input">
-                            <label for="tel">Phone Number</label>
+                            <label for="tel">Téléphone</label>
                             {{profileForm.tel}}
                         </div>
                         <div class="label-input">
-                            <label for="date_of_birth">Date of Birth</label>
+                            <label for="date_of_birth">Date de naissance</label>
                             {{profileForm.date_of_birth}}
                         </div>
                 </div>
-                <button id="save-button" type="submit">Save Changes</button>
+                <button id="save-button" type="submit">Enregistrer les modifications</button>
                 <div>GZ coins {{user.customuser.points}}</div>
                 <p id="popupmessage"></p>
             </form>
@@ -65,21 +65,21 @@
                             <div class="order-box">
                                 <img src="{% static "gz/assets\qr-code-scan.png" %}" alt="Order Pic">
                                 <div class="order-details">
-                                    <p>Order ID: <span>{{ order.id }}</span></p>
-                                    <p>Total Price: <span>TND {{ order.price }}</span></p>
+                                    <p>ID de commande: <span>{{ order.id }}</span></p>
+                                    <p>Prix total: <span>DT {{ order.price }}</span></p>
                                     {% comment %} <p>Order Date: <span>{{ order.created_at }}</span></p> {% endcomment %}
                                     {% if order.status == 'pending' %}
-                                    <p>Status: <span class="pending">Pending</span></p><br>
+                                    <p>Statut: <span class="pending">Pending</span></p><br>
                                 {% elif order.status == 'completed' %}
-                                    <p>Status: <span class="completed">Completed</span></p><br>
+                                    <p>Statut: <span class="completed">Terminé</span></p><br>
                                 {% else %}
-                                    <p>Status: <spand class="cancelled">Cancelled</span></p><br>
+                                    <p>Statut: <spand class="cancelled">Annulé</span></p><br>
                                 {% endif %}
                                 </div>
                             </div>
                             <div class="order-items">
                                 
-                                <h3 class="items-title">Items:</h3>
+                                <h3 class="items-title">Articles:</h3>
                                 <ul class="order-items">
                                     {% for item in order.order_items.all %}
                                         <li>{{ item.product.title }} x {{ item.quantity }}</li>
@@ -99,20 +99,20 @@
                 {% else %}
                 <div class="no-orders">
                     <i class="fa-solid fa-cart-plus"></i>
-                    <p>It looks empty here.
+                    <p>L'endroit semble vide.
                         <br>
-                        Make your first purchase now to view it listed here.</p>
-                    <button class="shop-now"><a href="{% url "catalog" %}">Shop Now</a></button>
+                        Effectuez votre premier achat dès maintenant pour l'inclure dans cette liste.</p>
+                    <button class="shop-now"><a href="{% url "catalog" %}">Acheter maintenant</a></button>
                 </div>
                 {% endif %}
 
             </ul>
         </div>
         <div class="receipts">
-            <h1>Receipts</h1>
+            <h1>Reçus</h1>
             <ul>
                 {% for receipt in receipts %}
-                    <li>Receipt ID: {{ receipt.id }}, User: {{ receipt.user }}, Date: {{ receipt.created_at }}</li>
+                    <li>Reçus ID: {{ receipt.id }}, User: {{ receipt.user }}, Date: {{ receipt.created_at }}</li>
                     <!-- Display other receipt details as needed -->
                 {% endfor %}
             </ul>
@@ -120,41 +120,41 @@
         
         
         <div class="addresses">
-            <h1>Address Book</h1>
+            <h1>Carnet d'adresse</h1>
             <div class="addresses-container">
                 <div class="address add-address">
                     <i class="fa-solid fa-plus"></i>
-                    <h2>Add a new delivary address</h2>
+                    <h2>Ajouter une adresse de livraison</h2>
                 </div>
                 {% for address in addresses %}
                     <div class="address" id="address-{{ address.id }}">
                         <p>{{ address }}</p>
                         <div>
-                        <button data-id="{{ address.id }}" class="edit-address-button">Edit</button>
-                        <button data-id="{{ address.id }}" class="delete-address-button edit-address-button">Delete</button>
+                        <button data-id="{{ address.id }}" class="edit-address-button">Editer</button>
+                        <button data-id="{{ address.id }}" class="delete-address-button edit-address-button">Supprimer</button>
                         </div>
                     </div>
                 {% endfor %}
                 
             </div>
             <div class="add-address-container">
-                <h1>Add a new address</h1>
+                <h1>Ajouter une adresse</h1>
                 <form class="addAddressForm">
                     {% csrf_token %}
                     <div>
-                        <label for="address">Address</label>
+                        <label for="address">Addresse</label>
                         {{addressForm.line}}
                         <div class="city-state-zip">
                             <div>
-                            <label for="city">country</label>
+                            <label for="city">Pays</label>
                             {{addressForm.country}}
                             </div>
                             <div>
-                            <label for="state">City</label>
+                            <label for="state">ville</label>
                             {{addressForm.city}}
                             </div>
                             <div>
-                            <label for="zip">Zip Code</label>
+                            <label for="zip">Code Postal</label>
                             {{addressForm.zip_code}}
                             </div>
                         </div>
@@ -166,27 +166,27 @@
                 </form>
             </div>
             <div class="edit-address-container">
-                <h1>Edit address</h1>
+                <h1>Modifier l'adresse</h1>
                 <form class="edit-address-form" method="post">
                     {% csrf_token %}
                     <div>
-                        <label for="address">Address</label>
+                        <label for="address">Adresse</label>
                         {{addressForm.line}}
                         <div class="city-state-zip">
                             <div>
-                            <label for="city">country</label>
+                            <label for="city">Pays</label>
                             {{addressForm.country}}
                             </div>
                             <div>
-                            <label for="state">City</label>
+                            <label for="state">Ville</label>
                             {{addressForm.city}}
                             </div>
                             <div>
-                            <label for="zip">Zip Code</label>
+                            <label for="zip">Code Postal</label>
                             {{addressForm.zip_code}}
                             </div>
                         </div>
-                        <button id="save-changes-button" type="submit">Save Changes</button>
+                        <button id="save-changes-button" type="submit">Enregistrer les changements</button>
                     </div>
                 </form>
             </div>

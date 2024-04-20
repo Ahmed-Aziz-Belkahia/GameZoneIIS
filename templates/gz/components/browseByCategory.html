@@ -1,25 +1,29 @@
-{% load static %}
-
-<link rel="stylesheet" href="{% static "gz/styles\components\browseByCategory.css" %}">
-
-<div id="browseByCategory"class="main__broweByCategory flexCenter">
-
-    <div class="broweByCategory__div flexCenter">
-
-        <div class="broweByCategory__categorys flexCenter">
-            {% for category in categories %}
-            <a href="/shop/category/{{ category.meta_title }}" class="categorys__category flexCenter">
-                <div class="category__img flexCenter">
-                    <div class="img__div flexCenter">
-                        <img src="{{ category.image.url }}" alt="{{ category.title }}">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits Nintendo, PlayStation 4, PlayStation 5 et manettes PS5</title>
+    <meta name="description" content="Découvrez notre sélection de produits incluant Nintendo, PlayStation 4, PlayStation 5 et manettes PS5.">
+    {% load static %}
+    <link rel="stylesheet" href="{% static "gz/styles/components/browseByCategory.css" %}">
+</head>
+<body>
+    <div id="browseByCategory" class="main__broweByCategory flexCenter">
+        <div class="broweByCategory__div flexCenter">
+            <div class="broweByCategory__categorys flexCenter">
+                {% for category in categories %}
+                <a href="/shop/category/{{ category.meta_title }}" class="categorys__category flexCenter">
+                    <div class="category__img flexCenter">
+                        <div class="img__div flexCenter">
+                            <img src="{{ category.image.url }}" alt="{{ category.title }}">
+                        </div>
                     </div>
-                </div>
-                {% comment %} <div class="category__title flexCenter">{{ category.product_count }} products</div> {% endcomment %}
-                <div class="category__title flexCenter">{{ category.title }}</div>
-            </a>
-            {% endfor %}
+                    <div class="category__title flexCenter">{{ category.title }}</div>
+                </a>
+                {% endfor %}
+            </div>
         </div>
-
     </div>
-
-</div>
+</body>
+</html>

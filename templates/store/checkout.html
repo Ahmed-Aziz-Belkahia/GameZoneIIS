@@ -17,10 +17,10 @@ Checkout
             <div class="breadcrumb_content">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'store:cart-view' %}">Shop</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'store:cart-view' %}">My Cart</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'store:shipping_address' %}">Shipping & Billing Details</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a>Checkout</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'store:cart-view' %}">Magasin</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'store:cart-view' %}">Mon panier</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'store:shipping_address' %}">Détails de l'envoi et de la facturation</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a>Sortie de caisse</a></li>
               </ol>
             </div>
           </div>
@@ -33,7 +33,7 @@ Checkout
          <div class="row">
             <div class="col-sm-6 col-lg-4 m-auto">
                <div class="main-title text-center mb50">
-                  <h2 class="title">Let's Checkout Now 🙂</h2>
+                  <h2 class="title">Passer à la caisse maintenant 🙂</h2>
                </div>
             </div>
          </div>
@@ -43,32 +43,32 @@ Checkout
                <div class="checkout_form style2">
                   
                   {% if address.billing_country != None %}
-                  <h3 class="titfle mb20">Shipping Details</h3>
+                  <h3 class="titfle mb20">Détails de l'expédition</h3>
                   {% else %}
-                  <h3 class="tiftle mb20">Shipping & Billing Details</h3>
+                  <h3 class="tiftle mb20">Détails de l'envoi et de la facturation</h3>
                   {% endif %}
                   <!-- <div class="alert alert-warning">
                      <strong>Please review your shipping address before placing an order</strong>
                   </div> -->
-                  <a href="{% url 'store:shipping_address' %}" class="dashed-custom">Change Address</a>
+                  <a href="{% url 'store:shipping_address' %}" class="dashed-custom">Modifier l'adresse</a>
                   <div class="checkout_coupon ui_kit_button mt-4">
                      <form class="form2" id="coupon_form" name="contact_form" action="#" method="post">
                         <div class="row">
                            <div class="col-sm-12">
                               <div class="form-group">
-                                 <label class="form-label">Full name *</label>
+                                 <label class="form-label">Nom et prénom *</label>
                                  <input class="form-control form_control" type="text" readonly value="{{ address.full_name }}">
                               </div>
                            </div>
                            <div class="col-sm-4">
                               <div class="form-group">
-                                 <label class="form-label">Your Email</label>
+                                 <label class="form-label">Votre Email</label>
                                  <input name="form_email" class="form-control form_control email" type="email" readonly value="{{ address.email }}">
                               </div>
                            </div>
                            <div class="col-sm-4">
                               <div class="form-group">
-                                 <label class="form-label">Phone *</label>
+                                 <label class="form-label">Téléphone *</label>
                                  <input name="form_phone" class="form-control form_control" type="text" readonly value="{{ address.mobile }}">
                               </div>
                            </div>
@@ -76,25 +76,25 @@ Checkout
                           
                            <div class="col-sm-4">
                               <div class="form-group">
-                                 <label class="form-label">Country*</label>
+                                 <label class="form-label">Pays*</label>
                                  <input class="form-control form_control" type="text" readonly value="{{ address.country }}">
                               </div>
                            </div>
                            <div class="col-sm-4">
                               <div class="form-group">
-                                 <label class="form-label">State</label>
+                                 <label class="form-label">État</label>
                                  <input class="form-control form_control mb10" type="text" readonly value="{{ address.state }}">
                               </div>
                            </div>
                            <div class="col-sm-4">
                               <div class="form-group">
-                                 <label class="form-label">Town or City</label>
+                                 <label class="form-label">Ville ou village</label>
                                  <input class="form-control form_control mb10" type="text" readonly value="{{ address.town_city }}">
                               </div>
                            </div>
                            <div class="col-sm-4">
                               <div class="form-group">
-                                 <label class="form-label">Home Address</label>
+                                 <label class="form-label">Adresse personnelle</label>
                                  <input class="form-control form_control mb10" type="text" readonly value="{{ address.address }}">
                               </div>
                            </div>
@@ -106,31 +106,31 @@ Checkout
                            </div> -->
                            {% if address.billing_country != None %}
                               <hr>
-                              <h3 class="titfle mb20">Billing Details</h3>
+                              <h3 class="titfle mb20">Détails de la facture</h3>
                            {% endif %}
                            {% if address.billing_country != None %}
 
                            <div class="col-sm-6">
                               <div class="form-group">
-                                 <label class="form-label">Billing Country*</label>
+                                 <label class="form-label">Pays de facturation*</label>
                                  <input class="form-control form_control" type="text" readonly value="{{ address.billing_country }}">
                               </div>
                            </div>
                            <div class="col-sm-6">
                               <div class="form-group">
-                                 <label class="form-label">Billing State</label>
+                                 <label class="form-label">Etat de facturation</label>
                                  <input class="form-control form_control mb10" type="text" readonly value="{{ address.billing_state }}">
                               </div>
                            </div>
                            <div class="col-sm-6">
                               <div class="form-group">
-                                 <label class="form-label">Billing Town or City</label>
+                                 <label class="form-label">Localité de facturation</label>
                                  <input class="form-control form_control mb10" type="text" readonly value="{{ address.billing_town_city }}">
                               </div>
                            </div>
                            <div class="col-sm-6">
                               <div class="form-group">
-                                 <label class="form-label">Billing Home Address</label>
+                                 <label class="form-label">Adresse de facturation</label>
                                  <input class="form-control form_control mb10" type="text" readonly value="{{ address.billing_address }}">
                               </div>
                            </div>
@@ -150,35 +150,35 @@ Checkout
                </div>
             </div>
             <div class="col-lg-4 col-xl-3">
-                <p class="para">You are about to pay for <span class="cart-list"><b>{{order_items.count}}</b></span> item(s)</p>
+                <p class="para">Vous allez payer <span class="cart-list"><b>{{order_items.count}}</b></span>article(s)</p>
                 <div class="order_sidebar_widget checkout_page mb30 mb30">
-                    <h4 class="title">Your Order</h4>
+                    <h4 class="title">Votre commande</h4>
                     <ul>
                        <li class="subtitle">
-                          <p>Sub Total <span class="float-end totals">{{ cs }}{{order.price|floatformat:2}}</span></p>
+                          <p>Sous-total <span class="float-end totals">{{ cs }}{{order.price|floatformat:2}}</span></p>
                        </li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
                        <li class="subtitle">
-                          <p>Shipping <span class="float-end totals">{{ cs }}{{ order.shipping|floatformat:2 }}</span></p>
+                          <p>Livraison <span class="float-end totals">{{ cs }}{{ order.shipping|floatformat:2 }}</span></p>
                        </li>
                        
                        <li class="subtitle">
-                        <p>Estimated {{tax_country.custom_name}} <span class="float-end totals">{{ cs }}{{ order.vat|floatformat:2 }}</span></p>
+                        <p>Estimation {{tax_country.custom_name}} <span class="float-end totals">{{ cs }}{{ order.vat|floatformat:2 }}</span></p>
                         </li>
                         <li class="subtitle">
-                           <p>Service Fee <span class="float-end totals">{{ cs }}{{ order.service_fee|floatformat:2 }}</span></p>
+                           <p>Frais de services <span class="float-end totals">{{ cs }}{{ order.service_fee|floatformat:2 }}</span></p>
                            </li>
                        <li class="subtitle">
-                          <p>Total  <span class="float-end totals">{{cs}}{{order.original_total|floatformat:2}}</span></p>
+                          <p>Totale  <span class="float-end totals">{{cs}}{{order.original_total|floatformat:2}}</span></p>
                           
                           {% if order.saved != 0.00 %}
-                           (<span style="font-size: 10px; margin-bottom: -10px;"><small>Before Discount</small></span>)
+                           (<span style="font-size: 10px; margin-bottom: -10px;"><small>Avant la remise</small></span>)
                           {% endif %}
                            
                        </li>
                        {% if order.saved != 0.00 %}
                         <li class="subtitle">
-                           <p style="color: green;">New Total <span class="float-end totals">{{cs}}{{order.total|floatformat:2}}</span></p>
-                           <small style="color: red;">Discount: <span class="float-end totals">-{{cs}}{{order.saved|floatformat:2}}</span></small>
+                           <p style="color: green;">Totale  <span class="float-end totals">{{cs}}{{order.total|floatformat:2}}</span></p>
+                           <small style="color: red;">Remise : <span class="float-end totals">-{{cs}}{{order.saved|floatformat:2}}</span></small>
                         </li>
                      {% endif %}
                     </ul>
@@ -203,9 +203,9 @@ Checkout
                 </div>
                  <div class="ui_kit_button payment_widget_btn">
                   {% if order.payment_method == "credit_card" %}
-                  <button  button id="checkout-button" class="btn btn-track purple-btn w100 mt20">Pay with Debit Card  <i class="fas fa-credit-card"></i></button>
+                  <button  button id="checkout-button" class="btn btn-track purple-btn w100 mt20">Paiement par carte de crédit  <i class="fas fa-credit-card"></i></button>
                   {% else %}
-                  <button  button id="place-order-button" class="place-order-button btn btn-track purple-btn w100 mt20">Place Order</button>
+                  <button  button id="place-order-button" class="place-order-button btn btn-track purple-btn w100 mt20">Commander</button>
                   {% endif %}
                   {% comment %} <button class="btn btn-track purple-btn w100 mt10" style="height: 80px;">Pay with PayPal <i class="fab fa-paypal"></i> {{paypal_payment_button.render}}</button> {% endcomment %}
                </div>

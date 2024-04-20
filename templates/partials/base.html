@@ -1,33 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html dir="ltr" lang="fr">
   <head>
-    <title>GameZone - {% block title %} {% endblock title %}</title>
+    <title>GameZone | Vente tout type de console de jeux, PS4, Ps5, Nintendo Switch, Bas Prix  {% block title %} {% endblock %}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
     <base href="{% static '/' %}">
     {% block meta_description %}
     {% if product and product.meta_description %}
-    <meta
-      name="description"
-      content="{{ product.meta_description }}"
-    />
-    <meta
-      name="keywords"
-      content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox"
-    />
+    <meta name="description" content="{{ product.meta_description }}" />
+    <meta name="keywords" content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox" />
     {% else %}
-      <meta
-      name="description"
-      content="GameZone - Your #1 marketplace for gaming"
-    />
-    <meta
-      name="keywords"
-      content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox"
-    />
-      {% endif %}
+    <meta name="description" content="GameZone - La société numéro 1 en Tunisie, spécialisée dans la vente et la réparation de consoles et machines de jeux PlayStation, Xbox et Nintendo, ainsi que des produits dérivés." />
+    <meta name="keywords" content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox" />
+    {% endif %}
+    {% endblock %}
+  </head>
+  <body>
+    <!-- Your HTML content here -->
+  </body>
+</html>
+
   {% endblock %}
+
     <meta name="CreativeLayers" content="ATFN" />
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/ace-responsive-menu.css' %}" />
@@ -106,322 +102,7 @@
     <div class="preloader"></div>
     <div>
       {% if '1' in basic_addon.header_type %}
-      {% comment %} <div class="header_middle pt20 pb20 dn-992">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-2 col-xxl-2">
-              <div class="header_top_logo_home1">
-                {% if 'use_name' in company.logo_type %}
-                <a href="{% url 'store:home' %}">
-                  <div class="logo">{{company.name}}</div>
-                </a>
-                {% endif %} {% if 'use_image' in company.logo_type %}
-                <a href="{% url 'store:home' %}">
-                  <div class="logo">
-                    <img
-                      src="{{company.logo.url}}"
-                      style="
-                        width: 50px;
-                        height: 50px;
-                        border-radius: 10px;
-                        object-fit: cover;
-                      "
-                      alt="{{company.name}}"
-                    />
-                  </div>
-                </a>
-                {% endif %} {% if 'use_landscape' in company.logo_type %}
-                <a href="{% url 'store:home' %}">
-                  <div class="logo">
-                    <img
-                      src="{{company.logo.url}}"
-                      style="
-                        width: 170px;
-                        height: 50px;
-                        border-radius: 10px;
-                        object-fit: fill;
-                      "
-                      alt="{{company.name}}"
-                    />
-                  </div>
-                </a>
-                {% endif %}
-              </div>
-            </div>
-            <div class="col-lg-3 col-xxl-5">
-              <div class="header_middle_advnc_search">
-                <div class="search_form_wrapper">
-                  <div class="row">
-                    <div class="col-audto p0">
-                      <div class="top-search">
-                        <form
-                          action="{% url 'store:search' %}"
-                          method="GET"
-                          class="form-search"
-                        >
-                          <div class="box-search prde_line">
-                            <input
-                              class="form_control"
-                              type="text"
-                              name="q"
-                              placeholder="Search products…"
-                            />
-                            <button
-                              class="btn search-btn purdple-btn"
-                              type="submit"
-                            >
-                              <i class="fas fa-search"></i>
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-xxl-5 pr0-lg">
-              <div class="hm_log_fav_cart_widget justify-content-center">
-                <div class="wrapper">
-                  <ul class="mb0">
-                    <li class="list-inline-item">
-                      <a
-                        class="header_top_iconbox"
-                        href="{% url 'core:buyer-wishlist' %}"
-                      >
-                        <div class="d-block d-md-flex">
-                          <div class="icon">
-                            <span class="fas fa-heart"></span>
-                          </div>
-                          <div class="details">
-                            <p class="subtitle">Wishlist</p>
-                            <h5 class="title">My Items</h5>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="list-inline-item">
-                      {% if request.user.is_authenticated %}
-                      <a class="header_top_iconbox signin-filter-btn">
-                        <div class="d-block d-md-flex">
-                          <div class="icon">
-                            <span class="fas fa-user"></span>
-                          </div>
-                          <div class="details">
-                            <p class="subtitle">Dashboard</p>
-                            <h5 class="title">My Account</h5>
-                          </div>
-                        </div>
-                      </a>
 
-                      {% else %}
-                      <a
-                        class="header_top_iconbox signin-filter-btn"
-                        href="{% url 'userauths:sign-in' %}"
-                      >
-                        <div class="d-block d-md-flex">
-                          <div class="icon">
-                            <span class="fas fa-user"></span>
-                          </div>
-                          <div class="details">
-                            <p class="subtitle">Sign In</p>
-                            <h5 class="title">Register</h5>
-                          </div>
-                        </div>
-                      </a>
-                      {% endif %}
-                    </li>
-                    <li class="list-inline-item">
-                      <a
-                        class="header_top_iconbox cart-filtefr-btn"
-                        href="{% url 'store:cart-view' %}"
-                      >
-                        <div class="d-block d-md-flex">
-                          <div class="icon">
-                            <span
-                              ><img
-                                src="{% static 'images/icons/flaticon-shopping-cart-white.svg' %}"
-                                alt="" /></span
-                            ><span class="badge cart-items-count"
-                              >{{request.session.cart_data_obj|length}}</span
-                            >
-                          </div>
-                          <div class="details">
-                            <!-- <p class="subtitle">{{ cs }}{{ total_session|floatformat:2 }}</p> -->
-                            <p class="subtitle">Cart</p>
-                            <h5 class="title">Items</h5>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> {% endcomment %}
-      {% include "gz/components/navigation.html" %}
-      <!-- Main Header Nav -->
-      {% comment %} <header class="header-nav menu_style_home_one main-menu">
-        <!-- Ace Responsive Menu -->
-        <nav class="posr">
-          <div class="container posr menu_bdrt1">
-            <!-- Menu Toggle btn-->
-            <div class="menu-toggle">
-              <button type="button" id="menu-btn">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div class="posr logo1 home1_style">
-              <div id="mega-menu">
-                <a class="btn-mega" href="{% url 'store:category' %}">
-                  <img class="me-2" src="{% static 'images/desktop-nav-menu-white.svg' %}" alt="Desktop Menu Icon" />
-                  <span class="fw500 fz16 color-white vam">Browse Categories</span>
-                </a>
-                
-              </div>
-            </div>
-            <!-- Responsive Menu Structure-->
-            <ul
-              id="respMenu"
-              class="ace-responsive-menu menu_list_custom_code wa pl200"
-              data-menu-style="horizontal"
-            >
-              <li class="visible_list">
-                <a href="{% url 'store:home' %}"
-                  ><span class="title">Home</span></a
-                >
-              </li>
-              <li class="megamenu_style">
-                <a href="{% url 'store:shop' %}"
-                  ><span class="title">Shop</span></a
-                >
-              </li>
-              <li class="megamenu_style">
-                <a href="{% url 'store:auction' %}"
-                  ><span class="title">Auction</span></a
-                >
-              </li>
-              <li class="megamenu_style">
-                <a href="{% url 'store:offer' %}"
-                  ><span class="title">Offer</span></a
-                >
-              </li>
-              <li class="visible_list">
-                <a href="#"
-                  ><span class="title"
-                    >Pages <i class="fas fa-caret-down"></i> </span
-                ></a>
-                <ul>
-                  <li>
-                    <a href="{% url 'addons:contact_us' %}">Contact Us</a>
-                  </li>
-                  <!-- <li>
-                    <a href="{% url 'addons:contact_us' %}">Help Center</a>
-                  </li> -->
-                  <li><a href="{% url 'addons:about_us' %}">About Us</a></li>
-                  <li>
-                    <a href="{% url 'reports:report-issue' %}">Report Issue</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'core:order-tracker' %}">Track Order</a>
-                  </li>
-
-                  <!-- {% if request.user.is_authenticated %}
-                  <li>
-                    <a href="#"
-                      ><span class="title"
-                        >My Account <i class="fas fa-caret-down"></i></span
-                    ></a>
-                    <ul>
-                      <li>
-                        <a
-                          class="active"
-                          href="{% url 'core:buyer-dashboard' %}"
-                          ><span class="fas fa-user"> </span> Account Details</a
-                        >
-                      </li>
-                      <li>
-                        <a href="{% url 'core:buyer-orders' %}">
-                          <span class="fas fa-list"> </span> Order</a
-                        >
-                      </li>
-                      <li>
-                        <a href="{% url 'core:buyer_bids' %}"
-                          ><span class="fas fa-chart-simple"> </span> My Bids</a
-                        >
-                      </li>
-                      <li>
-                        <a href="{% url 'core:buyer_offer' %}"
-                          ><span class="bi bi-percent"> </span> My Offers</a
-                        >
-                      </li>
-                      <li>
-                        <a href="{% url 'core:buyer-address' %}"
-                          ><span class="fas fa-location"> </span> Address</a
-                        >
-                      </li>
-                      <li>
-                        <a href="{% url 'core:buyer-wishlist' %}"
-                          ><span class="fas fa-heart"></span> Wishlist</a
-                        >
-                      </li>
-                      <li>
-                        <a href="{% url 'core:buyer-invoices' %}"
-                          ><span class="fas fa-file-invoice"></span> Invoices</a
-                        >
-                      </li>
-                      <li>
-                        <a href="{% url 'userauths:sign-out' %}"
-                          ><span class="fas fa-right-from-bracket"></span>
-                          Logout</a
-                        >
-                      </li>
-                    </ul>
-                  </li>
-                  {% endif %} -->
-                </ul>
-              </li>
-              <li class="visible_list">
-                <a href="{% url 'blog:blog-list' %}"
-                  ><span class="title">Blog</span></a
-                >
-              </li>
-
-              {% if request.user.profile.seller == True %}
-              <li class="visible_list">
-                <a href="{% url 'vendor:dashboard' %}"
-                  ><span class="title">Vendor Dashboard</span></a
-                >
-              </li>
-              {% else %}
-              <li class="visible_list">
-                <a href="{% url 'vendor:become-vendor' %}"
-                  ><span class="title">Become a Vendor</span></a
-                >
-              </li>
-              {% endif %}
-            </ul>
-            <ul
-              id="respMenu2"
-              class="ace-responsive-menu widget_menu_home2 wa"
-              data-menu-style="horizontal"
-            >
-              <!-- <li class="list-inline-item list_c"><a href="#">Deal of the Day</a></li> -->
-              <li class="list-inline-item list_c">
-                <a href="{% url 'store:hot_deals' %}">Hot Deals</a>
-              </li>
-              
-              <li class="list-inline-item list_c">
-                <a href="{% url 'core:order-tracker' %}">Track Order</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header> {% endcomment %}
 
       <!-- Body Ovelay Behind Sidebar -->
       <div class="hiddenbar-body-ovelay"></div>
@@ -446,16 +127,7 @@
             <div class="leftside_navbar_content_details">
               <div class="leftside_navbar_menu department_version">
                 <ul class="navbar-nav">
-                  {% comment %} DASHBOARD {% endcomment %}
-                  {% comment %} <li class="nav-item">
-                    <a
-                      class="nav-link collapsed"
-                      href="{% url 'core:buyer-dashboard' %}"
-                      ><span class="bi bi-grid-3x3-gap-fill"></span>Dashboard<i
-                        class="fas fa-angle-right arrow"
-                      ></i
-                    ></a>
-                  </li> {% endcomment %}
+
                   <li class="nav-item">
                     <a
                       class="nav-link collapsed"
@@ -598,16 +270,7 @@
                     >Create account</a
                   >
                 </p>
-                <!-- <div class="hr_content">
-                    <hr>
-                    <span class="hr_top_text">or</span>
-                  </div> -->
-                <!-- <ul class="login_with_social text-center mt30 mb0">
-                    <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="fab fa-google"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
-                  </ul> -->
+
               </form>
             </div>
             {% endif %}
@@ -873,27 +536,7 @@
                 </ul>
               </div>
             </div>
-            <!-- <div class="mobile_menu_search_widget ">
-               <div class="header_middle_advnc_search ">
-                 <div class="container search_form_wrapper mt-4">
-                   <div class="row">
-                     <div>
-                       <div class="top-search text-start">
-                         <form action="{% url 'store:search' %}" method="get" class="form-seatrch" accept-charset="utf-8">
-                           <div class="box-search d-flex">
-                             <input class="form-control" type="text"  placeholder="Search All Products..." name="q">
-                             <button class="btn searcdh-btn purdple-btn" type="submit"><i class="fas fa-search "></i></button>
-     
-                           </div>
-                         </form>
-                       </div>
-                       
-                     </div>
-                     
-                   </div>
-                 </div>
-               </div>
-             </div> -->
+           
             <div class="posr">
               <div class="mobile_menu_close_btn">
                 <span class="flaticon-close"></span>
@@ -959,10 +602,7 @@
             <li>
               <span>My Dashboard</span>
               <ul>
-                {% comment %} DASHBOARD {% endcomment %}
-                {% comment %} <li>
-                  <a href="{% url 'core:buyer-dashboard' %}">Dashboard</a>
-                </li> {% endcomment %}
+                
                 <li><a href="{% url 'core:buyer-orders' %}">Order</a></li>
                 <li><a href="{% url 'core:buyer-address' %}">Address</a></li>
                 <li><a href="{% url 'core:buyer-wishlist' %}">Wishlist</a></li>
@@ -1241,20 +881,7 @@
                   </li>
                   {% endif %}
 
-                  <!-- <li>
-                              <a href="#"><span class="title">Vendor Pages</span></a>
-                              <ul>
-                                 <li><a href="page-vendor-list.html">Vendor List</a></li>
-                                 <li><a href="page-vendor-single.html">Vendor Single</a></li>
-                                 <li><a href="page-dashboard.html">Dashboard</a></li>
-                                 <li><a href="page-dashboard-products.html">Products</a></li>
-                                 <li><a href="page-dashboard-order.html">Order</a></li>
-                                 <li><a href="page-dashboard-customer.html">Customer</a></li>
-                                 <li><a href="page-dashboard-categories.html">Categories</a></li>
-                                 <li><a href="page-dashboard-message.html">Message</a></li>
-                                 <li><a href="page-dashboard-setting.html">Settings</a></li>
-                              </ul>
-                           </li> -->
+                  
                   <li><a href="{% url 'addons:contact_us' %}">Contact</a></li>
                   <li><a href="">Help</a></li>
                   <li><a href="">Faq</a></li>
@@ -1515,16 +1142,7 @@
                     >Create account</a
                   >
                 </p>
-                <!-- <div class="hr_content">
-                        <hr>
-                        <span class="hr_top_text">or</span>
-                      </div> -->
-                <!-- <ul class="login_with_social text-center mt30 mb0">
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-google"></i></a></li>
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
-                      </ul> -->
+                
               </form>
             </div>
             {% endif %}

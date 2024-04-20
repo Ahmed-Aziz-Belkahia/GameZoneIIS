@@ -407,6 +407,18 @@ input[type="radio"]:checked + .choice-input{
   width: 2px
 }
 </style>
+{% block meta_description %}
+{% if product and product.meta_description %}
+<meta
+  name="description"
+  content="{{ product.meta_description }}"
+/>
+<meta
+  name="keywords"
+  content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox"
+/>
+{% endif %}
+{% endblock %}
   
   <!-- <div class="body_content_wrapper position-relative"> -->
     <!-- Custom Shop Category List Menu -->
@@ -424,7 +436,7 @@ input[type="radio"]:checked + .choice-input{
             <div class="breadcrumb_content">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url "store:home" %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url "store:shop" %}">Products</a></li>
+                <li class="breadcrumb-item"><a href="{% url "store:shop" %}">Produits</a></li>
                 
                 {% if product.brand %}
                   <li class="breadcrumb-item"><a href="{% url "store:brand-shop" meta_title=product.brand.meta_title %}">{{product.brand}}</a></li>
@@ -522,7 +534,7 @@ input[type="radio"]:checked + .choice-input{
                   </div>
                 </li>
                 {% if product.rating_count == 0 %}
-                  <li class="ml-2 mr-2 " style="margin-left: 6px; margin-right: 6px;">Not rated yet</li>
+                  <li class="ml-2 mr-2 " style="margin-left: 6px; margin-right: 6px;">Pas encore évaluée</li>
                 {% else %}
                     <li>{{product.product_rating|floatformat:1}}/5.0 </li>
                     <li class="mx-3">{{product.rating_count}} review{{product.rating_count|pluralize:"s"}} </li>
@@ -571,7 +583,7 @@ input[type="radio"]:checked + .choice-input{
                     
                     {% if product.brand %}
                       <tr>
-                        <th scope="col">Brand</th>
+                        <th scope="col">Marques</th>
                         <th scope="col">{{product.brand.title|title}}</th>
                       </tr>
                     {% endif %}
@@ -604,7 +616,7 @@ input[type="radio"]:checked + .choice-input{
                             <a href="#close" title="Close" class="close">X</a>
                             <h1>{{product.product_condition|title}} Product</h1>
                             <hr>
-                            <h4>Rating</h4>
+                            <h4>Evaluation</h4>
                             <h5>{{ product.product_condition_rating }}/10</h5>
                             <br>
                             <h4>Description</h4>
@@ -620,7 +632,7 @@ input[type="radio"]:checked + .choice-input{
                         
                     </tr>
 
-                      <th scope="col">Category</th>
+                      <th scope="col">Catégorie</th>
                       <th scope="col">
                         <span class="shadow p-1" style="border-radius: 4px; font-size: 10px;" ><a href="{% url 'store:category-shop' product.category.meta_title %}" target="_blank">{{product.category|title}}</a></span>
                       </th>
@@ -632,7 +644,7 @@ input[type="radio"]:checked + .choice-input{
                     </tr>
                     </tr>
 
-                      <th scope="col">Brand</th>
+                      <th scope="col">Marques</th>
                       <th scope="col">
                         <span class="shadow p-1" style="border-radius: 4px; font-size: 10px;" ><a href="{% url 'store:brand-shop' product.brand.meta_title %}" target="_blank">{{product.brand|title}}</a></span>
                       </th>
@@ -714,7 +726,7 @@ input[type="radio"]:checked + .choice-input{
                       </form>
                     {% endif %}
                     <ul class="shop_single_wishlist_area d-flex justify-content-center">
-                      <li style="cursor: pointer;" class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Add to Wishlist</a></li>
+                      <li style="cursor: pointer;" class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Ajouter à la liste de souhaits</a></li>
                     </ul>
                   </div>
 
@@ -1112,10 +1124,10 @@ input[type="radio"]:checked + .choice-input{
                   <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="returnpolicy-tab" data-bs-toggle="tab" data-bs-target="#returnpolicy" type="button" role="tab" aria-controls="returnpolicy" aria-selected="false">Policy</button>
                 </li> {% endcomment %}
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="qna-tab" data-bs-toggle="tab" data-bs-target="#qna" type="button" role="tab" aria-controls="qna" aria-selected="false">Questions and Answers</button>
+                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="qna-tab" data-bs-toggle="tab" data-bs-target="#qna" type="button" role="tab" aria-controls="qna" aria-selected="false">Questions et réponses</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0" id="customerreview-tab" data-bs-toggle="tab" data-bs-target="#customerreview" type="button" role="tab" aria-controls="customerreview" aria-selected="false">Customer Reviews</button>
+                  <button class="nav-link mt-3 mt-xl-0 mb-0" id="customerreview-tab" data-bs-toggle="tab" data-bs-target="#customerreview" type="button" role="tab" aria-controls="customerreview" aria-selected="false">Avis des clients</button>
                 </li>
               </ul>
               <!-- nav tab Nav List End -->
@@ -1505,19 +1517,19 @@ input[type="radio"]:checked + .choice-input{
 
                             {% if reviewer_status == False %}
                               <div class="alert-warning p-4">
-                                <strong>You must purchase this product before you can review</strong>
+                                <strong>Vous devez acheter ce produit avant de pouvoir l'évaluer</strong>
                               </div>
                             {% endif %}
                           {% endif %}
                         </div>
                         {% endif %}
                       {% else %}
-                      <h4>Hey, you need to <a href="{% url 'userauths:sign-in' %}?next={{request.path}}" class="dashed-custom">Login</a> to add a review for this product</h4>
+                      <h4>Hey, vous devez <a href="{% url 'userauths:sign-in' %}?next={{request.path}}" class="dashed-custom">Se connecter</a> ajouter un commentaire sur ce produit</h4>
                       {% endif %}
 
                       <div class="product_single_content mb30 ">
                         <div class="mbp_pagination_comments">
-                          <h5 class="mb30">{{reviews.count}} Review(s) For This Product</h5>
+                          <h5 class="mb30">{{reviews.count}} Commentaire(s) sur ce produit</h5>
                           {% for r in reviews %}
                           <div class="border border-rounded-cus p-3 mb-3">
 
@@ -1541,7 +1553,7 @@ input[type="radio"]:checked + .choice-input{
                                 </div>
                                 <h5 class="sub_title">{{r.product.title|title|truncatechars:"20"}}</h5>
                               </div>
-                              <div class="review_post_meta">Reviewed by {% if r.user.profile.full_name == None or r.user.profile.full_name == "" %}{{ r.user.username|title }}{% else %}{{ r.user.profile.full_name|title }}{% endif %} - {{r.date|date:"d M, Y"}}</div>
+                              <div class="review_post_meta">Révision par {% if r.user.profile.full_name == None or r.user.profile.full_name == "" %}{{ r.user.username|title }}{% else %}{{ r.user.profile.full_name|title }}{% endif %} - {{r.date|date:"d M, Y"}}</div>
                             </div>
                           </div>
                           <div class="review_content_para mb30">
@@ -1566,7 +1578,7 @@ input[type="radio"]:checked + .choice-input{
                             {% endif %}
                             
                           </div>
-                          <p class="text-success">{{ r.helpful.all.count }} Found this review helpful</p>
+                          <p class="text-success">{{ r.helpful.all.count }} J'ai trouvé ce commentaire utile</p>
                           <p class="text-success" id="alert{{r.id}}"></p>
                           </div>
 
@@ -1593,7 +1605,7 @@ input[type="radio"]:checked + .choice-input{
             <div class="row">
                 <div class="col-lg-10">
                 <div class="main-title text-center text-sm-start mb80-520 mb25-414">
-                    <h2 class="title">Related Products 🔗</h2>
+                    <h2 class="title">Produits liés</h2>
                 </div>
                 </div>
             </div>
@@ -1618,7 +1630,7 @@ input[type="radio"]:checked + .choice-input{
           <div class="row">
               <div class="col-lg-10">
               <div class="main-title text-center text-sm-start mb80-520 mb25-414">
-                  <h2 class="title">You might also like ❤️ </h2>
+                  <h2 class="title">Vous pouvez aussi aimer </h2>
               </div>
               </div>
           </div>

@@ -80,7 +80,7 @@
             <div class="account_user_deails pl40 pl0-lg">
               <div class="row">
                 <div class="col-lg-12">
-                  <h2 class="title mb30">Shipping & Billing Address</h2>
+                  <h2 class="title mb30">Adresse de livraison et de facturation</h2>
                 </div>
                 <!-- Button trigger modal -->
 
@@ -91,33 +91,33 @@
                     class="btn purple-btn"
                     style="font-size: 12px"
                   >
-                    Add New Shipping Address</a
+                  Nouvelle adresse de livraison</a
                   >
-                  <a href="#openModal-billing" class="btn border" style="font-size: 12px" >Add New Billing Address</a>
+                  <a href="#openModal-billing" class="btn border" style="font-size: 12px" >Nouvelle adresse de facturation</a>
 
                   <div id="openModal-billing" class="modalDialog">
                     <div>
-                      <h3 class="m-3">Add New Billing Address</h3>
+                      <h3 class="m-3">Nouvelle adresse de facturation</h3>
                       <form class="m-3" action="{% url 'core:add_billing_address' %}" method="POST">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-6">
                               <div class="form-group">
-                                 <label for="fm1" class="form-label">Full Name</label>
+                                 <label for="fm1" class="form-label">Nom et prénom</label>
                                  {{billing_form.full_name}}
                               </div>
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
                                 <label for="fm1" class="form-label"
-                                  >Email Address</label
+                                  >Adresse e-mail</label
                                 >
                                 {{billing_form.email}}
                               </div>
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
-                                <label for="fm1" class="form-label">Mobile</label>
+                                <label for="fm1" class="form-label">numéro de téléphone</label>
                                 {{billing_form.mobile}}
                               </div>
                             </div>
@@ -131,14 +131,14 @@
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
-                                <label for="fm1" class="form-label">State</label>
+                                <label for="fm1" class="form-label">Ville</label>
                                 {{billing_form.state}}
                               </div>
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
                                 <label for="fm1" class="form-label"
-                                  >Town or City</label
+                                  >Gouvernerat</label
                                 >
                                 {{billing_form.town_city}}
                               </div>
@@ -169,10 +169,10 @@
                     </div>
                   </div>
 
-                  <!-- New Shipping Address -->
+                  <!-- Nouvelle adresse de livraison -->
                   <div id="openModal-about" class="modalDialog">
                     <div>
-                      <h3 class="m-3">Add New Shipping Address</h3>
+                      <h3 class="m-3">Nouvelle adresse de livraison</h3>
                       <form class="m-3" method="POST">
                         {% csrf_token %}
                         <div class="row">
