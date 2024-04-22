@@ -4,7 +4,7 @@
 {% block head %}
 <link rel="stylesheet" href="{% static "gz/styles/paymentDone.css" %}">
 {% block title %}
-<title>GameZone | Payment Done</title>
+<title>GameZone | Paiement effectué</title>
 {% endblock title %}
 {% endblock head %}
 
@@ -21,23 +21,22 @@
           <div class="tracking-infos">
           </div>
         </div>
-        <img src="{% static "gz/assets/shipping-icon.png" %}" alt="Order Done" width="450px" height="450px"/>
+        <img src="{% static "gz/assets/shipping-icon.png" %}" alt="Commande effectuée" width="450px" height="450px"/>
     </div>
 </div>
 {% endblock main %}
 
 {% block scripts %}
 <script>
-    // Redirect function
+    // Fonction de redirection
     function redirectToPage() {
-        window.location.href = '/profile/orders/'; // Replace with your desired URL
+        window.location.href = '/profile/orders/'; // Remplacez par l'URL souhaitée
     }
 
-    // Redirect after 5 seconds
-    setTimeout(redirectToPage, 5000); // 5000 milliseconds = 5 seconds
+    // Redirection après 5 secondes
+    setTimeout(redirectToPage, 5000); // 5000 millisecondes = 5 secondes
 </script>
 {% endblock scripts %}
 {% block footer %}
     {% include "gz/components/footer.html" %}
 {% endblock footer %}
-

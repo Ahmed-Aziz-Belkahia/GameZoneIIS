@@ -1,9 +1,8 @@
-
 {% extends "partials/base.html" %}
 {% load static %}
 {% block content %}
   <div class="body_content_wrapper position-relative">
-  <!-- Inner Page Breadcrumb -->
+  <!-- Fil d'Ariane de la Page Intérieure -->
   <section class="inner_page_breadcrumb">
     <div class="container">
       <div class="row">
@@ -12,15 +11,15 @@
     </div>
   </section>
 
-	<!-- Shop Checkouts Content -->
+	<!-- Contenu du Panier de la Boutique -->
 	<section class="shop-cart pt30">
 		<div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <div class="order_complete_message text-center">
             <div class="icon bgc-thm1"><span class="fa fa-triangle-exclamation color-white"></span></div>
-            <h2 class="title">Payment Failed!</h2>
-            <p class="para">Opps...your payment failed to complete, please try again later.</p>
+            <h2 class="title">Paiement échoué !</h2>
+            <p class="para">Oops... votre paiement n'a pas pu être effectué, veuillez réessayer plus tard.</p>
           </div>
         </div>
       </div>
@@ -30,7 +29,7 @@
             <div class="order_list_raw text-center">
               <ul>
                 <li class="list-inline-item">
-                  <p>Order Number</p>
+                  <p>Numéro de Commande</p>
                   <h5>{{order.oid}}</h5>
                 </li>
                 <li class="list-inline-item">
@@ -42,7 +41,7 @@
                   <h5>${{order.total}}</h5>
                 </li>
                 <li class="list-inline-item">
-                  <p>Payment Method</p>
+                  <p>Méthode de Paiement</p>
                   <h5>{{order.payment_method}}</h5>
                 </li>
               </ul>

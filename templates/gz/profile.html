@@ -5,12 +5,10 @@
 <link rel="stylesheet" href="{% static "gz/styles/profile.css" %}">
 {% endblock head %}
 
-
-
 {% block header %}
     {% include 'gz/components/navigation.html' %}
     {% block title %}
-        <title>GameZone | Profile</title>
+        <title>GameZone | Profil</title>
     {% endblock title %}
 {% endblock header %}
 
@@ -19,7 +17,7 @@
     <div class="sidebar">
         <ul>
             <li onclick="showContent('profile')" class="tab active-tab"><i class="fa-solid fa-user"></i> Profil</li>
-            <li onclick="showContent('orders')" class="tab"><i class="fa-solid fa-boxes-stacked"></i> Les commandes</li> <!-- Changed from my-orders to orders -->
+            <li onclick="showContent('orders')" class="tab"><i class="fa-solid fa-boxes-stacked"></i> Commandes</li>
             <li onclick="showContent('receipts')" class="tab"><i class="fa-solid fa-receipt"></i> Reçus</li>
             <li onclick="showContent('addresses')" class="tab"><i class="fa-solid fa-location-dot"></i> Adresses</li>
         </ul>
@@ -52,34 +50,34 @@
                         </div>
                 </div>
                 <button id="save-button" type="submit">Enregistrer les modifications</button>
-                <div>GZ coins {{user.customuser.points}}</div>
+                <div>Points GZ : {{user.customuser.points}}</div>
                 <p id="popupmessage"></p>
             </form>
         </div>
-        <div class="orders" id='orders'> <!-- Changed from my-orders to orders -->
-            <h1>Orders</h1>
+        <div class="orders" id='orders'>
+            <h1>Commandes</h1>
             <ul>
                 {% if orders %}
                 {% for order in orders %}
                         <li class="order-list">
                             <div class="order-box">
-                                <img src="{% static "gz/assets\qr-code-scan.png" %}" alt="Order Pic">
+                                <img src="{% static "gz/assets\qr-code-scan.png" %}" alt="Image de la commande">
                                 <div class="order-details">
-                                    <p>ID de commande: <span>{{ order.id }}</span></p>
-                                    <p>Prix total: <span>DT {{ order.price }}</span></p>
-                                    {% comment %} <p>Order Date: <span>{{ order.created_at }}</span></p> {% endcomment %}
+                                    <p>ID de commande : <span>{{ order.id }}</span></p>
+                                    <p>Prix total : <span>DT {{ order.price }}</span></p>
+                                    {% comment %} <p>Date de commande : <span>{{ order.created_at }}</span></p> {% endcomment %}
                                     {% if order.status == 'pending' %}
-                                    <p>Statut: <span class="pending">Pending</span></p><br>
+                                    <p>Statut : <span class="pending">En attente</span></p><br>
                                 {% elif order.status == 'completed' %}
-                                    <p>Statut: <span class="completed">Terminé</span></p><br>
+                                    <p>Statut : <span class="completed">Terminé</span></p><br>
                                 {% else %}
-                                    <p>Statut: <spand class="cancelled">Annulé</span></p><br>
+                                    <p>Statut : <span class="cancelled">Annulé</span></p><br>
                                 {% endif %}
                                 </div>
                             </div>
                             <div class="order-items">
                                 
-                                <h3 class="items-title">Articles:</h3>
+                                <h3 class="items-title">Articles :</h3>
                                 <ul class="order-items">
                                     {% for item in order.order_items.all %}
                                         <li>{{ item.product.title }} x {{ item.quantity }}</li>
@@ -89,7 +87,7 @@
                             </div>
                             {% if order.status == 'pending' %}
                                 <div class="order-cancel">
-                                    <button data-orderId="{{order.id}}" class="cancel-button"><i class="fa-solid fa-xmark"></i> Cancel</button>
+                                    <button data-orderId="{{order.id}}" class="cancel-button"><i class="fa-solid fa-xmark"></i> Annuler</button>
                                 </div>
                             {% endif %}
                         </li>
@@ -112,15 +110,15 @@
             <h1>Reçus</h1>
             <ul>
                 {% for receipt in receipts %}
-                    <li>Reçus ID: {{ receipt.id }}, User: {{ receipt.user }}, Date: {{ receipt.created_at }}</li>
-                    <!-- Display other receipt details as needed -->
+                    <li>ID de reçu : {{ receipt.id }}, Utilisateur : {{ receipt.user }}, Date : {{ receipt.created_at }}</li>
+                    <!-- Afficher d'autres détails du reçu si nécessaire -->
                 {% endfor %}
             </ul>
         </div>
         
         
         <div class="addresses">
-            <h1>Carnet d'adresse</h1>
+            <h1>Carnet d'adresses</h1>
             <div class="addresses-container">
                 <div class="address add-address">
                     <i class="fa-solid fa-plus"></i>
@@ -130,7 +128,7 @@
                     <div class="address" id="address-{{ address.id }}">
                         <p>{{ address }}</p>
                         <div>
-                        <button data-id="{{ address.id }}" class="edit-address-button">Editer</button>
+                        <button data-id="{{ address.id }}" class="edit-address-button">Modifier</button>
                         <button data-id="{{ address.id }}" class="delete-address-button edit-address-button">Supprimer</button>
                         </div>
                     </div>
@@ -142,7 +140,7 @@
                 <form class="addAddressForm">
                     {% csrf_token %}
                     <div>
-                        <label for="address">Addresse</label>
+                        <label for="address">Adresse</label>
                         {{addressForm.line}}
                         <div class="city-state-zip">
                             <div>
@@ -150,7 +148,7 @@
                             {{addressForm.country}}
                             </div>
                             <div>
-                            <label for="state">ville</label>
+                            <label for="state">Ville</label>
                             {{addressForm.city}}
                             </div>
                             <div>
@@ -158,9 +156,7 @@
                             {{addressForm.zip_code}}
                             </div>
                         </div>
-                        {% comment %} <label for="country">Country</label>
-                        <input type="text" placeholder="Country"> {% endcomment %}
-                        <input class="add-address-button submit" type="submit" value="Add Address">
+                        <input class="add-address-button submit" type="submit" value="Ajouter une adresse">
 
                     </div>
                 </form>
@@ -186,7 +182,7 @@
                             {{addressForm.zip_code}}
                             </div>
                         </div>
-                        <button id="save-changes-button" type="submit">Enregistrer les changements</button>
+                        <button id="save-changes-button" type="submit">Enregistrer les modifications</button>
                     </div>
                 </form>
             </div>
@@ -241,11 +237,11 @@
           },
           success: function (response) {
               console.log(response)
-              document.getElementById('popupmessage').innerHTML = "Profile updated successfully";
+              document.getElementById('popupmessage').innerHTML = "Profil mis à jour avec succès";
               
           },
           error: function (error) {
-              console.error('Error filtering products:', error);
+              console.error('Erreur lors de la mise à jour du profil :', error);
           }
       });
     });
@@ -261,7 +257,7 @@
                 event.preventDefault();
                 const orderId = cancelButton.getAttribute('data-orderId');
     
-                // Send AJAX request to cancel the order
+                // Envoyer une requête AJAX pour annuler la commande
                 $.ajax({
                     type: 'POST',
                     url: `/cancel-order/${orderId}/`,
@@ -272,10 +268,10 @@
                     success: function(response) {
                         console.log(response);
                         window.location.reload();
-                        // You can optionally update the UI here if needed
+                        // Vous pouvez éventuellement mettre à jour l'interface utilisateur ici si nécessaire
                     },
                     error: function(error) {
-                        console.error('Error cancelling order:', error);
+                        console.error('Erreur lors de l'annulation de la commande :', error);
                     }
                 });
             });
@@ -343,7 +339,7 @@ document.addEventListener("click", function (event) {
             event.preventDefault();
             const addressId = this.getAttribute('data-id');
     
-            // Send AJAX request to delete the address
+            // Envoyer une requête AJAX pour supprimer l'adresse
             $.ajax({
                 type: 'POST',
                 url: `/delete-address/${addressId}/`,
@@ -352,11 +348,11 @@ document.addEventListener("click", function (event) {
                 },
                 success: function(response) {
                     console.log(response);
-                    // Optionally update the UI here if needed
+                    // Mettez éventuellement à jour l'interface utilisateur ici si nécessaire
                     window.location.reload()
                 },
                 error: function(error) {
-                    console.error('Error deleting address:', error);
+                    console.error('Erreur lors de la suppression de l'adresse :', error);
                 }
             });
         });
@@ -372,32 +368,32 @@ document.addEventListener("click", function (event) {
             event.preventDefault();
             const addressId = this.getAttribute('data-id');
     
-            // Fetch the address data and populate the edit form
+            // Récupérer les données de l'adresse et remplir le formulaire de modification
             $.ajax({
                 type: 'GET',
-                url: `/get-address/${addressId}/`, // You need to define a route to fetch address details
+                url: `/get-address/${addressId}/`, // Vous devez définir une route pour récupérer les détails de l'adresse
                 beforeSend: function(xhr, settings) {
                     xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
                 },
                 success: function(response) {
-                    // Populate the edit form fields with the fetched address data
+                    // Remplir les champs du formulaire de modification avec les données de l'adresse récupérées
                     populateEditForm(response, editForm, addressId);
                 },
                 error: function(error) {
-                    console.error('Error fetching address details:', error);
+                    console.error('Erreur lors de la récupération des détails de l'adresse :', error);
                 }
             });
         });
     });
 
     function populateEditForm(addressData, editForm, addressId) {
-        // Assuming you have form fields with appropriate names in your form object
+        // En supposant que vous avez des champs de formulaire avec des noms appropriés dans votre objet formulaire
         editForm.elements['line'].value = addressData.line;
         editForm.elements['country'].value = addressData.country;
         editForm.elements['city'].value = addressData.city;
         editForm.elements['zip_code'].value = addressData.zip_code;
     
-        // Update the data-id attribute of the saveChangesButton
+        // Mettre à jour l'attribut data-id du bouton de sauvegarde des modifications
         saveChangesButton.setAttribute('data-id', addressId);
     }
 
@@ -406,17 +402,17 @@ document.addEventListener("click", function (event) {
 
     const saveChangesButton = document.querySelector("#save-changes-button");
 
-    // Add event listener to the save changes button
+    // Ajouter un écouteur d'événements au bouton de sauvegarde des modifications
     saveChangesButton.addEventListener("click", function(event) {
         event.preventDefault();
 
-        // Serialize the form data
+        // Sérialiser les données du formulaire
         const formData = new FormData(editForm);
         const addressId = this.getAttribute('data-id');
-        // AJAX request to update the address
+        // Requête AJAX pour mettre à jour l'adresse
         $.ajax({
             type: 'POST',
-            url: `/edit-address/${addressId}/`, // Assuming you have a proper URL for editing addresses
+            url: `/edit-address/${addressId}/`, // En supposant que vous avez une URL appropriée pour l'édition des adresses
             data: formData,
             processData: false,
             contentType: false,
@@ -426,10 +422,10 @@ document.addEventListener("click", function (event) {
             success: function(response) {
                 console.log(response);
                 window.location.reload()
-                // Optionally update the UI or perform any necessary action
+                // Mettez éventuellement à jour l'interface utilisateur ou effectuez toute action nécessaire
             },
             error: function(error) {
-                console.error('Error updating address:', error);
+                console.error('Erreur lors de la mise à jour de l'adresse :', error);
             }
         });
     });

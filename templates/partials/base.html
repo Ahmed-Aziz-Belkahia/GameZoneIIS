@@ -2,28 +2,33 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="fr">
   <head>
-    <title>GameZone | Vente tout type de console de jeux, PS4, Ps5, Nintendo Switch, Bas Prix  {% block title %} {% endblock %}</title>
+    <title>GameZone - {% block title %} {% endblock title %}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
     <base href="{% static '/' %}">
     {% block meta_description %}
     {% if product and product.meta_description %}
-    <meta name="description" content="{{ product.meta_description }}" />
-    <meta name="keywords" content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox" />
+    <meta
+      name="description"
+      content="{{ product.meta_description }}"
+    />
+    <meta
+      name="keywords"
+      content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox"
+    />
     {% else %}
-    <meta name="description" content="GameZone - La société numéro 1 en Tunisie, spécialisée dans la vente et la réparation de consoles et machines de jeux PlayStation, Xbox et Nintendo, ainsi que des produits dérivés." />
-    <meta name="keywords" content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox" />
-    {% endif %}
-    {% endblock %}
-  </head>
-  <body>
-    <!-- Your HTML content here -->
-  </body>
-</html>
-
+      <meta
+      name="description"
+      content="GameZone - Le spécialiste de vente console de jeux, Ps4, PS5, Nintendo switch "
+    />
+    <meta
+      name="keywords"
+      content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox"
+    />
+      {% endif %}
+  
   {% endblock %}
-
     <meta name="CreativeLayers" content="ATFN" />
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/ace-responsive-menu.css' %}" />
@@ -103,7 +108,9 @@
     <div>
       {% if '1' in basic_addon.header_type %}
 
-
+      {% include "gz/components/navigation.html" %}
+      <!-- Main Header Nav -->
+      
       <!-- Body Ovelay Behind Sidebar -->
       <div class="hiddenbar-body-ovelay"></div>
       <!-- Sign In Hiddn SideBar -->
@@ -127,7 +134,7 @@
             <div class="leftside_navbar_content_details">
               <div class="leftside_navbar_menu department_version">
                 <ul class="navbar-nav">
-
+                 
                   <li class="nav-item">
                     <a
                       class="nav-link collapsed"
@@ -278,188 +285,7 @@
         </div>
       </div>
       <!--End Sign In Hiddn SideBar -->
-      <!-- Your Cart Hiddn SideBar -->
-      <div class="cart-hidden-sbar">
-        <div class="hsidebar-header">
-          <div class="sidebar-close-icon">
-            <span class="flaticon-close"></span>
-          </div>
-          <h4 class="title">Your Cart</h4>
-        </div>
-        <div class="hsidebar-content">
-          <div class="log_fav_cart_widget hsidebar_home_page">
-            <div class="wrapper">
-              <ul class="cart">
-                <li class="list-inline-item">
-                  <ul class="dropdown_content">
-                    <li class="list_content">
-                      <div>
-                        <img
-                          class="float-start mt10"
-                          src="images/shop/s1.png"
-                          alt="75x75"
-                        />
-                        <p>Apple MacBook Pro with Apple M1 Chip</p>
-                        <div class="cart_btn home_page_sidebar mt10">
-                          <div class="quantity-block home_page_sidebar">
-                            <button
-                              class="quantity-arrow-minus home_page_sidebar"
-                            >
-                              <img src="images/icons/minus.svg" alt="" />
-                            </button>
-                            <input
-                              class="quantity-num home_page_sidebar"
-                              type="number"
-                              value="3"
-                            />
-                            <button
-                              class="quantity-arrow-plus home_page_sidebar"
-                            >
-                              <span class="flaticon-close"></span>
-                            </button>
-                          </div>
-                          <span class="home_page_sidebar price">$3.399</span>
-                        </div>
-                        <span class="close_icon"
-                          ><i class="flaticon-close"></i
-                        ></span>
-                      </div>
-                    </li>
-                    <li class="list_content">
-                      <div>
-                        <img
-                          class="float-start mt10"
-                          src="images/shop/s2.png"
-                          alt="75x75"
-                        />
-                        <p>Apple MacBook Pro with Apple M1 Chip</p>
-                        <div class="cart_btn home_page_sidebar mt10">
-                          <div class="quantity-block home_page_sidebar">
-                            <button
-                              class="quantity-arrow-minus2 home_page_sidebar"
-                            >
-                              <img src="images/icons/minus.svg" alt="" />
-                            </button>
-                            <input
-                              class="quantity-num2 home_page_sidebar"
-                              type="number"
-                              value="3"
-                            />
-                            <button
-                              class="quantity-arrow-plus2 home_page_sidebar"
-                            >
-                              <span class="flaticon-close"></span>
-                            </button>
-                          </div>
-                          <span class="home_page_sidebar price">$3.399</span>
-                        </div>
-                        <span class="close_icon"
-                          ><i class="flaticon-close"></i
-                        ></span>
-                      </div>
-                    </li>
-                    <li class="list_content_total_price">
-                      <h5>
-                        Total:
-                        <span class="total_price float-end">$6.225.98</span>
-                      </h5>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="hsidebar_footer_content">
-          <div class="list_last_content">
-            <div class="lc">
-              <p class="para">Buy $98.00 more to enjoy FREE Shipping</p>
-              <div class="uilayout_range home1_style">
-                <div class="sidebar_range_slider mb30 mt25">
-                  <input class="range-example-km" value="80" type="text" />
-                </div>
-              </div>
-              <a href="#" class="cart_btns btn btn-white">View Cart</a>
-              <a href="#" class="checkout_btns btn btn-thm">Checkout</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--End Your Cart Hiddn SideBar -->
-      <!-- Sign Up Hiddn SideBar -->
-      <div class="signup-hidden-sbar">
-        <div class="hsidebar-header">
-          <div class="sidebar-close-icon">
-            <span class="flaticon-close"></span>
-          </div>
-          <h4 class="title">Create Your Account</h4>
-        </div>
-        <div class="hsidebar-content">
-          <div class="log_reg_form sidebar_area">
-            <div class="sign_up_form">
-              <form action="#">
-                <div class="form-group">
-                  <label class="form-label">Your Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Ali Tufan"
-                  />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Username</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="alitfn"
-                  />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Your Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="creativelayers088@gmail.com"
-                  />
-                </div>
-                <div class="form-group mb20">
-                  <label class="form-label">Password</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="******************"
-                  />
-                </div>
-                <button type="submit" class="btn btn-signup btn-thm">
-                  Create Account
-                </button>
-                <p class="text-center mb25 mt10">
-                  Already have an account? <a>Sign in</a>
-                </p>
-                <div class="hr_content">
-                  <hr />
-                  <span class="hr_top_text">or</span>
-                </div>
-                <ul class="login_with_social text-center mt30 mb0">
-                  <li class="list-inline-item">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><i class="fab fa-google"></i></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><i class="fab fa-apple"></i></a>
-                  </li>
-                </ul>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--End Sign Up Hiddn SideBar -->
+
 
       <!-- Main Header Nav For Mobile -->
       <div id="page" class="stylehome1">
@@ -536,7 +362,27 @@
                 </ul>
               </div>
             </div>
-           
+            <!-- <div class="mobile_menu_search_widget ">
+               <div class="header_middle_advnc_search ">
+                 <div class="container search_form_wrapper mt-4">
+                   <div class="row">
+                     <div>
+                       <div class="top-search text-start">
+                         <form action="{% url 'store:search' %}" method="get" class="form-seatrch" accept-charset="utf-8">
+                           <div class="box-search d-flex">
+                             <input class="form-control" type="text"  placeholder="Search All Products..." name="q">
+                             <button class="btn searcdh-btn purdple-btn" type="submit"><i class="fas fa-search "></i></button>
+     
+                           </div>
+                         </form>
+                       </div>
+                       
+                     </div>
+                     
+                   </div>
+                 </div>
+               </div>
+             </div> -->
             <div class="posr">
               <div class="mobile_menu_close_btn">
                 <span class="flaticon-close"></span>
@@ -578,7 +424,6 @@
                     {% endfor %}
                   </ul>
                 </li>
-
                 <li>
                   <span>Shop Pages</span>
                   <ul>
@@ -591,9 +436,10 @@
                     </li>
                     <!-- <li><a href="page-compare.html">Compare</a></li> -->
                     <li>
-                      <a href="{% url 'core:order-tracker' %}"
-                        >Order Tracking</a
-                      >
+                      <a href="{% url 'core:order-tracker' %}">Order Tracking</a>
+                    </li>
+                  </ul>
+                </li>
                     </li>
                   </ul>
                 </li>
@@ -602,7 +448,10 @@
             <li>
               <span>My Dashboard</span>
               <ul>
-                
+                {% comment %} DASHBOARD {% endcomment %}
+                {% comment %} <li>
+                  <a href="{% url 'core:buyer-dashboard' %}">Dashboard</a>
+                </li> {% endcomment %}
                 <li><a href="{% url 'core:buyer-orders' %}">Order</a></li>
                 <li><a href="{% url 'core:buyer-address' %}">Address</a></li>
                 <li><a href="{% url 'core:buyer-wishlist' %}">Wishlist</a></li>
@@ -881,7 +730,7 @@
                   </li>
                   {% endif %}
 
-                  
+
                   <li><a href="{% url 'addons:contact_us' %}">Contact</a></li>
                   <li><a href="">Help</a></li>
                   <li><a href="">Faq</a></li>
@@ -1142,7 +991,16 @@
                     >Create account</a
                   >
                 </p>
-                
+                <!-- <div class="hr_content">
+                        <hr>
+                        <span class="hr_top_text">or</span>
+                      </div> -->
+                <!-- <ul class="login_with_social text-center mt30 mb0">
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-google"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
+                      </ul> -->
               </form>
             </div>
             {% endif %}
@@ -1260,115 +1118,7 @@
         </div>
       </div>
 
-      <div class="cart-hidden-sbar">
-        <div class="hsidebar-header">
-          <div class="sidebar-close-icon">
-            <span class="fas fa-xmark"></span>
-          </div>
-          <h4 class="title">Your Cart</h4>
-        </div>
-        <div class="hsidebar-content">
-          <div class="log_fav_cart_widget hsidebar_home_page">
-            <div class="wrapper">
-              <ul class="cart">
-                <li class="list-inline-item">
-                  <ul class="dropdown_content">
-                    <li class="list_content">
-                      <div>
-                        <img
-                          class="float-start mt10"
-                          src="images/shop/s1.png"
-                          alt="75x75"
-                        />
-                        <p>Apple MacBook Pro with Apple M1 Chip</p>
-                        <div class="cart_btn home_page_sidebar mt10">
-                          <div class="quantity-block home_page_sidebar">
-                            <button
-                              class="quantity-arrow-minus home_page_sidebar"
-                            >
-                              <img
-                                src="images/icons/minus.svg"
-                                alt=""
-                              /></button
-                            ><input
-                              class="quantity-num home_page_sidebar"
-                              type="number"
-                              value="3"
-                            /><button
-                              class="quantity-arrow-plus home_page_sidebar"
-                            >
-                              <span class="fas fa-xmark"></span>
-                            </button>
-                          </div>
-                          <span class="home_page_sidebar price">$3.399</span>
-                        </div>
-                        <span class="close_icon"
-                          ><i class="fas fa-xmark"></i
-                        ></span>
-                      </div>
-                    </li>
-                    <li class="list_content">
-                      <div>
-                        <img
-                          class="float-start mt10"
-                          src="images/shop/s2.png"
-                          alt="75x75"
-                        />
-                        <p>Apple MacBook Pro with Apple M1 Chip</p>
-                        <div class="cart_btn home_page_sidebar mt10">
-                          <div class="quantity-block home_page_sidebar">
-                            <button
-                              class="quantity-arrow-minus2 home_page_sidebar"
-                            >
-                              <img
-                                src="images/icons/minus.svg"
-                                alt=""
-                              /></button
-                            ><input
-                              class="quantity-num2 home_page_sidebar"
-                              type="number"
-                              value="3"
-                            /><button
-                              class="quantity-arrow-plus2 home_page_sidebar"
-                            >
-                              <span class="fas fa-xmark"></span>
-                            </button>
-                          </div>
-                          <span class="home_page_sidebar price">$3.399</span>
-                        </div>
-                        <span class="close_icon"
-                          ><i class="fas fa-xmark"></i
-                        ></span>
-                      </div>
-                    </li>
-                    <li class="list_content_total_price">
-                      <h5>
-                        Total:<span class="total_price float-end"
-                          >$6.225.98</span
-                        >
-                      </h5>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="hsidebar_footer_content">
-          <div class="list_last_content">
-            <div class="lc">
-              <p class="para">Buy $98.00 more to enjoy FREE Shipping</p>
-              <div class="uilayout_range home1_style">
-                <div class="sidebar_range_slider mb30 mt25">
-                  <input class="range-example-km" value="80" type="text" />
-                </div>
-              </div>
-              <a href="#" class="cart_btns btn btn-white">View Cart</a
-              ><a href="#" class="checkout_btns btn btn-thm">Checkout</a>
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       <div class="signup-hidden-sbar">
         <div class="hsidebar-header">

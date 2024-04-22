@@ -1,11 +1,11 @@
 {% extends "partials/base.html" %}
 {% load static %}
 {% block title %}
-  Dashboard
+  Tableau de bord
 {% endblock title %}
 {% load crispy_forms_tags %}
 {% block content %}
-<section class="our-dashbord dashbord"style="margin-top: 0;">
+<section class="our-dashbord dashbord" style="margin-top: 0;">
    <div class="container">
       <div class="row">
          {% include 'buyer/nav-desktop.html' %}
@@ -14,17 +14,17 @@
                <div class="row">
                <div class="col-xl-12">
                   <div class="account_user_deails pl40 pl0-md">
-                     <h2 class="title mb30">My Dashboard</h2>
+                     <h2 class="title mb30">Mon tableau de bord</h2>
                      <div class="ui_kit_tab style2">
-                        <!-- nav tab Nav List Start -->
+                        <!-- Début de la liste de navigation par onglets -->
                         <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
                            <li class="nav-item" role="presentation">
-                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">Order Analytics</button>
+                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">Analyse des commandes</button>
                            </li>
                            
                         </ul>
-                        <!-- nav tab Nav List End -->
-                        <!-- nav tab contents Start -->
+                        <!-- Fin de la liste de navigation par onglets -->
+                        <!-- Début du contenu des onglets -->
                         <div class="tab-content pt20 row" id="myTabContent">
                            <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
                               <div class="account_details_page form_grid">
@@ -33,7 +33,7 @@
                            </div>
                            
                         </div>
-                        <!-- nav tab contents End -->
+                        <!-- Fin du contenu des onglets -->
                      </div>
                   </div>
                </div>
@@ -50,7 +50,7 @@
     const data = {
       labels: labels,
       datasets: [{
-        label: 'Orders',
+        label: 'Commandes',
         backgroundColor: '#b331ff ',
         borderColor: '#b331ff',
         data: {{totalOrders}},

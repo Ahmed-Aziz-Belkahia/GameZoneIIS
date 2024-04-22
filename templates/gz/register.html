@@ -3,13 +3,12 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static "gz/styles/register.css" %}">
-    {% block title%}
+    {% block title %}
     <title>GameZone | Enregistrer un compte</title>
-    {% endblock title%}
+    {% endblock title %}
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 {% endblock head %}
-
 
 {% block main %}
 
@@ -18,12 +17,12 @@
         <img src="{% static "gz/assets/logo/logo_white.png" %}" alt="">
     </div>
     <div class="form-box">
-                        <!-- Error message container -->
+                        <!-- Conteneur des messages d'erreur -->
                         <div id="errorMessage"></div>
         <div class="form-value">
             <form method='POST'>
                 {% csrf_token %}
-                <h2>Register</h2>
+                <h2>S'inscrire</h2>
                 <div class="inputbox">
                     <div class="name-fields">
                         <div class="input-field">
@@ -60,7 +59,7 @@
                         {{ signUpForm.password2 }}
                     </div>
                 </div>
-                <button id="signupSubmit">Register</button>
+                <button id="signupSubmit">S'inscrire</button>
                 <div class="login">
                     <p>Vous avez déjà un compte ? <a href="{% url "login" %}">Connexion</a></p>
                 </div>

@@ -1,4 +1,7 @@
-{% extends "vendor/vendor-base.html" %} {% load static %} {% block content %}
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+
+{% block content %}
 <style>
   th,
   td {
@@ -20,7 +23,7 @@
             <div class="dashboard_title_area">
               <h2>Messages</h2>
               <p class="para">
-                Start a conversation with customers, clients or friends...
+                Commencez une conversation avec des clients, des collègues ou des amis...
               </p>
             </div>
           </div>
@@ -41,8 +44,8 @@
                         class="form-control"
                         type="search"
                         name="username"
-                        placeholder="Search For Someone..."
-                        aria-label="Search"
+                        placeholder="Rechercher quelqu'un..."
+                        aria-label="Recherche"
                       />
                       <button class="btn border p-2 ms-2" type="submit">
                         <span class="fas fa-search"></span>
@@ -81,7 +84,7 @@
                           </div>
                           <div class="iul_notific">
                             <small class="body-color"
-                              >{{message.date|timesince}} ago</small
+                              >{{message.date|timesince}} depuis</small
                             >
                           </div>
                         </div>
@@ -117,7 +120,7 @@
                           </div>
                           <div class="iul_notific">
                             <small class="body-color"
-                              >{{message.date|timesince}} ago</small
+                              >{{message.date|timesince}} depuis</small
                             >
                           </div>
                         </div>
@@ -125,7 +128,7 @@
                     </li>
                   </a>
                   {% endif %} {% empty %}
-                  <h4>No Chats Yet...</h4>
+                  <h4>Aucun chat pour le moment...</h4>
                   {% endfor %}
                 </ul>
               </div>

@@ -1,4 +1,6 @@
-{% extends "vendor/vendor-base.html" %} {% load static %} {% block content %}
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
 <style>
   th,
   td {
@@ -8,7 +10,7 @@
     background-color: rgb(229, 224, 245);
   }
 
-  /* Small devices (portrait tablets and large phones, 600px and up) */
+  /* Petits appareils (tablettes en mode portrait et grands téléphones, 600px et plus) */
   @media only screen and (max-width: 600px) {
     .mobile-div {
       display: none;
@@ -21,7 +23,7 @@
     }
   }
 
-  /* Medium devices (landscape tablets, 768px and up) */
+  /* Appareils moyens (tablettes en mode paysage, 768px et plus) */
   @media only screen and (max-width: 768px) {
     .mobile-div {
       display: none;
@@ -34,7 +36,7 @@
     }
   }
 
-  /* Large devices (laptops/desktops, 992px and up) */
+  /* Grands appareils (ordinateurs portables/ordinateurs de bureau, 992px et plus) */
   @media only screen and (min-width: 992px) {
     .example {
       background: orange;
@@ -44,7 +46,7 @@
     }
   }
 
-  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  /* Appareils très grands (grands ordinateurs portables et ordinateurs de bureau, 1200px et plus) */
   @media only screen and (min-width: 1200px) {
     .example {
       background: pink;
@@ -120,7 +122,7 @@
             <div class="dashboard_title_area">
               <h2>Messages</h2>
               <p class="para">
-                Start a conversation with customers, clients or friends...
+                Commencez une conversation avec des clients, des clients ou des amis...
               </p>
             </div>
           </div>
@@ -141,8 +143,8 @@
                         class="form-control"
                         type="search"
                         name="q"
-                        placeholder="Search For Someone..."
-                        aria-label="Search"
+                        placeholder="Rechercher quelqu'un..."
+                        aria-label="Rechercher"
                       />
                       <button class="btn border p-2 ms-2" type="submit">
                         <span class="fas fa-search"></span>
@@ -155,7 +157,7 @@
                       class="btn purple-btn row-cols-lg-aufto g-3 align-items-center d-flex p-3 m-2"
                       style="font-size: 12px"
                     >
-                      View All Messages</a
+                      Voir tous les messages</a
                     >
                   </div>
                 </div>
@@ -176,8 +178,8 @@
                         class="form-control"
                         type="search"
                         name="q"
-                        placeholder="Search For Someone..."
-                        aria-label="Search"
+                        placeholder="Rechercher quelqu'un..."
+                        aria-label="Rechercher"
                       />
                       <button class="btn border p-2 ms-2" type="submit">
                         <span class="fas fa-search"></span>
@@ -219,7 +221,7 @@
                           </div>
                           <div class="iul_notific">
                             <small class="" style="font-size: 10px"
-                              >{{message.date|timesince}} ago</small
+                              >{{message.date|timesince}} depuis</small
                             >
                           </div>
                         </div>
@@ -259,7 +261,7 @@
                           </div>
                           <div class="iul_notific">
                             <small class="" style="font-size: 10px"
-                              >{{message.date|timesince}} ago</small
+                              >{{message.date|timesince}} depuis</small
                             >
                           </div>
                         </div>
@@ -267,7 +269,7 @@
                     </li>
                   </a>
                   {% endif %} {% empty %}
-                  <h4>No Chats Yet...</h4>
+                  <h4>Aucun chat pour le moment...</h4>
                   {% endfor %}
                 </ul>
               </div>
@@ -297,7 +299,7 @@
                     <h4 class="name pt-2">{{ reciever_id.username|title }}</h4>
                     {% endif %}
 
-                    <!-- <p class="preview">Active</p> -->
+                    <!-- <p class="preview">Actif</p> -->
                   </div>
                 </div>
               </div>
@@ -350,8 +352,8 @@
                     class="form-control"
                     type="search"
                     id="messagee"
-                    placeholder="Type a Message"
-                    aria-label="Search"
+                    placeholder="Tapez un message"
+                    aria-label="Rechercher"
                   />
                   <button
                     id="send-message-btn"
@@ -359,7 +361,7 @@
                     style="color: white"
                     type="submit"
                   >
-                    Send
+                    Envoyer
                   </button>
                 </form>
               </div>
@@ -373,7 +375,7 @@
 
 <div id="openModal-about" class="modalDialog">
   <div>
-    <a href="#close" title="Close" class="close">X</a>
+    <a href="#close" title="Fermer" class="close">X</a>
     <h1>Message(s)</h1>
     <hr />
     <div class="row">
@@ -396,8 +398,8 @@
                             class="form-control"
                             type="search"
                             name="q"
-                            placeholder="Search For Someone..."
-                            aria-label="Search"
+                            placeholder="Rechercher quelqu'un..."
+                            aria-label="Rechercher"
                           />
                           <button class="btn border p-2 ms-2" type="submit">
                             <span class="fas fa-search"></span>
@@ -443,7 +445,7 @@
                               </div>
                               <div class="iul_notific">
                                 <small class="" style="font-size: 10px"
-                                  >{{message.date|timesince}} ago</small
+                                  >{{message.date|timesince}} depuis</small
                                 >
                               </div>
                             </div>
@@ -488,7 +490,7 @@
                               </div>
                               <div class="iul_notific">
                                 <small class="" style="font-size: 10px"
-                                  >{{message.date|timesince}} ago</small
+                                  >{{message.date|timesince}} depuis</small
                                 >
                               </div>
                             </div>
@@ -496,7 +498,7 @@
                         </li>
                       </a>
                       {% endif %} {% empty %}
-                      <h4>No Chats Yet...</h4>
+                      <h4>Aucun chat pour le moment...</h4>
                       {% endfor %}
                     </ul>
                   </div>

@@ -1,7 +1,6 @@
 <div class="row mt15">
   <p class="para">
-    You have <span class="cart-list">{{totalcartitems }}</span> items in your
-    cart
+    Vous avez <span class="cart-list">{{totalcartitems }}</span> articles dans votre panier
   </p>
 
   <div class="col-lg-8 col-xl-9">
@@ -9,12 +8,12 @@
       <table class="table table-borderless">
         <thead>
           <tr>
-            <th scope="col">PRODUCT</th>
-            <th scope="col">PRICE</th>
-            <th scope="col">QUANTITY</th>
+            <th scope="col">PRODUIT</th>
+            <th scope="col">PRIX</th>
+            <th scope="col">QUANTITÉ</th>
             <th scope="col">TOTAL</th>
-            <th scope="col">UPDATE</th>
-            <th scope="col">REMOVE</th>
+            <th scope="col">MISE À JOUR</th>
+            <th scope="col">SUPPRIMER</th>
           </tr>
         </thead>
         <tbody class="table_body">
@@ -43,7 +42,7 @@
                     <span class="fz16">{{p.title|truncatechars:27}}</span>
                     <br />
                     <span class="fz16"
-                      >By: <b><i>{{p.shop_name|title}}</i></b></span
+                      >Par : <b><i>{{p.shop_name|title}}</i></b></span
                     >
                     <br />
                   </a>
@@ -119,7 +118,7 @@
           </tr>
           {% empty %}
           <tr>
-            <td>Your cart is empty, <a href="">continue shopping</a></td>
+            <td>Votre panier est vide, <a href="">continuez vos achats</a></td>
           </tr>
           {% endfor %}
         </tbody>
@@ -136,11 +135,11 @@
   </div>
   <div class="col-lg-4 col-xl-3">
     <div class="order_sidebar_widget style2">
-      <h4 class="title">Cart Totals</h4>
+      <h4 class="title">Total du panier</h4>
       <ul>
         <li class="subtitle">
           <p>
-            Product Subtotal
+            Sous-total du produit
             <span class="float-end"
               >{{ cs }}{{cart_total_amount|floatformat:2}}</span
             >
@@ -149,7 +148,7 @@
         <!-- <li class="subtitle"><p>Order Discounts <span class="float-end">-$30.01</span></p></li> -->
         <li class="subtitle">
           <p>
-            Estimated Shipping
+            Livraison estimée
             <i
               data-bs-toggle="tooltip"
               data-bs-placement="top"
@@ -161,7 +160,7 @@
         </li>
         <li class="subtitle">
           <p>
-            Estimated {{tax_country.custom_name}}
+            {{tax_country.custom_name}} estimé
             <i
               data-bs-toggle="tooltip"
               data-bs-placement="top"
@@ -173,7 +172,7 @@
         </li>
         <li class="subtitle">
           <p>
-            Service Fee
+            Frais de service
             <span class="float-end"
               >{{ cs }}{{product_processing_fee_|floatformat:2}}</span
             >
@@ -194,7 +193,7 @@
     <a
       href="{% url 'store:shipping_address' %}"
       class="btn w100 mt-4 purple-btn"
-      >Continue</a
+      >Continuer</a
     >
   </div>
 </div>

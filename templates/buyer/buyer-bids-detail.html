@@ -1,19 +1,18 @@
-
 {% extends "partials/base.html" %}
 {% load static %}
 {% block title %}
-  Bids
+  Offres
 {% endblock title %}
 {% block content %}
   <div class="body_content_wrapper position-relative" style="margin-top: 0;">
-  <!-- Inner Page Breadcrumb -->
+  <!-- Breadcrumb de la page intérieure -->
 	<section class="shop-cart pt30">
 		<div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <div class="order_complete_message text-center">
             <div class="icon bgc-thm1"><span class="fa fa-shopping-cart color-white"></span></div>
-            <h2 class="title">Bid ID: #{{ bid.bid }}</h2>
+            <h2 class="title">ID de l'Offre: #{{ bid.bid }}</h2>
             {% if bid.winner == True %}
                   
                   <input class="product-quantity-{{ bid.product.id }}" type="hidden" value="1" id="product-quantity" class="w-25 mb-10 product-quantity-{{ bid.product.id }}">
@@ -31,8 +30,8 @@
                   <input type="hidden" class="product-title-{{ bid.product.id }}" value="{{ bid.product.title }}">
 
 
-                  <li><button type="button" class="btn btn-thm w100 button-add-to-cart add-to-cart-btn hide-button" onclick="showbtn()" data-index="{{ bid.product.id }}" id="add-to-cart-btn">Add to cart</button></li>
-                <!-- <p class="para"><a href="" style="border-bottom: 1px dashed ;">Checkout Now</a></p> -->
+                  <li><button type="button" class="btn btn-thm w100 button-add-to-cart add-to-cart-btn hide-button" onclick="showbtn()" data-index="{{ bid.product.id }}" id="add-to-cart-btn">Ajouter au panier</button></li>
+                <!-- <p class="para"><a href="" style="border-bottom: 1px dashed ;">Payer maintenant</a></p> -->
           {% endif %}
               </div>
         </div>
@@ -43,12 +42,12 @@
             <div class="order_list_raw text-center">
               <ul>
                 <li class="list-inline-item">
-                  <p>Bid ID</p>
+                  <p>ID de l'Offre</p>
                   <h5>{{bid.bid}}</h5>
                 </li>
                 <li class="list-inline-item">
-                    <p>Status</p>
-                    <h5>{% if bid.winner == True %}Won <i class="bi bi-trophy"></i>{% else %}Lost{% endif %}</h5>
+                    <p>Statut</p>
+                    <h5>{% if bid.winner == True %}Gagné <i class="bi bi-trophy"></i>{% else %}Perdu{% endif %}</h5>
                   </li>
                 <li class="list-inline-item">
                   <p>Date</p>
@@ -63,16 +62,16 @@
             </div>
            
             <div class="order_details">
-              <h4 class="title mb25">Bid Details</h4>
+              <h4 class="title mb25">Détails de l'Offre</h4>
               <h4 class="title mb25">{{bid.product.title|truncatechars:27}}</h4>
               <div class="od_content">
                 <ul>
-                  <li class="subtitle bb1 mb15"><p>Other Bidders <span class="float-end">{{bid.product.title|truncatechars:27}}</span></p></li>
+                  <li class="subtitle bb1 mb15"><p>Autres Offrants <span class="float-end">{{bid.product.title|truncatechars:27}}</span></p></li>
                   {% for p in others %}
                     <li><p class="product_name_qnt">{{p.user.username|title}} <span class="float-end">{{ cs }}{{p.price}} </b></span></p></li>
                   {% endfor %}
 
-                  <li class="subtitle bt1 bfb1 mb10 mt15 pt10"><p>Ending Date <span class="float-end">{{ bid.product.ending_date }}</span></p></li>
+                  <li class="subtitle bt1 bfb1 mb10 mt15 pt10"><p>Date de Fin <span class="float-end">{{ bid.product.ending_date }}</span></p></li>
                   
                     
                 </ul>

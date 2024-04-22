@@ -2,21 +2,25 @@
 
 <link rel="stylesheet" href="{% static "gz/styles/components/accesoriesCatalog.css" %}">
 
-<div class="main__accessoriesCatalog flexCenter">
-    <div class="accessoriesCatalog__div flexCenter">
-        <div class="accessoriesCatalog__text">Top Accessoires</div>
-        <div class="accessoriesCatalog__items flexCenter">
-            <div class="accessoriesCatalog__horizontal">
+<div class="main__accesoriesCatalog flexCenter">
+    <div class="accesoriesCatalog__div flexCenter">
+        <div class="accesoriesCatalog__text">
+            Découvrez les Meilleurs Accessoires
+        </div>
+        <div class="accesoriesCatalog__items flexCenter">
+            <div class="accesoriesCatalog__list">
                 {% for accessory in top_accessories %}
-                    <a href="/detail/{{ accessory.meta_title }}" class="accessoriesCatalog__item">
-                        <div class="item__img">
-                            <img src="{{ accessory.image.url }}" alt="{{ accessory.title }}" width="184.8" height="184.8">
+                <a href="/{{accessory.meta_title}}" class="accesoriesCatalog__item flexCenter">
+                    <div class="item__div flexCenter">
+                        <div class="item__img flexCenter">
+                            <img src="{{ accessory.image.url }}" alt="{{ accessory.title }}">
                         </div>
-                        <div class="item__info">
+                        <div class="item__info flexCenter">
                             <div class="info__price">{{ accessory.price }}<span>DT</span></div>
-                            <div class="info__title">{{ accessory.title }}</div>
+                            <div class="info__title">{{ accessory.title|title|truncatechars:35}}</div>
                         </div>
-                    </a>
+                    </div>
+                </a>
                 {% endfor %}
             </div>
         </div>

@@ -36,8 +36,8 @@
                                 class="form-control"
                                 type="search"
                                 name="q"
-                                placeholder="Search For Someone..."
-                                aria-label="Search"
+                                placeholder="Rechercher quelqu'un..."
+                                aria-label="Recherche"
                               />
                               <button class="btn border p-2 ms-2" type="submit">
                                 <span class="fas fa-search"></span>
@@ -83,7 +83,7 @@
                                   </div>
                                   <div class="iul_notific">
                                     <small class="body-color"
-                                      >{{message.date|timesince}} ago</small
+                                      >Il y a {{message.date|timesince}}</small
                                     >
                                   </div>
                                 </div>
@@ -127,7 +127,7 @@
                                   </div>
                                   <div class="iul_notific">
                                     <small class="body-color"
-                                      >{{message.date|timesince}} ago</small
+                                      >Il y a {{message.date|timesince}}</small
                                     >
                                   </div>
                                 </div>
@@ -135,7 +135,7 @@
                             </li>
                           </a>
                           {% endif %} {% empty %}
-                          <h4>No Chats Yet...</h4>
+                          <h4>Pas de chats pour le moment...</h4>
                           {% endfor %}
                         </ul>
                       </div>

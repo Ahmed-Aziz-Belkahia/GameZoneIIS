@@ -1,4 +1,6 @@
-{% extends "partials/base.html" %} {% load static %} {% block content %}
+{% extends "partials/base.html" %} 
+{% load static %} 
+{% block content %}
 <div class="body_content_wrapper position-relative">
   <!-- Inner Page Breadcrumb -->
 
@@ -11,8 +13,8 @@
             <div class="icon bgc-thm1">
               <span class="fa fa-check color-white"></span>
             </div>
-            <h2 class="title">Your Order Is Completed !</h2>
-            <p class="para">Thank you. Your order has been received.</p>
+            <h2 class="title">Votre commande est terminée !</h2>
+            <p class="para">Merci. Votre commande a été reçue.</p>
           </div>
         </div>
       </div>
@@ -22,7 +24,7 @@
             <div class="order_list_raw text-center">
               <ul>
                 <li class="list-inline-item">
-                  <p>Order Number</p>
+                  <p>Numéro de Commande</p>
                   <h5>{{order.oid}}</h5>
                 </li>
                 <li class="list-inline-item">
@@ -34,17 +36,17 @@
                   <h5>${{order.total}}</h5>
                 </li>
                 <li class="list-inline-item">
-                  <p>Payment Method</p>
+                  <p>Méthode de Paiement</p>
                   <h5>{{order.payment_method}}</h5>
                 </li>
               </ul>
             </div>
             <div class="order_details">
-              <h4 class="title mb25">Order Details</h4>
+              <h4 class="title mb25">Détails de la Commande</h4>
               <div class="od_content">
                 <ul>
                   <li class="subtitle bb1 mb15">
-                    <p>Product <span class="float-end">Subtotal</span></p>
+                    <p>Produit <span class="float-end">Sous-total</span></p>
                   </li>
                   {% for p in products %}
                   <li>
@@ -60,13 +62,13 @@
 
                   <li class="subtitle bt1 bb1 mb10 mt15 pt10">
                     <p>
-                      Sub Total
+                      Sous-total
                       <span class="float-end">{{ cs }}{{ order.price }}</span>
                     </p>
                   </li>
                   <li class="subtitle bb1 mb10">
                     <p>
-                      Shipping
+                      Livraison
                       <span class="float-end free_shipping"
                         >{{order.shipping}}</span
                       >
@@ -74,7 +76,7 @@
                   </li>
                   <li class="subtitle bb1 mb10">
                     <p>
-                      VAT
+                      TVA
                       <span class="float-end totals"
                         >{{ cs }}{{ order.vat }}</span
                       >
@@ -82,7 +84,7 @@
                   </li>
                   <li class="subtitle bb1 mb10">
                     <p>
-                      Payment Method
+                      Méthode de Paiement
                       <span class="float-end fwn_bd_color"
                         >{{order.payment_method}}</span
                       >

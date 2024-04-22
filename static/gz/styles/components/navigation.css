@@ -755,8 +755,9 @@ background: url(https://gameszone.tn/static/images/background/footer-bg-img-home
     justify-content: space-between;
     padding: 0 25px;
 }
-.see_all > h2{
+.see_all > .sidemenu_title{
     padding: 1rem 0;
+    font-weight: 700;
 }
 .see_all > a{
     text-decoration: underline;

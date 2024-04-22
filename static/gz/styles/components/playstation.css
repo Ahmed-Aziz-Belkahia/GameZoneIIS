@@ -30,12 +30,14 @@
 
 .main__playstation .text__title {
     font-size: 3rem;
-    font-weight: 900;
+    font-weight: 300;
+    text-align: center;
 }
 
 .main__playstation .text__slogan {
-    font-weight: 500;
     font-size: 2rem;
+    font-weight: 300;
+    text-align: center;
 }
 
 .main__playstation .playstation__layer2 {

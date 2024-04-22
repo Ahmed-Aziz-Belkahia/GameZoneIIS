@@ -1,18 +1,18 @@
 {% extends "partials/base.html" %}
- {% load static %} 
- 
- {% block title %}
-  Result for {{query}}
- {% endblock title %}
-  
- {% block content %}
+{% load static %}
+
+{% block title %}
+  Résultat pour {{query}}
+{% endblock title %}
+
+{% block content %}
 <style>
   ul,
   li {
     list-style: none;
   }
 </style>
-<!-- Listing Grid View -->
+<!-- Affichage en grille -->
 <section class="our-listing pt0">
   <div class="container">
     <div class="row mt60">
@@ -20,8 +20,8 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="main-title bb1 pb10">
-              <h2 class="title">Search: "{{query}}"</h2>
-              <h4>We found {{product_count.count}} résultats de votre recherche.</h4>
+              <h2 class="title">Recherche : "{{query}}"</h2>
+              <h4>Nous avons trouvé {{product_count.count}} résultats pour votre recherche.</h4>
             </div>
           </div>
         </div>

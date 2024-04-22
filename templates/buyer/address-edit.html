@@ -1,6 +1,7 @@
-{% extends "partials/base.html" %} {% load static %} 
+{% extends "partials/base.html" %}
+{% load static %} 
 {% block title %}
-  Edit Address
+  Modifier l'Adresse
 {% endblock title %}
 
 {% block content %}
@@ -11,13 +12,13 @@
     <div class="row">
       <div class="col-lg-12 col-xl-12 col-xxl-12 m-auto">
         <div class="log_reg_form mt70-992">
-          <h2 class="title">Mettre à jour l'adresse</h2>
+          <h2 class="title">Mise à jour de l'Adresse</h2>
           <div class="login_form">
             <form method="POST">
               {% csrf_token %}
               <div class="mb-2 mr-sm-2">{{form.as_p}}</div>
 
-              <button type="submit" class="btn purple-btn btn-thm">Enregistrer la mise à jour</button>
+              <button type="submit" class="btn purple-btn btn-thm">Enregistrer la Mise à Jour</button>
               <a href="{% url 'core:buyer-address' %}" class="btn btn-secondary">Retour</a>
             </form>
           </div>

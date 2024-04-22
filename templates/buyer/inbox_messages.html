@@ -1,6 +1,6 @@
 {% extends "partials/base.html" %} {% load static %} {% load crispy_forms_tags %}
 {% block title %}
-  Inbox 
+  Boîte de réception 
 {% endblock title %}
 {% block content %}
 <style>
@@ -140,8 +140,8 @@
                                 class="form-control"
                                 type="search"
                                 name="q"
-                                placeholder="Search For Someone..."
-                                aria-label="Search"
+                                placeholder="Rechercher quelqu'un..."
+                                aria-label="Rechercher"
                               />
                               <button class="btn border p-2 ms-2" type="submit">
                                 <span class="fas fa-search"></span>
@@ -154,7 +154,7 @@
                               class="btn purple-btn row-cols-lg-aufto g-3 align-items-center d-flex p-3 m-2"
                               style="font-size: 12px"
                             >
-                              View All Messages</a
+                              Voir tous les messages</a
                             >
                           </div>
                         </div>
@@ -176,8 +176,8 @@
                                 class="form-control"
                                 type="search"
                                 name="q"
-                                placeholder="Search For Someone..."
-                                aria-label="Search"
+                                placeholder="Rechercher quelqu'un..."
+                                aria-label="Rechercher"
                               />
                               <button class="btn border p-2 ms-2" type="submit">
                                 <span class="fas fa-search"></span>
@@ -223,15 +223,14 @@
                                   </div>
                                   <div class="iul_notific">
                                     <small class="" style="font-size: 10px"
-                                      >{{message.date|timesince}} ago</small
+                                      >{{message.date|timesince}} depuis</small
                                     >
                                   </div>
                                 </div>
                               </div>
                             </li>
                           </a>
-                          {% endif %} 
-                          {% if request.user == message.reciever %}
+                          {% endif %} {% if request.user == message.reciever %}
                           <a
                             href="{% url 'core:inbox-detail' message.sender.username %}"
                           >
@@ -268,7 +267,7 @@
                                   </div>
                                   <div class="iul_notific">
                                     <small class="" style="font-size: 10px"
-                                      >{{message.date|timesince}} ago</small
+                                      >{{message.date|timesince}} depuis</small
                                     >
                                   </div>
                                 </div>
@@ -276,7 +275,7 @@
                             </li>
                           </a>
                           {% endif %} {% empty %}
-                          <h4>No Chats Yet...</h4>
+                          <h4>Aucune discussion pour le moment...</h4>
                           {% endfor %}
                         </ul>
                       </div>
@@ -296,7 +295,7 @@
                           />
 
                           <div class="meta">
-                            <!-- <a class="text-thm3 tdu float-end fz14" href="#">Delete Conversation</a> -->
+                            <!-- <a class="text-thm3 tdu float-end fz14" href="#">Supprimer la conversation</a> -->
 
                             {% if reciever_id.profile.full_name %}
                             <h4 class="name pt-2">
@@ -308,7 +307,7 @@
                             </h4>
                             {% endif %}
 
-                            <!-- <p class="preview">Active</p> -->
+                            <!-- <p class="preview">Actif</p> -->
                           </div>
                         </div>
                       </div>
@@ -361,8 +360,8 @@
                             class="form-control"
                             type="search"
                             id="messagee"
-                            placeholder="Type a Message"
-                            aria-label="Search"
+                            placeholder="Écrire un message"
+                            aria-label="Rechercher"
                           />
                           <button
                             id="send-message-btn"
@@ -370,7 +369,7 @@
                             style="color: white"
                             type="submit"
                           >
-                            Send
+                            Envoyer
                           </button>
                         </form>
                       </div>
@@ -388,7 +387,7 @@
 
 <div id="openModal-about" class="modalDialog">
   <div>
-    <a href="#close" title="Close" class="close">X</a>
+    <a href="#close" title="Fermer" class="close">X</a>
     <h1>Message(s)</h1>
     <hr />
     <div class="row">
@@ -411,8 +410,8 @@
                             class="form-control"
                             type="search"
                             name="q"
-                            placeholder="Search For Someone..."
-                            aria-label="Search"
+                            placeholder="Rechercher quelqu'un..."
+                            aria-label="Rechercher"
                           />
                           <button class="btn border p-2 ms-2" type="submit">
                             <span class="fas fa-search"></span>
@@ -458,7 +457,7 @@
                               </div>
                               <div class="iul_notific">
                                 <small class="" style="font-size: 10px"
-                                  >{{message.date|timesince}} ago</small
+                                  >{{message.date|timesince}} depuis</small
                                 >
                               </div>
                             </div>
@@ -502,7 +501,7 @@
                               </div>
                               <div class="iul_notific">
                                 <small class="" style="font-size: 10px"
-                                  >{{message.date|timesince}} ago</small
+                                  >{{message.date|timesince}} depuis</small
                                 >
                               </div>
                             </div>
@@ -510,7 +509,7 @@
                         </li>
                       </a>
                       {% endif %} {% empty %}
-                      <h4>No Chats Yet...</h4>
+                      <h4>Aucune discussion pour le moment...</h4>
                       {% endfor %}
                     </ul>
                   </div>
@@ -547,19 +546,9 @@
                         </li>\
                         ";
         $(".chatting_content_new").append(_html);
-        // Scroll to last message
-        $(".chat_container").scrollTop(100000000);
-        $("#message-form")[0].reset();
+        $("#messagee").val("");
       },
     });
-  });
-
-</script>
-
-<script>
-  $(document).ready(function() {
-    $(".chat_container").scrollTop(100000000);
-    
   });
 </script>
 

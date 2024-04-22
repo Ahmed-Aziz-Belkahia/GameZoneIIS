@@ -23,7 +23,7 @@
                 {% for product in top_deals %}
     <a href="/{{ product.meta_title }}">
         <div class="cards__card">
-            <div class="card__upper flexCenter">{{ product.title }}</div>
+            <div class="card__upper flexCenter">{{ product.title|title|truncatechars:25}}</div>
             <div class="card__lower flexCenter">
                 <div class="lower__div">
                     <div class="lower__img flexCenter">

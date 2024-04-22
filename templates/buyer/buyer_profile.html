@@ -1,7 +1,7 @@
 {% extends "partials/base.html" %}
 {% load static %}
 {% block title %}
-  Profile
+  Profil
 {% endblock title %}
 {% load crispy_forms_tags %}
 {% block content %}
@@ -49,7 +49,7 @@
 }
 </style>
 
-<section class="our-dashbord dashbord"style="margin-top: 0;">
+<section class="our-dashbord dashbord" style="margin-top: 0;">
    <div class="container">
       <div class="row">
          {% include 'buyer/nav-desktop.html' %}
@@ -58,17 +58,17 @@
                <div class="row">
                <div class="col-xl-12">
                   <div class="account_user_deails pl40 pl0-md">
-                     <h2 class="title mb30">Account Details</h2>
+                     <h2 class="title mb30">Détails du compte</h2>
                      <div class="ui_kit_tab style2">
-                        <!-- nav tab Nav List Start -->
+                        <!-- Nav List Start -->
                         <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
                            <li class="nav-item" role="presentation">
-                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">Profile İnformation</button>
+                              <button class="nav-link active" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button" role="tab" aria-controls="t20" aria-selected="true">Informations sur le profil</button>
                            </li>
                            
                         </ul>
-                        <!-- nav tab Nav List End -->
-                        <!-- nav tab contents Start -->
+                        <!-- Nav List End -->
+                        <!-- Contenu des onglets de navigation Start -->
                         <div class="tab-content pt20 row" id="myTabContent">
                            <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
                               <div class="account_details_page form_grid">
@@ -96,65 +96,65 @@
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">Full Name</label>
+                                             <label class="form-label">Nom complet</label>
                                              {{p_form.full_name}}
                                              
                                           </div>
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">Email Address</label>
+                                             <label class="form-label">Adresse e-mail</label>
                                              {{u_form.email}}
 
                                           </div>
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">Username</label>
+                                             <label class="form-label">Nom d'utilisateur</label>
                                              <input type="text" name="username" value="{{user.username}}" class="form-control textinput" id="" maxlength="1000" readonly>
                                           </div>
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">Phone</label>
+                                             <label class="form-label">Téléphone</label>
                                              {{p_form.phone}}
                                           </div>
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">Gender</label>
+                                             <label class="form-label">Sexe</label>
                                              {{p_form.gender}}
                                           </div>
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">Country</label>
+                                             <label class="form-label">Pays</label>
                                              {{p_form.country}}
                                           </div>
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">State</label>
+                                             <label class="form-label">État</label>
                                              {{p_form.state}}
                                           </div>
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">City</label>
+                                             <label class="form-label">Ville</label>
                                              {{p_form.city}}
                                           </div>
                                        </div>
                                        <div class="col-md-6">
                                           <div class="form-group mb-4">
-                                             <label class="form-label">Address</label>
+                                             <label class="form-label">Adresse</label>
                                              {{p_form.address}}
                                           </div>
                                        </div>
                                        
                                        <div class="col-sm-12">
                                           <div class="form-group d-flex mb0">
-                                             <button type="type" class="btn purple-btn me-3" style="color: white;">Update</button>
-                                             <button type="type" class="btn btn-white">Cancel</button>
+                                             <button type="type" class="btn purple-btn me-3" style="color: white;">Mettre à jour</button>
+                                             <button type="type" class="btn btn-white">Annuler</button>
                                           </div>
                                        </div>
                                     </div>
@@ -163,7 +163,7 @@
                            </div>
                            
                         </div>
-                        <!-- nav tab contents End -->
+                        <!-- Contenu des onglets de navigation End -->
                      </div>
                   </div>
                </div>

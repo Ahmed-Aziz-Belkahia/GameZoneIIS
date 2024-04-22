@@ -5,7 +5,7 @@
 <div class="main__gamesCatalog flexCenter">
     <div class="gamesCatalog__div flexCenter">
         <div class="gamesCatalog__text">
-            Top des Jeux
+            Meilleurs Jeux
         </div>
         
         <div class="gamesCatalog__items flexCenter">
@@ -18,7 +18,7 @@
                         </div>
                         <div class="item__info flexCenter">
                             <div class="info__price">{{ game.price }}<span>DT</span></div>
-                            <div class="info__title">{{ game.title }}</div>
+                            <div class="info__title">{{ game.title|title|truncatechars:35}}</div>
                         </div>
                     </div>
                 </div>

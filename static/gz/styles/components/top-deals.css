@@ -28,14 +28,16 @@
 .main__top-deals .layer1__text {
     width: 100%;
     height: 100%;
-    padding: 2rem;
+    padding: 1rem;
 }
 .main__top-deals .layer2__cards > a{
     height: -webkit-fill-available;
 }
 .main__top-deals .text__title {
     font-size: 3rem;
-    font-weight: 900;
+    font-weight: 300;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
 }
 
 .main__top-deals .text__slogan {

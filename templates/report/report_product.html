@@ -1,19 +1,18 @@
-
 {% extends "partials/base.html" %}
 {% load static %}
 {% block content %}
   
   <div class="body_content_wrapper position-relative">
-  <!-- Inner Page Breadcrumb -->
+  <!-- Fil d'Ariane de la Page Intérieure -->
   <section class="inner_page_breadcrumb">
     <div class="container">
       <div class="row">
         <div class="col-xl-6">
           <div class="breadcrumb_content">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Electronics</a></li>
-              <li class="breadcrumb-item active"><a href="#">Computers</a></li>
+              <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+              <li class="breadcrumb-item"><a href="#">Électronique</a></li>
+              <li class="breadcrumb-item active"><a href="#">Ordinateurs</a></li>
             </ol>
           </div>
         </div>
@@ -34,14 +33,14 @@
             <div class="login_form tracking_page pt100 pt50-lg">
               <form method="POST">
                 {% csrf_token %}
-                <h1 class="title">Report Product</h2>
-                <p class="mb30">Please give us a detail information on why you are reporting this product.</p>
+                <h1 class="title">Signaler le Produit</h1> <!-- Corrected closing tag </h1> -->
+                <p class="mb30">Veuillez nous donner des informations détaillées sur la raison pour laquelle vous signalez ce produit.</p>
                 <div class="form-group">
-                  <label class="form-label">Why are you reporting this product</label>
+                  <label class="form-label">Pourquoi signalez-vous ce produit</label>
                   <textarea name="message" id="message" type="text" cols="60" rows="40" class="form-control"></textarea>
                 </div>
                 
-                <button type="submit" class="btn btn-track btn-thm w100">Send Reports</button>
+                <button type="submit" class="btn btn-track btn-thm w100">Envoyer les Signalements</button>
               </form>
             </div>
           </div>

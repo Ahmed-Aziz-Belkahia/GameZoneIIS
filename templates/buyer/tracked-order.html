@@ -1,19 +1,19 @@
 {% extends "partials/base.html" %} {% load static %} {% block content %}
 
 <div class="body_content_wrapper position-relative">
-  <!-- Inner Page Breadcrumb -->
+  <!-- Fil d'Ariane de la page intérieure -->
   <section class="inner_page_breadcrumb" style="margin-top: 100px">
     <div class="container">
       <div class="row">
         <div class="col-xl-6">
           <div class="breadcrumb_content">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Accueil</a></li>
               <li class="breadcrumb-item">
-                <a href="{% url 'core:order-tracker' %}">Order Tracker</a>
+                <a href="{% url 'core:order-tracker' %}">Suivi de commande</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">
-                <a>Tracked Order</a>
+                <a>Commande suivie</a>
               </li>
             </ol>
           </div>
@@ -22,7 +22,7 @@
     </div>
   </section>
 
-  <!-- Order Tracking -->
+  <!-- Suivi de commande -->
   <section class="shop-cart pt30">
     <div class="container">
       <div class="row justify-content-center">
@@ -31,12 +31,12 @@
             <div class="icon bgc-thm1">
               <span class="fa fa-shopping-cart color-white"></span>
             </div>
-            <h2 class="title">Order ID: #{{ order.oid }}</h2>
+            <h2 class="title">ID de commande : #{{ order.oid }}</h2>
             <p class="para">
               <a
                 href="{% url 'core:buyer-invoice-detail' order.oid %}"
                 style="border-bottom: 1px dashed"
-                >View Order Invoice</a
+                >Voir la facture de la commande</a
               >
             </p>
           </div>
@@ -45,13 +45,13 @@
       <div class="row">
         <div class="col-xl-8 offset-xl-2">
           <a href="{% url 'core:order-tracker' %}" class="btn btn-dark"
-            >Go Back</a
+            >Retour</a
           >
           <div class="shop_order_box mt25">
             <div class="order_list_raw text-center">
               <ul>
                 <li class="list-inline-item">
-                  <p>Order ID</p>
+                  <p>ID de commande</p>
                   <h5>{{order.oid}}</h5>
                 </li>
                 <li class="list-inline-item">
@@ -63,7 +63,7 @@
                   <h5>${{order.total}}</h5>
                 </li>
                 <li class="list-inline-item">
-                  <p>Payment Method</p>
+                  <p>Méthode de paiement</p>
                   <h5>{{order.payment_method}}</h5>
                 </li>
               </ul>
@@ -73,7 +73,7 @@
                 <ul>
                   <li class="subtitle">
                     <p>
-                      Sub Total
+                      Sous-total
                       <span class="float-end free_shipping"
                         >{{ cs }}{{ order.price }}</span
                       >
@@ -81,7 +81,7 @@
                   </li>
                   <li class="subtitle">
                     <p>
-                      VAT
+                      TVA
                       <span class="float-end free_shipping"
                         >{{ cs }}{{order.vat}}</span
                       >
@@ -89,7 +89,7 @@
                   </li>
                   <li class="subtitle">
                     <p>
-                      Service Fee
+                      Frais de service
                       <span class="float-end totals"
                         >{{ cs }}{{ order.service_fee }}</span
                       >
@@ -130,7 +130,7 @@
                 <ul>
                   <li class="subtitle">
                     <p>
-                      Sub Total
+                      Sous-total
                       <span class="float-end free_shipping"
                         >{{ cs }}{{ o.price }}</span
                       >
@@ -138,13 +138,13 @@
                   </li>
                   <li class="subtitle">
                     <p>
-                      QTY
+                      QTE
                       <span class="float-end free_shipping">{{ o.qty }}</span>
                     </p>
                   </li>
                   <li class="subtitle">
                     <p>
-                      Shipping
+                      Livraison
                       <span class="float-end free_shipping"
                         >{{ cs }}{{o.shipping}}</span
                       >
@@ -160,7 +160,7 @@
                   </li>
                   <li class="subtitle">
                     <p>
-                      Delivery Status
+                      État de livraison
                       <span class="float-end fwn_bd_color"
                         >{{o.delivery_status|title}}</span
                       >
@@ -168,7 +168,7 @@
                   </li>
                   <li class="subtitle">
                     <p>
-                      Vendor
+                      Vendeur
                       <span class="float-end fwn_bd_color"
                         ><a
                           href=""
@@ -183,7 +183,7 @@
                   </li>
                   <li class="subtitle">
                     <p>
-                      Courier Service
+                      Service de livraison
                       <span class="float-end totals"
                         ><a
                           href="{{o.delivery_couriers.couriers_tracking_website_address}}"
@@ -195,7 +195,7 @@
                   </li>
                   <li class="subtitle">
                     <p>
-                      Tracking ID
+                      ID de suivi
                       <span class="float-end totals"
                         ><a
                           href="{{o.delivery_couriers.couriers_tracking_website_address}}"

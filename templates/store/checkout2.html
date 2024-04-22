@@ -44,20 +44,20 @@ Checkout
                   </div>
                   <div class="col-lg-5">
                     <div class="invoice_deails">
-                      <h4 class="float-start"><b>ID facture #{{order.oid}}</b></h4>
+                      <h4 class="float-start"><b>Invoice ID #{{order.oid}}</b></h4>
                     </div>
                   </div>
                 </div>
                 <div class="row mt50">
                   <div class="col-sm-6 col-lg-7">
                     <div class="invoice_date mb70">
-                      <div class="title"><b>Date de facture</b></div>
+                      <div class="title"><b>Invoice date</b></div>
                       <h5 class="mb0">{{order.date}}</h5>
                     </div>
                     <div class="invoice_address">
-                      <h4 class="m0"><b>Vendeur</b></h4>
+                      <h4 class="m0"><b>Vendor</b></h4>
                       {% for o in order.vendor.all %}
-                      <h5 class="m-0 p-0"><b>Nom</b>: {{o.shop_name}}</h5>
+                      <h5 class="m-0 p-0"><b>Name</b>: {{o.shop_name}}</h5>
                       <h5 class="m-0 p-0"><b>ID</b>: #{{o.vid}}</h5>
                       {% endfor %}
                     </div>
@@ -65,7 +65,7 @@ Checkout
                   <br><br>
                   <div class="col-sm-6 col-lg-5">
                     <div class="invoice_address mt-4 pt-4">
-                      <h4 class="m-0"><strong>Client</strong></h4>
+                      <h4 class="m-0"><strong>Customer</strong></h4>
                       
                       <h5>{{order.full_name|title}}</h5>
                       <p>{{order.address}}, {{order.town_city}} <br> {{order.state}} <br> {{order.country|title}}</p>
@@ -78,11 +78,11 @@ Checkout
                       <table class="table">
                         <thead class="thead-light">
                           <tr class="tblh_row">
-                            <th class="tbleh_title" scope="col">Produit</th>
-                            <th class="tbleh_title" scope="col">Prix</th>
+                            <th class="tbleh_title" scope="col">Product</th>
+                            <th class="tbleh_title" scope="col">Price</th>
                             <th class="tbleh_title" scope="col">QTY</th>
-                            <th class="tbleh_title" scope="col">Totale</th>
-                            <th class="tbleh_title" scope="col">Livraison</th>
+                            <th class="tbleh_title" scope="col">Total</th>
+                            <th class="tbleh_title" scope="col">Shipping</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -104,23 +104,23 @@ Checkout
                   <br><br>
                   <div class="col-lg-12 col-xl-12 float-fend">
                       <div class="order_sidebar_widget checkout_page mb30 mb30">
-                          <h4 class="title">Votre commande</h4>
+                          <h4 class="title">Your Order</h4>
                           <ul>
                              <li class="subtitle">
-                                <p>Sous-total <span class="float-end totals">{{ cs }}{{order.price|floatformat:2}}</span></p>
+                                <p>Sub Total <span class="float-end totals">{{ cs }}{{order.price|floatformat:2}}</span></p>
                              </li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
                              <li class="subtitle">
-                                <p>Livraison <span class="float-end totals">{{ cs }}{{ order.shipping|floatformat:2 }}</span></p>
+                                <p>Shipping <span class="float-end totals">{{ cs }}{{ order.shipping|floatformat:2 }}</span></p>
                              </li>
                              
                              <li class="subtitle">
-                              <p>Estimation des taxes <span class="float-end totals">{{ cs }}{{ order.vat|floatformat:2 }}</span></p>
+                              <p>Estimated Tax Fee <span class="float-end totals">{{ cs }}{{ order.vat|floatformat:2 }}</span></p>
                               </li>
                               <li class="subtitle">
-                                 <p>Frais de services <span class="float-end totals">{{ cs }}{{ order.service_fee|floatformat:2 }}</span></p>
+                                 <p>Service Fee <span class="float-end totals">{{ cs }}{{ order.service_fee|floatformat:2 }}</span></p>
                                  </li>
                              <li class="subtitle">
-                                <p>TOTALE <span class="float-end totals">{{cs}}{{order.total|floatformat:2}}</span></p>
+                                <p>Total <span class="float-end totals">{{cs}}{{order.total|floatformat:2}}</span></p>
                              </li>
                           </ul>
                            

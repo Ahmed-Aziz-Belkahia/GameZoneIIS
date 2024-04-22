@@ -4,7 +4,7 @@
 {% block head %}
 <link rel="stylesheet" href="{% static "gz/styles/checkout.css" %}">
 {% block title%}
-<title>GameZone | Checkout</title>
+<title>GameZone | Paiement</title>
 {% endblock title %}
 {% endblock head %}
 
@@ -14,7 +14,7 @@
         <a href="{% url 'home' %}">
             <img src="{% static "gz/assets/logo/logo_white.png" %}" alt="GameZone">
         </a>
-        <h3> Checkout </h3>
+        <h3> Paiement </h3>
     </div>
 </div>
 <div class="checkout-body">
@@ -34,13 +34,13 @@
                     <input type="radio" id="credit-card" name="payment-method" value="credit-card">
                     <label for="credit-card"> 
                         <i class="fa-solid fa-credit-card"></i>
-                        carte de credit
+                        Carte de crédit
                     </label>
                 </div>
             </form>
         </div>
         <div class="checkout-form">
-            <h3>Ship to</h3>
+            <h3>Livraison à</h3>
             <form id="addressForm" method="POST" action="">
                 <input type="hidden" name="csrfmiddlewaretoken" value="5urIwqH8rnoz90Uar1BrzIhlwrzfkNs96ElCtxJNQNqbXP7CKfRQfFqLGlb4oAkv">
                 <!-- Address 1 -->
@@ -58,9 +58,9 @@
         </div>
     </div>
     <div class="checkout-summary">
-        <h3>Résumé de l'ordre</h3>
+        <h3>Résumé de la commande</h3>
         <div class="sub-total">
-            <p>Sous total</p>
+            <p>Sous-total</p>
             <p>DT {{cart.calculate_total_price}}</p>
         </div>
         <div class="Shipping-total">
@@ -72,7 +72,7 @@
             <p>DT 0</p>
         </div>
         <div class="summary-total">
-            <p>Totale</p>
+            <p>Total</p>
             <p>DT {{cart.price}}</p>
         </div>
         <button class="btn-place-order btn-primary">Commander</button>
@@ -179,7 +179,7 @@
                     // Handle success response
                 },
                 error: function (xhr, status, error) {
-                    console.error('Error:', error);
+                    console.error('Erreur:', error);
                     // Handle error response
                 }
             });

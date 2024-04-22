@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     
-    <!-- Include jQuery UI -->
+    <!-- Inclure jQuery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <title>GameZone | Catalogue</title>
@@ -35,10 +35,10 @@
         <div class="filter__div">
             <button class="filter__button"><i class="fa-solid fa-filter"></i>Filtre</button>
             <div class="filter_box">
-                <button id='sortButton' class="filter__button sort__button"><i class="fa-solid fa-sort"></i> Sort</button>
+                <button id='sortButton' class="filter__button sort__button"><i class="fa-solid fa-sort"></i> Trier</button>
                 <div class="dropdown-menu sort-dropdown-menu show" aria-labelledby="sortby-dropdown" style="display:none;">
                     <span class="sort-by-up-arrow"></span>
-                    <a class="dropdown-item price-low-to-high" data-id="price-low-to-high">Prix croissantsant</a>
+                    <a class="dropdown-item price-low-to-high" data-id="price-low-to-high">Prix croissant</a>
                     <a class="dropdown-item price-high-to-low" data-id="price-high-to-low">Prix décroissant</a>
                     {% comment %} <a href="{% url "catalog" %}?sort_by=price_high_to_low" class="dropdown-item most-popular" data-id="most-popular">Most Popular</a> {% endcomment %}
                 </div>
@@ -46,10 +46,10 @@
         </div>
         <form class="catalog__filter" method="post">
             {% csrf_token %}
-            <!-- Manufacturers -->
+            <!-- Fabricants -->
             <div class="catalog_header">
                 <button type="button" class="toggleFilters">
-                    <h3>Filtre Menu</h3>
+                    <h3>Menu de filtre</h3>
                     <i class="fa-solid fa-xmark closefilter"></i>
                 </button>
             </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="catalog_filters catalogFilters">
                     <ul>
-                        <!-- Manufacturer Checkbox Options -->
+                        <!-- Options de case à cocher du fabricant -->
                         {% for manufacturer in form.manufacturer.field.queryset %}
                         <li>
                             <div class="rating__container">
@@ -75,17 +75,17 @@
                 </div>
             </div>
         
-            <!-- Categories -->
+            <!-- Catégories -->
             <div class="catalog_container">
                 <div class="catalog_header">
                     <button type="button" class="toggleFilters">
-                        <h3>Categories</h3>
+                        <h3>Catégories</h3>
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
                 <div class="catalog_filters catalogFilters">
                     <ul>
-                        <!-- Category Checkbox Options -->
+                        <!-- Options de case à cocher de catégorie -->
                         {% for category in form.category.field.queryset %}
                         <li>
                             <div class="rating__container">
@@ -108,7 +108,7 @@
                 </div>
                 <div class="catalog_filters catalogFilters">
                     <ul>
-                        <!-- Genre Checkbox Options -->
+                        <!-- Options de case à cocher de genre -->
                         {% for genre in form.genre.field.queryset %}
                         <li>
                             <div class="rating__container">
@@ -121,17 +121,17 @@
                 </div>
             </div>
         
-            <!-- Colors -->
+            <!-- Couleurs -->
             <div class="catalog_container">
                 <div class="catalog_header">
                     <button type="button" class="toggleFilters">
-                        <h3>Colors</h3>
+                        <h3>Couleurs</h3>
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
                 <div class="catalog_filters catalogFilters">
                     <ul>
-                        <!-- Color Checkbox Options -->
+                        <!-- Options de case à cocher de couleur -->
                         {% for color in form.colors.field.queryset %}
                         <li>
                             <div class="rating__container">
@@ -144,17 +144,17 @@
                 </div>
             </div>
         
-            <!-- Sizes -->
+            <!-- Tailles -->
             <div class="catalog_container">
                 <div class="catalog_header">
                     <button type="button" class="toggleFilters">
-                        <h3>Sizes</h3>
+                        <h3>Tailles</h3>
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
                 <div class="catalog_filters catalogFilters">
                     <ul>
-                        <!-- Size Checkbox Options -->
+                        <!-- Options de case à cocher de taille -->
                         {% for size in form.sizes.field.queryset %}
                         <li>
                             <div class="rating__container">
@@ -167,11 +167,11 @@
                 </div>
             </div>
         
-            <!-- Price Range -->
+            <!-- Plage de prix -->
             <div class="catalog_container">
                 <div class="catalog_header">
                     <button type="button" class="toggleFilters">
-                        <h3>Price</h3>
+                        <h3>Prix</h3>
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
@@ -181,7 +181,7 @@
                             <div class="rating__container">
                                 <div class="price-range-slider">
                                     <p class="range-value">
-                                        <label for="amount">Price Range:</label>
+                                        <label for="amount">Plage de prix :</label>
                                         <input type="text" id="amount" readonly>
                                     </p>
                                     <div id="slider-range" class="range-bar"></div>
@@ -192,7 +192,7 @@
                 </div>
             </div>
         
-            <!-- Buttons Group -->
+            <!-- Groupe de boutons -->
             <div class="buttons-group">
                 <input type="submit" class="done-btn">
             </div>
@@ -219,7 +219,7 @@
                                     <div class="product-tile-availability">{{product.manufacturer}}</div>
                                     <div id="render-tile-price" class="render-tile-price">
                                         <div id="render-base-group" class="render-base-group">
-                                            <div id="render-sale-price" class="render-sale-price">{{product.price}}</div>
+                                            <div id="render-sale-price" class="render-sale-price">{{product.price}} DT</div>
                                             <div id="render-base-price" class="render-base-price"></div>
                                         </div>
                                         <div id="render-pro-group" class="render-pro-group">
@@ -229,8 +229,8 @@
                                     <div class="render-tile-release-date" style="display: none;"></div>
                                     <div class="render-tile-bops-copy">
                                         <div style="margin-top: 10px; font-size: 14px">
-                                            <strong>FREE $25 OFF</strong>
-                                            your online order when you pick up in store. (orders $250+)
+                                            <strong>25 DT GRATUITS</strong>
+                                            pour votre commande en ligne lorsque vous la récupérez en magasin. (commandes de 250 DT et plus)
                                         </div>
                                     </div>
                                 </div>
@@ -260,15 +260,15 @@
           });
           
           var catalog__swiper = new Swiper(".catalog__swiper-container", {
-            slidesPerView: 4, // Show 3 slides at a time
-            slidesPerGroup: 4, // Group the slides by 5 for navigation
+            slidesPerView: 4, // Afficher 3 diapositives à la fois
+            slidesPerGroup: 4, // Regrouper les diapositives par 5 pour la navigation
             speed: 1500,
             pagination: {
-              el: ".swiper-pagination", // Use the container element you defined in HTML
-              type: "bullets", // Set pagination type to bullets
-              clickable: true, // Allow clicking on the pagination bullets to navigate
-              bulletClass: "my-bullet-class", // Set custom class name for bullets (optional)
-              bulletActiveClass: "my-bullet-active-class", // Set custom class name for active bullet (optional)
+              el: ".swiper-pagination", // Utiliser l'élément de conteneur que vous avez défini dans HTML
+              type: "bullets", // Définir le type de pagination sur des balles
+              clickable: true, // Autoriser le clic sur les balles de pagination pour naviguer
+              bulletClass: "my-bullet-class", // Définir un nom de classe personnalisé pour les balles (facultatif)
+              bulletActiveClass: "my-bullet-active-class", // Définir un nom de classe personnalisé pour la balle active (facultatif)
               renderBullet: function (index, className) {
                 return '<span class="' + className + '">' + '<h3 class=bullet__h3>' + (index + 1) + '</h3>' + "</span>";
               },
@@ -280,7 +280,7 @@
           });
           
           minMaxValues = []
-          //-----JS for Price Range slider-----
+          //-----JS pour le curseur de plage de prix-----
           $(function() {
         
             $( "#slider-range" ).slider({
@@ -290,13 +290,13 @@
                 values: [ 0, 10000 ],
                 slide: function( event, ui ) {
                     $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-                    // Update minMaxValues array
+                    // Mettre à jour le tableau minMaxValues
                     minMaxValues = [ui.values[0], ui.values[1]]
                     console.log( minMaxValues);
                 }
             });
         
-            // Initialize the amount input field with default values
+            // Initialiser le champ de saisie amount avec les valeurs par défaut
             $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
                 " - $" + $( "#slider-range" ).slider( "values", 1 ) );
         });
@@ -314,15 +314,15 @@
           const submitButton = form.querySelector(".done-btn");
           
           submitButton.addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent default form submission behavior
+            event.preventDefault(); // Empêcher le comportement de soumission de formulaire par défaut
             console.log( minMaxValues, "hggggggggggggggggggggggggggggggggggg" );
             const formData = new FormData(form);
             
-            // Add minMaxValues to the FormData
+            // Ajouter minMaxValues au FormData
             formData.append('min_price', parseInt(minMaxValues[0] || 0));
             formData.append('max_price', parseInt(minMaxValues[1] || 99999));
         
-            // Log form data for debugging
+            // Journaliser les données de formulaire pour le débogage
             for (const entry of formData.entries()) {
                 console.log(entry);
             }
@@ -338,10 +338,10 @@
                 },
                 success: function(response) {
                     console.log(response.products);
-                    displayFilteredProducts(response.products); // Render filtered products
+                    displayFilteredProducts(response.products); // Rendre les produits filtrés
                 },
                 error: function(error) {
-                    console.error('Error filtering products:', error);
+                    console.error('Erreur lors du filtrage des produits :', error);
                 }
             });
         });
@@ -354,23 +354,23 @@
 
         const sortButtons = document.querySelectorAll(".dropdown-item");
 
-        // Loop through each sort button
+        // Boucle à travers chaque bouton de tri
         sortButtons.forEach(function(sortButton) {
-            // Add click event listener to each sort button
+            // Ajouter un écouteur d'événements de clic à chaque bouton de tri
             sortButton.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent default form submission behavior
+                event.preventDefault(); // Empêcher le comportement de soumission de formulaire par défaut
             
-                // Assuming minMaxValues is defined elsewhere in your code
+                // Supposant que minMaxValues est défini ailleurs dans votre code
                 console.log(minMaxValues, "hggggggggggggggggggggggggggggggggggg");
             
-                const formData = new FormData(form); // Assuming 'form' is defined somewhere
+                const formData = new FormData(form); // En supposant que 'form' est défini quelque part
 
-                // Add minMaxValues to the FormData
+                // Ajouter minMaxValues au FormData
                 formData.append('min_price', parseInt(minMaxValues[0] || 0));
                 formData.append('max_price', parseInt(minMaxValues[1] || 99999));
                 formData.append('sort_by', sortButton.getAttribute("data-id"));
             
-                // Log form data for debugging
+                // Journaliser les données de formulaire pour le débogage
                 for (const entry of formData.entries()) {
                     console.log(entry);
                 }
@@ -378,7 +378,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '/filter/',
-                    data: formData, // No need to wrap formData in an object
+                    data: formData, // Pas besoin d'encapsuler formData dans un objet
                     processData: false,
                     contentType: false,
                     beforeSend: function(xhr, settings) {
@@ -386,27 +386,27 @@
                     },
                     success: function(response) {
                         console.log(response.products);
-                        displayFilteredProducts(response.products); // Render filtered products
+                        displayFilteredProducts(response.products); // Rendre les produits filtrés
                     },
                     error: function(error) {
-                        console.error('Error filtering products:', error);
+                        console.error('Erreur lors du filtrage des produits :', error);
                     }
                 });
             });
         });
           
           function displayFilteredProducts(products) {
-            productsCountP = document.querySelector(".products-count").innerText = `${products.length} Results`
+            productsCountP = document.querySelector(".products-count").innerText = `${products.length} Résultats`
 
             const productsContainer = document.querySelector('.products__div');
-            productsContainer.innerHTML = ''; // Clear existing products
+            productsContainer.innerHTML = ''; // Effacer les produits existants
         
             products.forEach(product => {
-                // Create HTML elements for each product
+                // Créer des éléments HTML pour chaque produit
                 const productDiv = document.createElement('div');
                 productDiv.classList.add('catalog__product', 'product-grid-tile-wrapper');
         
-                // Add product details
+                // Ajouter les détails du produit
                 productDiv.innerHTML = `
                 <div id="product-grid-tile-grid-item" name="tile-render" class="product grid-tile" style="height:100%;">
                     <div name="product-tile" id="403500" class="product-tile product-detail gme-card gme-card--shadow product-tile-render loaded" data-pid="403500">
@@ -419,7 +419,7 @@
                                 <div class="product-tile-availability">${product.manufacturer}</div>
                                 <div id="render-tile-price" class="render-tile-price">
                                     <div id="render-base-group" class="render-base-group">
-                                        <div id="render-sale-price" class="render-sale-price">${product.price}</div>
+                                        <div id="render-sale-price" class="render-sale-price">${product.price} DT</div>
                                         <div id="render-base-price" class="render-base-price"></div>
                                     </div>
                                     <div id="render-pro-group" class="render-pro-group">
@@ -429,8 +429,8 @@
                                 <div class="render-tile-release-date" style="display: none;"></div>
                                 <div class="render-tile-bops-copy">
                                     <div style="margin-top: 10px; font-size: 14px">
-                                        <strong>FREE $25 OFF</strong>
-                                        your online order when you pick up in store. (orders $250+)
+                                        <strong>25 DT GRATUITS</strong>
+                                        pour votre commande en ligne lorsque vous la récupérez en magasin. (commandes de 250 DT et plus)
                                     </div>
                                 </div>
                             </div>
@@ -439,7 +439,7 @@
                     </div>
                 </div>`;
         
-                productsContainer.appendChild(productDiv); // Append product to container
+                productsContainer.appendChild(productDiv); // Ajouter le produit au conteneur
             });
         
             VanillaTilt.init(document.querySelectorAll(".catalog__product"), {
@@ -468,12 +468,12 @@
           
         
           document.addEventListener("DOMContentLoaded", function() {
-            const filters = document.querySelector(".filter__button"); // Added "." for class selector
-            const menu = document.querySelector(".catalog__filter"); // Added "." for class selector
+            const filters = document.querySelector(".filter__button"); // Ajout de "." pour le sélecteur de classe
+            const menu = document.querySelector(".catalog__filter"); // Ajout de "." pour le sélecteur de classe
             const body = document.querySelector("body");
             const closefilter = document.querySelector(".closefilter");
 
-            // Toggle menu when button is clicked
+            // Basculez le menu lorsque le bouton est cliqué
             filters.addEventListener("click", function() {
                 menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
                 body.style.overflowY = menu.style.display === "none" ? "auto" : "hidden";
@@ -484,7 +484,7 @@
                 body.style.overflowY = "auto";
             });
 
-            // Close menu when clicking outside of it
+            // Fermez le menu lorsque vous cliquez à l'extérieur de celui-ci
             document.addEventListener("click", function(event) {
                 if (!menu.contains(event.target) && !filters.contains(event.target)) {
                     menu.style.display = "none";
@@ -494,44 +494,21 @@
         });
         
         document.addEventListener("DOMContentLoaded", function() {
-            var toggleButtons = document.querySelectorAll(".toggleFilters");
-        
-            toggleButtons.forEach(function(toggleButton) {
-                toggleButton.addEventListener("click", function() {
-                    var filtersDiv = toggleButton.parentElement.nextElementSibling;
-                    filtersDiv.classList.toggle("show");
-                    toggleButton.querySelector("i").classList.toggle("fa-plus");
-                    toggleButton.querySelector("i").classList.toggle("fa-minus");
+            var toggleFilters = document.querySelectorAll('.toggleFilters');
+
+            toggleFilters.forEach(function(filterButton) {
+                filterButton.addEventListener('click', function() {
+                    var parent = this.parentNode.nextElementSibling;
+
+                    if(parent.style.display == 'none' || parent.style.display == '') {
+                        parent.style.display = 'block';
+                    } else {
+                        parent.style.display = 'none';
+                    }
                 });
             });
         });
         
-        
-        
-        
-        document.addEventListener("DOMContentLoaded", function () {
-            const button = document.querySelector(".sort__button");
-            const menu = document.querySelector(".sort-dropdown-menu");
-        
-            // Toggle menu when button is clicked
-            button.addEventListener("click", function () {
-                menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
-            });
-        
-            // Close menu when clicking outside of it
-            document.addEventListener("click", function (event) {
-                if (!menu.contains(event.target) && !button.contains(event.target)) {
-                    menu.style.display = "none";
-                }
-            });
-        });
-    
     </script>
 
-    <script src="{% static "js\custom.js" %}"></script>
-    
 {% endblock scripts %}
-
-{% block footer %}
-    {% include "gz/components/footer.html" %}
-{% endblock footer %}

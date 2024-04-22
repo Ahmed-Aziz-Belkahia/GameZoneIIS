@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  Address
+  Adresse
 {% endblock title %}
   
 {% load crispy_forms_tags %}
@@ -80,7 +80,7 @@
             <div class="account_user_deails pl40 pl0-lg">
               <div class="row">
                 <div class="col-lg-12">
-                  <h2 class="title mb30">Adresse de livraison et de facturation</h2>
+                  <h2 class="title mb30">Adresse de livraison & de facturation</h2>
                 </div>
                 <!-- Button trigger modal -->
 
@@ -91,19 +91,19 @@
                     class="btn purple-btn"
                     style="font-size: 12px"
                   >
-                  Nouvelle adresse de livraison</a
+                    Ajouter une nouvelle adresse de livraison</a
                   >
-                  <a href="#openModal-billing" class="btn border" style="font-size: 12px" >Nouvelle adresse de facturation</a>
+                  <a href="#openModal-billing" class="btn border" style="font-size: 12px" >Ajouter une nouvelle adresse de facturation</a>
 
                   <div id="openModal-billing" class="modalDialog">
                     <div>
-                      <h3 class="m-3">Nouvelle adresse de facturation</h3>
+                      <h3 class="m-3">Ajouter une nouvelle adresse de facturation</h3>
                       <form class="m-3" action="{% url 'core:add_billing_address' %}" method="POST">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-6">
                               <div class="form-group">
-                                 <label for="fm1" class="form-label">Nom et prénom</label>
+                                 <label for="fm1" class="form-label">Nom complet</label>
                                  {{billing_form.full_name}}
                               </div>
                             </div>
@@ -117,28 +117,28 @@
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
-                                <label for="fm1" class="form-label">numéro de téléphone</label>
+                                <label for="fm1" class="form-label">Téléphone</label>
                                 {{billing_form.mobile}}
                               </div>
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
                                 <label for="fm1" class="form-label"
-                                  >Country</label
+                                  >Pays</label
                                 >
                                 {{billing_form.country}}
                               </div>
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
-                                <label for="fm1" class="form-label">Ville</label>
+                                <label for="fm1" class="form-label">État</label>
                                 {{billing_form.state}}
                               </div>
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
                                 <label for="fm1" class="form-label"
-                                  >Gouvernerat</label
+                                  >Ville</label
                                 >
                                 {{billing_form.town_city}}
                               </div>
@@ -146,14 +146,14 @@
                             <div class="col-lg-6">
                               <div class="form-group">
                                 <label for="fm1" class="form-label"
-                                  >Address</label
+                                  >Adresse</label
                                 >
                                 {{billing_form.address}}
                               </div>
                             </div>
                             <div class="col-lg-6">
                               <div class="form-group">
-                                <label for="fm1" class="form-label">ZIP</label>
+                                <label for="fm1" class="form-label">Code postal</label>
                                 {{billing_form.zip}}
                               </div>
                             </div>
@@ -161,9 +161,9 @@
                           </div>
                         <div class="form-group py-2">
                           <button type="submit" class="btn purple-btn">
-                            Create Billing Addreas
+                            Créer une adresse de facturation
                           </button>
-                          <a href="#close" title="Close" class="close">X</a>
+                          <a href="#close" title="Fermer" class="close">X</a>
                         </div>
                       </form>
                     </div>
@@ -172,14 +172,14 @@
                   <!-- Nouvelle adresse de livraison -->
                   <div id="openModal-about" class="modalDialog">
                     <div>
-                      <h3 class="m-3">Nouvelle adresse de livraison</h3>
+                      <h3 class="m-3">Ajouter une nouvelle adresse de livraison</h3>
                       <form class="m-3" method="POST">
                         {% csrf_token %}
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
                               <label for="fm1" class="form-label"
-                                >Full Name</label
+                                >Nom complet</label
                               >
                               {{form.full_name}}
                             </div>
@@ -187,35 +187,35 @@
                           <div class="col-lg-6">
                             <div class="form-group">
                               <label for="fm1" class="form-label"
-                                >Email Address</label
+                                >Adresse e-mail</label
                               >
                               {{form.email}}
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="fm1" class="form-label">Mobile</label>
+                              <label for="fm1" class="form-label">Téléphone</label>
                               {{form.mobile}}
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
                               <label for="fm1" class="form-label"
-                                >Country</label
+                                >Pays</label
                               >
                               {{form.country}}
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="fm1" class="form-label">State</label>
+                              <label for="fm1" class="form-label">État</label>
                               {{form.state}}
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
                               <label for="fm1" class="form-label"
-                                >Town or City</label
+                                >Ville</label
                               >
                               {{form.town_city}}
                             </div>
@@ -223,20 +223,20 @@
                           <div class="col-lg-6">
                             <div class="form-group">
                               <label for="fm1" class="form-label"
-                                >Address</label
+                                >Adresse</label
                               >
                               {{form.address}}
                             </div>
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="fm1" class="form-label">ZIP</label>
+                              <label for="fm1" class="form-label">Code postal</label>
                               {{form.zip}}
                             </div>
                           </div>
                           <div class="col-lg-6">
                            <div class="form-group">
-                             <label for="fm1" class="form-label">Same as billing address</label>
+                             <label for="fm1" class="form-label">Identique à l'adresse de facturation</label>
                              {{form.same_as_billing_address}}
                            </div>
                          </div>
@@ -244,9 +244,9 @@
 
                         <div class="form-group py-2">
                           <button type="submit" class="btn purple-btn">
-                            Create Shipping Addreas
+                            Créer une adresse de livraison
                           </button>
-                          <a href="#close" title="Close" class="close">X</a>
+                          <a href="#close" title="Fermer" class="close">X</a>
                         </div>
                       </form>
                     </div>
@@ -256,7 +256,7 @@
                 </div>
                 <hr>
                 <div class="col-lg-6 mb30 border-bottom p-2">
-                  <h4>Shipping Address</h4>
+                  <h4>Adresse de livraison</h4>
                   <div class="row">
                     {% for a in address %}
                     <div class="col-lg-4 shadow p-3 m-2">
@@ -271,9 +271,9 @@
                         <p>{{a.country|title}}</p>
                         
                         {% if a.same_as_billing_address == True %}
-                        <p class="mt30" style="color: green;"><small>Same as billing Address <i class="fas fa-check-circle"></i></small> </p>
+                        <p class="mt30" style="color: green;"><small>Identique à l'adresse de facturation <i class="fas fa-check-circle"></i></small> </p>
                         {% else %}
-                        <p class="mt30" style="color: red;"><small>Same as billing Address <i class="bi bi-x-circle-fill"></i></small> </p>
+                        <p class="mt30" style="color: red;"><small>Non Identique à l'adresse de facturation <i class="bi bi-x-circle-fill"></i></small> </p>
                         {% endif %}
                            
                         <p class="mt30">{{a.email}}</p>
@@ -283,22 +283,22 @@
                       <span class="float-start mb-2"><a href="{% url 'core:buyer-edit-address' a.id %}" class="btn border ms-2"><i class="bi bi-pencil-square"></i></a></span>
                       <span class="float-start mb-2"><a href="{% url 'core:buyer-delete-address' a.id %}" style="margin-left: 5px; margin-right: 5px;" class="btn border ms-2"><i class="bi bi-trash3-fill"></i></a></span>
                       {% if a.status %}
-                        <button data-address-id="{{ a.id }}" class="btn btn-success check{{ a.id }} check" >Default <i class="fas fa-check-circle  ms-2 "></i></button>
-                        <button data-address-id="{{ a.id }}" style="display: none" style="margin-left: 5px; margin-right: 5px;" class="btn purple-btn make-default-address button{{ a.id }} action_btn  ms-2 " >Make Default</button>
+                        <button data-address-id="{{ a.id }}" class="btn btn-success check{{ a.id }} check" >Par Défaut <i class="fas fa-check-circle  ms-2 "></i></button>
+                        <button data-address-id="{{ a.id }}" style="display: none" style="margin-left: 5px; margin-right: 5px;" class="btn purple-btn make-default-address button{{ a.id }} action_btn  ms-2 " >Rendre Par Défaut</button>
                       {% else %}
-                        <button data-address-id="{{ a.id }}" style="display: none;" class="btn btn-success check{{ a.id }} check  ms-2 " >Default <i class="fas fa-check-circle"></i></button>
-                        <button data-address-id="{{ a.id }}" class="btn purple-btn make-default-address button{{ a.id }} action_btn  ms-2 " >Make Default</button>
+                        <button data-address-id="{{ a.id }}" style="display: none;" class="btn btn-success check{{ a.id }} check  ms-2 " >Par Défaut <i class="fas fa-check-circle"></i></button>
+                        <button data-address-id="{{ a.id }}" class="btn purple-btn make-default-address button{{ a.id }} action_btn  ms-2 " >Rendre Par Défaut</button>
                       {% endif %}
                     </div>
                     {% empty %}
-                    <h6>No Shipping Address Yet</h6>
+                    <h6>Aucune adresse de livraison pour le moment</h6>
 
                     {% endfor %}
                   </div>
                 </div>
 
                 <div class="col-lg-6 mb30 border-bottom p-2">
-                  <h4>Billing Address</h4>
+                  <h4>Adresse de facturation</h4>
 
                   <div class="row">
                     {% for a in billing_address %}
@@ -312,7 +312,7 @@
                         <p>{{a.city|title}}</p>
                         <p>{{a.state|title}}</p>
                         <p>{{a.country|title}}</p>
-                        <p class="mt30" style="color: rgba(255, 255, 255, 0);"><small>Same as billing Address </small> </p>
+                        <p class="mt30" style="color: rgba(255, 255, 255, 0);"><small>Identique à l'adresse de facturation </small> </p>
                         <p class="mt30">{{a.email}}</p>
                         <p>{{a.mobile}}</p>
 
@@ -322,15 +322,15 @@
                         <span class="float-start mb-2"><a href="{% url 'core:buyer-edit-billing-address' a.id %}" class="btn border ms-2 mr-2 ml-2"><i class="bi bi-pencil-square"></i></a></span>
                         <span class="float-start mb-2"><a href="{% url 'core:buyer_delete_billing_address' a.id %}" style="margin-left: 5px; margin-right: 5px;" class="btn border ms-2 mr-2 ml-2"><i class="bi bi-trash3-fill"></i></a></span>
                       {% if a.status %}
-                        <button data-billing-id="{{ a.id }}" class="btn btn-success check2{{ a.id }} check2" >Default <i class="fas fa-check-circle ms-2 "></i></button>
-                        <button data-billing-id="{{ a.id }}" style="display: none" class="btn purple-btn make-default-billing-address button2{{ a.id }} ms-2 action_btn2" >Make Default</button>
+                        <button data-billing-id="{{ a.id }}" class="btn btn-success check2{{ a.id }} check2" >Par Défaut <i class="fas fa-check-circle ms-2 "></i></button>
+                        <button data-billing-id="{{ a.id }}" style="display: none" class="btn purple-btn make-default-billing-address button2{{ a.id }} ms-2 action_btn2" >Rendre Par Défaut</button>
                       {% else %}
-                        <button data-billing-id="{{ a.id }}" style="display: none;" class="btn btn-success check2 check2{{ a.id }} ms-2 " >Default <i class="fas fa-check-circle"></i></button>
-                        <button data-billing-id="{{ a.id }}" class="btn purple-btn make-default-billing-address button2{{ a.id }} ms-2  action_btn2" >Make Default</button>
+                        <button data-billing-id="{{ a.id }}" style="display: none;" class="btn btn-success check2 check2{{ a.id }} ms-2 " >Par Défaut <i class="fas fa-check-circle"></i></button>
+                        <button data-billing-id="{{ a.id }}" class="btn purple-btn make-default-billing-address button2{{ a.id }} ms-2  action_btn2" >Rendre Par Défaut</button>
                       {% endif %}
                     </div>
                     {% empty %}
-                    <h6>No Billing Address Yet</h6>
+                    <h6>Aucune adresse de facturation pour le moment</h6>
                     {% endfor %}
                   </div>
                 </div>

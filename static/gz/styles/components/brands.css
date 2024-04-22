@@ -60,13 +60,17 @@ h1.gme-v3-global-heading {
     padding: 1rem 17rem;
     color: var(--MP-C);
     font-weight: 700;
+    font-size: 3rem;
+    font-weight: 300;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
 }
 h1.gme-v3-global-heading > span{
     color: #7cc300;
 }
 @media only screen and (max-width: 1824px) {
     .brands__div{
-        padding: 0 10rem;
+        padding: 0 9rem;
     }
     h1.gme-v3-global-heading{
         padding: 1rem 11rem;

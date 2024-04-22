@@ -4,7 +4,7 @@
             <a href="{% url 'store:product-detail' p.meta_title %}">
                 <img src="{{p.image.url}}"
                     {% comment %} style="height: 200px; width: 100%; object-fit: cover; border-radius: 3px;" {% endcomment %}
-                    class="product-img-avatar" alt="Meilleure vente"
+                    class="product-img-avatar" alt="Meilleur article vendeur"
                 >
             </a>
             <div class="thumb_info">
@@ -17,18 +17,18 @@
             
             {% if p.in_stock == True and p.stock_qty != 0 %}
                 {% if p.type == "auction" %}
-                    <div class="shop_item_cart_bftn d-grid mt-2"><a class="btn purple-btn" href="{% url 'store:product-detail' p.meta_title %}">Join Bidding Now</a></div>
+                    <div class="shop_item_cart_bftn d-grid mt-2"><a class="btn purple-btn" href="{% url 'store:product-detail' p.meta_title %}">Rejoindre la mise aux enchères maintenant</a></div>
                 {% endif %}
 
                 {% if p.type == "offer" %}
-                    <div class="shop_item_cart_bftn d-grid mt-2"><a class="btn purple-btn" href="{% url 'store:product-detail' p.meta_title %}">Submit Price Offer</a></div>
+                    <div class="shop_item_cart_bftn d-grid mt-2"><a class="btn purple-btn" href="{% url 'store:product-detail' p.meta_title %}">Soumettre une offre de prix</a></div>
                 {% endif %}
 
                 {% if p.type == "regular" %}
-                    <div class="shop_item_cart_bftn d-grid"><a class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2" data-index="{{ p.id }}" id="add-to-cart-btn">Add to Cart</a></div>
+                    <div class="shop_item_cart_bftn d-grid"><a class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2" data-index="{{ p.id }}" id="add-to-cart-btn">Ajouter au panier</a></div>
                 {% endif %}  
             {% else %}
-            <div class="d-grid text-white"><a class="btn btngray mt-2 text-white" style="color: white;">Out of stock</a></div>
+            <div class="d-grid text-white"><a class="btn btngray mt-2 text-white" style="color: white;">En rupture de stock</a></div>
             {% endif %}   
         </div>
         <div class="details">
@@ -37,7 +37,7 @@
             </div>
             <div class="sub_title mt-0 mb0 mb-2 mb2"><a
                     href="{% url 'store:brand-shop' p.brand.meta_title %}"
-                    class="dashed-custom"><small>By
+                    class="dashed-custom"><small>Par
                         {{p.brand|truncatechars:20}}</small></a></div>
             <div class="review d-block">
                 <ul class="mb0 me-2">
@@ -94,11 +94,11 @@
 
                 </ul>
                 {% if p.rating_count == 0 %}
-                <div class="review_count"><a><small>Not Rated Yet</small></a></div>
+                <div class="review_count"><a><small>Pas encore évalué</small></a></div>
                 {% else %}
                 <div class="review_count"><a><small>{{p.product_rating|floatformat:1}}/5.0
                             ({{p.rating_count}}
-                            review{{p.rating_count|pluralize:"s"}})</small></a></div>
+                            avis{{p.rating_count|pluralize:"s"}})</small></a></div>
                 {% endif %}
 
             </div>

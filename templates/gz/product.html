@@ -86,7 +86,7 @@
                 <div class="info__left">
                     <div class="bottom__desctiption">
                         <div class="description__features">
-                            <div class="features__title">Features:</div>
+                            <div class="features__title">Caractéristiques :</div>
                             <ul class="features__container">
                                 {% for feature in product.feature_set.all %}
                                     <li class="features__div">
@@ -96,11 +96,11 @@
                             </ul>
                         </div>
                         <div class="description__full-description">
-                            <div class="full-description__title">Description du produit:</div>
+                            <div class="full-description__title">Description du produit :</div>
                             <div class="full-description__content">{{ product.description }}</div>
                         </div>
                         <div class="Specifications">
-                            <div class="features__title">Spécifications:</div>
+                            <div class="features__title">Spécifications :</div>
                             <div class="product-accordion-panel">
                                 {% for spec in product.specification_set.all %}
                                     <div class="product-attribute-redesign">
@@ -144,8 +144,8 @@
         // Function to change main image and reset zoom on side image click
         function changeMainImage(imageSrc) {
             mainImage.attr("src", imageSrc);
-            mainImage.css("background-position", "0 0"); // Reset background position for zoom
-            zoomCircle.hide(); // Hide zoom circle
+            mainImage.css("background-position", "0 0"); // Réinitialiser la position du fond pour le zoom
+            zoomCircle.hide(); // Masquer le cercle de zoom
         }
 
         // Event listener for side image click
@@ -181,7 +181,7 @@
             const selectedInput = $(this).find(".selected-choice-input");
             if (selectedInput.val() === "") {
                 e.preventDefault();
-                alert("Please select a choice before submitting.");
+                alert("Veuillez sélectionner une option avant de soumettre.");
             }
         });
 

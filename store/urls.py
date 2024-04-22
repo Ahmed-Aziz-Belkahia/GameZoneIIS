@@ -12,7 +12,6 @@ urlpatterns = [
     path("shop/brand/<str:meta_title>", views.brand_shop, name="brand-shop"),
     path("hot_deals/", views.hot_deals, name="hot_deals"),
     path("search/", views.search_list, name="search"),
-    path("<str:meta_title>/", views.product_detail, name="product-detail"),
     path("my-cart/", views.cart_view, name="cart-view"),
     path("category/<cid>/", views.category_detail, name="category_detail"),
     path("shipping_address/", views.shipping_address, name="shipping_address"),
@@ -51,4 +50,6 @@ urlpatterns = [
 
     path('get-subcategories/<str:category_meta_title>', views.get_subcategories, name='get-subcategories'),
     path('nav-search/', views.nav_search, name='nav-search'),
+    path("<str:meta_title>/", views.product_detail, name="product-detail"),
+
 ]

@@ -1,15 +1,18 @@
-{% extends "partials/base.html" %}
+{% extends "partials/base.html" %} 
 {% load static %}
 
-{% block title %}Offres Spéciales 🔥{% endblock title %}
+{% block title %}
+  Offres Spéciales 🔥
+{% endblock title %}
   
 {% block content %}
 <style>
-  ul, li {
+  ul,
+  li {
     list-style: none;
   }
 </style>
-
+<!-- Vue en grille de liste -->
 <section class="our-listing pt0" style="margin-top: 100px;">
   <div class="container">
     <div class="row mt50">
@@ -18,10 +21,12 @@
           <h1 class="title text-center">Offres Spéciales 🔥</h1>
         </div>
         <div class="shop_item_4grid_slider dots_none owl-theme owl-carousel">
+                            
           {% for p in featured_hot_deals %}
-            {% include 'store/product_list.html' %}
+              {% include 'store/product_list.html' %}
           {% endfor %}
-        </div>
+          
+      </div>
       </div>
     </div>
     <div class="row mt60">
@@ -29,41 +34,51 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="main-title bb1 pb10">
-              <h2 class="title">Tous les Produits en Promotion</h2>
+              <h2 class="title">Tous les Produits en Offre Spéciale</h2>
             </div>
           </div>
         </div>
         <div class="row">
-          {% for p in products %}
+          <div class="row">
+            {% for p in products %}
             <div class="col-sm-6 col-lg-3 col-xl-3 p0 pl15-520 mb-3 mb3">
               {% include 'store/product_list.html' %}
             </div>
-          {% empty %}
+            {% empty %}
             <div>
-              <h4>Aucune offre spéciale pour le moment...</h4>
+              <h4>Pas encore d'offres spéciales...</h4>
             </div>
-          {% endfor %}
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="mbp_pagination mt30 text-center">
-              <ul class="page_navigation">
-                {% if products.has_previous %}
+            {% endfor %}
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mbp_pagination mt30 text-center">
+                <ul class="page_navigation">
+                  {% if products.has_previous %}
                   <li class="page-item">
-                    <a class="page-link" href="{% url 'store:shop' %}?page={{products.previous_page_number}}" tabindex="-1" aria-disabled="true">
-                      <span class="fas fa-angle-left"></span>
-                    </a>
+                    <a
+                      class="page-link"
+                      href="{% url 'store:shop' %}?page={{products.previous_page_number}}"
+                      tabindex="-1"
+                      aria-disabled="true"
+                    >
+                      <span class="fas fa-angle-left"></span
+                    ></a>
                   </li>
-                {% endif %}
-                {% if products.has_next %}
+                  {% endif %} {% if products.has_next %}
                   <li class="page-item">
-                    <a class="page-link" href="{% url 'store:shop' %}?page={{products.next_page_number}}">
-                      <span class="fas fa-angle-right"></span>
-                    </a>
+                    <a
+                      class="page-link"
+                      href="{% url 'store:shop' %}?page={{products.next_page_number}}"
+                      ><span class="fas fa-angle-right"></span
+                    ></a>
                   </li>
-                {% endif %}
-              </ul>
-              <p class="mt20 pagination_page_count text-center">{{ products }} -- {{ products_count.count }} Produits trouvés</p>
+                  {% endif %}
+                </ul>
+                <p class="mt20 pagination_page_count text-center">
+                  {{products}} -- {{products_couunt.count}} Produits trouvés
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -72,4 +87,3 @@
   </div>
 </section>
 {% endblock content %}
-

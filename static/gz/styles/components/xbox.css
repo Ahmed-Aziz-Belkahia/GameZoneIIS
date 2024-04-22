@@ -30,12 +30,14 @@
 
 .main__xbox .text__title {
     font-size: 3rem;
-    font-weight: 900;
+    font-weight: 300;
+    text-align: center;
 }
 
 .main__xbox .text__slogan {
-    font-weight: 500;
     font-size: 2rem;
+    font-weight: 300;
+    text-align: center;
 }
 
 .main__xbox .xbox__layer2 {

@@ -1,4 +1,6 @@
-{% extends "vendor/vendor-base.html" %} {% load static %} {% block content %}
+{% extends "vendor/vendor-base.html" %}
+{% load static %}
+{% block content %}
 <style>
   th,
   td {
@@ -20,7 +22,7 @@
             <div class="dashboard_title_area">
               <h2>Messages</h2>
               <p class="para">
-                Start a conversation with customers, clients or friends...
+                Commencez une conversation avec des clients, des clients ou des amis...
               </p>
             </div>
           </div>
@@ -38,8 +40,8 @@
                       <input
                         class="form-control"
                         type="search"
-                        placeholder="Search For Someone..."
-                        aria-label="Search"
+                        placeholder="Rechercher quelqu'un..."
+                        aria-label="Rechercher"
                       />
                     </form>
                   </div>
@@ -79,7 +81,7 @@
                           </div>
                           <div class="iul_notific">
                             <small class="body-color"
-                              >{{message.date|timesince}} ago</small
+                              >{{message.date|timesince}} depuis</small
                             >
                           </div>
                         </div>
@@ -119,7 +121,7 @@
                           </div>
                           <div class="iul_notific">
                             <small class="body-color"
-                              >{{message.date|timesince}} ago</small
+                              >{{message.date|timesince}} depuis</small
                             >
                           </div>
                         </div>
@@ -127,7 +129,7 @@
                     </li>
                   </a>
                   {% endif %} {% empty %}
-                  <h4>No Chats Yet...</h4>
+                  <h4>Aucun chat encore...</h4>
                   {% endfor %}
                 </ul>
               </div>
@@ -147,7 +149,7 @@
                   />
 
                   <div class="meta">
-                    <!-- <a class="text-thm3 tdu float-end fz14" href="#">Delete Conversation</a> -->
+                    <!-- <a class="text-thm3 tdu float-end fz14" href="#">Supprimer la conversation</a> -->
 
                     {% if reciever_id.profile.full_name %}
                     <h4 class="name pt-2">
@@ -157,7 +159,7 @@
                     <h4 class="name pt-2">{{ reciever_id.username|title }}</h4>
                     {% endif %}
 
-                    <!-- <p class="preview">Active</p> -->
+                    <!-- <p class="preview">Actif</p> -->
                   </div>
                 </div>
               </div>
@@ -189,7 +191,7 @@
                         <small class="body-color mr15"
                           >{{m.date|timesince}}</small
                         >
-                        You
+                        Vous
                       </h5>
                       <a href="{{m.sender.profile.image.url}}" target="_blank">
                         <img
@@ -211,10 +213,10 @@
                     <input
                       class="form-control"
                       type="search"
-                      placeholder="Type a Message"
-                      aria-label="Search"
+                      placeholder="Tapez un message"
+                      aria-label="Rechercher"
                     />
-                    <button class="btn" type="submit">Send</button>
+                    <button class="btn" type="submit">Envoyer</button>
                   </form>
                 </div>
               </div>
@@ -231,7 +233,7 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
-    console.log("Working...");
+    console.log("Fonctionne...");
     setInterval(function () {
       $.ajax({
         url: "{% url 'vendor:get_messages_ajax' reciever_id.username %}",

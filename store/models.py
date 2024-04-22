@@ -360,7 +360,7 @@ class Product(models.Model):
 
     image = models.ImageField(upload_to=user_directory_path, default="product.png")
     description = CKEditor5Field(config_name='extends', null=True, blank=True)
-    meta_description = CKEditor5Field(config_name='extends', null=True, blank=True)
+    meta_description = models.CharField(blank=True, null=True, max_length=10000)
 
     price = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, null=True, blank=True)
     old_price = models.DecimalField(max_digits=12, decimal_places=2, default=0.00, null=True, blank=True)
@@ -370,7 +370,7 @@ class Product(models.Model):
     gz_coins = models.IntegerField(default=0, null=True, blank=True)
 
     show_old_price = models.BooleanField(default=True)
-    tags = TaggableManager(blank=True)
+    tags = models.CharField(blank=True, null=True, max_length=10000)
     status = models.CharField(choices=STATUS, max_length=10, default="published", null=True, blank=True)
     product_condition = models.CharField(choices=PRODUCT_CONDITION, max_length=50, default="new", null=True, blank=True)
     product_condition_rating = models.IntegerField(choices=PRODUCT_CONDITION_RATING, default=1, null=True, blank=True)

@@ -14,7 +14,7 @@
    flex-direction: row;
    display: flex;
    gap: 20px;
-   padding: 100px 0;
+   padding: 50px 0 0;
 }
 .filter__button{
    -webkit-box-align: center;
@@ -191,16 +191,16 @@ label{
     border: 1px solid #212529;
  }
  </style>
-    <!-- Listing Grid View -->
+    <!-- Vue en grille de liste -->
     <div class="filter-options">
       <div class="catalog_header">
-        <h3 class="mb-0 d-flex align-items-center">Menu Filtre</h3>
+        <h3 class="mb-0 d-flex align-items-center">Menu de filtre</h3>
         <button type="button" class="toggleFilters">
             <i class="fa-solid fa-xmark closefilter"></i>
         </button>
       </div>
       <form method="GET" class="filter-form">
-          <!-- Filter by brands -->
+          <!-- Filtrer par marques -->
           <h3>Marques</h3>
           <ul>
               {% for brand in brands %}
@@ -213,8 +213,8 @@ label{
               {% endfor %}
           </ul>
           
-          <!-- Filter by direct subcategories -->
-          <h3>Sous-catégories</h3>
+          <!-- Filtrer par sous-catégories directes -->
+          <h3>Sous-catégories directes</h3>
           <ul>
               {% for subcategory in direct_subcategories %}
                   <li>
@@ -226,8 +226,8 @@ label{
               {% endfor %}
           </ul>
           
-          <!-- Filter by rating -->
-          <h3>Notes</h3>
+          <!-- Filtrer par notation -->
+          <h3>Notations</h3>
           <ul>
               {% for rating_choice in all_ratings %}
                   <li>
@@ -239,23 +239,23 @@ label{
               {% endfor %}
           </ul>
           
-          <!-- Price range filter -->
-          <h3>Prix </h3>
-          <label for="min_price">Min Prix:</label>
+          <!-- Filtre de plage de prix -->
+          <h3>Plage de prix</h3>
+          <label for="min_price">Prix minimum :</label>
           <input type="number" name="min_price" id="min_price" value="{{ min_price }}">
           
-          <label for="max_price">Max Prix:</label>
+          <label for="max_price">Prix maximum :</label>
           <input type="number" name="max_price" id="max_price" value="{{ max_price }}">
           <input type="hidden" name="sort_by" id="sort_by" value="">
-          <button type="submit" class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2 w-100">Apply Filters</button>
-          <a href="{% url 'store:shop' %}" class="btn btn-tfhm button-add-to-cart add-to-cart-btn reset-btn mt-2 w-100">Reset</a>
+          <button type="submit" class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2 w-100">Appliquer les filtres</button>
+          <a href="{% url 'store:shop' %}" class="btn btn-tfhm button-add-to-cart add-to-cart-btn reset-btn mt-2 w-100">Réinitialiser</a>
       </form>
   </div>
   </div>
   <div class="filter__div container">
-    <button class="filter__button"><i class="fa-solid fa-filter" aria-hidden="true"></i>Filtre </button>
+    <button class="filter__button"><i class="fa-solid fa-filter" aria-hidden="true"></i> Filtre</button>
     <div class="filter_box">
-        <button id="sortButton" class="filter__button sort__button"><i class="fa-solid fa-sort" aria-hidden="true"></i> Sort</button>
+        <button id="sortButton" class="filter__button sort__button"><i class="fa-solid fa-sort" aria-hidden="true"></i> Trier</button>
         <div class="dropdown-menu sort-dropdown-menu show" aria-labelledby="sortby-dropdown" style="display:none;">
             <span class="sort-by-up-arrow"></span>
             <a class="dropdown-item price-low-to-high" data-id="price-low-to-high">Prix croissant</a>
@@ -264,6 +264,53 @@ label{
         </div>
     </div>
   </div>
+  <section class="our-listing pt0">
+    <div class="container">
+      
+      
+      
+      <div class="row mt60">
+        <div class="col-lg-12 col-xl-12 pl15-md">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="main-title bfb1 pb10">
+                <h2 class="title">Tous les produits</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row">
+              {% for p in products %}
+                <div class="col-sm-6 col-lg-3 col-xl-3 p0 pl15-520 mb3">
+                  {% include 'store/product_list.html' %}
+                </div>
+              {% endfor %}
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="mbp_pagination mt30 text-center">
+                  <ul class="page_navigation">
+                      {% if products.has_previous %}
+                        <li class="page-item">
+                        <a class="page-link" href="{% url 'store:shop' %}?page={{products.previous_page_number}}" tabindex="-1" aria-disabled="true"> <span class="fas fa-angle-left"></span></a>
+                        </li>
+                    {% endif %}
+                    
+                    {% if products.has_next %}
+                        <li class="page-item">
+                        <a class="page-link" href="{% url 'store:shop' %}?page={{products.next_page_number}}"><span class="fas fa-angle-right"></span></a>
+                        </li>
+                    {% endif %}
+                    </ul>
+                  <p class="mt20 pagination_page_count text-center">{{products}} -- {{products_couunt.count}} Produits trouvés</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
     <section class="deliver-divider pb70">
       <div class="container">
           <div class="row">
@@ -285,62 +332,16 @@ label{
           
       </div>
   </section>
-    <section class="our-listing pt0">
-      <div class="container">
-        
-        
-        
-        <div class="row mt60">
-          <div class="col-lg-12 col-xl-12 pl50 pl15-md">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="main-title bfb1 pb10">
-                  <h2 class="title">Tous les produits</h2>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="row">
-                {% for p in products %}
-                  <div class="col-sm-6 col-lg-3 col-xl-3 p0 pl15-520 mb3">
-                    {% include 'store/product_list.html' %}
-                  </div>
-                {% endfor %}
-              </div>
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="mbp_pagination mt30 text-center">
-                    <ul class="page_navigation">
-                        {% if products.has_previous %}
-                          <li class="page-item">
-                          <a class="page-link" href="{% url 'store:shop' %}?page={{products.previous_page_number}}" tabindex="-1" aria-disabled="true"> <span class="fas fa-angle-left"></span></a>
-                          </li>
-                      {% endif %}
-                      
-                      {% if products.has_next %}
-                          <li class="page-item">
-                          <a class="page-link" href="{% url 'store:shop' %}?page={{products.next_page_number}}"><span class="fas fa-angle-right"></span></a>
-                          </li>
-                      {% endif %}
-                      </ul>
-                    <p class="mt20 pagination_page_count text-center">{{products}} -- {{products_couunt.count}} Products found</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <script>
       document.addEventListener("DOMContentLoaded", function() {
-        const filters = document.querySelector(".filter__button"); // Added "." for class selector
-        const menu = document.querySelector(".filter-options"); // Added "." for class selector
+        const filters = document.querySelector(".filter__button"); // Ajout de "." pour le sélecteur de classe
+        const menu = document.querySelector(".filter-options"); // Ajout de "." pour le sélecteur de classe
         const body = document.querySelector("body");
         const closefilter = document.querySelector(".closefilter");
 
-        // Toggle menu when button is clicked
+        // Bascule du menu lorsque le bouton est cliqué
         filters.addEventListener("click", function() {
             menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
             body.style.overflowY = menu.style.display === "none" ? "auto" : "hidden";
@@ -351,7 +352,7 @@ label{
             body.style.overflowY = "auto";
         });
 
-        // Close menu when clicking outside of it
+        // Ferme le menu lorsqu'on clique en dehors
         document.addEventListener("click", function(event) {
             if (!menu.contains(event.target) && !filters.contains(event.target)) {
                 menu.style.display = "none";
@@ -363,12 +364,12 @@ label{
       const button = document.querySelector(".sort__button");
       const menu = document.querySelector(".sort-dropdown-menu");
   
-      // Toggle menu when button is clicked
+      // Bascule du menu lorsque le bouton est cliqué
       button.addEventListener("click", function () {
           menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
       });
   
-      // Close menu when clicking outside of it
+      // Ferme le menu lorsqu'on clique en dehors
       document.addEventListener("click", function (event) {
           if (!menu.contains(event.target) && !button.contains(event.target)) {
               menu.style.display = "none";
@@ -391,15 +392,15 @@ label{
     
     sortButtons.forEach(function(sortButton) {
         sortButton.addEventListener("click", function(event) {
-            event.preventDefault(); // Prevent default link behavior
+            event.preventDefault(); // Empêche le comportement de lien par défaut
             
-            // Get the data-id attribute value of the clicked sort button
+            // Obtient la valeur de l'attribut data-id du bouton de tri cliqué
             const sortByValue = sortButton.getAttribute("data-id");
             
-            // Update the value of the hidden input field
+            // Met à jour la valeur du champ de saisie masqué
             sortInput.value = sortByValue;
             
-            // Submit the form
+            // Soumet le formulaire
             form.submit();
         });
     });

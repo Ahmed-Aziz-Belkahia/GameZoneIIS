@@ -1,9 +1,9 @@
 {% extends "partials/base.html" %}
- {% load static %}
- {% block title %}
-Cart 
- {% endblock title %}
- {% block content %}
+{% load static %}
+{% block title %}
+    Cart
+{% endblock title %}
+{% block content %}
 {% load crispy_forms_tags %}
 <style>
   ul,
@@ -126,7 +126,7 @@ Cart
 }
 </style>
 <div class="body_content_wrapper position-relative" id="cartList">
-  <!-- Inner Page Breadcrumb -->
+  <!-- Breadcrumb de la page intérieure -->
   <section class="inner_page_breadcrumb" style="margin-top: 10px">
     <div class="container">
       <div class="row">
@@ -134,11 +134,11 @@ Cart
           <div class="breadcrumb_content">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="{% url 'store:home' %}">Home</a>
+                <a href="{% url 'store:home' %}">Accueil</a>
               </li>
-              <li class="breadcrumb-item"><a>Boutique </a></li>
+              <li class="breadcrumb-item"><a>Boutique</a></li>
               <li class="breadcrumb-item active" aria-current="page">
-                <a>Panier </a>
+                <a>Panier d'achats</a>
               </li>
             </ol>
           </div>
@@ -147,21 +147,21 @@ Cart
     </div>
   </section>
 
-  <!-- Shop Checkouts Content -->
+  <!-- Contenu du panier d'achats -->
   <section class="shop-cart pt30">
     <div class="container">
       <div class="row">
         <div class="col-sm-6 col-lg-4 m-auto">
           <div class="main-title text-center mb50">
-            <h2 class="title">Panier </h2>
+            <h2 class="title">Panier d'achats</h2>
             <!-- <input type="text" name="" id=""> -->
           </div>
         </div>
       </div>
       <div class="row mt15" id="cartList">
         <p class="para">
-          Vous avez <span class="cart-list">{{totalcartitems }}</span> des éléments
-          dans votre panier
+          Vous avez <span class="cart-list">{{totalcartitems }}</span> articles dans
+          votre panier
         </p>
 
         <div class="col-lg-8 col-xl-8">
@@ -169,12 +169,12 @@ Cart
             <table class="table table-borderless">
               <thead>
                 <tr>
-                  <th scope="col">Produit </th>
-                  <th scope="col">Prix</th>
+                  <th scope="col">PRODUIT</th>
+                  <th scope="col">PRIX</th>
                   <th scope="col">QUANTITÉ</th>
-                  <th scope="col">TOTALE</th>
-                  <th scope="col">UMISE À JOUR</th>
-                  <th scope="col">RETIRER</th>
+                  <th scope="col">TOTAL</th>
+                  <th scope="col">METTRE À JOUR</th>
+                  <th scope="col">SUPPRIMER</th>
                 </tr>
               </thead>
               <tbody class="table_body">
@@ -202,9 +202,9 @@ Cart
                         >
                           <span class="fz16">{{p.title|truncatechars:27}}</span>
                           <br />
-                          <span class="fz16">By: <b><i>{{p.product_brand|title}}</i></b></span>
+                          <span class="fz16">Par : <b><i>{{p.product_brand|title}}</i></b></span>
                           <br />
-                          <span class="fz16">Quantité en stock: </a><span id="stock_qty{{product_id}}">{{p.product_stock_qty}}</span></span>
+                          <span class="fz16">Stock Qty: </a><span id="stock_qty{{product_id}}">{{p.product_stock_qty}}</span></span>
 
                           <br />
                         </a>
@@ -284,7 +284,7 @@ Cart
                 <tr>
                   <td>
                     Votre panier est vide,
-                    <a href="{% url 'store:shop' %}">Continuer vos achats</a>
+                    <a href="{% url 'store:shop' %}">continuer vos achats</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -294,18 +294,18 @@ Cart
         </div>
         <div class="col-lg-4 col-xl-4">
           <div class="order_sidebar_widget style2">
-            <h4 class="title">Totaux du panier</h4>
+            <h4 class="title">Total du panier</h4>
 {% comment %}             <form id="shippingForm" method="POST" action="">
               <p class="shipping_title"></p>
               <div class="colors__divs">
                   <div class="divs__div color flexCenter pick_up_in_store">
                       <div class="shipping_option_container">
                           <div class="row justify-content-between">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-store"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"></path></svg>
-                            <span class="shipping_text">Free</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-store"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path></svg>
+                            <span class="shipping_text">Gratuit</span>
                           </div>
-                          <p>Pick up in store</p>
-                          <p>Available in working time</p>
+                          <p>Retrait en magasin</p>
+                          <p>Disponible pendant les heures de travail</p>
                       </div>
                   </div>
           
@@ -316,8 +316,8 @@ Cart
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg>
                             <span class="shipping_text">7.00 DT</span>
                           </div>
-                          <p>Ship to home</p>
-                          <p>1-2 day shipping</p>
+                          <p>Expédition à domicile</p>
+                          <p>Expédition en 1-2 jours</p>
                       </div>
                   </div>
               </div>
@@ -336,7 +336,7 @@ Cart
               <!-- <li class="subtitle"><p>Order Discounts <span class="float-end">-$30.01</span></p></li> -->
               <li class="subtitle">
                 <p>
-                  Frais de livraison
+                  Expédition estimée
                   <i
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -350,7 +350,7 @@ Cart
               </li>
               <li class="subtitle">
                 <p>
-                  Estimé {{tax_country.custom_name}}
+                  {{tax_country.custom_name}} estimé
                   <i
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -375,7 +375,7 @@ Cart
               <li class="subtitle"><hr /></li>
               <li class="subtitle totals">
                 <p>
-                  Totale
+                  Total
                   <span class="float-end"
                     >{{cs}}{{total_amount|floatformat:2}}</span
                   >
@@ -383,7 +383,7 @@ Cart
               </li>
 
               {% if coupon_name %}
-              <li><b>{{coupon_name}}</b> Coupon appliqué</li>
+              <li><b>{{coupon_name}}</b> Coupon Applied</li>
               {% endif %} {% for item in coupon_name.items %} hi {% endfor %}
             </ul>
           </div>

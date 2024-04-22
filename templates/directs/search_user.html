@@ -1,6 +1,6 @@
-
 {% extends "vendor/vendor-base.html" %}
 {% load static %}
+
 {% block content %}
 <style>
   th,
@@ -22,9 +22,9 @@
           <div class="col-lg-12">
             <div class="dashboard_title_area">
               <h2>
-                Showing Results for "<b><i>{{ username }}</i></b> "
+                Affichage des résultats pour "<b><i>{{ username }}</i></b> "
               </h2>
-              <p class="para">Found <b>{{users.count}} </b>Result(s)</p>
+              <p class="para">Trouvé <b>{{users.count}} </b>Résultat(s)</p>
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@
                 <div class="iu_heading">
                   <div class="candidate_revew_search_box">
                     <form class="row-cols-lg-aufto g-3 align-items-center d-flex p-3 m-2" action="{% url 'vendor:search_users' %}" method="GET">
-                      <input class="form-control" type="search" name="q" placeholder="Search For Someone..." aria-label="Search">
+                      <input class="form-control" type="search" name="q" placeholder="Rechercher quelqu'un..." aria-label="Recherche">
                       <button class="btn border p-2 ms-2"  type="submit"><span class="fas fa-search"></span></button>
                     </form>
                   </div>
@@ -61,7 +61,7 @@
                             <h5 class="name">{{message.username|title}}</h5>
                             {% endif %}
                             <p class="preview">
-                              Send Message
+                              Envoyer un message
                               <i class="bi bi-chat-right-dots-fill"></i>
                             </p>
                           </div>
@@ -74,7 +74,7 @@
                   </a>
 
                   {% empty %}
-                  <h4>No Users Found...</h4>
+                  <h4>Aucun utilisateur trouvé...</h4>
                   {% endfor %}
                 </ul>
               </div>

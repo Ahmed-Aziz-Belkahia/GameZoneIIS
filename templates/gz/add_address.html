@@ -1,16 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% extends "gz/base.html" %}
 {% load static %}
 
@@ -28,7 +15,7 @@
 
 {% block main %}
 <div class="container">
-    <h2>Add Address</h2>
+    <h2>Ajouter une adresse</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

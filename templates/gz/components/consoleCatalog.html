@@ -16,7 +16,7 @@
                     </div>
                     <div class="item__info flexCenter">
                         <div class="info__price">{{ product.price }}<span>DT</span></div>
-                        <div class="info__title">{{ product.title }}</div>
+                        <div class="info__title">{{ product.title|title|truncatechars:35}}</div>
                     </div>
                 </div>
             </a>

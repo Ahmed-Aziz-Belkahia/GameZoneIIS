@@ -1,8 +1,7 @@
-
 {% extends "partials/base.html" %}
 {% load static %}
 {% block title %}
-S'inscrire
+  Inscription
 {% endblock title %}
 {% block content %}
 {% load crispy_forms_tags %}
@@ -31,11 +30,11 @@ S'inscrire
           <form method="POST">
             {% csrf_token %}
             <div class="mb-2 mr-sm-2">
-              <label class="form-label">Nom et prénom</label>
+              <label class="form-label">Nom complet</label>
               {{form.full_name}}
             </div>
             <div class="mb-2 mr-sm-2">
-              <label class="form-label">adresse e-mail</label>
+              <label class="form-label">Adresse e-mail</label>
               {{form.email}}
             </div>
             <div class="mb-2 mr-sm-2">
@@ -43,21 +42,21 @@ S'inscrire
                 {{form.username}}
               </div>
             <div class="form-group mb5">
-              <label class="form-label">mot de passe</label>
+              <label class="form-label">Mot de passe</label>
               {{form.password1}}
             </div>
             <div class="form-group mb5">
-                <label class="form-label">Confirmez le mot de passe</label>
+                <label class="form-label">Confirmer le mot de passe</label>
                 {{form.password2}}
               </div>
               <br>
               <!-- <div class="form-group mb5">
-                <label class="form-label">Enter the code below</label> <br>
+                <label class="form-label">Entrez le code ci-dessous</label> <br>
                 {{form.captcha}}
               </div> -->
             
             <button type="submit" class="btn btn-log btn-thm mt20">Créer un compte</button>
-            <p class="text-center mb25 mt10">Vous avez déjà un compte ? <a href="{% url 'userauths:sign-in' %}" class="dashed-custom">Login Now</a></p>
+            <p class="text-center mb25 mt10">Vous avez déjà un compte ? <a href="{% url 'userauths:sign-in' %}" class="dashed-custom">Connectez-vous maintenant</a></p>
             <div class="hr_content">
             </div>
 
@@ -258,17 +257,17 @@ input[type='text'] {
           <main>
 
             <div class="stepper">
-              <div class="step--1 step-active">Step 1</div>
-              <!-- <div class="step--2">Step 2</div> -->
-              <!-- <div class="step--3">Step 3</div> -->
-              <div class="step--2">Finish</div>
+              <div class="step--1 step-active">Étape 1</div>
+              <!-- <div class="step--2">Étape 2</div> -->
+              <!-- <div class="step--3">Étape 3</div> -->
+              <div class="step--2">Fin</div>
             </div>
               {% csrf_token %}
             <div class="form form-active" method="POST">
               {% csrf_token %}
               <div class="form--header-container">
                 <h1 class="form--header-title" style="color: #fff; ">
-                  Personal Info
+                  Informations personnelles
                 </h1>
               </div>
               {{form.full_name}}
@@ -279,39 +278,39 @@ input[type='text'] {
             <div class="form">
               <div class="form--header-container">
                 <h1 class="form--header-title" style="color: #fff;">
-                  Choisir un mot de passe
+                  Choisissez un mot de passe
                 </h1>
 
                 <p class="form--header-text" style="color: #fff;">
-                  La sécurité est accrue lorsque votre mot de passe est fort.
+                  Plus votre mot de passe est fort, plus il est sécurisé
                 </p>
               </div>
 
               {{form.password1}}
               {{form.password2}}
               <!-- <hr> -->
-              <!-- <label for="" class="text-left">Enter Captcha Below</label>
+              <!-- <label for="" class="text-left">Entrez le captcha ci-dessous</label>
               {{form.captcha}} -->
               
-              <button class="form__btn" id="btn-2-prev">Previous</button>
-              <button class="form__btn d-none" id="btn-2-next">Next</button>
-              <button class="form__btn" id="btn-2-nexft" type="submit">Create Account</button>
+              <button class="form__btn" id="btn-2-prev">Précédent</button>
+              <button class="form__btn d-none" id="btn-2-next">Suivant</button>
+              <button class="form__btn" id="btn-2-nexft" type="submit">Créer un compte</button>
             </div>
 
             <div class="form">
               <div class="form--header-container">
                 <h1 class="form--header-title">
-                  Social account
+                  Compte social
                 </h1>
 
                 <p class="form--header-text">
-                  Tell us more about your social account.
+                  Parlez-nous davantage de votre compte social.
                 </p>
               </div>
               <input type="text" placeholder="Linkedin" />
               <input type="text" placeholder="Twitter" />
               <input type="text" placeholder="Github" />
-              <button class="form__btn" id="btn-3">Submit</button>
+              <button class="form__btn" id="btn-3">Soumettre</button>
             </div>
             <div class="form--message"></div>
           </main>
@@ -355,7 +354,7 @@ formBtn3.addEventListener('click', function(e) {
   document.querySelector(`.step--4`).classList.add('step-active');
   formBtn3.parentElement.style.display = 'none';
   document.querySelector('.form--message').innerHTML = `
-   <h1 class="form--message-text">Your account is successfully created </h1>
+   <h1 class="form--message-text">Votre compte a été créé avec succès </h1>
    `;
   e.preventDefault();
 });

@@ -2,156 +2,352 @@
 {% load static %}
 
 {% block title %}
-    Détails d'expédition et de facturation
+    Détails de livraison et de facturation
 {% endblock title %}
 
 {% load crispy_forms_tags %}
 {% block content %}
 
-<!-- {% crispy form %} -->
 <style>
-    ul,
-    li {
-        list-style: none;
-    }
-    .form-label{
-        font-size: medium;
-    }
-    .font-medium{
-        font-size: medium;
-    }
-    .subtitle .form-check-input:checked {
-        background-color: #94d92f;
-        border-color: #86bc42;
-    }
-    .subtitle .form-check-input:focus{
-        box-shadow: 0 0 0 0.25rem rgb(13 253 60 / 24%);
-    }
-    .subtitle label{
-        font-weight: 500;
-        color: #000;
-        cursor: pointer;
-        width: 100%;
-    }
-    .subtitle > div{
-        cursor: pointer;
-        flex-wrap: nowrap;
-    }
-    .scrollToHome.show{
-        display:none;
-    }
-    .payment-methods li {
-        cursor: pointer;
-        padding: 10px;
-        cursor: pointer;
-        margin-bottom: 10px;
-    }
-    .payment-methods li:hover {
-        background-color: #f0f0f0;
-    }
-    .payment-methods li.selected {
-        background-color: #94d92f;
-        border: 2px solid #94d92f;
-        border-radius: 10px;
-        color: white;
-    }
-    .payment-methods li.selected label{
-        color: white;
-    }
-    .shipping-methods > .subtitle{
-        cursor: pointer;
-        padding: 10px;
-        cursor: pointer;
-        margin-bottom: 10px;
-    }
-    .shipping-methods li:hover {
-        background-color: #f0f0f0;
-    }
-    .shipping-methods li.selected {
-        background-color: #94d92f;
-        border: 2px solid #94d92f;
-        border-radius: 10px;
-        color: white;
-    }
-    .shipping-methods li.selected label{
-        color: white;
-    }
+  ul,
+  li {
+    list-style: none;
+  }
+  .form-label{
+    font-size: medium;
+  }
+  .font-medium{
+    font-size: medium;
+  }
+  .subtitle .form-check-input:checked {
+    background-color: #94d92f;
+    border-color: #86bc42;
+}
+.subtitle .form-check-input:focus{
+  box-shadow: 0 0 0 0.25rem rgb(13 253 60 / 24%);
+}
+.subtitle label{
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  width: 100%;
+}
+.subtitle > div{
+  cursor: pointer;
+  flex-wrap: nowrap;
+}
+.scrollToHome.show{
+  display:none;
+}
+.payment-methods li {
+  cursor: pointer;
+  padding: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.payment-methods li:hover {
+  background-color: #f0f0f0;
+}
+.payment-methods li.selected {
+  background-color: #94d92f;
+  border: 2px solid #94d92f;
+  border-radius: 10px;
+  color: white;
+}
+.payment-methods li.selected label{
+  color: white;
+}
+.shipping-methods > .subtitle{
+  cursor: pointer;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.shipping-methods li:hover {
+  background-color: #f0f0f0;
+}
+.shipping-methods li.selected {
+  background-color: #94d92f;
+  border: 2px solid #94d92f;
+  border-radius: 10px;
+  color: white;
+}
+.shipping-methods li.selected label{
+  color: white;
+}
 </style>
 <div class="body_content_wrapper position-relative" style="margin-top: 30px">
-    <!-- Breadcrumb de la page intérieure -->
-    <section class="inner_page_breadcrumb">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="breadcrumb_content">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'store:home' %}">Accueil</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'store:cart-view' %}">Boutique</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'store:cart-view' %}">Mon Panier</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                <a href="#">Détails de l'expédition</a>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
+  <!-- Breadcrumb interne de la page -->
+  <section class="inner_page_breadcrumb">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="breadcrumb_content">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'store:home' %}">Accueil</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="{% url 'store:cart-view' %}">Boutique</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="{% url 'store:cart-view' %}">Mon Panier</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                <a href="#">Détails de livraison</a>
+              </li>
+            </ol>
+          </div>
         </div>
-    </section>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-    <!-- Contenu de la caisse de magasin -->
-    <section class="shop-cart pt30">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-lg-4 m-auto">
-                    <div class="main-title text-center">
-                        <h2 class="title">Détails de facturation et d'expédition</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row" id="cartList">
-                <div class="col-lg-8 col-xl-9" style="overflow: hidden">
-                    <div class="shopping_cart_table table-responsive" style="overflow: hidden">
-                        <form class="form2" id="coupon_form" name="contact_form" method="POST" style="">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group mb-3">
-                                        <label class="form-label">Nom complet *</label>
-                                        {{form.full_name}}
-                                    </div>
-                                </div>
-                                <!-- Plus de champs de formulaire... -->
-                            </div>
-                            <!-- Plus de champs de formulaire... -->
-                            {% if totalcartitems %}
-                            <button type="submit" class="btn purple-btn btn-block h-10">
-                                Passer à la caisse
-                            </button>
-                            {% endif %}
-                        </form>
-                    </div>
-                </div>
-                <!-- Sidebar de commande -->
-                <div class="col-lg-4 col-xl-3">
-                    <div class="order_sidebar_widget style2">
-                        <h4 class="title">Total du panier</h4>
-                        <!-- Contenu du widget de sidebar de commande -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div>
+      </div>
     </div>
+  </section>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+  <!-- Contenu de la page de paiement -->
+  <section class="shop-cart pt30">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-lg-4 m-auto">
+          <div class="main-title text-center">
+            <h2 class="title">Détails de facturation et de livraison</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="cartList">
+        <div class="col-lg-8 col-xl-9" style="overflow: hidden">
+          <div
+            class="shopping_cart_table table-responsive"
+            style="overflow: hidden"
+          >
+            <form
+              class="form2"
+              id="coupon_form"
+              name="contact_form"
+              method="POST"
+              style=""
+              >
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Nom complet *</label>
+                    {{form.full_name}}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Adresse e-mail *</label>
+                    {{form.email}}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Portable *</label>
+                    {{form.mobile}}
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Pays*</label>
+                    {{form.country}}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group mb-3">
+                    <label class="form-label">État*</label>
+                    {{form.state}}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Ville ou commune*</label>
+                    {{form.town_city}}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Rue et adresse domicile*</label>
+                    {{form.address}}
+                  </div>
+                </div>
+                <!-- <div class="col-sm-6">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Code postal*</label>
+                    {{form.postal_code}}
+                  </div>
+                </div> -->
+                <div class="col-sm-12">
+                  <div class="form-group mb-3 d-flex align-items-center gap-2">
+                    <label class="form-check-label font-medium" for="efwefwe"
+                      >L'adresse de livraison est-elle identique à l'adresse de facturation</label
+                    >
+                    <input
+                      type="checkbox"
+                      class="form-check-input checkbox_check"
+                      id="checkboxIdInput"
+                      checked
+                    />
+                  </div>
+                </div>
+
+                <div class="row" hidden id="actions">
+                  <h3>Ajouter une adresse de facturation</h3>
+                  <div class="col-sm-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label class="form-label">Sélectionner le pays de facturation</label>
+                      {{form.billing_country}}
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label class="form-label">Sélectionner l'état de facturation</label>
+                      {{form.billing_state}}
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label class="form-label">Sélectionner la ville ou la commune de facturation</label>
+                      {{form.billing_town_city}}
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label class="form-label">Sélectionner l'adresse de facturation</label>
+                      {{form.billing_address}}
+                    </div>
+                  </div>
+                  <!-- <div class="col-sm-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label class="form-label">Sélectionner le code postal de facturation</label>
+                      {{form.billing_postal_code}}
+                    </div>
+                  </div> -->
+                </div>
+                
+                <h4 class="title">Mode de livraison</h4>
+                <ul class="shipping-methods">
+                    <li class="subtitle" data-value="ship_to_home">
+                        <div class="form-check-inline d-flex align-items-center gap-2">
+                            <input type="radio" class="form-check-input" id="shipping_method1" name="shipping_method" value="ship_to_home" checked>
+                            <label class="form-check-label font-medium d-flex align-items-center gap-2" for="shipping_method1">
+                                <i class="fa-solid fa-truck"></i>
+                                Livraison à domicile
+                            </label>
+                        </div>
+                    </li>
+                    <li class="subtitle" data-value="pick_up_in_store">
+                        <div class="form-check-inline d-flex align-items-center gap-2">
+                            <input type="radio" class="form-check-input" id="shipping_method2" name="shipping_method" value="pick_up_in_store">
+                            <label class="form-check-label font-medium d-flex align-items-center gap-2" for="shipping_method2">
+                                <i class="fa-solid fa-store"></i>
+                                Retrait en magasin
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+                
+                <h4 class="title">Mode de paiement</h4>
+                <ul class="payment-methods">
+                    <li class="subtitle" data-value="credit_card">
+                        <div class="form-check-inline d-flex align-items-center gap-2">
+                            <input type="radio" class="form-check-input" id="payment_method1" name="payment_method" value="credit_card" checked>
+                            <label class="form-check-label font-medium d-flex align-items-center gap-2" for="payment_method1">
+                                <i class="fa-solid fa-credit-card"></i>
+                                Carte de crédit
+                            </label>
+                        </div>
+                    </li>
+                    <li class="subtitle" data-value="cash">
+                        <div class="form-check-inline d-flex align-items-center gap-2">
+                            <input type="radio" class="form-check-input" id="payment_method2" name="payment_method" value="cash">
+                            <label class="form-check-label font-medium d-flex align-items-center gap-2" for="payment_method2">
+                                <i class="fa-solid fa-money-bill"></i>
+                                Payer en espèces à la livraison
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+
+                {% if totalcartitems %}
+                <button type="submit" class="btn purple-btn btn-block h-10">
+                  Passer à la caisse
+                </button>
+                {% endif %}
+              </div>
+              <a href="{% url 'store:cart-view' %}" class="dashed-custom mt-3 font-medium"
+                >Retourner au panier</a
+              >
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xl-3">
+          <div class="order_sidebar_widget style2">
+            <h4 class="title">Total du panier</h4>
+            <ul>
+              <li class="subtitle">
+                <p>
+                  Sous-total du produit
+                  <span class="float-end"
+                    >{{ cs }}{{cart_total_amount|floatformat:2}}</span
+                  >
+                </p>
+              </li>
+              <li class="subtitle">
+                <p>
+                  Livraison estimée
+                  <i
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Tooltip on top"
+                    class="bi bi-info-circle-fill"
+                  ></i>
+                  <span class="float-end"
+                    >{{ cs }}{{total_shipping_amount|floatformat:2}}</span
+                  >
+                </p>
+              </li>
+              <li class="subtitle">
+                <p>
+                  {{tax_country.custom_name}} estimée
+                  <i
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Tooltip on top"
+                    class="bi bi-info-circle-fill"
+                  ></i
+                  ><span class="float-end"
+                    >{{cs}}{{ tax_amount_|floatformat:2 }}</span
+                  >
+                </p>
+              </li>
+              <li class="subtitle">
+                <p>
+                  Frais de service
+                  <span class="float-end"
+                    >{{ cs }}{{service_fee_amount|floatformat:2}}</span
+                  >
+                </p>
+              </li>
+              <li class="subtitle"><hr /></li>
+              <li class="subtitle totals">
+                <p>
+                  Total
+                  <span class="float-end"
+                    >{{cs}}{{total_amount|floatformat:2}}</span
+                  >
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div>
+  </div>
 </div>
 
 {% endblock content %}
-

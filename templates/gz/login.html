@@ -3,9 +3,9 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static "gz/styles/login.css" %}">
-    {% block title%}
+    {% block title %}
     <title>GameZone | Connexion</title>
-    {% endblock title%}
+    {% endblock title %}
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 {% endblock head %}
@@ -19,7 +19,7 @@
         <img src="{% static "gz/assets/logo/logo_white.png" %}" alt="">
     </div>
     <div class="form-box">
-                <!-- Error message container -->
+                <!-- Conteneur du message d'erreur -->
                 <div id="errorMessage"></div>
         <div class="form-value">
             <form method="post">
@@ -42,7 +42,7 @@
                 </div>
                 <button id='signinSubmit'>Se connecter</button>
                 <div class="register">
-                    <p>créer un compte <a href="{% url "register" %}">Inscription</a></p>
+                    <p>Créer un compte <a href="{% url "register" %}">Inscription</a></p>
                 </div>
             </form>
         </div>
