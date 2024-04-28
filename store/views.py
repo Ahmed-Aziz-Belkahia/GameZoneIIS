@@ -636,6 +636,10 @@ def offer(request):
 def product_detail(request, meta_title):
     product = Product.objects.get(status="published", meta_title=meta_title)
     
+    if product.stock_qty == 0:
+        messages.warning(request, "This product is currently out of stock.")
+        return redirect("store:home")
+    
     if product.status == "disabled":
         return redirect("store:home")
     

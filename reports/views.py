@@ -152,7 +152,7 @@ def report_issue(request):
             user=request.user
         )
         messages.success(request, "Your issue have been reported, we would get back to you as soon as possible.")
-        return redirect("core:buyer-dashboard")
+        return redirect("core:profile")
     
     return render(request, "report/report-issue.html")
     
