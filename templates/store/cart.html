@@ -1,7 +1,7 @@
 {% extends "partials/base.html" %}
 {% load static %}
 {% block title %}
-    Cart
+    Panier
 {% endblock title %}
 {% block content %}
 {% load crispy_forms_tags %}
@@ -54,7 +54,6 @@
     }
   }
   .colors__divs {
-    /* width: 100%; */
     display: flex;
     align-items: flex-start;
     gap: 1rem;
@@ -65,24 +64,19 @@
     position: relative;
     overflow: hidden;
     align-items: self-start;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
     background-color: transparent;
     border: 2px solid gray;
     border-radius: 8px;
     cursor: pointer;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: column;
     flex-direction: column;
     gap: 4px;
     outline: none;
-    width: -webkit-fill-available;
+    width: 100%;
   }
   .shipping_option_container {
     padding: 1rem;
-    width: -webkit-fill-available;
+    width: 100%;
 }
 .shipping_option_container p {
   font-size: .8125rem;
@@ -154,7 +148,6 @@
         <div class="col-sm-6 col-lg-4 m-auto">
           <div class="main-title text-center mb50">
             <h2 class="title">Panier d'achats</h2>
-            <!-- <input type="text" name="" id=""> -->
           </div>
         </div>
       </div>
@@ -173,7 +166,6 @@
                   <th scope="col">PRIX</th>
                   <th scope="col">QUANTITÉ</th>
                   <th scope="col">TOTAL</th>
-                  <th scope="col">METTRE À JOUR</th>
                   <th scope="col">SUPPRIMER</th>
                 </tr>
               </thead>
@@ -204,9 +196,6 @@
                           <br />
                           <span class="fz16">Par : <b><i>{{p.product_brand|title}}</i></b></span>
                           <br />
-                          <span class="fz16">Stock Qty: </a><span id="stock_qty{{product_id}}">{{p.product_stock_qty}}</span></span>
-
-                          <br />
                         </a>
                       </li>
                     </ul>
@@ -222,12 +211,7 @@
                     class="product-product_processing_fee-{{ product_id }}"
                     value="{{ p.product_processing_fee }}"
                   />
-                  <input
-                    type="hidden"
-                    class="product-product_tax_fee-{{ product_id }}"
-                    value="{{ p.product_tax_fee }}"
-                  />
-
+              
                   <input type="hidden" class="product-product_stock_qty-{{ product_id }}" value="{{ p.product_stock_qty }}" />
 
 
@@ -258,7 +242,6 @@
                         </button>
                       </div>
                     </div>
-                    <!-- <input class="cart_count text-center" placeholder="2" type="number"> -->
                   </td>
                   <td class="">{{ cs }}{% widthratio p.price 1 p.qty %}</td>
                   <td class="action text-center" data-title="Remove">
@@ -267,8 +250,7 @@
                       class="text-body update-item"
                       data-item="{{ product_id }}"
                     >
-                      <i class="bi bi-arrow-clockwise"></i>
-                    </button>
+                    
                   </td>
                   <td class="action text-center" data-title="Remove">
                     <button
@@ -295,35 +277,7 @@
         <div class="col-lg-4 col-xl-4">
           <div class="order_sidebar_widget style2">
             <h4 class="title">Total du panier</h4>
-{% comment %}             <form id="shippingForm" method="POST" action="">
-              <p class="shipping_title"></p>
-              <div class="colors__divs">
-                  <div class="divs__div color flexCenter pick_up_in_store">
-                      <div class="shipping_option_container">
-                          <div class="row justify-content-between">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-store"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path></svg>
-                            <span class="shipping_text">Gratuit</span>
-                          </div>
-                          <p>Retrait en magasin</p>
-                          <p>Disponible pendant les heures de travail</p>
-                      </div>
-                  </div>
-          
-                  <div class="divs__div color flexCenter ship_to_home selected">
 
-                      <div class="shipping_option_container">
-                          <div class="row justify-content-between">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg>
-                            <span class="shipping_text">7.00 DT</span>
-                          </div>
-                          <p>Expédition à domicile</p>
-                          <p>Expédition en 1-2 jours</p>
-                      </div>
-                  </div>
-              </div>
-              <input type="hidden" id="selectedColorInput" name="selected_color" value="1">
-          </form> {% endcomment %}
-              
             <ul>
               <li class="subtitle">
                 <p>
@@ -333,7 +287,6 @@
                   >
                 </p>
               </li>
-              <!-- <li class="subtitle"><p>Order Discounts <span class="float-end">-$30.01</span></p></li> -->
               <li class="subtitle">
                 <p>
                   Expédition estimée
@@ -348,30 +301,6 @@
                   >
                 </p>
               </li>
-              <li class="subtitle">
-                <p>
-                  {{tax_country.custom_name}} estimé
-                  <i
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Tooltip on top"
-                    class="bi bi-info-circle-fill"
-                  ></i
-                  ><span class="float-end"
-                    >{{cs}}{{ tax_amount_|floatformat:2 }}</span
-                  >
-                </p>
-              </li>
-              <li class="subtitle">
-                <p>
-                  Frais de service
-                  <span class="float-end"
-                    >{{ cs }}{{service_fee_amount|floatformat:2}}</span
-                  >
-                </p>
-              </li>
-              <!-- <li class="subtitle"><p>xEstimated Taxes <i data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" class="bi bi-info-circle-fill"></i><span class="float-end">{{ cs }}{{total_tax|floatformat:2}}</span></p></li> -->
-              <!-- <li class="subtitle"><p>Service Fee <span class="float-end">{{ cs }}{{service_fee_amount|floatformat:2}}</span></p></li> -->
               <li class="subtitle"><hr /></li>
               <li class="subtitle totals">
                 <p>
@@ -403,7 +332,6 @@
   $(document).on("click", "#increase-btn", function () {
     let id = $(this).attr("data-btn");
     var input_value = $("#qty" + id).val();
-    console.log(input_value);
 
     if (input_value >= 0) {
       input_value++;
@@ -414,7 +342,6 @@
   $(document).on("click", "#decrease-btn", function () {
     let id = $(this).attr("data-btn");
     var input_value = $("#qty" + id).val();
-    console.log(input_value);
 
     if (input_value >= 0) {
       input_value--;
@@ -431,33 +358,25 @@
 
     shippingOptions.forEach(option => {
         option.addEventListener('click', () => {
-            // Remove 'selected' class from all options
             shippingOptions.forEach(opt => {
                 opt.classList.remove('selected');
             });
-            // Add 'selected' class to the clicked option
             option.classList.add('selected');
 
-            // Set the value of the hidden input based on the selected option
             document.getElementById('selectedColorInput').value = option.classList.contains('pick_up_in_store') ? "0" : "1";
 
-            // Update selected shipping method
             const selectedShippingMethod = document.getElementById('selectedColorInput').value;
             console.log('Selected Shipping Method:', selectedShippingMethod);
 
-            // Call a function to reload prices based on the selected method
             reloadPrices(selectedShippingMethod);
         });
     });
 
-    // Simulate click event on default shipping option (ship to home)
-    document.querySelector('.ship_to_home').click(); // Assuming ship_to_home has the 'selected' class by default
+    document.querySelector('.ship_to_home').click();
 });
 
 function reloadPrices(selectedShippingMethod) {
-    // This is a placeholder function, you should replace this with your actual logic
     console.log('Reloading prices for shipping method:', selectedShippingMethod);
-    // Update prices based on selectedShippingMethod
 }
         
 </script>

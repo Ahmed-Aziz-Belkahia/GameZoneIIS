@@ -148,6 +148,7 @@ class Category(models.Model):
     title = models.CharField(max_length=100)
     meta_title = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="category", default="category.png", null=True, blank=True)
+    alt = models.CharField(max_length=100, blank=True, null=True)
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -178,6 +179,7 @@ class SubCategory(models.Model):
     title = models.CharField(max_length=100)
     meta_title = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="sub_category", default="sub_category.png", null=True, blank=True)
+    alt = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Sub Categories"
@@ -253,8 +255,10 @@ class Genre(models.Model):
     title = models.CharField(max_length=100)
     meta_title = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="genre", default="genre.png", null=True, blank=True)
+    alt = models.CharField(max_length=100, blank=True, null=True)
     featured = models.BooleanField(default=False)
     featured_image = models.ImageField(upload_to="featured genre", default="featured genre.png", null=True, blank=True)
+    featured_alt = models.CharField(max_length=100, blank=True, null=True)
 
     active = models.BooleanField(default=True)
 
@@ -284,6 +288,7 @@ class Brand(models.Model):
     title = models.CharField(max_length=100)
     meta_title = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="brand", default="brand.png", null=True, blank=True)
+    alt = models.CharField(max_length=100, blank=True, null=True)
     featured = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     
@@ -334,6 +339,7 @@ class Choice(models.Model):
     title = models.CharField(max_length=150, blank=True, null=True)
     meta_title = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="choice", default='choice.png', blank=True, null=True)
+    alt = models.CharField(max_length=100, blank=True, null=True)
 
     def save(self, *args, **kwargs):
 
@@ -356,9 +362,11 @@ class Product(models.Model):
     #types = models.ManyToManyField(Type, blank=True, related_name='products')
 
     title = models.CharField(max_length=100)
-    meta_title = models.SlugField(unique=True, null=True, blank=True)
+    meta_title = models.SlugField(unique=True, blank=True, null=True)
+    title_meta_title = models.CharField(max_length=1000, null=True, blank=True)
 
     image = models.ImageField(upload_to=user_directory_path, default="product.png")
+    alt = models.CharField(max_length=100, blank=True, null=True)
     description = CKEditor5Field(config_name='extends', null=True, blank=True)
     meta_description = models.CharField(blank=True, null=True, max_length=10000)
 
@@ -385,17 +393,21 @@ class Product(models.Model):
     game = models.BooleanField(default=False, null=True, blank=True)
     featured_game = models.BooleanField(default=False, null=True, blank=True)
     featured_game_banner = models.ImageField(upload_to="featured game banner", default="featured game banner.png", null=True, blank=True)
+    featured_game_banner_alt = models.CharField(max_length=100, blank=True, null=True)
 
     add_to_featured_games_slider = models.BooleanField(default=False, null=True, blank=True)
     featured_game_slider_banner = models.ImageField(upload_to="featured game slider banner", default="featured game slider banner.png", null=True, blank=True)
     featured_game_slider_mobile_banner = models.ImageField(upload_to="featured game slider banner", default="featured game slider mobile banner.png", null=True, blank=True)
+    featured_game_slider_alt = models.CharField(max_length=100, blank=True, null=True)
 
     hero_section_featured = models.BooleanField(default=False, null=True, blank=True)
     hero_banner = models.ImageField(upload_to="hero", default="hero.png", null=True, blank=True)
     hero_banner_mobile = models.ImageField(upload_to="hero", default="hero_mobile.png", null=True, blank=True)
+    hero_alt = models.CharField(max_length=100, blank=True, null=True)
 
     deal_category = models.CharField(choices=DEAL_CATEGORIES, max_length=40, blank=True, null=True)
     deal_image = models.ImageField(upload_to="deal", default="deal.png", null=True, blank=True)
+    deal_alt = models.CharField(max_length=100, blank=True, null=True)
     deal_description = models.CharField(max_length=150, blank=True, null=True)
 
     catalog_type = models.CharField(choices=CATALOG_TYPES, max_length=40, blank=True, null=True)
@@ -418,6 +430,7 @@ class Product(models.Model):
     bidders = models.ManyToManyField(User, related_name="bidders", blank=True)
     slug = models.SlugField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+    release_date = models.DateField(null=True, blank=True)
 
     class Meta:
         ordering = ['-date']
@@ -494,6 +507,7 @@ class Product(models.Model):
 class Gallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, related_name="product_gallery")
     image = models.ImageField(upload_to="product_gallery", default="gallery.png")
+    alt = models.CharField(max_length=100, blank=True, null=True)
     active = models.BooleanField(default=True)
     date = models.DateTimeField(auto_now_add=True)
     gid = ShortUUIDField(length=10, max_length=25, alphabet="abcdefghijklmnopqrstuvxyz")
@@ -716,6 +730,7 @@ class CallToActionBanner(models.Model):
     cid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet="abcdefghijklmnopqrstuvxyz")
     banner = models.ImageField(upload_to="cta banner", default="cta banner.png")
     banner_mobile = models.ImageField(upload_to="cta banner", default="cta monile banner.png")
+    banner_alt = models.CharField(max_length=100, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True, related_name="CTA_Banners")
     CTA_type = models.CharField(max_length=100, choices=CTA_TYPES)
     active = models.BooleanField(default=True)

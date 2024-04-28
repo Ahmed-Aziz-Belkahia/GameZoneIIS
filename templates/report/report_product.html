@@ -1,16 +1,23 @@
+<!--
 {% extends "partials/base.html" %}
 {% load static %}
+
+{% block title %}Signaler un problem{% endblock %}
+
+{% block meta_title %}si vous avez un problem avec votre console contacter nous{% endblock %}
+{% block meta_description %}si vous avez un problem avec le jeux ou la console merci de nous comuniquer le problem{% endblock %}
+
 {% block content %}
   
   <div class="body_content_wrapper position-relative">
-  <!-- Fil d'Ariane de la Page Intérieure -->
+  <!-- Fil d'Ariane de la Page Intérieure 
   <section class="inner_page_breadcrumb">
     <div class="container">
       <div class="row">
         <div class="col-xl-6">
           <div class="breadcrumb_content">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+              <!--<li class="breadcrumb-item"><a href="#">Accueil</a></li>
               <li class="breadcrumb-item"><a href="#">Électronique</a></li>
               <li class="breadcrumb-item active"><a href="#">Ordinateurs</a></li>
             </ol>
@@ -20,11 +27,11 @@
     </div>
   </section>
 
-	<section class="our-order-tracking pt0">
-		<div class="container">
-			<div class="row">
-                <div class="col-lg-6">
-                    <div class="order_tracdking_thumb animate_content">
+  <section class="our-order-tracking pt0">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="order_tracdking_thumb animate_content">
             <img class="animate_thumb" src="https://media.istockphoto.com/id/894875516/vector/exclamation-point-sign-in-red-triangle-vector-icon.jpg?s=612x612&w=0&k=20&c=AYMHwOnNCaWz8j3ubjC24cBrlk_ei_oCB3kS-UwvZtU=" alt="">
           </div>
         </div>
@@ -33,7 +40,7 @@
             <div class="login_form tracking_page pt100 pt50-lg">
               <form method="POST">
                 {% csrf_token %}
-                <h1 class="title">Signaler le Produit</h1> <!-- Corrected closing tag </h1> -->
+                <h1 class="title">Signaler le Produit</h1> 
                 <p class="mb30">Veuillez nous donner des informations détaillées sur la raison pour laquelle vous signalez ce produit.</p>
                 <div class="form-group">
                   <label class="form-label">Pourquoi signalez-vous ce produit</label>
@@ -45,9 +52,10 @@
             </div>
           </div>
         </div>
-			</div>
-		</div>
-	</section>
+      </div>
+    </div>
+  </section>
 
   </div>
 {% endblock content %}
+-->

@@ -1,11 +1,18 @@
 {% extends "partials/base.html" %}
 {% load static %}
+
 {% block title %}
-All Categories
+Toutes les catégories
 {% endblock title %}
+
+{% block meta %}
+<meta name="description" content="Découvrez toutes les catégories disponibles dans notre magasin en ligne.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock meta %}
+
 {% block content %}
 
-
+<h1>Toutes les catégories</h1>
 
 <section class="top-category pb30 pt20">
    <div class="container">
@@ -13,7 +20,7 @@ All Categories
          <div class="col-lg-12">
             <div class="d-flex justify-content-between">
                <div class="main-title">
-                  <h2>All Categories</h2>
+                  <h4>Achetez les meilleures consoles, PlayStation 4, PlayStation 5, Nintendo Switch et Xbox, à bas prix.</h4>
                </div>
             </div>
          </div>
@@ -23,10 +30,10 @@ All Categories
          <div class="col-6 col-md-3 col-xl wow fadeInUp" data-wow-duration=".7s">
             <a href="{% url 'store:category_detail' c.cid %}">
                <div class="iconbox">
-                  <div class="icon"><img src="{{c.image.url}}" alt="Category Image"></div>
+                  <div class="icon"><img src="{{c.image.url}}" alt="Category {{c.title}} image"></div>
                   <div class="details">
                      <h5 class="title">{{c.title|title}}</h5>
-                     <p class="subtitle">{{c.product_count}} item(s)</p>
+                     <p class="subtitle">{{c.product_count}} Article</p>
                   </div>
                </div>
             </a>
@@ -38,5 +45,34 @@ All Categories
    </div>
 </section>
 
+{% for p in products_ %}
+<div class="container">
+   <div class="row">
+      <div class="col-lg-4 col-md-6 mb30">
+         <div class="product-item">
+            <div class="product-thumb">
+               <a href="{% url 'store:product_detail' p.pid %}"><img src="{{p.image.url}}" alt="Product Image"></a>
+               <div class="product-action">
+                  <a href="#" title="Quick View"><i class="fa fa-search"></i></a>
+                  <a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                  <a href="#" title="Add to Compare"><i class="fa fa-exchange"></i></a>
+               </div>
+            </div>
+            <div class="product-content">
+               <h5 class="title"><a href="{% url 'store:product_detail' p.pid %}">{{p.title|title}}</a></h5>
+               <div class="price">{{p.price}} DT</div>
+               <div class="rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half"></i>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}
 
 {% endblock content %}

@@ -49,16 +49,14 @@
                 <div class="tab-content" id="v-pills-tabContent">
 
                   
-                    {% for g in product_images %}
-                    <div class="tab-pane fade" id="v-pills-{{g.gid}}" role="tabpanel" aria-labelledby="v-pills-{{g.gid}}-tab">
-                        <div class="shop_single_navmenu_content mb-3 text-center">
-                        <a class="product_popup popup-img" href="{{g.image.url}}"><span class="bi bi-fullscreen"></span></a>
-                        <div class="zoomimg_wrapper">
-                            <img class="zoom-img product-detail-img" id="zoom_02" src="{{g.image.url}}" data-zoom-image="{{g.image.url}}" width="350" alt="Shop Single Image"/>
-                        </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+                  {% for g in product_images %}
+                  <div class="tab-pane fade" id="v-pills-{{g.gid}}" role="tabpanel" aria-labelledby="v-pills-{{g.gid}}-tab">
+                      <div class="shop_single_navmenu_content mb-3 text-center">
+                          <a class="product_popup popup-img" href="{{g.image.url}}"><span class="bi bi-fullscreen"></span></a>
+                          <img class="product-detail-img" src="{{g.image.url}}" width="350" height="350" alt="Shop Single Image"/>
+                      </div>
+                  </div>
+              {% endfor %}
 
                   <div class="tab-pane fade show active" id="v-pills-{{product.pid}}" role="tabpanel" aria-labelledby="v-pills-{{product.pid}}-tab">
                     <div class="shop_single_navmenu_content mb-3 text-center">
@@ -192,23 +190,7 @@
                 </li>
                 {% endif %}
 
-                <li class="d-flex mt-3"><a href="#">Share</a>
-                  <span class="social_icons">
-                    <ul class="mb0">
-                      <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
-                      <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                      <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
-                      <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                    </ul>
-                  </span>
-                </li>
-                <li class="d-flex mt-1"><a href="{% url 'reports:product-report' product.pid %}">Report <i class="bi bi-exclamation-triangle-fill"></i> </a></li>
 
-              </ul>
-            </div>
-          </div>
-          
-          <div class="col-xl-3">
             
             {% if product.type == "auction" %}
               {% if product.bidding_ended == False %}

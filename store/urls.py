@@ -21,6 +21,7 @@ urlpatterns = [
     path('success-payment/', views.PaymentSuccessView, name='success'),
     path('failed-payment/', views.PaymentFailedView, name='failed'),
     
+    
     # Bidding and Auctioon
     path("auction/", views.auction, name="auction"),
     path("auction_detail/<pid>/", views.auction_detail, name="auction_detail"),

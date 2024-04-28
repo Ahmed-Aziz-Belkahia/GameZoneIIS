@@ -111,7 +111,7 @@
             <div class="col-lg-12">
               <div class="dashboard_setting_box">
                 <div class="ui_kit_tab style2">
-                  <!-- nav tab Nav List Start -->
+                   nav tab Nav List Start 
                   <div class="tab-content pt20 row" id="myTabContent">
                     <div class="tab-pane fade show active col-lg-12" id="editprofile" role="tabpanel" aria-labelledby="editprofile-tab">
                       <div class="account_details_page form_grid">
@@ -150,14 +150,14 @@
                                         </div>
                                         <table class="table card-header p2 p-2">
                                             <tbody id="item-variants">  <!-- id="item-inlineformsetname" -->
-                                                <!-- formset non forms errors -->
+                                                 formset non forms errors -
                                                 {% for error in formset.non_form_errors %}
                                                     <span style="color: red">{{ error }}</span>
                                                 {% endfor %}
                                                 {{formss.image}}
                                                 {% for formss in formset %}
                                                     {{ formss.management_form }}
-                                                    <tr id="variants-{{ forloop.counter0 }}" class= hide_all>  <!-- id="inlineformsetname-counter" -->
+                                                    <tr id="variants-{{ forloop.counter0 }}" class= hide_all>   id="inlineformsetname-counter" 
                                                         {{ formss.id }}
                                                         {% for field in formss.visible_fields %}
                                                             <td>
@@ -194,7 +194,7 @@
                     
                     
                   </div>
-                  <!-- nav tab contents End -->
+                   nav tab contents End 
                 </div>
               </div>
             </div>

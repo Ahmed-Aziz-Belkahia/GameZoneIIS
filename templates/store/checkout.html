@@ -162,12 +162,6 @@ checkout
                        </li>
                        
                        <li class="subtitle">
-                        <p>{{tax_country.custom_name}} Estimé <span class="float-end totals">{{ cs }}{{ order.vat|floatformat:2 }}</span></p>
-                        </li>
-                        <li class="subtitle">
-                           <p>Frais de Service <span class="float-end totals">{{ cs }}{{ order.service_fee|floatformat:2 }}</span></p>
-                           </li>
-                       <li class="subtitle">
                           <p>Total  <span class="float-end totals">{{cs}}{{order.original_total|floatformat:2}}</span></p>
                           
                           {% if order.saved != 0.00 %}

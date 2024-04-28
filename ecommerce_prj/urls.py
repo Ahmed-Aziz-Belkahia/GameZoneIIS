@@ -9,7 +9,7 @@ from django.conf.urls import handler404, handler500
 urlpatterns = [
     # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     path('khalabiza/', admin.site.urls),
-    path('', include("store.urls")),
+    
     path('user/', include("userauths.urls")),
     path('b/', include("core.urls")),
     path('vendor/', include("vendor.urls")),
@@ -41,3 +41,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+urlpatterns + path('', include("store.urls")),

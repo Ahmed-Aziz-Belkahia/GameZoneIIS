@@ -11,122 +11,115 @@
 {% endblock header %}
 
 {% block main %}
-    <div class="main__product">
-        <div class="product__div">
-            <div class="product__product flexCenter">
-                <div class="product__url">{{ product.subcategories }}</div>
-                <div class="product__info flexCenter">
-                    <div class="left__pictures-container flexCenter">
-                        <div class="pictures-container__sideImages">
-                            <div class="sideImages__div flexCenter">
-                                <div class="sideImages__sideImage flexCenter">
-                                    <img src="{{ product.image.url }}" alt="">
-                                </div>
-                                {% for subImage in product.subImages.all %}
-                                    <div class="sideImages__sideImage flexCenter">
-                                        <img src="{{ subImage.image.url }}" alt="">
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="pictures-container__mainImage" id="mainImageContainer">
-                            <img src="{{ product.image.url }}" alt="" id="mainImage">
-                            <div class="zoom-circle" id="zoomCircle"></div>
-                        </div>
-                    </div>
-                    <div class="info__right">
-                        <div class="right__title">{{ product.title }}</div>
-                        <div class="right__manufacturer">{{ product.manufacturer }}</div>
-                        <div class="right__reviews flexCenter">
-                            <div class="reviews__stars">
-                                {% for star in "xxxxx"|make_list %}
-                                    {% if forloop.counter <= reviews %}
-                                        <div class="stars__star"><i class="fa-solid fa-star"></i></div>
-                                    {% else %}
-                                        <div class="stars__star"><i class="fa-regular fa-star"></i></div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="reviews__numbers"><a href="#"> 4.5 (15)</a></div>
-                        </div>
-                        <div class="right__price flexCenter">
-                            <div class="price__current">{{ product.price }} DT</div>
-                        </div>
-                        <div class="points">
-                            <div class="points__div">Vous collectez {{ product.points }} GZ Coins</div>
-                        </div>
-                        {% for type in product.types.all %}
-                            <div class="right__choices">
-                                <div class="choices__label">
-                                    {{ type.name }}: <span></span>
-                                </div>
-                                <form class="choice-form" method="POST" action="">
-                                    {% csrf_token %}
-                                    <div class="choices__divs">
-                                        {% for choice in type.choices.all %}
-                                            <div class="divs__div choice flexCenter" data-choice-id="{{ choice.name }}">
-                                                <img src="{{ choice.img.url }}" alt="{{ choice.name }}">
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                    <input type="hidden" class="selected-choice-input" name="selected_choice" value="">
-                                </form>
-                            </div>
-                        {% endfor %}
-                        <div class="right__shipping">
-                            <div class="shipping__div">Livraison GRATUITE à partir de 300 DT</div>
-                            <div class="shipping__div">Expédition en 24h</div>
-                        </div>
-                        <div class="right__button flexCenter">
-                            <a class="add-to-cart">Ajouter au panier</a>
-                            <a class="buy-now">Acheter</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="info__left">
-                    <div class="bottom__desctiption">
-                        <div class="description__features">
-                            <div class="features__title">Caractéristiques :</div>
-                            <ul class="features__container">
-                                {% for feature in product.feature_set.all %}
-                                    <li class="features__div">
-                                        <strong>{{ feature.title }}</strong><p>{{ feature.description }}</p>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="description__full-description">
-                            <div class="full-description__title">Description du produit :</div>
-                            <div class="full-description__content">{{ product.description }}</div>
-                        </div>
-                        <div class="Specifications">
-                            <div class="features__title">Spécifications :</div>
-                            <div class="product-accordion-panel">
-                                {% for spec in product.specification_set.all %}
-                                    <div class="product-attribute-redesign">
-                                        <h3 class="product-attribute-group-name">{{ spec.title }}</h3>
-                                        <div class="col specifications js-productFeatures">
-                                            <table class="product-attribute-table-redesign">
-                                                <tbody>
-                                                    {% for value in spec.value_set.all %}
-                                                        <tr>
-                                                            <th>{{ value.title }}</th>
-                                                            <td>{{ value.description }}</td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="main__product">
+    <div class="product__div">
+      <div class="product__product flexCenter">
+        <div class="product__url">{{ product.subcategories }}</div>
+        <div class="product__info flexCenter">
+          <div class="left__pictures-container flexCenter">
+            <div class="pictures-container__sideImages">
+              <div class="sideImages__div flexCenter">
+                <div class="sideImages__sideImage" data-image-src="{{ product.image.url }}"></div>
+                {% for subImage in product.subImages.all %}
+                  <div class="sideImages__sideImage" data-image-src="{{ subImage.image.url }}"></div>
+                {% endfor %}
+              </div>
             </div>
-            {% include 'gz/components/relatedProductsCatalog.html' %}
+            <div class="pictures-container__mainImage" id="mainImageContainer">
+              <img src="{{ product.image.url }}" alt="" id="mainImage" style="width: 300px; height: 300px;">
+              <div class="zoom-circle" id="zoomCircle"></div>
+            </div>
+          </div>
+          <div class="info__right">
+            <div class="right__title">{{ product.title }}</div>
+            <div class="right__manufacturer">{{ product.manufacturer }}</div>
+            <div class="right__reviews flexCenter">
+              <div class="reviews__stars">
+                {% for star in "xxxxx"|make_list %}
+                    {% if forloop.counter <= reviews %}
+                        <div class="stars__star"><i class="fa-solid fa-star"></i></div>
+                    {% else %}
+                        <div class="stars__star"><i class="fa-regular fa-star"></i></div>
+                    {% endif %}
+                {% endfor %}
+              </div>
+              <div class="reviews__numbers"><a href="#"> 4.5 (15)</a></div>
+            </div>
+            <div class="right__price flexCenter">
+                <div class="price__current">{{ product.price }} DT</div>
+            </div>
+            <div class="points">
+                <div class="points__div">Vous collectez {{ product.points }} GZ Coins</div>
+            </div>
+            {% for type in product.types.all %}
+                <div class="right__choices">
+                    <div class="choices__label">
+                        {{ type.name }}:
+                    </div>
+                    <div class="choices__options">
+                      {% for choice in type.choices.all %}
+                        <div class="choice flexCenter" data-choice-id="{{ choice.name }}" data-choice-value="{{ choice.title }}">
+                          <img src="{{ choice.img.url }}" alt="{{ choice.name }}" style="width: 50px; height: 50px;">
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <input type="hidden" class="selected-choice-input" name="selected_choice" value="">
+                </div>
+            {% endfor %}
+            <div class="right__shipping">
+                <div class="shipping__div">Livraison GRATUITE à partir de 300 DT</div>
+                <div class="shipping__div">Expédition en 24h</div>
+            </div>
+            <div class="right__button flexCenter">
+                <button class="add-to-cart">Ajouter au panier</button>
+                <button class="buy-now">Acheter</button>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="info__left">
+        <div class="bottom__desctiption">
+          <div class="description__features">
+            <div class="features__title">Caractéristiques :</div>
+            <ul class="features__container">
+              {% for feature in product.feature_set.all %}
+                <li class="features__div">
+                  <strong>{{ feature.title }}</strong><p>{{ feature.description }}</p>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="description__full-description">
+            <div class="full-description__title">Description du produit :</div>
+            <div class="full-description__content">{{ product.description }}</div>
+          </div>
+          <div class="Specifications">
+            <div class="features__title">Spécifications :</div>
+            <div class="product-accordion-panel">
+              {% for spec in product.specification_set.all %}
+                <div class="product-attribute-redesign">
+                  <h3 class="product-attribute-group-name">{{ spec.title }}</h3>
+                  <div class="col specifications js-productFeatures">
+                    <table class="product-attribute-table-redesign">
+                      <tbody>
+                        {% for value in spec.value_set.all %}
+                          <tr>
+                            <th>{{ value.title }}</th>
+                            <td>{{ value.description }}</td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    {% include 'gz/components/relatedProductsCatalog.html' %}
+</div>
 {% endblock main %}
 
 {% block footer %}
@@ -139,7 +132,6 @@
         const mainImage = $("#mainImage");
         const zoomCircle = $("#zoomCircle");
         const mainImageContainer = $("#mainImageContainer");
-        const sideImages = $(".sideImages__sideImage img");
 
         // Function to change main image and reset zoom on side image click
         function changeMainImage(imageSrc) {
@@ -149,57 +141,56 @@
         }
 
         // Event listener for side image click
-        sideImages.on("click", function() {
-            const newImageSrc = $(this).attr("src");
+        $(".sideImages__sideImage").on("click", function() {
+            const newImageSrc = $(this).data("image-src");
             changeMainImage(newImageSrc);
         });
 
         // Function to handle choice selection
-        $(".choice-form").on("click", ".divs__div.choice", function() {
-            const selectedChoice = $(this);
+        function handleChoiceSelection(event) {
+            const selectedChoice = $(event.target);
             const selectedChoiceId = selectedChoice.data("choice-id");
+            const selectedChoiceValue = selectedChoice.data("choice-value");
 
             // Remove 'selected' class from all choices within the same container
-            selectedChoice.siblings().removeClass("selected");
+            selectedChoice.closest(".right__choices").find(".choice").removeClass("selected");
+
             // Add 'selected' class to the clicked choice
             selectedChoice.addClass("selected");
 
-            // Set the selected choice ID to the hidden input within the same container
+            // Set the selected choice ID and value to the hidden input within the same container
             selectedChoice.closest(".right__choices").find(".selected-choice-input").val(selectedChoiceId);
-        });
+            selectedChoice.closest(".right__choices").find(".selected-choice-value").text(selectedChoiceValue);
+        }
 
         // Set the first choice as selected by default
         $(".right__choices").each(function() {
-            const firstChoice = $(this).find(".divs__div.choice:first");
+            const firstChoice = $(this).find(".choice:first");
             firstChoice.addClass("selected");
             const selectedChoiceId = firstChoice.data("choice-id");
+            const selectedChoiceValue = firstChoice.data("choice-value");
             $(this).find(".selected-choice-input").val(selectedChoiceId);
+            $(this).find(".selected-choice-value").text(selectedChoiceValue);
         });
 
-        // Prevent form submission on button click if no choice is selected
-        $(".choice-form").submit(function(e) {
-            const selectedInput = $(this).find(".selected-choice-input");
-            if (selectedInput.val() === "") {
-                e.preventDefault();
-                alert("Veuillez sélectionner une option avant de soumettre.");
-            }
-        });
+        // Event listener for choice click
+        $(document).on("click", ".choice", handleChoiceSelection);
 
         // Handle "Add to Cart" and "Buy Now" button clicks
         $(".right__button").on("click", ".add-to-cart, .buy-now", function(e) {
             e.preventDefault();
-            const types = []; // Corrected the declaration of the types array
+            const types = [];
 
             // Iterate over each type's selected choice
             $(".right__choices").each(function() {
                 const selectedChoiceId = $(this).find(".selected-choice-input").val();
                 const typeName = $(this).find(".choices__label").text().trim();
+                const selectedChoiceValue = $(this).find(".selected-choice-value").text();
 
-                // Corrected the syntax for adding objects to the types array
-                types.push({ [typeName]: selectedChoiceId });
+                types.push({ [typeName]: { id: selectedChoiceId, value: selectedChoiceValue } });
 
                 // Log the selected choice ID and type name (you can modify this to send to the server)
-                console.log("Type: " + typeName + ", Selected Choice ID: " + selectedChoiceId);
+                console.log("Type: " + typeName + ", Selected Choice ID: " + selectedChoiceId + ", Selected Choice Value: " + selectedChoiceValue);
             });
 
             $.ajax({

@@ -5,7 +5,7 @@
     <title>GameZone - {% block title %} {% endblock title %}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <base href="{% static '/' %}">
     {% block meta_description %}
     {% if product and product.meta_description %}
@@ -15,21 +15,18 @@
     />
     <meta
       name="keywords"
-      content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox"
+      content="{{ product.tags }}"
     />
     {% else %}
-      <meta
-      name="description"
-      content="GameZone - Le spécialiste de vente console de jeux, Ps4, PS5, Nintendo switch "
-    />
-    <meta
-      name="keywords"
-      content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox"
-    />
-      {% endif %}
-  
-  {% endblock %}
-    <meta name="CreativeLayers" content="ATFN" />
+      <meta name="description" content="GameZone - Le spécialiste de vente console de jeux, Ps4, PS5, Nintendo switch. Achetez vos consoles et jeux préférés à des prix compétitifs. Livraison rapide et sécurisée."/>
+      <meta name="keywords" content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox, Console de jeux, Jeux vidéo, Accessoires de jeux"/>
+    {% endif %}
+    <meta name="author" content="GameZone"/>
+    <meta name="copyright" content="GameZone 2024"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="revisit-after" content="1 day"/>
+    {% endblock %}
+    <meta name="game zone" content="ATFN" />
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/ace-responsive-menu.css' %}" />
     <link rel="stylesheet" href="{% static 'css/menu.css' %}" />
@@ -72,29 +69,6 @@
       rel="shortcut icon"
       type="image/x-icon"
     />
-    <link href="{% static '/gz/assets/favicon.ico' %}" sizes="128x128" rel="shortcut icon" />
-    <link
-      rel="stylesheet"
-      href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
     <!--[if lt IE 9
       ]><script src="{% static 'https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js' %}"></script>
       <script src="{% static 'https://oss.maxcdn.com/respond/1.4.2/respond.min.js' %}"></script
@@ -121,10 +95,10 @@
           </div>
 
           {% if request.user.is_authenticated %}
-          <h4 class="title">Quick Links</h4>
-          <h6>Welcome back {{request.user.username|title}} 🙂</h6>
+          <h4 class="title">Lien rapide</h4>
+          <h6>Bon retour {{request.user.username|title}} 🙂</h6>
           {% else %}
-          <h4 class="title">Sign-In</h4>
+          <h4 class="title">S'inscrire</h4>
           {% endif %}
         </div>
         <div class="hsidebar-content">
@@ -139,7 +113,7 @@
                     <a
                       class="nav-link collapsed"
                       href="{% url 'core:buyer-orders' %}"
-                      ><span class="fas fa-cart-shopping"></span>Orders<i
+                      ><span class="fas fa-cart-shopping"></span>Commandes<i
                         class="fas fa-angle-right arrow"
                       ></i
                     ></a>
@@ -148,7 +122,7 @@
                     <a
                       class="nav-link collapsed"
                       href="{% url 'core:buyer-address' %}"
-                      ><span class="fas fa-location-dot"></span>Address<i
+                      ><span class="fas fa-location-dot"></span>Adresse<i
                         class="fas fa-angle-right arrow"
                       ></i
                     ></a>
@@ -157,7 +131,7 @@
                     <a
                       class="nav-link collapsed"
                       href="{% url 'core:buyer-address' %}"
-                      ><span class="fas fa-heart"></span>Wishlist<i
+                      ><span class="fas fa-heart"></span>Liste de souhaits<i
                         class="fas fa-angle-right arrow"
                       ></i
                     ></a>
@@ -166,7 +140,7 @@
                     <a
                       class="nav-link collapsed"
                       href="{% url 'core:buyer-invoices' %}"
-                      ><span class="fas fa-file-invoice"></span>Invoice<i
+                      ><span class="fas fa-file-invoice"></span>Facture<i
                         class="fas fa-angle-right arrow"
                       ></i
                     ></a>
@@ -191,29 +165,6 @@
                   </li>
                   <br />
                   <hr />
-
-                  {% if request.user.profile.seller == True %}
-                  <li class="nav-item">
-                    <a
-                      class="nav-link collapsed"
-                      href="{% url 'vendor:dashboard' %}"
-                      ><span class="bi bi-grid-1x2-fill"></span>Vendor
-                      Dashboard<i class="fas fa-right-from-bracket arrow"></i
-                    ></a>
-                  </li>
-                  {% else %}
-                  <li class="nav-item">
-                    <a
-                      class="nav-link collapsed"
-                      href="{% url 'vendor:become-vendor' %}"
-                      ><span class="bi bi-grid-1x2-fill"></span>Become a
-                      vendor<i class="fas fa-right-from-bracket arrow"></i
-                    ></a>
-                  </li>
-                  {% endif %}
-
-                  <br />
-                  <hr />
                   <li class="nav-item">
                     <a
                       class="nav-link collapsed"
@@ -232,21 +183,21 @@
               <form method="POST" action="{% url 'userauths:sign-in-2' %}">
                 {% csrf_token %}
                 <div class="mb-2 mr-sm-2">
-                  <label class="form-label">Email address</label>
+                  <label class="form-label">Adresse e-mail</label>
                   <input
                     type="text"
                     name="email"
                     class="form-control"
-                    placeholder="your-email@123.com"
+                    placeholder="votre-email@123.com"
                   />
                 </div>
                 <div class="form-group mb5">
-                  <label class="form-label">Password</label>
+                  <label class="form-label">Mot de passe</label>
                   <input
                     type="password"
                     name="password"
                     class="form-control"
-                    placeholder="password"
+                    placeholder="mot de passe"
                   />
                 </div>
                 <div class="custom-control custom-checkbox">
@@ -256,10 +207,10 @@
                     id="exampleCheck3"
                   />
                   <label class="custom-control-label" for="exampleCheck3"
-                    >Remember me</label
+                    >Se souvenir de moi</label
                   >
                   <a class="btn-fpswd float-end" href="#"
-                    >Lost your password?</a
+                    >Mot de passe oublié?</a
                   >
                 </div>
                 <button
@@ -267,14 +218,14 @@
                   class="btn btn-log btn-thm mt20"
                   style="color: #fff"
                 >
-                  Login
+                  Connexion
                 </button>
                 <p class="text-center mb25 mt10">
-                  Don't have an account?
+                  Vous n'avez pas de compte?
                   <a
                     class="signup-filtder-btn"
                     href="{% url 'userauths:sign-up' %}"
-                    >Create account</a
+                    >Créer un compte</a
                   >
                 </p>
 
@@ -362,27 +313,7 @@
                 </ul>
               </div>
             </div>
-            <!-- <div class="mobile_menu_search_widget ">
-               <div class="header_middle_advnc_search ">
-                 <div class="container search_form_wrapper mt-4">
-                   <div class="row">
-                     <div>
-                       <div class="top-search text-start">
-                         <form action="{% url 'store:search' %}" method="get" class="form-seatrch" accept-charset="utf-8">
-                           <div class="box-search d-flex">
-                             <input class="form-control" type="text"  placeholder="Search All Products..." name="q">
-                             <button class="btn searcdh-btn purdple-btn" type="submit"><i class="fas fa-search "></i></button>
-     
-                           </div>
-                         </form>
-                       </div>
-                       
-                     </div>
-                     
-                   </div>
-                 </div>
-               </div>
-             </div> -->
+            
             <div class="posr">
               <div class="mobile_menu_close_btn">
                 <span class="flaticon-close"></span>
@@ -394,16 +325,16 @@
         <nav id="menu" class="stylehome1">
           <ul>
             <li>
-              <span>Home</span>
+              <span>Accueil</span>
               <ul>
-                <li><a href="{% url 'store:home' %}">Visit Homepage</a></li>
+                <li><a href="{% url 'store:home' %}">Visiter la page d'accueil</a></li>
               </ul>
             </li>
             <li>
-              <span>Shop</span>
+              <span>Boutique</span>
               <ul>
                 <li>
-                  <span>Category</span>
+                  <span>Catégorie</span>
                   <ul>
                     {% for c in category %}
                     <li>
@@ -415,28 +346,28 @@
                   </ul>
                 </li>
                 <li>
-                  <span>Brands</span>
+                  <span>Marques</span>
                   <ul>
                     {% for b in brands|slice:10 %}
                     <li><a href="">{{b.title}}</a></li>
                     {% empty %}
-                    <li style="color: black">No Brands Yet.</li>
+                    <li style="color: black">Pas encore de marques.</li>
                     {% endfor %}
                   </ul>
                 </li>
                 <li>
-                  <span>Shop Pages</span>
+                  <span>Pages de la boutique</span>
                   <ul>
-                    <li><a href="{% url 'store:cart-view' %}">Cart</a></li>
+                    <li><a href="{% url 'store:cart-view' %}">Panier</a></li>
                     <li>
-                      <a href="{% url 'core:buyer-wishlist' %}">Wishlist</a>
+                      <a href="{% url 'core:buyer-wishlist' %}">Liste de souhaits</a>
                     </li>
                     <li>
-                      <a href="{% url 'core:profile' %}">My account</a>
+                      <a href="{% url 'core:profile' %}">Mon compte</a>
                     </li>
-                    <!-- <li><a href="page-compare.html">Compare</a></li> -->
+                    <!-- <li><a href="page-compare.html">Comparer</a></li> -->
                     <li>
-                      <a href="{% url 'core:order-tracker' %}">Order Tracking</a>
+                      <a href="{% url 'core:order-tracker' %}">Suivi des commandes</a>
                     </li>
                   </ul>
                 </li>
@@ -446,50 +377,47 @@
               </ul>
             </li>
             <li>
-              <span>My Dashboard</span>
+              <span>Mon tableau de bord</span>
               <ul>
-                {% comment %} DASHBOARD {% endcomment %}
-                {% comment %} <li>
-                  <a href="{% url 'core:buyer-dashboard' %}">Dashboard</a>
-                </li> {% endcomment %}
-                <li><a href="{% url 'core:buyer-orders' %}">Order</a></li>
-                <li><a href="{% url 'core:buyer-address' %}">Address</a></li>
-                <li><a href="{% url 'core:buyer-wishlist' %}">Wishlist</a></li>
-                <li><a href="{% url 'core:buyer-invoices' %}">Invoice</a></li>
-                <li><a href="{% url 'core:buyer_bids' %}">Bids</a></li>
-                <li><a href="{% url 'core:buyer_offer' %}">Offers</a></li>
+               
+                <li><a href="{% url 'core:buyer-orders' %}">Commande</a></li>
+                <li><a href="{% url 'core:buyer-address' %}">Adresse</a></li>
+                <li><a href="{% url 'core:buyer-wishlist' %}">Liste de souhaits</a></li>
+                <li><a href="{% url 'core:buyer-invoices' %}">Facture</a></li>
+                <li><a href="{% url 'core:buyer_bids' %}">Offres</a></li>
+                <li><a href="{% url 'core:buyer_offer' %}">Commandes</a></li>
 
                 {% if request.user.is_authenticated %}
-                <li><a href="{% url 'userauths:sign-out' %}">Logout</a></li>
+                <li><a href="{% url 'userauths:sign-out' %}">Se déconnecter</a></li>
                 {% endif %}
               </ul>
             </li>
 
             {% if request.user.profile.seller == True %}
             <li>
-              <span>Vendor Dashboard</span>
+              <span>Tableau de bord du vendeur</span>
               <ul>
                 <li>
-                  <a href="{% url 'vendor:dashboard' %}">Visit Dashboard</a>
+                  <a href="{% url 'vendor:dashboard' %}">Visiter le tableau de bord</a>
                 </li>
 
                 {% if request.user.is_authenticated %}
-                <li><a href="{% url 'userauths:sign-out' %}">Logout</a></li>
+                <li><a href="{% url 'userauths:sign-out' %}">Se déconnecter</a></li>
                 {% endif %}
               </ul>
             </li>
             {% else %}
             <li>
-              <span>Become a vendor</span>
+              <span>Devenir vendeur</span>
               <ul>
                 <li>
                   <a href="{% url 'vendor:become-vendor' %}"
-                    >Become a vendor today!</a
+                    >Devenir vendeur dès aujourd'hui!</a
                   >
                 </li>
 
                 {% if request.user.is_authenticated %}
-                <li><a href="{% url 'userauths:sign-out' %}">Logout</a></li>
+                <li><a href="{% url 'userauths:sign-out' %}">Se déconnecter</a></li>
                 {% endif %}
               </ul>
             </li>
@@ -498,17 +426,17 @@
             <li>
               <span>Pages</span>
               <ul>
-                <li><a href="{% url 'addons:about_us' %}">About Us</a></li>
-                <li><a href="{% url 'addons:contact_us' %}">Contact Us</a></li>
-                <li><a href="">Help</a></li>
-                <li><a href="">Faq</a></li>
-                <li><a href="">Terms and Conditions</a></li>
+                <li><a href="{% url 'addons:about_us' %}">À propos de nous</a></li>
+                <li><a href="{% url 'addons:contact_us' %}">Contactez-nous</a></li>
+                <li><a href="">Aide</a></li>
+                <li><a href="">FAQ</a></li>
+                <li><a href="">Termes et conditions</a></li>
               </ul>
             </li>
             <li>
               <span>Blog</span>
               <ul>
-                <li><a href="{% url 'blog:blog-list' %}">Visit Blog</a></li>
+                <li><a href="{% url 'blog:blog-list' %}">Visiter le blog</a></li>
               </ul>
             </li>
             <li>
@@ -522,7 +450,7 @@
                     type="text"
                     class="form-control"
                     name="q"
-                    placeholder="Search Products"
+                    placeholder="Rechercher des produits"
                   />
                 </div>
                 <button
@@ -530,7 +458,7 @@
                   class="btn btn-signup purple-btn mt-2"
                   style="color: white"
                 >
-                  Search Now
+                  Rechercher maintenant
                 </button>
               </form>
             </li>
@@ -538,7 +466,7 @@
               <a
                 class="tdu text-thm1 text-capitalize"
                 href="{% url 'userauths:sign-out' %}"
-                >Logout <i class="fas fa-right-from-bracket arrow"></i
+                >Se déconnecter <i class="fas fa-right-from-bracket arrow"></i
               ></a>
             </li>
           </ul>
@@ -665,30 +593,7 @@
                   <li class="col mega_menu_list">
                     <h4 class="title">Top Selling</h4>
 
-                    {% for p in product_|slice:3 %}
-                    <div
-                      class="banner_one megamenu_style home1_style color1 mb30"
-                    >
-                      <div class="thumb style1">
-                        <img
-                          class="float-end"
-                          src="{{p.image.url}}"
-                          alt="smartwatch"
-                        />
-                      </div>
-                      <div class="details">
-                        <p class="para color-light-blue">
-                          Starting from<span class="fw500">$899.</span>
-                        </p>
-                        <h3 class="title">{{p.title|truncatechars:20}}</h3>
-                        <a
-                          href="{% url 'store:product-detail' p.meta_title %}"
-                          class="shop_btn"
-                          >Shop Now</a
-                        >
-                      </div>
-                    </div>
-                    {% endfor %}
+                    
                     <a href="{% url 'store:shop' %}" class="shop_btn"
                       >View All</a
                     >
@@ -720,28 +625,7 @@
                     </ul>
                   </li>
 
-                  {% if request.user.profile.seller != True %}
-                  <li>
-                    <a href="{% url 'vendor:become-vendor' %}">Become Vendor</a>
-                  </li>
-                  {% else %}
-                  <li>
-                    <a href="{% url 'vendor:dashboard' %}">Vendor Dashboard</a>
-                  </li>
-                  {% endif %}
-
-
-                  <li><a href="{% url 'addons:contact_us' %}">Contact</a></li>
-                  <li><a href="">Help</a></li>
-                  <li><a href="">Faq</a></li>
-                  <li><a href="">Terms and Conditions</a></li>
-
-                  {% if request.user.is_authenticated %}
-                  <li><a href="{% url 'userauths:sign-out' %}">Logout</a></li>
-                  {% else %}
-                  <li><a href="{% url 'userauths:sign-in' %}">Login</a></li>
-                  <li><a href="{% url 'userauths:sign-up' %}">Register</a></li>
-                  {% endif %}
+                  
                 </ul>
               </li>
               <li class="visible_list">
@@ -951,16 +835,16 @@
                     type="text"
                     name="email"
                     class="form-control"
-                    placeholder="your-email@123.com"
+                    placeholder="Email@email.com"
                   />
                 </div>
                 <div class="form-group mb5">
-                  <label class="form-label">Password</label>
+                  <label class="form-label">Mot de passe</label>
                   <input
                     type="password"
                     name="password"
                     class="form-control"
-                    placeholder="password"
+                    placeholder="Mot de passe"
                   />
                 </div>
                 <div class="custom-control custom-checkbox">
@@ -991,135 +875,11 @@
                     >Create account</a
                   >
                 </p>
-                <!-- <div class="hr_content">
-                        <hr>
-                        <span class="hr_top_text">or</span>
-                      </div> -->
-                <!-- <ul class="login_with_social text-center mt30 mb0">
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-google"></i></a></li>
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
-                      </ul> -->
+         
               </form>
             </div>
             {% endif %}
-          </div>
-        </div>
-      </div>
-
-      <div class="cart-hidden-sbar">
-        <div class="hsidebar-header">
-          <div class="sidebar-close-icon">
-            <span class="fas fa-xmark"></span>
-          </div>
-          <h4 class="title">Your Cart</h4>
-        </div>
-        <div class="hsidebar-content">
-          <div class="log_fav_cart_widget hsidebar_home_page">
-            <div class="wrapper">
-              <ul class="cart">
-                <li class="list-inline-item">
-                  <ul class="dropdown_content">
-                    <li class="list_content">
-                      <div>
-                        <img
-                          class="float-start mt10"
-                          src="images/shop/s1.png"
-                          alt="75x75"
-                        />
-                        <p>Apple MacBook Pro with Apple M1 Chip</p>
-                        <div class="cart_btn home_page_sidebar mt10">
-                          <div class="quantity-block home_page_sidebar">
-                            <button
-                              class="quantity-arrow-minus home_page_sidebar"
-                            >
-                              <img
-                                src="images/icons/minus.svg"
-                                alt=""
-                              /></button
-                            ><input
-                              class="quantity-num home_page_sidebar"
-                              type="number"
-                              value="3"
-                            /><button
-                              class="quantity-arrow-plus home_page_sidebar"
-                            >
-                              <span class="fas fa-xmark"></span>
-                            </button>
-                          </div>
-                          <span class="home_page_sidebar price">$3.399</span>
-                        </div>
-                        <span class="close_icon"
-                          ><i class="fas fa-xmark"></i
-                        ></span>
-                      </div>
-                    </li>
-                    <li class="list_content">
-                      <div>
-                        <img
-                          class="float-start mt10"
-                          src="images/shop/s2.png"
-                          alt="75x75"
-                        />
-                        <p>Apple MacBook Pro with Apple M1 Chip</p>
-                        <div class="cart_btn home_page_sidebar mt10">
-                          <div class="quantity-block home_page_sidebar">
-                            <button
-                              class="quantity-arrow-minus2 home_page_sidebar"
-                            >
-                              <img
-                                src="images/icons/minus.svg"
-                                alt=""
-                              /></button
-                            ><input
-                              class="quantity-num2 home_page_sidebar"
-                              type="number"
-                              value="3"
-                            /><button
-                              class="quantity-arrow-plus2 home_page_sidebar"
-                            >
-                              <span class="fas fa-xmark"></span>
-                            </button>
-                          </div>
-                          <span class="home_page_sidebar price">$3.399</span>
-                        </div>
-                        <span class="close_icon"
-                          ><i class="fas fa-xmark"></i
-                        ></span>
-                      </div>
-                    </li>
-                    <li class="list_content_total_price">
-                      <h5>
-                        Total:<span class="total_price float-end"
-                          >$6.225.98</span
-                        >
-                      </h5>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="hsidebar_footer_content">
-          <div class="list_last_content">
-            <div class="lc">
-              <p class="para">Buy $98.00 more to enjoy FREE Shipping</p>
-              <div class="uilayout_range home1_style">
-                <div class="sidebar_range_slider mb30 mt25">
-                  <input class="range-example-km" value="80" type="text" />
-                </div>
-              </div>
-              <a href="#" class="cart_btns btn btn-white">View Cart</a
-              ><a href="#" class="checkout_btns btn btn-thm">Checkout</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
+            
       <div class="signup-hidden-sbar">
         <div class="hsidebar-header">
           <div class="sidebar-close-icon">
@@ -1301,7 +1061,7 @@
                 {% endif %}
               </ul>
             </li>
-
+            <!--
             {% if request.user.profile.seller == True %}
             <li>
               <span>Vendor Dashboard</span>
@@ -1324,7 +1084,7 @@
                     >Become a vendor today!</a
                   >
                 </li>
-
+              -->
                 {% if request.user.is_authenticated %}
                 <li><a href="{% url 'userauths:sign-out' %}">Logout</a></li>
                 {% endif %}
@@ -1336,7 +1096,7 @@
               <span>Pages</span>
               <ul>
                 <li><a href="{% url 'addons:about_us' %}">About Us</a></li>
-                <li><a href="{% url 'addons:contact_us' %}">Contact Us</a></li>
+                <li><a href="{% url 'addons:contact_us' %}">Contactez-nous</a></li>
                 <li><a href="">Help</a></li>
                 <li><a href="">Faq</a></li>
                 <li><a href="">Terms and Conditions</a></li>
@@ -1413,7 +1173,7 @@
           <div class="row mt60 justify-content-center">
             <div class="col-sm-6 col-md-5 col-lg-3 col-xl-3">
               <div class="footer_contact_widget home2_style">
-                <h4>Contact Us</h4>
+                <h4>Contactez-nous</h4>
                 <div class="footer_contact_iconbox home2_style d-flex mb-4">
                   <div class="icon"><span class="fas fa-phone"></span></div>
                   <div class="details ms-4">
@@ -1453,7 +1213,7 @@
                 <h4>Customer Support</h4>
                 <ul class="list-unstyled">
                   <li>
-                    <a href="{% url 'addons:contact_us' %}">Contact Us</a>
+                    <a href="{% url 'addons:contact_us' %}">Contactez-nous</a>
                   </li>
                   <li><a href="{% url 'reports:report-issue' %}">Report Issue</a></li>
                   
@@ -1462,7 +1222,7 @@
             </div>
             <div class="col-sm-8 col-md-5 col-lg-3 col-xl-2">
               <div class="footer_social_widget home2_style">
-                <h4 class="title">Follow us</h4>
+                <h4 class="title">Suivez-nous</h4>
                 <div class="social_icon_list home2_style mt30">
                   <ul class="mb20">
                     <li class="list-inline-item">
@@ -1480,21 +1240,21 @@
               </div>
 
               <div class="footer_acceped_card_widget home2_style">
-                <h4 class="title mb20">We accept</h4>
+                <h4 class="title mb20">Nous acceptons</h4>
                 <div class="acceped_card_list">
                   <ul class="d-flex mb-0">
                     <li class="me-2">
                       <a href="#"
                         ><img
                           src="{% static 'images/resource/visa-card.png' %}"
-                          alt="visa-card"
+                          alt="Visa Card - secure and widely accepted payment method"
                       /></a>
                     </li>
                     <li class="me-2">
                       <a href="#"
                         ><img
                           src="{% static 'images/resource/master-card.png' %}"
-                          alt="master-card"
+                          alt="Master - secure and widely accepted payment method"
                       /></a>
                     </li>
                   </ul>
@@ -1508,7 +1268,7 @@
                     <span class="flaticon-email-1"></span>
                   </div>
                   <div class="details">
-                    <h3 class="title">Subscribe and stay up to date.</h3>
+                    <h3 class="title">Abonnez-vous et restez informé.</h3>
                   </div>
                 </div>
                 <div class="footer_social_widget">
@@ -1538,7 +1298,7 @@
                 </p>
                 <p>
                   <a href="{% url 'addons:terms_and_conditions' %}"
-                    >Privacy</a
+                    >Politique de confidentialité</a
                   >·<a href="{% url 'addons:terms_and_conditions' %}"
                     >Terms</a
                   >·<a href="{% url 'addons:terms_and_conditions' %}"

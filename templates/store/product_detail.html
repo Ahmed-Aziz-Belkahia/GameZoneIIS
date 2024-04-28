@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  {{product.title}}
+  {{product.title_meta_title}}
 {% endblock title %}
     
 {% block content %}
@@ -97,11 +97,6 @@
     padding: 0;
     border-bottom: 1px solid #cccccc;
   }
-
-
-
-
-
   
   .dd-menuf {
     padding: 0;
@@ -427,7 +422,7 @@ section{
             <div class="breadcrumb_content">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url "store:home" %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{% url "store:shop" %}">Products</a></li>
+                <li class="breadcrumb-item"><a href="{% url "store:shop" %}">Produit</a></li>
                 
                 {% if product.brand %}
                   <li class="breadcrumb-item"><a href="{% url "store:brand-shop" meta_title=product.brand.meta_title %}">{{product.brand}}</a></li>
@@ -450,21 +445,31 @@ section{
                 <div class="tab-content mx-auto" id="v-pills-tabContent">
 
                   
-                    {% for g in product_images %}
-                    <div class="tab-pane fade" id="v-pills-{{g.gid}}" role="tabpanel" aria-labelledby="v-pills-{{g.gid}}-tab">
-                        <div class="shop_single_navmenu_content mb-3 text-center">
-                        <!-- <a class="product_popup popup-img" href="{{g.image.url}}"></a> -->
-                        <div class="zoomimg_wrapper">
-                            <img class="zoom-img product-detail-img" id="zoom_02" src="{{g.image.url}}" data-zoom-image="{{g.image.url}}" width="350" alt="Shop Single Image"/>
-                        </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+                  {% for g in product_images %}
+                   <div class="tab-pane fade" id="v-pills-{{g.gid}}" role="tabpanel" aria-labelledby="v-pills-{{g.gid}}-tab">
+                    <div class="shop_single_navmenu_content mb-3 text-center">
+                      <a class="product_popup popup-img" href="{{g.image.url}}" title="{{ product_name }}">
+                        <!-- Added title attribute for accessibility -->
+                         </a>
+                          <div class="zoomimg_wrapper">
+                            <img
+                             class="zoom-img product-detail-img"
+                             id="zoom_02"
+                             src="{{g.image.url}}"
+                             data-zoom-image="{{g.image.url}}"
+                             width="350"
+                             height="150"
+                             alt="{{ product_name }}"
+                          />
+                       </div>
+                      </div>
+                   </div>
+                 {% endfor %}
 
                   <div class="tab-pane fade show active" id="v-pills-{{product.pid}}" role="tabpanel" aria-labelledby="v-pills-{{product.pid}}-tab">
                     <div class="shop_single_navmenu_content mb-3 text-center">
-                      <div class="zoomimg_wrapper">
-                        <img class="zoom-img product-detail-img" id="zoom_03" src="{{product.image.url}}" style="border-radius: 10px;" data-zoom-image="{{product.image.url}}" width="350" alt="Shop Single Image"/>
+                       <div class=""> 
+                         <img class="zoom-img product-detail-img" id="zoom_03" src="{{product.image.url}}" style="border-radius: 10px;" data-zoom-image="{{product.image.url}}" width="350" height="150 alt="Shop Single Image"/> 
                       </div>
                     </div>
                   </div>
@@ -525,10 +530,10 @@ section{
                   </div>
                 </li>
                 {% if product.rating_count == 0 %}
-                  <li class="ml-2 mr-2 " style="margin-left: 6px; margin-right: 6px;">Not rated yet</li>
+                  <li class="ml-2 mr-2 " style="margin-left: 6px; margin-right: 6px;">Pas encore évalué</li>
                 {% else %}
                     <li>{{product.product_rating|floatformat:1}}/5.0 </li>
-                    <li class="mx-3">{{product.rating_count}} review{{product.rating_count|pluralize:"s"}} </li>
+                    <li class="mx-3">{{product.rating_count}} valué{{product.rating_count|pluralize:"s"}} </li>
                 {% endif %}
               </ul>
               <hr>
@@ -573,7 +578,7 @@ section{
                   <thead>
                     <tr>
                       <th scope="col">Date de sortie</th>
-                      <th scope="col">{{product.brand.title|title}}</th>
+                      <th scope="col">{{ product.release_date }}</th>
                     </tr>
                     {% if product.brand %}
                       <tr>
@@ -669,15 +674,11 @@ section{
                   <span class="social_icons">
                     <ul class="mb0">
                       <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
-                      <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
                       <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li> -->
-                      <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in"></i></a></li> -->
                     </ul>
                   </span>
                 </li>
-                <li class="d-flex mt-1"><a href="{% url 'reports:product-report' product.pid %}">Report <i class="bi bi-exclamation-triangle-fill"></i> </a></li>
-
-              </ul>
+                </ul>
             </div>
           </div>
           
@@ -706,21 +707,10 @@ section{
                     {% else %}
                       <h4 class="ssfpd_price mb25 text-center">My Bid Amount - {{cs}}{{my_bid_obj.price}} </h4>
                       <form action="" method="POST">
-                        {% csrf_token %}
-                        <ul class="cart_btns ui_kit_button mb15">
-                          <li>
-                            <div class="cart_btn home_page_sidebar mb10">
-                            <div class="quantity-block home_page_sidebar">
-                              <input class="quantity-num2 shop_single_page_sidebar " name="bidding_amount_update" type="number" value="{{my_bid_obj.price}}" >
-                            </div>
-                          </div>
-                        </li>
-                          <li><button type="submit" class="w100 btn-custom">Update Bid Amount</button></li>
-                        </ul>
-                      </form>
+                        
                     {% endif %}
                     <ul class="shop_single_wishlist_area d-flex justify-content-center">
-                      <li style="cursor: pointer;" class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Add to Wishlist</a></li>
+                      <li style="cursor: pointer;" class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Ajouter à la liste de vœux</a></li>
                     </ul>
                   </div>
 
@@ -865,29 +855,6 @@ section{
                     </div>
                   </div>
                 </div>
-                <!-- <div class="contact_icon_box mt30">
-                  <label class="dropdown">
-                    <div class="dd-button">View All Bidders</div>
-                    <br>
-                    <input type="checkbox" class="dd-input" id="test">
-                    <ul class="dd-menu">
-                      {% for b in all_bidders %}
-                            <div class="card-body ">
-                              <div class="contact_iconbox d-flex shadow p-3 {% if b.winner == True %} alert-success{% endif %}" style="border-radius: 10px;">
-                                <div class="icon"><img src="{{b.user.profile.image.url}}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;" alt=""></div>
-                                <div class="details ms-4">
-                                  <h4 class="title">{{b.user.username|title}} {% if b.user == winner.user and winner.winner == True %}(Winner <i class="bi bi-trophy-fill"></i>) {% endif %}</h4>
-                                  <a href="#">{{cs}}{{ b.price|floatformat:2 }}</a>
-                                </div>
-                              </div>
-                            </div>
-                        {% empty %}
-                        <h5>No Bidders Yet</h5>
-                        {% endfor %}
-                    </ul>
-                  </label>
-                 
-                </div> -->
               </div>
               {% endif %}
 
@@ -927,10 +894,10 @@ section{
                 {% endif %}
                     
                   
-                  <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>Add to cart</button> -->
+                  <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>Acheter</button> -->
                 </ul>
                 <ul class="shop_single_wishlist_area d-flex justify-content-center">
-                  <li class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Add to Wishlist</a></li>
+                  <li class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Ajouter à la liste de vœux</a></li>
                 </ul>
 
               </div>
@@ -955,7 +922,7 @@ section{
                   <input type="text" class="product-stock-qty-{{ product.id }}" value="{{ product.stock_qty }}" />
                   <input type="text" class="product-in-stock-{{ product.id }}" value="{{ product.in_stock }}" />
 
-                  <li><button type="button" class="btn purple-btn w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">Add to cart</button></li>
+                  <li><button type="button" class="btn purple-btn w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">Acheter</button></li>
                 </ul>
                 <ul class="shop_single_wishlist_area d-flex justify-content-center">
                 </ul>
@@ -963,31 +930,7 @@ section{
               </div>
               {% endif %}
 
-              {% if my_offer_obj.status == "pending" %}
-              <div class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0">
-                <div class="sspd_price mb25">Update Offer Price</div>
-                <ul class="cart_btns ui_kit_button mb15">
-                  <form action="" method="POST">
-                      {% csrf_token %}
-                    <li>
-                      <div class="cart_btn home_page_sidebar mb10">
-                      <div class="quantity-block home_page_sidebar">
-                        <input class="quantity-num2 shop_single_page_sidebar " name="offer_amount_update" type="number" value="{{my_offer_obj.price}}">
-                      </div>
-                    </div>
-                  </li>
-                  <li class="text-center" >NOTE: Currency is in {{ ca }}({{cs}})</li>
-                  <li><button type="submit" class="btn btn-fthm purple-btn w100" style="color: #fff;">Update Price</button></li>
-                </form>
-                  <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>Add to cart</button> -->
-                </ul>
-                <ul class="shop_single_wishlist_area d-flex justify-content-center">
-                  <li class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Add to Wishlist</a></li>
-                </ul>
-
-              </div>
-              {% endif %}
-
+              
               {% if my_offer_obj.status == "reject" %}
 
               <div class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0">
@@ -1034,9 +977,6 @@ section{
                   <input type="hidden" class="product-brand-{{ product.id }}" value="{{ product.brand }}" />
                   
                   <input type="hidden" class="product-types_choices-{{ product.id }}" value="here the json of selected choices" />
-                  
-
-
                   <input type="hidden" class="product-gz_coins-{{ product.id }}" value="{{ product.gz_coins }}" />
                   <input type="hidden" class="product-shipping_amount-{{ product.id }}" value="{{ product.shipping_amount }}" />
                   <input type="hidden" class="product-quantity-{{ product.id }}" value="1" id="product-quantity" class="w-25 mb-10 product-quantity-{{ product.id }}" />
@@ -1045,49 +985,23 @@ section{
                   <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}" />
                   <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}" />
                   <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}" />
-                  <input type="hidden" class="product-meta_title-{{ product.id }}" value="{{ product.meta_title }}" />
+                  <input type="hidden" class="product-meta-title-{{ product.id }}" value="{{ product.meta_title }}" />
                   <input type="hidden" class="product-slug-{{ product.id }}" value="{{ product.slug }}" />                      
                   <input type="hidden" class="product-vendor-slug-{{ p.id }}" value="{{ product.vendor.slug }}" />
                   
                   <input type="hidden" class="product-stock-qty-{{ product.id }}" value="{{ product.stock_qty }}" />
                   <input type="hidden" class="product-in-stock-{{ product.id }}" value="{{ product.in_stock }}" />
 
-                  <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">Add to cart</button></li>
+                  <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">acheter</button></li>
                   
-                  <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>Add to cart</button> -->
+                  <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>acheter</button> -->
                 </ul>
                 <ul class="shop_single_wishlist_area d-flex justify-content-center">
-                  <li class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Add to Wishlist</a></li>
+                  <li class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Ajouter à la liste de vœux</a></li>
                   <!-- <li class="pe-2 ms-2"><a href="#"><span class="flaticon-graph me-2"></span>Compare</a></li> -->
                 </ul>
                 <hr>
-                <!-- <div class="vendor_iconbox style2 d-block d-sm-flex mb-1">
-                  <span class="icon fz30 heading-color"><span class="bi bi-truck"></span></span>
-                  <div class="details ms-0 ms-sm-4 mt-2 mt-sm-0">
-                    <p class="heading-color">Free shipping, <span class="fw500">arrives by Thu, Jun 2</span> to Sacramento, 95829 <span class="fw500">Want it faster?</span> <span class="tdu">Add an address</span> to see options <a class="tdu" href="">More options</a></p>
-                  </div>
-                </div> -->
-                <!-- <div class="vendor_iconbox style2 d-block d-sm-flex mb-1">
-                  <span class="icon fz30 heading-color"><span class="bi bi-shop"></span></span>
-                  <div class="details ms-0 ms-sm-4 mt-2 mt-sm-0">
-                    <p class="heading-color">Sold and shipped by</p>
-                    <h5 ><a class="dashed-custom" href="{% url 'vendor:vendor_shop_view_page' product.vendor.vid %}">{{product.vendor.shop_name|title}}</a></h5>
-                  </div>
-                </div> -->
-                <!-- <div class="vendor_iconbox style2 d-block d-sm-flex mb-0">
-                  <span class="icon fz30 heading-color"><span class="bi bi-box"></span></span>
-                  <div class="details ms-0 ms-sm-4 mt-2 mt-sm-0">
-                    <p class="heading-color">Free 15-Day returns <a class="tdu" href="">Details</a></p>
-                  </div>
-                </div> -->
-
-                {% comment %} <hr>
-                <div class="shop_single_siderbar_mini_content mt-4">
-                  <h4>More seller options (2)</h4>
-                  <p>Starting from $1,249.00</p>
-                  <a class="tdu" href="#">Compare all sellers</a>
-                </div> 
-                {% endcomment %}
+                
               </div>
             {% endif %}
 
@@ -1103,25 +1017,14 @@ section{
                 </li>
 
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab" aria-controls="specifications" aria-selected="false">Specifications</button>
+                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab" aria-controls="specifications" aria-selected="false">Spécifications</button>
                 </li>
-                <!-- <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="false">Details & Specs</button>
-                </li>
+
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="included-tab" data-bs-toggle="tab" data-bs-target="#included" type="button" role="tab" aria-controls="included" aria-selected="false">What's Included</button>
-                </li> -->
-                {% comment %} <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="vendor-tab" data-bs-toggle="tab" data-bs-target="#vendor" type="button" role="tab" aria-controls="vendor" aria-selected="false">Vendor</button>
-                </li> {% endcomment %}
-                {% comment %} <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="returnpolicy-tab" data-bs-toggle="tab" data-bs-target="#returnpolicy" type="button" role="tab" aria-controls="returnpolicy" aria-selected="false">Policy</button>
-                </li> {% endcomment %}
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="qna-tab" data-bs-toggle="tab" data-bs-target="#qna" type="button" role="tab" aria-controls="qna" aria-selected="false">Questions and Answers</button>
+                  <button class="nav-link mt-3 mt-xl-0 mb-0 me-3 me-xl-5" id="qna-tab" data-bs-toggle="tab" data-bs-target="#qna" type="button" role="tab" aria-controls="qna" aria-selected="false">Questions et réponses</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link mt-3 mt-xl-0 mb-0" id="customerreview-tab" data-bs-toggle="tab" data-bs-target="#customerreview" type="button" role="tab" aria-controls="customerreview" aria-selected="false">Customer Reviews</button>
+                  <button class="nav-link mt-3 mt-xl-0 mb-0" id="customerreview-tab" data-bs-toggle="tab" data-bs-target="#customerreview" type="button" role="tab" aria-controls="customerreview" aria-selected="false">Avis des clients</button>
                 </li>
               </ul>
               <!-- nav tab Nav List End -->
@@ -1139,83 +1042,6 @@ section{
                   <div class="shop_single_table table-responsive">
                     <table class="table table-striped table-borderless">
                       <thead>
-                        <tr>
-                          <th scope="col">Brand</th>
-                          <th class="ps-2" scope="col">Apple</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">Model Name</th>
-                          <td>MacBook Pro</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Screen Size</th>
-                          <td>16.2 Inches</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Color Space</th>
-                          <td>Space Gray</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Hard Disk Size</th>
-                          <td>1 TB</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">CPU Model</th>
-                          <td>Apple M1</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Ram Memory Installed Size</th>
-                          <td>16 GB</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Operating System</th>
-                          <td>Mac OS</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Graphics Card Description</th>
-                          <td>Integrated</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Graphics Coprocessor</th>
-                          <td>M1 Pro</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
                         </tr>
                       </tbody>
                     </table>
@@ -1224,9 +1050,6 @@ section{
                 <div class="tab-pane fade col-xl-8" id="included" role="tabpanel" aria-labelledby="included-tab">
                   <div class="shop_item_list_features shop_single_style">
                     <ul class="mb0 order_list list-style-type-bullet">
-                      <li><a href="#">16-inch MacBook Pro</a></li>
-                      <li><a href="#">140W USB‑C Power Adapter</a></li>
-                      <li><a href="#">USB‑C to MagSafe 3 Cable (2 m)</a></li>
                     </ul>
                   </div>
                 </div>
@@ -1260,10 +1083,6 @@ section{
                       </div>
                     </div>
                   </div>
-
-
-
-                  
                 </div>
                 <div class="tab-pane fade col-xl-12" id="returnpolicy" role="tabpanel" aria-labelledby="returnpolicy-tab">
                   <p class="shipping_return_para mb-0 mt-3">{{ product.vendor.shop_policy|safe }}</p>
@@ -1310,17 +1129,17 @@ section{
                               <p id="q-alert"></p>
                             </div>
                             {% else %}
-                            <h4>Hey, you need to <a href="{% url 'userauths:sign-in' %}?next={{request.path}}" class="dashed-custom">Login</a> to ask a question or make an enquiry.</h4>
+                            <h4>Hé, vous devez <a href="{% url 'userauths:sign-in' %}?next={{request.path}}" class="dashed-custom">Login</a> to ask a question or make an enquiry.</h4>
                           {% endif %}
                         </div>
                         {% for q in questions_answers %}
                           <div class="question_with_poster mt-3">
                             <h5 class="title">Q: {{q.question}}?</h5>
-                            <p class="author">Asked by {{q.user.username|title}} - {{q.date|date:"d M, Y"}}</p>
+                            <p class="author">Interrogé par {{q.user.username|title}} - {{q.date|date:"d M, Y"}}</p>
                           </div>
                           <div class="question_with_answer mt-3 ms-3">
                             <h5 class="title">A: {{q.answer}}</h5>
-                            <p class="author mb-0">Answered by {{q.product.vendor.name|title}}</p>
+                            <p class="author mb-0">Répondu par {{q.product.vendor.name|title}}</p>
                           </div>
                         {% endfor %}
 
@@ -1456,15 +1275,15 @@ section{
                               
                               <div class="row">
                                 <div class="col-md-12">
-                                  <h4 class="title mb20">Add a Review</h4>
-                                  <h5 class="mb0">Your rating of this product</h5>
+                                  <h4 class="title mb20">Ajouter un avis</h4>
+                                  <h5 class="mb0">Votre évaluation de ce produit</h5>
                                   <div class="sspd_postdate vendor_single">
                                     <div class="sspd_review">
                                       {{review_form.rating }}
                                     </div>
                                   </div>
                                   <div class="form-group mt-4">
-                                    <label class="heading-color mb10">Your review</label>
+                                    <label class="heading-color mb10">Votr avis</label>
                                   </div>
                                 </div>
                                   <div class="form-group">
@@ -1486,15 +1305,15 @@ section{
                                 
                                 <div class="row">
                                   <div class="col-md-12">
-                                    <h4 class="title mb20">Add a Review</h4>
-                                    <h5 class="mb0">Your rating of this product</h5>
+                                    <h4 class="title mb20">Ajouter un avis</h4>
+                                    <h5 class="mb0">Votre évaluation de ce produit</h5>
                                     <div class="sspd_postdate vendor_single">
                                       <div class="sspd_review">
                                         {{review_form.rating }}
                                       </div>
                                     </div>
                                     <div class="form-group mt-4">
-                                      <label class="heading-color mb10">Your review</label>
+                                      <label class="heading-color mb10">Votr avis</label>
                                     </div>
                                   </div>
                                     <div class="form-group">
@@ -1511,19 +1330,19 @@ section{
 
                             {% if reviewer_status == False %}
                               <div class="alert-warning p-4">
-                                <strong>You must purchase this product before you can review</strong>
+                                <strong>Vous devez acheter ce produit avant de pouvoir l'évaluer</strong>
                               </div>
                             {% endif %}
                           {% endif %}
                         </div>
                         {% endif %}
                       {% else %}
-                      <h4>Hey, you need to <a href="{% url 'userauths:sign-in' %}?next={{request.path}}" class="dashed-custom">Login</a> to add a review for this product</h4>
+                      <h4>Hé, vous devez <a href="{% url 'userauths:sign-in' %}?next={{request.path}}" class="dashed-custom">Login</a> to add a review for this product</h4>
                       {% endif %}
 
                       <div class="product_single_content mb30 ">
                         <div class="mbp_pagination_comments">
-                          <h5 class="mb30">{{reviews.count}} Review(s) For This Product</h5>
+                          <h5 class="mb30">{{reviews.count}} Avis(s) Pour ce produit</h5>
                           {% for r in reviews %}
                           <div class="border border-rounded-cus p-3 mb-3">
 
@@ -1572,7 +1391,7 @@ section{
                             {% endif %}
                             
                           </div>
-                          <p class="text-success">{{ r.helpful.all.count }} Found this review helpful</p>
+                          <p class="text-success">{{ r.helpful.all.count }} J'ai trouvé ce commentaire utile</p>
                           <p class="text-success" id="alert{{r.id}}"></p>
                           </div>
 
@@ -1588,9 +1407,6 @@ section{
             </div>
           </div>
         </div>
-
-
-        
       </div>
     </section>
       <!-- </div> -->
@@ -1599,7 +1415,7 @@ section{
             <div class="row">
                 <div class="col-lg-10">
                 <div class="main-title text-center text-sm-start mb80-520 mb25-414">
-                    <h2 class="title">Related Products 🔗</h2>
+                    <h2 class="title">Produit connexe</h2>
                 </div>
                 </div>
             </div>
@@ -1624,7 +1440,7 @@ section{
           <div class="row">
               <div class="col-lg-10">
               <div class="main-title text-center text-sm-start mb80-520 mb25-414">
-                  <h2 class="title">You might also like ❤️ </h2>
+                  <h2 class="title">Vous pouvez aussi aimer ❤️ </h2>
               </div>
               </div>
           </div>
@@ -1642,13 +1458,6 @@ section{
           
       </div>
     </section>
-
-
-
-                    
- 
-
-
   <script>
     var dayss = document.getElementById("dayss")
     var hourss = document.getElementById("hourss")
