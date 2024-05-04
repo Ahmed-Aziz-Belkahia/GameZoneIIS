@@ -13,7 +13,7 @@
         <div class="broweByCategory__div flexCenter">
             <div class="broweByCategory__categorys flexCenter">
                 {% for category in categories %}
-                <a href="/shop/category/{{ category.meta_title }}" class="categorys__category flexCenter">
+                <a href="/category/{{ category.meta_title }}" class="categorys__category flexCenter">
                     <div class="category__img flexCenter">
                         <div class="img__div flexCenter">
                             <img src="{{ category.image.url }}" alt="{{ category.title }}">

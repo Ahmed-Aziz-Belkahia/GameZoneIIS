@@ -7,6 +7,9 @@
     
 {% block content %}
 {% load crispy_forms_tags %}
+
+
+
 <!-- {% crispy review_form %} -->
 
 <style>
@@ -459,7 +462,8 @@ section{
                              data-zoom-image="{{g.image.url}}"
                              width="350"
                              height="150"
-                             alt="{{ product_name }}"
+                             alt="{{g.alt}}"
+                             
                           />
                        </div>
                       </div>
@@ -469,16 +473,16 @@ section{
                   <div class="tab-pane fade show active" id="v-pills-{{product.pid}}" role="tabpanel" aria-labelledby="v-pills-{{product.pid}}-tab">
                     <div class="shop_single_navmenu_content mb-3 text-center">
                        <div class=""> 
-                         <img class="zoom-img product-detail-img" id="zoom_03" src="{{product.image.url}}" style="border-radius: 10px;" data-zoom-image="{{product.image.url}}" width="350" height="150 alt="Shop Single Image"/> 
+                         <img class="zoom-img product-detail-img" id="zoom_03" src="{{product.image.url}}" alt="{{product.alt}}" style="border-radius: 10px;" data-zoom-image="{{product.image.url}}" width="350" height="150 alt="Shop Single Image"/> 
                       </div>
                     </div>
                   </div>
 
                 </div>
                 <div class="nav d-flex nav-pills me-3 mb-3 sliderImg" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
-                    <button class="nav-link mb-0 me-3 active " id="v-pills-{{product.pid}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{product.pid}}" type="button" role="tab" aria-controls="v-pills-{{product.pid}}" aria-selected="true"><img src="{{ product.image.url }}" class="product-detail-img-list" alt=""></button>
+                    <button class="nav-link mb-0 me-3 active " id="v-pills-{{product.pid}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{product.pid}}" type="button" role="tab" aria-controls="v-pills-{{product.pid}}" aria-selected="true"><img src="{{ product.image.url }}" class="product-detail-img-list" alt="{{ product.title }} image"></button>
                     {% for g in product_images %}
-                    <button class="nav-link mb-0 me-3" id="v-pills-{{g.gid}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{g.gid}}" type="button" role="tab" aria-controls="v-pills-{{g.gid}}" aria-selected="true"><img src="{{ g.image.url }}" class="product-detail-img-list" alt=""></button>
+                    <button class="nav-link mb-0 me-3" id="v-pills-{{g.gid}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{g.gid}}" type="button" role="tab" aria-controls="v-pills-{{g.gid}}" aria-selected="true"><img src="{{ g.image.url }}" class="product-detail-img-list" alt="{{ g.alt }}"></button>
                     {% endfor %}
                 </div>
               </div>
@@ -562,7 +566,7 @@ section{
                     <div class="choice-input {% if forloop.first %} selected {% endif %}">
                       <input type="radio" id="{{ type.title }}_{{ choice.title }}" name="{{ type.title }}" value="{{ choice.title }}" {% if forloop.first %} checked {% endif %}>
                       {% if choice.image %}
-                        <img src="{{choice.image.url}}" alt="{{choice.title}}">
+                        <img src="{{choice.image.url}}" alt="{{choice.alt}}">
                       {% endif %}
                       <label for="{{ type.title }}_{{ choice.title }}" class="choice_input_label">{{ choice.title }}</label>
                     </div>
@@ -613,13 +617,12 @@ section{
                       <div id="openModal-about" class="modalDialog">
                           <div>
                             <a href="#close" title="Close" class="close">X</a>
-                            <h1>{{product.product_condition|title}} Product</h1>
+                            <h1>{{product.title|title}} </h1>
                             <hr>
                             <h4>Rating</h4>
-                            <h5>{{ product.product_condition_rating }}/10</h5>
                             <br>
-                            <h4>Description</h4>
-                            <h5>{{ product.product_condition_description }}</h5>
+                            <h4>{{ product.brand }} </h4>
+                            <h5>{{ product.category }}</h5>
                           </div>
                       </div>
 
@@ -976,23 +979,27 @@ section{
                   <input type="hidden" class="product-vendor-name-{{ product.id }}" value="{{ product.vendor.shop_name }}" />
                   <input type="hidden" class="product-brand-{{ product.id }}" value="{{ product.brand }}" />
                   
-                  <input type="hidden" class="product-types_choices-{{ product.id }}" value="here the json of selected choices" />
+                  <input type="hidden" class="product-types_choices-{{ product.id }}" value="{}" />
                   <input type="hidden" class="product-gz_coins-{{ product.id }}" value="{{ product.gz_coins }}" />
                   <input type="hidden" class="product-shipping_amount-{{ product.id }}" value="{{ product.shipping_amount }}" />
-                  <input type="hidden" class="product-quantity-{{ product.id }}" value="1" id="product-quantity" class="w-25 mb-10 product-quantity-{{ product.id }}" />
+                  <input type="hidden" class="product-quantity-{{ product.id }}" value="{{ product.stock_qty }}" id="product-quantity" class="w-25 mb-10 product-quantity-{{ product.id }}" />
                   <input type="hidden" class="product-price-{{ product.id }}" value="{{ product.price }}" />
                   <input type="hidden" class="product-pid-{{ product.id }}" value="{{ product.pid }}" />
                   <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}" />
                   <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}" />
                   <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}" />
+
+                  <input type="hidden" class="product-is_digital-{{ product.id }}" value="{{ product.digital }}" />
+                  
                   <input type="hidden" class="product-meta-title-{{ product.id }}" value="{{ product.meta_title }}" />
+                  <input type="hidden" class="product-meta_title-{{ product.id }}" value="{{ product.meta_title }}" />
                   <input type="hidden" class="product-slug-{{ product.id }}" value="{{ product.slug }}" />                      
                   <input type="hidden" class="product-vendor-slug-{{ p.id }}" value="{{ product.vendor.slug }}" />
                   
                   <input type="hidden" class="product-stock-qty-{{ product.id }}" value="{{ product.stock_qty }}" />
                   <input type="hidden" class="product-in-stock-{{ product.id }}" value="{{ product.in_stock }}" />
 
-                  <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">acheter</button></li>
+                  <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">ajouter au panier</button></li>
                   
                   <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>acheter</button> -->
                 </ul>

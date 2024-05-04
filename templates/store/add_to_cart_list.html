@@ -17,8 +17,14 @@
 <input type="hidden" class="product-id-{{ p.id }}" value="{{ p.id }}" />
 <input type="hidden" class="product-title-{{ p.id }}" value="{{ p.title }}" />
 <input type="hidden" class="product-meta_title-{{ p.id }}" value="{{ p.meta_title }}" />
+<input type="hidden" class="product-meta-title-{{ p.id }}" value="{{ p.meta_title }}" />
+
+<input type="hidden" class="product-is_digital-{{ p.id }}" value="{{ p.digital }}" />
+
 <input type="hidden" class="product-slug-{{ p.id }}" value="{{ p.slug }}" />                      
 <input type="hidden" class="product-vendor-slug-{{ p.id }}" value="{{ p.vendor.slug }}" />
+
+<input type="hidden" class="product-is_digital-{{ product.id }}" value="{{ p.digital }}" />
 
 <input type="hidden" class="product-stock-qty-{{ p.id }}" value="{{ p.stock_qty }}" />
 <input type="hidden" class="product-in-stock-{{ p.id }}" value="{{ p.in_stock }}" />

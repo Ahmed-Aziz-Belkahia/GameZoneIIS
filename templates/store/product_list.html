@@ -2,7 +2,7 @@
     <div class="shop_item small_style bdrs6 hvr_bdr1 home2_style border border-rounded-cus">
         <div class="thumb pb30">
             <a href="{% url 'store:product-detail' p.meta_title %}">
-                <img src="{{p.image.url}}"
+                <img src="{{p.image.url}}" alt="{{p.alt}}"
                     {% comment %} style="height: 200px; width: 100%; object-fit: cover; border-radius: 3px;" {% endcomment %}
                     class="product-img-avatar" alt="Meilleur article vendeur"
                 >

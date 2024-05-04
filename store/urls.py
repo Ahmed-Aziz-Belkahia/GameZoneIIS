@@ -6,10 +6,10 @@ app_name = "store"
 urlpatterns = [
     path("", views.index, name="home"),
     path("offer/", views.offer, name="offer"),
-    path("category/", views.category_list, name="category"),
+    #path("category/", views.category_list, name="category"),
     path("shop/", views.shop, name="shop"),
-    path("shop/category/<str:meta_title>", views.category_shop, name="category-shop"),
-    path("shop/brand/<str:meta_title>", views.brand_shop, name="brand-shop"),
+    path("category/<str:meta_title>", views.category_shop, name="category-shop"),
+    path("brand/<str:meta_title>", views.brand_shop, name="brand-shop"),
     path("hot_deals/", views.hot_deals, name="hot_deals"),
     path("search/", views.search_list, name="search"),
     path("my-cart/", views.cart_view, name="cart-view"),
@@ -21,11 +21,6 @@ urlpatterns = [
     path('success-payment/', views.PaymentSuccessView, name='success'),
     path('failed-payment/', views.PaymentFailedView, name='failed'),
     
-    
-    # Bidding and Auctioon
-    path("auction/", views.auction, name="auction"),
-    path("auction_detail/<pid>/", views.auction_detail, name="auction_detail"),
-    path("auction_update/<pid>/<bid>/", views.auction_update, name="auction_update"),
     
     # Paypal
     path('paypal/', include('paypal.standard.ipn.urls')),

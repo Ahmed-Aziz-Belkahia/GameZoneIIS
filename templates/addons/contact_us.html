@@ -75,7 +75,7 @@
           <div class="col-lg-6">
             <div class="form_grid">
               <div class="wrapper">
-                <form class="contact_form" name="contact_form" action="#" method="POST" novalidate>
+                <form class="contact_form" name="contact_form" action="{% url "addons:contact_us" %}" method="POST" novalidate>
                   {% csrf_token %}
                   <div class="row">
                     <div class="col-md-6">

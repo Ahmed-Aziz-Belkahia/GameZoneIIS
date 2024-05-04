@@ -209,7 +209,7 @@
                   <label class="custom-control-label" for="exampleCheck3"
                     >Se souvenir de moi</label
                   >
-                  <a class="btn-fpswd float-end" href="#"
+                  <a class="btn-fpswd float-end" href="{% url "password_reset" %}"
                     >Mot de passe oublié?</a
                   >
                 </div>
@@ -488,7 +488,7 @@
             </div>
             <div class="posr logo1 home5_style_megamenu_btn">
               <div class="position-relative">
-                <a class="department-filter-btn btn-mega" href="#"
+                <a class="department-filter-btn btn-mega" 
                   ><img
                     class="me-3 mt-3"
                     src="{% static 'images/desktop-nav-menu-dark.svg' %}"
@@ -514,7 +514,7 @@
                 <!-- <a href="{% url 'store:home' %}"><span class="title">Products</span></a> -->
               </li>
               <li class="megamenu_style">
-                <a href="#"><span class="title">Shop</span></a>
+                <a href="{% url "store:shop" %}"><span class="title">Shop</span></a>
                 <ul class="row dropdown-megamenu">
                   <li class="col mega_menu_list pl30">
                     <h4 class="title">Categories</h4>
@@ -605,7 +605,7 @@
                 <ul>
                   <li><a href="">About Us</a></li>
                   <li>
-                    <a href="#"><span class="title">Accounts</span></a>
+                    <a href="{% url "core:profile" %}"><span class="title">Accounts</span></a>
                     <ul>
                       <li>
                         <a href="{% url 'core:buyer-dashboard' %}">Dashboard</a>
@@ -705,7 +705,7 @@
                 ></a>
               </li>
               <li>
-                <a class="signin-filter-btn" href="#"
+                <a class="signin-filter-btn" href="{% url "core:profile" %}"
                   ><span class="far fa-user"></span
                 ></a>
               </li>
@@ -856,7 +856,7 @@
                   <label class="custom-control-label" for="exampleCheck3"
                     >Remember me</label
                   >
-                  <a class="btn-fpswd float-end" href="#"
+                  <a class="btn-fpswd float-end" href="{% url "password_reset" %}"
                     >Lost your password?</a
                   >
                 </div>
@@ -965,7 +965,7 @@
                 <ul class="cart mt15">
                   <!-- <li class="list-inline-item"><a class="cart_btn signup-filter-btn" href="#"><span class="icon fas fa-search"></span></a></li> -->
                   <li class="list-inline-item">
-                    <a class="cart_btn signin-filter-btn" href="#"
+                    <a class="cart_btn signin-filter-btn" href="{% url "core:profile" %}"
                       ><span class="icon fas fa-user"></span
                     ></a>
                   </li>
@@ -1097,9 +1097,7 @@
               <ul>
                 <li><a href="{% url 'addons:about_us' %}">About Us</a></li>
                 <li><a href="{% url 'addons:contact_us' %}">Contactez-nous</a></li>
-                <li><a href="">Help</a></li>
-                <li><a href="">Faq</a></li>
-                <li><a href="">Terms and Conditions</a></li>
+                <li><a href="{% url "addons:terms_and_conditions" %}">Terms and Conditions</a></li>
               </ul>
             </li>
             <li>
@@ -1203,7 +1201,7 @@
                     >
                   </li>
                   <li>
-                    <a href="{% url 'addons:terms_and_conditions' %}">Privacy Policy</a>
+                    <a href="{% url 'addons:privacy_policy' %}">Privacy Policy</a>
                   </li>
                 </ul>
               </div>
@@ -1215,7 +1213,6 @@
                   <li>
                     <a href="{% url 'addons:contact_us' %}">Contactez-nous</a>
                   </li>
-                  <li><a href="{% url 'reports:report-issue' %}">Report Issue</a></li>
                   
                 </ul>
               </div>
@@ -1226,12 +1223,12 @@
                 <div class="social_icon_list home2_style mt30">
                   <ul class="mb20">
                     <li class="list-inline-item">
-                      <a href="{{company.facebook}}"
+                      <a href="{{company.facebook}}" target="_blank"
                         ><i class="fab fa-facebook"></i
                       ></a>
                     </li>
                     <li class="list-inline-item">
-                      <a href="{{company.instagram}}"
+                      <a href="{{company.instagram}}" target="_blank"
                         ><i class="fab fa-instagram"></i
                       ></a>
                     </li>
@@ -1244,14 +1241,14 @@
                 <div class="acceped_card_list">
                   <ul class="d-flex mb-0">
                     <li class="me-2">
-                      <a href="#"
+                      <a 
                         ><img
                           src="{% static 'images/resource/visa-card.png' %}"
                           alt="Visa Card - secure and widely accepted payment method"
                       /></a>
                     </li>
                     <li class="me-2">
-                      <a href="#"
+                      <a 
                         ><img
                           src="{% static 'images/resource/master-card.png' %}"
                           alt="Master - secure and widely accepted payment method"

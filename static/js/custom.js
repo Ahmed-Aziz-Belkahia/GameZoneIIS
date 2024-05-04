@@ -98,6 +98,7 @@ $(document).on("click", "#question-btn", function(){
     
         let product_id = $(".product-id-" + index).val()
         let product_meta_title = $(".product-meta_title-" + index).val()
+        let product_is_digital = $(".product-is_digital-" + index).val()
         let product_price = $(".product-price-" + index).val()
         let product_types_choices = $(".product-types_choices-" + index).val()
         let product_shipping_amount = $(".product-shipping_amount-" + index).val()
@@ -121,6 +122,7 @@ $(document).on("click", "#question-btn", function(){
         console.log("Meta title:", product_meta_title);
         console.log("ID:", product_id);
         console.log("PID:", product_pid);
+        console.log("Digital?:", product_is_digital);
         console.log("GZ Coins:", product_gz_coins, "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
         console.log("product_types_choices:", product_types_choices);
         console.log("Image:", product_image);
@@ -148,6 +150,7 @@ $(document).on("click", "#question-btn", function(){
                 data: {
                     'id': product_id,
                     'product_meta_title': product_meta_title,
+                    'product_is_digital': product_is_digital,
                     'product_types_choices': product_types_choices,
                     'pid': product_pid,
                     'product_types_choices': product_types_choices,

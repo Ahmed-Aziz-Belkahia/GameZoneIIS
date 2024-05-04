@@ -375,7 +375,7 @@
               >
               </li>
               <li>
-                <a href="{% url 'addons:terms_and_conditions' %}">Politique de confidentialité</a>
+                <a href="{% url 'addons:privacy_policy' %}">Politique de confidentialité</a>
               </li>
             </ul>
           </div>
@@ -387,7 +387,6 @@
               <li>
                 <a href="{% url 'addons:contact_us' %}">Contactez-nous</a>
               </li>
-              <li><a href="{% url 'reports:report-issue' %}">Signaler un problème</a></li>
               
             </ul>
           </div>
@@ -398,10 +397,10 @@
             <div class="social_icon_list home2_style mt30">
               <ul class="mb20">
                 <li class="list-inline-item">
-                  <a href="{{company.facebook}}"><i class="fab fa-facebook"></i></a>
+                  <a href="{{company.facebook}}" target="_blank"><i class="fab fa-facebook"></i></a>
                 </li>
                 <li class="list-inline-item">
-                  <a href="{{company.instagram}}"><i class="fab fa-instagram"></i></a>
+                  <a href="{{company.instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>
                 </li>
               </ul>
             </div>
@@ -411,10 +410,10 @@
             <div class="acceped_card_list">
               <ul class="d-flex mb-0">
                 <li class="me-2">
-                  <a href="#"><img src="/static/images/resource/visa-card.png" alt="visa-card"></a>
+                  <a><img src="/static/images/resource/visa-card.png" alt="visa-card"></a>
                 </li>
                 <li class="me-2">
-                  <a href="#"><img src="/static/images/resource/master-card.png" alt="master-card"></a>
+                  <a><img src="/static/images/resource/master-card.png" alt="master-card"></a>
                 </li>
               </ul>
             </div>
@@ -454,7 +453,7 @@
               Reserved
             </p>
             <p>
-              <a href="{% url 'addons:terms_and_conditions' %}"
+              <a href="{% url 'addons:privacy_policy' %}"
               >Confidentialité</a
             >·<a href="{% url 'addons:terms_and_conditions' %}"
               >Termes</a

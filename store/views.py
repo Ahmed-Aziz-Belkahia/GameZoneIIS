@@ -359,6 +359,7 @@ def category_shop(request, meta_title):
     pages_filtered_products = paginator.get_page(page_number)
 
     context = {
+        "current_category": category,
         "direct_subcategories": direct_subcategories,
         "brands": brands,
         "products_count": products_count,
@@ -449,6 +450,7 @@ def brand_shop(request, meta_title):
     pages_filtered_products = paginator.get_page(page_number)
 
     context = {
+        "brand": brand,
         "direct_subcategories": direct_subcategories,
         "shop_categories": categories,
         "products_count": products_count,
@@ -1041,6 +1043,7 @@ def add_to_cart(request):
         'qty': request.GET['qty'],
         'price': request.GET['price'],
         'product_meta_title': request.GET['product_meta_title'],
+        'product_is_digital': request.GET['product_is_digital'],
         'product_types_choices': request.GET['product_types_choices'],
         'shipping_amount': request.GET['shipping_amount'],
         'shipping_amount': request.GET['shipping_amount'],
@@ -1394,6 +1397,8 @@ def shipping_address(request):
         vendor_fee = 0.5
         service_fee_flat_rate = 1
 
+    digital_cart = False
+
     if 'cart_data_obj' in request.session:
         
         for p_id, item in request.session['cart_data_obj'].items():
@@ -1403,12 +1408,16 @@ def shipping_address(request):
             products_amount += int(item['qty']) * float(item['price'])
             shipping_amount__ += 0 #int(item['qty']) * float(item['shipping_amount'])
             product_plus_shipping = products_amount + shipping_amount__
+
+            print(item, "ffffffffffffffffffffffffffff")
+            if item['product_is_digital'] == "True":
+                digital_cart = True
+                
             
             # print("product_plus_shipping ==================", product_plus_shipping)
             # print("product_plus_shipping ==================", product_plus_shipping)
             # print("tax_amount_ ==================", tax_amount_)
             # print("tax_rate ==================", tax_rate)
-            
             
             service_fee_calc = products_amount
             if basic_addon.service_fee_charge_type == "percentage":
@@ -1421,7 +1430,6 @@ def shipping_address(request):
                 service_fee_amount = service_fee_calc * 0.5
                 
                 
-            vendor = item['vendor']
 
             # total_amount = cart_total_amount + total_shipping_amount + total_tax + service_fee_amount
             #main_cart_total = cart_total_amount + shipping_amount__
@@ -1436,7 +1444,6 @@ def shipping_address(request):
             form = CheckoutForm(request.POST)
             print(request.POST)
             if form.is_valid():
-                print("valid form", form)
                 print("payment_method", request.POST.get("payment_method"))
                 new_form = form.save(commit=False)
                 
@@ -1454,7 +1461,9 @@ def shipping_address(request):
                 billing_town_city = new_form.billing_town_city
                 billing_address = new_form.billing_address
                 
-                if shipping_method == "ship_to_home":
+                print(digital_cart)
+                if shipping_method == "ship_to_home" and digital_cart == False:
+                    print("test")
                     # Add $7 to the total amount for shipping to home
                     shipping_amount__ = 7
                     total_shipping_amount = shipping_amount__
@@ -1935,21 +1944,24 @@ def PaymentSuccessView(request):
     # Fetch the order associated with the payment reference
     order = get_object_or_404(CartOrder, payment_ref=payment_ref)
     
+    
+    
     if order.payment_status == "processing":
         order.payment_status = "paid"
         order.payment_method = "Credit/Debit Card"
         order.delivery_status = "shipping_processing"
         order.save()
-        
+        request.session.pop('cart_data_obj')
         # Update order items, send email notifications, update product stock, and payout vendors
         update_order_details(order)
         
     elif order.payment_status == "paid":
+        request.session.pop('cart_data_obj')
         messages.success(request, f'Your order has been received.')
-        return redirect("core:profile")
+        return redirect("store:home")
     else:
         messages.success(request, 'Oops... Internal Server Error; please try again later')
-        return redirect("core:profile")
+        return redirect("store:home")
         
     products = CartOrderItem.objects.filter(order=order)
     return render(request, "payment/payment_success.html", {"order": order, 'products': products}) 
@@ -2039,7 +2051,6 @@ def PaymentFailedView(request):
 @csrf_exempt
 def create_checkout_session(request, id):
     print("Create checkout session")
-    request.session.pop('cart_data_obj')
     order = get_object_or_404(CartOrder, oid=id)
     if order.payment_method == "credit_card":
         request_data = json.loads(request.body)
