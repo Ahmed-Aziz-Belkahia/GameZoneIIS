@@ -148,8 +148,8 @@ def category_list(request):
 
 
 def search_list(request):
-    products = Product.objects.filter(status="published").order_by("-id")
-    product_count = Product.objects.filter(status="published").order_by("-id")
+    products = Product.objects.filter(status="published").order_by("sort", "-id")
+    product_count = Product.objects.filter(status="published").order_by("sort", "-id")
     
     query = request.GET.get("q")
     if query:
@@ -168,7 +168,7 @@ def search_list(request):
     return render(request, "store/search_list.html", context)
 
 def nav_search(request):
-    products = Product.objects.filter(status="published").order_by("-id")
+    products = Product.objects.filter(status="published").order_by("sort", "-id")
 
     if request.method == 'POST':
         query = request.POST.get("q")
@@ -200,7 +200,7 @@ def nav_search(request):
     return JsonResponse({'success': True, 'queryList': []})
 
 def shop(request):
-    products = Product.objects.filter(status="published").order_by("-id")
+    products = Product.objects.filter(status="published").order_by("sort", "-id")
     filtered_products = products
     products_count = products.count()
     top_selling = Product.objects.filter(status="published").order_by("-orders")[:20]
@@ -290,7 +290,7 @@ def shop(request):
 
 def category_shop(request, meta_title):
     brands = Brand.objects.filter(active=True)
-    products = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by("-id")
+    products = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by('sort', "-id")
     filtered_products = products
     products_count = products.count()
     top_selling = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by("-orders")[:20]
@@ -379,7 +379,7 @@ def category_shop(request, meta_title):
 
 def brand_shop(request, meta_title):
     brand = Brand.objects.get(meta_title=meta_title)
-    products = Product.objects.filter(brand=brand, status="published").order_by("-id")
+    products = Product.objects.filter(brand=brand, status="published").order_by("sort", "-id")
     filtered_products = products
     products_count = products.count()
     top_selling = Product.objects.filter(brand=brand, status="published").order_by("-orders")[:20]
@@ -637,10 +637,9 @@ def offer(request):
 
 def product_detail(request, meta_title):
     product = Product.objects.get(status="published", meta_title=meta_title)
-    
+    disable_button = False
     if product.stock_qty == 0:
-        messages.warning(request, "This product is currently out of stock.")
-        return redirect("store:home")
+        disable_button = True
     
     if product.status == "disabled":
         return redirect("store:home")
@@ -761,8 +760,6 @@ def product_detail(request, meta_title):
                     amount = request.POST.get("offer_amount")
                     message = request.POST.get("custom_message")
                     
-                    print("amount ==================", amount)
-                    print("message ==================", message)
                     
                     offer = ProductOffers.objects.create(user=request.user,price=amount,message=message,product=product,email=request.user.email)
                     Notification.objects.create(vendor=product.vendor,product=product,offer=offer,amount=amount,type="new_offer")
@@ -941,6 +938,7 @@ def product_detail(request, meta_title):
                     return redirect("store:product-detail", product.meta_title)
 
     context = {
+        "disable_button": disable_button,
         "bidders":bidders,
         "product":product,
         "product_images":product_images,

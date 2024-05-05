@@ -365,6 +365,8 @@ class Product(models.Model):
     meta_title = models.SlugField(unique=True, blank=True, null=True)
     title_meta_title = models.CharField(max_length=1000, null=True, blank=True)
 
+    index = models.IntegerField(default=10, blank=True, null=True)
+
     image = models.ImageField(upload_to=user_directory_path, default="product.png")
     alt = models.CharField(max_length=100, blank=True, null=True)
     description = CKEditor5Field(config_name='extends', null=True, blank=True)

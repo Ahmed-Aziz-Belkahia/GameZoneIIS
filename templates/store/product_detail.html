@@ -999,7 +999,12 @@ section{
                   <input type="hidden" class="product-stock-qty-{{ product.id }}" value="{{ product.stock_qty }}" />
                   <input type="hidden" class="product-in-stock-{{ product.id }}" value="{{ product.in_stock }}" />
 
+                  {% if disable_button %}
+                  <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;"  disabled>en repture de stock</button></li>
+                  {% else %}
                   <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">ajouter au panier</button></li>
+                  {% endif %}
+                  
                   
                   <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>acheter</button> -->
                 </ul>
