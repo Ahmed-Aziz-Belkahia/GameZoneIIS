@@ -548,7 +548,7 @@ background: url(https://gameszone.tn/static/images/background/footer-bg-img-home
 @media screen and (max-width: 768px) {
     .navbar__search{
         position: absolute !important;
-        top: 72%;
+        top: 75%;
         bottom: 0;
         left: 0;
     }
@@ -584,7 +584,7 @@ background: url(https://gameszone.tn/static/images/background/footer-bg-img-home
         width: max-content;
     }
     .header__div{
-        height: 135px;
+        height: 115px;
     }
     .header__navbar{
         width: 100vw;
@@ -703,6 +703,17 @@ background: url(https://gameszone.tn/static/images/background/footer-bg-img-home
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+.categories__div > .right-content > .track_container > .track_details > a {
+    display: block;
+    font-size: medium;
+    font-weight: 700;
+    padding: 0 15px 0 0;
+    margin: 0;
+    color: white;
+}
+.categories__div > .right-content > .track_container > .track_details > a:hover{
+    color: var(--MS-C)
 }
 .categories__div > .right-content > .track_container > .track_details > p {
     display: block;

@@ -5,7 +5,7 @@
     background: whitesmoke;
     gap: 2rem;
     padding-bottom: 64px;
-    padding-top: 64px;
+    padding-top: 0;
     box-shadow: 0 0 4px #00000045;
 }
 

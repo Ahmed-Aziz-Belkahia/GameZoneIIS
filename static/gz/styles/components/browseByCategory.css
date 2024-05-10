@@ -59,6 +59,9 @@
     .broweByCategory__categorys{
         padding: 0 2rem;
     }
+    .categorys__category{
+        width: 240px;
+    }
 }
 @media screen and (max-width: 1024px) {
     .broweByCategory__categorys{
