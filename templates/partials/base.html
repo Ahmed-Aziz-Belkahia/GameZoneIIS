@@ -7,20 +7,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <base href="{% static '/' %}">
+
+    {% if product and product.title_meta_title %}
+    <meta
+      name="title"
+      content="{{ product.title_meta_title }}"
+    />
+    {% elif current_category and current_category.title_meta_title %}
+    <meta
+      name="title"
+      content="{{ current_category.title_meta_title }}"
+    />
+    {% elif brand and brand.title_meta_title %}
+    <meta
+      name="title"
+      content="{{ brand.title_meta_title }}"
+    />
+    {% else %}
+    <meta name="title" content="Gamezone"/>
+
+    {% endif %}
+
     {% block meta_description %}
+
+    {% if product and product.tags %}
+    <meta
+      name="keywords"
+      content="{{ product.tags }}"
+    />
+    {% elif current_category and current_category.tags %}
+    <meta
+      name="keywords"
+      content="{{ current_category.tags }}"
+    />
+    {% elif brand and brand.tags %}
+    <meta
+      name="keywords"
+      content="{{ brand.tags }}"
+    />
+    {% else %}
+    <meta name="keywords" content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox, Console de jeux, Jeux vidéo, Accessoires de jeux"/>
+    {% endif %}
+
     {% if product and product.meta_description %}
     <meta
       name="description"
       content="{{ product.meta_description }}"
     />
+    {% elif current_category and current_category.meta_description%}
     <meta
-      name="keywords"
-      content="{{ product.tags }}"
+      name="description"
+      content="{{ current_category.meta_description }}"
+    />
+    {% elif brand and brand.meta_description%}
+    <meta
+      name="description"
+      content="{{ brand.meta_description }}"
     />
     {% else %}
       <meta name="description" content="GameZone - Le spécialiste de vente console de jeux, Ps4, PS5, Nintendo switch. Achetez vos consoles et jeux préférés à des prix compétitifs. Livraison rapide et sécurisée."/>
-      <meta name="keywords" content="Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox, Console de jeux, Jeux vidéo, Accessoires de jeux"/>
     {% endif %}
+
     <meta name="author" content="GameZone"/>
     <meta name="copyright" content="GameZone 2024"/>
     <meta name="robots" content="index, follow"/>

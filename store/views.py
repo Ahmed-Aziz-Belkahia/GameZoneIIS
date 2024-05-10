@@ -290,7 +290,7 @@ def shop(request):
 
 def category_shop(request, meta_title):
     brands = Brand.objects.filter(active=True)
-    products = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by('sort', "-id")
+    products = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by('index', "-id")
     filtered_products = products
     products_count = products.count()
     top_selling = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by("-orders")[:20]

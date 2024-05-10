@@ -146,7 +146,10 @@ PAYMENT_METHOD = (
 class Category(models.Model):
     cid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet="abcdefghijklmnopqrstuvxyz")
     title = models.CharField(max_length=100)
+    title_meta_title = models.CharField(max_length=150, blank=True, null=True)
+    meta_description = models.CharField(max_length=10000, blank=True, null=True)
     meta_title = models.SlugField(unique=True, null=True, blank=True)
+    tags = models.CharField(blank=True, null=True, max_length=10000)
     image = models.ImageField(upload_to="category", default="category.png", null=True, blank=True)
     alt = models.CharField(max_length=100, blank=True, null=True)
     active = models.BooleanField(default=True)
@@ -286,6 +289,9 @@ class Genre(models.Model):
 class Brand(models.Model):
     bid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet="abcdefghijklmnopqrstuvxyz")
     title = models.CharField(max_length=100)
+    title_meta_title = models.CharField(max_length=150, blank=True, null=True)
+    meta_description = models.CharField(max_length=10000, blank=True, null=True)
+    tags = models.CharField(blank=True, null=True, max_length=10000)
     meta_title = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="brand", default="brand.png", null=True, blank=True)
     alt = models.CharField(max_length=100, blank=True, null=True)

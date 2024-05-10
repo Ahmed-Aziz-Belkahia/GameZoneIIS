@@ -87,3 +87,13 @@
     }
     
 }
+@media screen and (max-width: 768px) {
+    .gamesCatalog__items{
+        flex-wrap: wrap;
+        gap: 0px;
+        width: 100%;
+    }
+    .gamesCatalog__items a{
+        width: 50%;
+    }
+}

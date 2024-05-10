@@ -250,7 +250,16 @@
 }
 @media screen and (max-width: 768px) {
     .main__xbox .layer2__cards {
-        flex-direction: column;
+        flex-direction: row;
+        overflow-x: scroll;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 25%);
+        gap: 10px;
+        grid-template-columns: 15rem 15rem 15rem 15rem;
+        gap: 0px;
+        padding: 0;
+        justify-content: flex-start;
     }
     .main__xbox .card__lower{
         height: auto;

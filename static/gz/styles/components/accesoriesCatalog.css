@@ -93,7 +93,18 @@
 }
 @media screen and (max-width: 768px) {
     .accesoriesCatalog__list{
-        flex-direction: column;
-        gap: 0;
+        flex-wrap: wrap;
+        gap: 0px;
+    }
+    .main__accesoriesCatalog .accesoriesCatalog__item{
+        width: 50%;
+    }
+}
+@media screen and (max-width: 375px) {
+    .accesoriesCatalog__text{
+        text-align: center;
+    }
+    .main__accesoriesCatalog .accesoriesCatalog__item{
+        width: 40%;
     }
 }
