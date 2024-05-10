@@ -51,7 +51,7 @@
             <div class="widget_list">
               <ul class="list_details">
                 {% for c in categoriess %}
-                    <li><a href="{% url 'blog:category_detail' c.slug %}">{{c.title}}</a></li>
+                    <li><a href="{% url 'blog:category_detail' meta_title=c.meta_title %}">{{c.title}}</a></li>
                 {% endfor %}
                 
               </ul>
@@ -64,14 +64,14 @@
             <div class="col-md-6 col-xl-4">
               <div class="for_blog">
                 <div class="thumb">
-                  <img class="img-whp" src="{{p.image.url}}" style="width: 100%; height: 240px; object-fit: cover;" alt="{{p.title}}">
+                  <img class="img-whp" src="{{p.image.url}}" style="width: 100%; height: 240px; object-fit: cover;" alt="{{p.alt}}">
                 </div>
                 <div class="details">
                   <div class="tc_content">
                     <span class="subtitle">{{p.category.title}}</span>
-                    <h4 class="title"><a href="{% url 'blog:blog-detail' p.pid %}">{{p.title|truncatechars:60}}</a></h4>
+                    <h4 class="title"><a href="{% url 'blog:blog-detail' meta_title=p.meta_title %}">{{p.title|truncatechars:60}}</a></h4>
                     <span class="post_date">{{p.date|date:"d M, Y"}}</span> <br>
-                    <a href="{% url 'blog:blog-detail' p.pid %}" class="purple-btn btn mt-3">Read More</a>
+                    <a href="{% url 'blog:blog-detail' meta_title=p.meta_title %}" class="purple-btn btn mt-3">Read More</a>
 
                   </div>
                 </div>

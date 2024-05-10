@@ -1,12 +1,14 @@
 from django.db import models
 from django.conf import settings
+import shortuuid
 from taggit.managers import TaggableManager
 from userauths.models import user_directory_path
 from html import unescape
 from django.utils.html import strip_tags
 from django_ckeditor_5.fields import CKEditor5Field
 from shortuuid.django_fields import ShortUUIDField
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils.text import slugify
 
 User = settings.AUTH_USER_MODEL
 
@@ -20,6 +22,9 @@ BLOG_PUBLISH_STATUS = (
 class Category(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
+    meta_title = models.SlugField(unique=True, blank=True, null=True)
+    title_meta_title = models.CharField(max_length=150, null=True, blank=True)
+    meta_description = models.CharField(max_length=10000, null=True, blank=True)
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -29,12 +34,24 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title 
+    
+    def save(self, *args, **kwargs):
+        if self.meta_title == "" or self.meta_title == None:
+            uuid_key = shortuuid.uuid()
+            uniqueid = uuid_key[:4]
+            self.meta_title = slugify(self.title) + "-" + str(uniqueid.lower())
+            
+        super(Category, self).save(*args, **kwargs)
         
     
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(upload_to=user_directory_path)
+    alt = models.CharField(max_length=10000, blank=True, null=True)
     title = models.CharField(max_length=1000)
+    meta_title = models.SlugField(unique=True, blank=True, null=True)
+    title_meta_title = models.CharField(max_length=150, blank=True, null=True)
+    meta_description = models.CharField(max_length=10000, blank=True, null=True)
     content = CKEditor5Field(config_name='extends')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     tags = TaggableManager()
@@ -60,6 +77,14 @@ class Post(models.Model):
         total_words = len((string).split())
 
         return round(total_words / 200)
+    
+    def save(self, *args, **kwargs):
+        if self.meta_title == "" or self.meta_title == None:
+            uuid_key = shortuuid.uuid()
+            uniqueid = uuid_key[:4]
+            self.meta_title = slugify(self.title) + "-" + str(uniqueid.lower())
+            
+        super(Post, self).save(*args, **kwargs)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')

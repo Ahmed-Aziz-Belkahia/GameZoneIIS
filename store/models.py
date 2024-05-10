@@ -6,9 +6,10 @@ from django_ckeditor_5.fields import CKEditor5Field
 from django.template.defaultfilters import escape
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
-
-from django.shortcuts import redirect
 from django.utils.text import slugify
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.shortcuts import redirect
 
 from userauths.models import User, user_directory_path, Profile
 from core.models import Address, BillingAddress
@@ -244,13 +245,18 @@ class SubCategory(models.Model):
         product_count = Product.objects.filter(subcategory__in=related_subcategories_ids)
         return product_count
 
+    def clean(self):
+        super().clean()
+        if self.parent_subcategory == self:
+            raise ValidationError(_('A subcategory cannot be its own parent category.'))
+
 
     def save(self, *args, **kwargs):
         if self.meta_title == "" or self.meta_title == None:
             uuid_key = shortuuid.uuid()
             uniqueid = uuid_key[:4]
             self.meta_title = slugify(self.title) + "-" + str(uniqueid.lower())
-            
+        
         super(SubCategory, self).save(*args, **kwargs)
 
 class Genre(models.Model):

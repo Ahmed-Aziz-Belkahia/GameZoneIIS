@@ -31,8 +31,8 @@ def blogList(request):
     }
     return render(request, 'blog/post-lists.html', context)
 
-def blogDetail(request, pid):
-    post = Post.objects.get(status="published", pid=pid)
+def blogDetail(request, meta_title):
+    post = Post.objects.get(status="published", meta_title=meta_title)
     comment = Comment.objects.filter(post=post, active=True)
     blogs = Post.objects.filter(status="published").order_by("-id")[:10]
     related_blogs = Post.objects.filter(category=post.category).order_by("-id")[:12]
@@ -59,8 +59,8 @@ def blogDetail(request, pid):
     return render(request, 'blog/post-detail.html', context)
 
 
-def category_detail(request, slug):
-    category = Category.objects.get(slug=slug)
+def category_detail(request, meta_title):
+    category = Category.objects.get(meta_title=meta_title)
     blog_count = Post.objects.filter(category=category, status="published")
     blog = Post.objects.filter(category=category, status="published")
     categories = Category.objects.filter(active=True)

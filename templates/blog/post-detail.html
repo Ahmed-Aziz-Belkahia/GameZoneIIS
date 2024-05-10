@@ -134,9 +134,9 @@
                 <div class="details">
                 <div class="tc_content">
                     <span class="subtitle">{{p.category.title}}</span>
-                    <h4 class="title"><a href="{% url 'blog:blog-detail' p.pid %}">{{p.title}}</a></h4>
+                    <h4 class="title"><a href="{% url 'blog:blog-detail' meta_title=p.meta_title %}">{{p.title}}</a></h4>
                     <span class="post_date">{{p.date|date:"d M, Y"}}</span> <br>
-                    <a href="{% url 'blog:blog-detail' p.pid %}" class="purple-btn btn mt-3">Read More</a>
+                    <a href="{% url 'blog:blog-detail' meta_title=p.meta_title %}" class="purple-btn btn mt-3">Read More</a>
 
                 </div>
                 </div>
