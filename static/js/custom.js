@@ -196,9 +196,6 @@ $(document).on("click", "#question-btn", function(){
         let product_tax_fee = $(".product-product_tax_fee-" + _pId).val()
         let product_stock_qty = $(".product-product_stock_qty-" + _pId).val()
         
-
-        console.log(_pQty);
-
         if (parseInt(_pQty) > parseInt(product_stock_qty)) {
             Swal.fire({
                 icon: 'warning',

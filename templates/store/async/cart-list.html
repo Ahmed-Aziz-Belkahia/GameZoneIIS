@@ -114,7 +114,7 @@
                       <li class="ms-2 ms-md-3">
                         <a
                           class="cart_title"
-                          href="{% url 'store:product-detail' p.meta_title %}"
+                          href="{% url 'store:product-detail' meta_title=p.product_meta_title %}"
                         >
                           <span class="fz16">{{p.title|truncatechars:27}}</span>
                           <br />
@@ -262,31 +262,73 @@
 </div>
 
 <script>
-  $(document).on("click", "#increase-btn", function () {
-    let id = $(this).attr("data-btn");
-    var input_value = $("#qty" + id).val();
-    console.log(input_value);
+// Function to handle quantity update
+function updateQuantity(id, operation) {
+  let input_value = parseInt($("#qty" + id).val());
+  const product_stock_qty = parseInt($(".product-product_stock_qty-" + id).val());
 
-    if (input_value >= 0) {
+  if (operation === 'increase' && input_value < product_stock_qty) {
       input_value++;
-      $("#qty" + id).val(input_value);
-    }
-  });
-
-  $(document).on("click", "#decrease-btn", function () {
-    let id = $(this).attr("data-btn");
-    var input_value = $("#qty" + id).val();
-    console.log(input_value);
-
-    if (input_value >= 0) {
+  } else if (operation === 'decrease' && input_value > 1) {
       input_value--;
-      $("#qty" + id).val(input_value);
-    }
+  }
 
-    if (input_value === 0) {
-      $("#qty" + id).val(1);
-    }
-  });
+  $("#qty" + id).val(input_value);
+
+  // Update the cart with new quantity
+  $(".update-item[data-item='" + id + "']").click();
+}
+
+// Attach event listeners
+{% comment %} $(document).on('click', '.increase-btn', function() {
+  const id = $(this).attr('data-btn');
+  updateQuantity(id, 'increase');
+});
+
+$(document).on('click', '.decrease-btn', function() {
+  const id = $(this).attr('data-btn');
+  updateQuantity(id, 'decrease');
+}); {% endcomment %}
+
+$(document).on('click', '.update-item', function() {
+  var _pId = $(this).attr('data-item');
+  var _vm = $(this);
+
+  var _pQty = $(".product-qty-" + _pId).val();
+  let shipping_amount = $(".product-shipping_amount-" + _pId).val();
+  let product_processing_fee = $(".product-product_processing_fee-" + _pId).val();
+  let product_tax_fee = $(".product-product_tax_fee-" + _pId).val();
+  let product_stock_qty = $(".product-product_stock_qty-" + _pId).val();
+  
+  if (parseInt(_pQty) > parseInt(product_stock_qty)) {
+      Swal.fire({
+          icon: 'warning',
+          title: 'Oops... Stock Qty Exceeded!',
+          text: 'You are exceeding the stock current quantity of ' + product_stock_qty,
+      });
+      $(".product-qty-" + _pId).val(product_stock_qty);
+  } else {
+      // Ajax call to update cart
+      $.ajax({
+          url: '/ajax/update-cart/',
+          data: {
+              'id': _pId,
+              'qty': _pQty,
+              'shipping_amount': shipping_amount,
+              'product_tax_fee': product_tax_fee,
+              'product_processing_fee': product_processing_fee,
+          },
+          dataType: 'json',
+          beforeSend: function() {
+              _vm.attr('disabled', true);
+          },
+          success: function(res) {
+              _vm.attr('disabled', false);
+              $("#cartList").html(res.data);
+          }
+      });
+  }
+});
 
   document.addEventListener("DOMContentLoaded", function() {
     const shippingOptions = document.querySelectorAll('.colors__divs .divs__div');

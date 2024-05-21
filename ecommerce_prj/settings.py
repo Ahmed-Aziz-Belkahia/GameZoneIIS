@@ -239,10 +239,18 @@ ANYMAIL = {
 
 
 
-FROM_EMAIL='contact@gameszone.tn'
+""" FROM_EMAIL='contact@gameszone.tn'
 EMAIL_BACKEND='anymail.backends.mailgun.EmailBackend'
 DEFAULT_FROM_EMAIL='contact@gameszone.tn'
-SERVER_EMAIL='contact@gameszone.tn'
+SERVER_EMAIL='contact@gameszone.tn' """
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ahmadazizbelkahiag2a@gmail.com'
+EMAIL_HOST_PASSWORD='rjsz fsvm yrgm eizg'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 GEOIP_PATH =os.path.join('geoip')
 
@@ -264,21 +272,18 @@ customColorPalette = [
     {"color": "hsl(207, 90%, 54%)", "label": "Blue"},
 ]
 
-
-
 CKEDITOR_5_CONFIGS = {
     "default": {
-        "toolbar": [
-            "heading",
-            "|",
-            "bold",
-            "italic",
-            "link",
-            "bulletedList",
-            "numberedList",
-            "blockQuote",
-            "imageUpload"
-        ],
+        'skin': 'moono',
+        "codeSnippet_theme": 'monokai',
+        "toolbar": "all",
+        "extraPlugins": ','.join([
+            "codesnippet",
+            "widget",
+            "dialog",
+            "image",
+            "imageUpload",
+        ])
     },
     "comment": {
         "language": {"ui": "en", "content": "en"},
@@ -291,9 +296,15 @@ CKEDITOR_5_CONFIGS = {
             "bulletedList",
             "numberedList",
             "blockQuote",
+            "insertImage",
         ],
+        "extraPlugins": ','.join([
+            "image",
+            "imageUpload",
+        ]),
     },
     "extends": {
+        "mediaEmbed": {"previewsInData": "true"},
         "language": "en",
         "blockToolbar": [
             "paragraph",
@@ -305,41 +316,40 @@ CKEDITOR_5_CONFIGS = {
             "numberedList",
             "|",
             "blockQuote",
+            "insertImage",
         ],
         "toolbar": [
-            # "heading",
-            # "|",
-            
-            # "|",
+            "heading",
+            "|",
             "bold",
             "italic",
-            # "link",
+            "link",
             "underline",
             "strikethrough",
             "code",
-            # "subscript",
-            # "superscript",
+            "subscript",
+            "superscript",
             "highlight",
             "|",
             "bulletedList",
-            # "codeBlock",
-            # "numberedList",
-            # "todoList",
-            # "|",
+            "codeBlock",
+            "numberedList",
+            "todoList",
+            "|",
             "outdent",
             "indent",
-            # "|",
+            "|",
             "blockQuote",
             "insertImage",
-            # "|",
+            "|",
             "fontSize",
-            # "fontFamily",
+            "fontFamily",
             "fontColor",
             "fontBackgroundColor",
-            # "mediaEmbed",
+            "mediaEmbed",
             "removeFormat",
             "insertTable",
-            # "sourceEditing",
+            "sourceEditing",
         ],
         "image": {
             "toolbar": [
@@ -420,9 +430,9 @@ CKEDITOR_5_CONFIGS = {
     },
 }
 
-
-
-
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 
 JAZZMIN_SETTINGS = {
     'site_header': "GameZone",
