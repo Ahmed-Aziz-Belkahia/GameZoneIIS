@@ -216,8 +216,6 @@ LOGOUT_REDIRECT_URL = "userauths:sign-in"
 
 AUTH_USER_MODEL = 'userauths.User'
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
-
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
 
@@ -281,8 +279,6 @@ CKEDITOR_5_CONFIGS = {
             "codesnippet",
             "widget",
             "dialog",
-            "image",
-            "imageUpload",
         ])
     },
     "comment": {
@@ -296,12 +292,7 @@ CKEDITOR_5_CONFIGS = {
             "bulletedList",
             "numberedList",
             "blockQuote",
-            "insertImage",
         ],
-        "extraPlugins": ','.join([
-            "image",
-            "imageUpload",
-        ]),
     },
     "extends": {
         "mediaEmbed": {"previewsInData": "true"},
@@ -316,10 +307,11 @@ CKEDITOR_5_CONFIGS = {
             "numberedList",
             "|",
             "blockQuote",
-            "insertImage",
         ],
         "toolbar": [
             "heading",
+            "|",
+            
             "|",
             "bold",
             "italic",
@@ -433,6 +425,7 @@ CKEDITOR_5_CONFIGS = {
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
+
 
 JAZZMIN_SETTINGS = {
     'site_header': "GameZone",

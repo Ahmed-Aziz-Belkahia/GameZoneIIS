@@ -74,6 +74,7 @@ PAYMENT_STATUS = (
 
 ORDER_STATUS = (
     ("pending", "pending"),
+    ("initiated", 'Initiated'),
     ("fulfilled", "fulfilled"),
     ("partially_fulfilled", "Partially Fulfilled"),
     ("cancelled", "Cancelled"),
@@ -608,7 +609,7 @@ class CartOrder(models.Model):
     payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS, default="initiated")
     payment_method = models.CharField(max_length=100, choices=PAYMENT_METHOD, null=True, blank=True)
     payment_ref = models.CharField(max_length=200, null=True, blank=True)
-    order_status = models.CharField(max_length=100, choices=ORDER_STATUS, default="initiated")
+    order_status = models.CharField(max_length=100, choices=ORDER_STATUS, default="pending")
     delivery_status = models.CharField(max_length=100, choices=DELIVERY_STATUS, default="on_hold")
     price = models.DecimalField(default=0.00, max_digits=12, decimal_places=2)
     shipping = models.DecimalField(default=0.00, max_digits=12, decimal_places=2)

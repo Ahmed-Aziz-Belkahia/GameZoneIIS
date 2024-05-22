@@ -21,11 +21,11 @@ class StaffCreationForm(forms.ModelForm):
         }
 
 class UserRegisterForm(UserCreationForm):
-    full_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'id': "", 'placeholder':'Full Name'}), max_length=100, required=False)
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'id': "", 'placeholder':'Username'}), max_length=100, required=False)
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control' , 'id': "", 'placeholder':'Email Address'}), required=False)
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'btn__btn__btn form-control' , 'id': "", 'placeholder':'Password'}), required=False)
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={ 'class': 'btn__btn__btn form-control' , 'id': "", 'placeholder':'Confirm Password'}), required=False)
+    full_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'id': "", 'placeholder':'Full Name'}), max_length=100, required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'id': "", 'placeholder':'Username'}), max_length=100, required=True)
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control' , 'id': "", 'placeholder':'Email Address'}), required=True)
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'btn__btn__btn form-control' , 'id': "", 'placeholder':'Password'}), required=True)
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={ 'class': 'btn__btn__btn form-control' , 'id': "", 'placeholder':'Confirm Password'}), required=True)
     # captcha=CaptchaField()
     
     class Meta:
@@ -42,7 +42,6 @@ class ProfileUpdateForm(forms.ModelForm):
     address = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Residential Address', 'class': 'form-control', 'id': ""}), max_length=1000, required=False)
     city = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control', 'id': ""}), max_length=1000, required=False)
     state = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'State', 'class': 'form-control', 'id': ""}), max_length=1000, required=False)
-    country = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Country', 'class': 'form-control', 'id': ""}), max_length=1000, required=False)
     gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'form-control', 'id': ""}), required=False)
     phone = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Mobile Number', 'class': 'form-control', 'id': ""}), max_length=1000, required=False)
     image = ImageField(widget=FileInput)

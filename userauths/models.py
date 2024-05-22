@@ -70,7 +70,7 @@ class Profile(models.Model):
     pid = ShortUUIDField(length=7, max_length=25, alphabet="abcdefghijklmnopqrstuvxyz123")
     cover_image = models.ImageField(upload_to=user_directory_path, default="cover.jpg", blank=True, null=True)
     image = models.ImageField(upload_to=user_directory_path, default="default.jpg", null=True, blank=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     full_name = models.CharField(max_length=1000, null=True, blank=True)
     bio = models.CharField(max_length=100, null=True, blank=True)
     about_me = models.TextField(null=True, blank=True)
@@ -78,7 +78,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=100, choices=GENDER, null=True, blank=True)
 
 
-    country = models.CharField(max_length=100, null=True, blank=True)
+    country = models.ForeignKey("addons.TaxRate", on_delete=models.SET_NULL, null=True, related_name="user_country_tax", blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
     state = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=1000, null=True, blank=True)

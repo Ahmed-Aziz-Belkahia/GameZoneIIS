@@ -149,37 +149,40 @@ def category_list(request):
     }
     return render(request, "store/categories.html", context)
 
+def get_fuzzy_matched_products(query, products, threshold=70):
+    product_data = [
+        (product.id, product.title or "", product.description or "", product.category.title or "")
+        for product in products
+    ]
 
+    def match_score(product):
+        title_score = fuzz.partial_ratio(query, product[1])
+        description_score = fuzz.partial_ratio(query, product[2])
+        category_score = fuzz.partial_ratio(query, product[3])
+        return max(title_score, description_score, category_score)
+
+    matched_product_ids = [product[0] for product in product_data if match_score(product) >= threshold]
+    return products.filter(id__in=matched_product_ids).distinct()
 
 def search_list(request):
-    products = Product.objects.filter(status="published").order_by("sort", "-id")
-    all_products = list(products)  # Convert queryset to a list for fuzzy matching
-    product_count = len(all_products)
-    
     query = request.GET.get("q")
+    products = Product.objects.filter(status="published").order_by("index", "-id")
+
+    print(f"Initial product count: {products.count()}")
+    
     if query:
-        # Get all products' relevant fields
-        product_data = [
-            (product.id, product.title or "", product.description or "", product.category.title or "")
-            for product in all_products
-        ]
-
-        # Use fuzzy matching to filter products
-        def match_score(product):
-            title_score = fuzz.partial_ratio(query, product[1])
-            description_score = fuzz.partial_ratio(query, product[2])
-            category_score = fuzz.partial_ratio(query[3])
-            return max(title_score, description_score, category_score)
-
-        # Filter products based on a match threshold
-        threshold = 70  # Adjust this threshold as needed
-        matched_product_ids = [product[0] for product in product_data if match_score(product) >= threshold]
-
-        products = Product.objects.filter(id__in=matched_product_ids, status="published").distinct().order_by("index", "-id")
-
+        products = get_fuzzy_matched_products(query, products)
+        print(f"Product count after fuzzy matching: {products.count()}")
+        matched_ids = products.values_list('id', flat=True)
+        print(f"Matched product IDs: {list(matched_ids)}")
+    
+    product_count = products.count()
+    print(f"Final product count: {product_count}")
+    
     paginator = Paginator(products, 16)
     page_number = request.GET.get('page')
     products = paginator.get_page(page_number)
+    print(f"Products on page {page_number}: {list(products)}")
     
     context = {
         "product_count": product_count,
@@ -188,40 +191,29 @@ def search_list(request):
     }
     return render(request, "store/search_list.html", context)
 
-
 def nav_search(request):
-    products = Product.objects.filter(status="published").order_by("index", "-id")
-
     if request.method == 'POST':
         query = request.POST.get("q")
+        products = Product.objects.filter(status="published").order_by("index", "-id")
+
+        print(f"Initial product count: {products.count()}")
+
         if query:
-            # Get all products' relevant fields
-            product_data = [
-                (product.id, product.title or "", product.description or "", product.category.title or "")
-                for product in products
-            ]
+            products = get_fuzzy_matched_products(query, products)
+            print(f"Product count after fuzzy matching: {products.count()}")
+            matched_ids = products.values_list('id', flat=True)
+            print(f"Matched product IDs: {list(matched_ids)}")
 
-            # Use fuzzy matching to filter products
-            def match_score(product):
-                title_score = fuzz.partial_ratio(query, product[1])
-                description_score = fuzz.partial_ratio(query, product[2])
-                category_score = fuzz.partial_ratio(query, product[3])
-                return max(title_score, description_score, category_score)
-
-            # Filter products based on a match threshold
-            threshold = 70  # Adjust this threshold as needed
-            matched_product_ids = [product[0] for product in product_data if match_score(product) >= threshold]
-
-            products = products.filter(id__in=matched_product_ids).distinct()
-
-        product_count = products.count()  # Count the filtered products
+        product_count = products.count()
+        print(f"Final product count: {product_count}")
 
         paginator = Paginator(products, 16)
         page_number = request.POST.get('page') or 1
         products = paginator.get_page(page_number)
+        print(f"Products on page {page_number}: {list(products)}")
 
         query_list = [{'meta_title': product.meta_title, 'title': product.title} for product in products.object_list]
-        print(query_list)
+        
         context = {
             "success": True,
             "product_count": product_count,
@@ -230,11 +222,6 @@ def nav_search(request):
         }
         return JsonResponse(context)
 
-    """ elif request.method == 'GET':
-        q = request.GET.get('q')
-        if q:
-            return redirect(f'/catalog?q={q}') """
-    
     return JsonResponse({'success': True, 'queryList': []})
 
 def shop(request):
@@ -249,9 +236,15 @@ def shop(request):
     brands = Brand.objects.filter(product_brand__in=products).distinct()
     direct_subcategories = SubCategory.objects.none()
 
-    q=request.GET.get('q')
+    q = request.GET.get('q')
     if q:
-        filtered_products = filtered_products.filter(Q(title__icontains=q) | Q(description__icontains=q) | Q(category__title__icontains=q)).distinct()
+        filtered_products = get_fuzzy_matched_products(q, filtered_products)
+
+    print(f"Initial product count: {products.count()}")
+    if q:
+        print(f"Product count after fuzzy matching: {filtered_products.count()}")
+        matched_ids = filtered_products.values_list('id', flat=True)
+        print(f"Matched product IDs: {list(matched_ids)}")
 
     for category in categories:
         direct_subcategories = direct_subcategories.union(category.subcategories.filter(parent_subcategory=None))
@@ -302,7 +295,7 @@ def shop(request):
         if sort_by == 'price-low-to-high':
             filtered_products = filtered_products.order_by('price')
         elif sort_by == 'price-high-to-low':
-            filtered_products = filtered_products.order_by('-price')    
+            filtered_products = filtered_products.order_by('-price')
 
     # Paginate the filtered products
     paginator = Paginator(filtered_products, 16)
@@ -310,7 +303,7 @@ def shop(request):
     pages_filtered_products = paginator.get_page(page_number)
 
     context = {
-        "direct_subcategories": direct_subcategories,        
+        "direct_subcategories": direct_subcategories,
         "shop_categories": categories,
         "brands": brands,
         "products_count": products_count,
@@ -1091,7 +1084,7 @@ def add_to_cart(request):
         'product_processing_fee': request.GET['product_processing_fee'],
         'product_tax_fee': request.GET['product_tax_fee'],
         "product_stock_qty":request.GET["product_stock_qty"],
-        "product_in_stock":request.GET["product_in_stock"],
+        "product_in_stock":request.GET["product_in_stock"],        
 
     }
 
@@ -1210,7 +1203,130 @@ def cart_view(request):
             total_amount = cart_total_amount + total_shipping_amount + service_fee_amount + tax_amount_
             
             product = Product.objects.get(id=p_id)
+            
+        # form = CheckoutForm()
+        # if request.method == 'POST':
+        #     form = CheckoutForm(request.POST)
+        #     if form.is_valid():
+        #         new_form = form.save(commit=False)
+                
+        #         full_name = new_form.full_name
+        #         email = new_form.email
+        #         mobile = new_form.mobile
+        #         country = new_form.country
+        #         state = new_form.state
+        #         town_city = new_form.town_city
+        #         address = new_form.address
+                
+                
+        #         # tax_rate_fee = TaxRate.objects.filter(country=country)
+        #         # if tax_rate_fee.exists():
+        #         #     main_tax_fee = main_cart_total * tax_rate_fee.first().rate / 100
+        #         #     print("tax_rate_fee ========================", main_tax_fee)
+        #         # else:
+        #         #     print("Failed ========================", tax_rate_fee)
+        #         #     main_tax_fee = main_cart_total * 0.01
+            
+            
+        #     main_tax_fee = main_cart_total * tax_rate
+        #     total_amount__ = cart_total_amount + shipping_amount__ + main_tax_fee + service_fee_amount
+        #     # print("main_tax_fee ==================", main_tax_fee)
+            
 
+        #     if request.user.is_authenticated:
+        #         order = CartOrder.objects.create(
+        #             full_name=full_name,
+        #             email=email,
+        #             mobile=mobile,
+        #             country=country,
+        #             state=state,
+        #             town_city=town_city,
+        #             address=address,
+                    
+        #             price=cart_total_amount, 
+        #             buyer=request.user, 
+        #             total=total_amount__, 
+        #             shipping=shipping_amount__, 
+        #             vat=main_tax_fee, 
+        #             service_fee=service_fee_amount 
+        #         )
+        #         order.save()
+        #     else:
+        #         order = CartOrder.objects.create(
+        #             full_name=full_name,
+        #             email=email,
+        #             mobile=mobile,
+        #             country=country,
+        #             state=state,
+        #             town_city=town_city,
+        #             address=address,
+                    
+        #             price=cart_total_amount, 
+        #             buyer=None, 
+        #             total=total_amount__, 
+        #             shipping=shipping_amount__, 
+        #             vat=main_tax_fee, 
+        #             service_fee=service_fee_amount 
+        #         )
+        #         order.save()
+        
+        #     for p_id, item in request.session['cart_data_obj'].items():
+        #         product = Product.objects.get(id=p_id)
+        #         cart_total_amount_ += int(item['qty']) * float(item['price'])
+        #         shipping_amount_ += int(item['qty']) * product.shipping_amount
+        #         tax_amount += int(item['qty']) * float(tax)
+        #         cart_total_amount_items = int(item['qty']) * float(item['price'])
+        #         # Remove vendor fee from vendors products amounts
+        #         total_payable = cart_total_amount_items -  vendor_fee
+        #         item_shipping = int(item['qty']) * product.shipping_amount
+                
+        #         item_cart_total = int(item['qty']) * float(item['price'])
+        #         main_cart_total_item = item_cart_total + float(item_shipping)
+                
+                
+        #         service_fee_calc = products_amount
+        #         # print("service_fee_calc ==================", service_fee_calc)
+        #         if basic_addon.service_fee_charge_type == "percentage":
+        #             service_fee_amount = service_fee_calc * service_fee
+                    
+        #         elif basic_addon.service_fee_charge_type == "flat_rate":
+        #             service_fee_amount = service_fee_calc * float(service_fee_flat_rate)
+                    
+        #         else:
+        #             service_fee_amount = service_fee_calc * 0.5
+
+                
+        #         tax_rate_fee = TaxRate.objects.filter(country=country)
+        #         if tax_rate_fee.exists():
+        #             main_tax_fee_item = main_cart_total_item * tax_rate_fee.first().rate / 100
+        #             # print("tax_rate_fee ========================", main_tax_fee)
+        #         else:
+        #             # print("Failed ========================", tax_rate_fee)
+        #             main_tax_fee_item = main_cart_total_item * 0.01
+                
+        #         grand_total = float(item['qty']) * float(item['price']) + float(item_shipping) + float(main_tax_fee_item) + float(service_fee_amount)
+                
+        #         cart_order_products = CartOrderItem.objects.create(
+        #             order=order,
+        #             vendor=product.vendor,
+        #             invoice_no="#" + str(order.oid), 
+        #             product=item['title'],
+        #             image=item['image'],
+        #             qty=item['qty'],
+        #             product_obj=product,
+        #             price=item['price'],
+        #             shipping=item_shipping,
+        #             paid_vendor=False,
+        #             grand_total=grand_total,
+        #             vat=main_tax_fee_item, 
+        #             service_fee=service_fee_amount ,
+        #             total_payable=total_payable,
+        #             total=float(item['qty']) * float(item['price'])
+        #         )
+        #         cart_order_products.save()
+        #         order.vendor.add(item['vendor'])
+
+        #     return redirect('store:checkout', order.oid)
         now = timezone.now()
         if request.method == "POST":
             try:
@@ -1322,7 +1438,6 @@ def shipping_address(request):
             shipping_amount__ += 0 #int(item['qty']) * float(item['shipping_amount'])
             product_plus_shipping = products_amount + shipping_amount__
 
-            print(item, "ffffffffffffffffffffffffffff")
             if item['product_is_digital'] == "True":
                 digital_cart = True
                 
@@ -1352,7 +1467,7 @@ def shipping_address(request):
             
             product = Product.objects.get(id=p_id)
             
-        form = CheckoutForm()
+        form = CheckoutForm(user=request.user)
         if request.method == 'POST':
             form = CheckoutForm(request.POST)
             print(request.POST)
@@ -1399,13 +1514,13 @@ def shipping_address(request):
 
             if request.user.is_authenticated:
                 order = CartOrder.objects.create(
-                    full_name=full_name,
-                    email=email,
-                    mobile=mobile,
-                    country=country,
-                    state=state,
-                    town_city=town_city,
-                    address=address,
+                    full_name=request.user.profile.full_name,
+                    email=request.user.email,
+                    mobile=request.user.profile.phone,
+                    country=request.user.profile.country,
+                    state=request.user.profile.state,
+                    town_city=request.user.profile.city,
+                    address=request.user.profile.address,
                     shipping_method=shipping_method,
                     payment_method=payment_method,
 
@@ -1582,7 +1697,6 @@ def delete_item_from_cart(request):
 def update_cart(request):
     product_id = str(request.GET['id'])
     product_qty = request.GET['qty']
-    print(product_qty)
     shipping_amount = request.GET['shipping_amount']
     product_tax_fee = request.GET['product_tax_fee']
     product_processing_fee = request.GET['product_processing_fee']
@@ -1650,6 +1764,7 @@ def checkout_view(request, oid, *args, **kwargs):
         order_items = CartOrderItem.objects.filter(order=order)
         # print("order_email =============", order.email)
         order.payment_status = "processing"
+        order.order_status = "initiated"
         # After the order is successfully created and saved
         order.save()
 
@@ -1672,7 +1787,7 @@ def checkout_view(request, oid, *args, **kwargs):
                     print("type =============", type)
 
                     order_items_ = CartOrderItem.objects.filter(vendor=coupon.vendor, order=order)
-                    
+
                     for o in order_items_:
                         # if o.applied_coupon == False:
                         if not coupon in o.coupon.all():
@@ -1729,6 +1844,7 @@ def checkout_view(request, oid, *args, **kwargs):
                             else:
                                 messages.error(request, f"Coupon Have No Discount Type")
                                 return redirect("store:checkout", order.oid)
+
                         else:
                             messages.warning(request, f"Coupon Already Activated")
                             return redirect("store:checkout", order.oid)
@@ -1769,16 +1885,17 @@ def checkout_view(request, oid, *args, **kwargs):
                             return redirect("store:checkout", order.oid)
                     messages.success(request, f"Coupon Found and activated")
                     return redirect("store:checkout", order.oid)
+
             except Coupon.DoesNotExist:
                 messages.error(request, f"Coupon Not Found")
-                return redirect("store:checkout", order.oid)    
+                return redirect("store:checkout", order.oid)
         else:
             form = CouponApplyForm()
         
         if 'coupon_id' in request.session:
             del request.session['coupon_id']
             del request.session['coupon_name']
-        
+    
         
         host = request.get_host()
         paypal_dict = {
@@ -1967,6 +2084,8 @@ def PaymentFailedView(request):
 def create_checkout_session(request, id):
     print("Create checkout session")
     order = get_object_or_404(CartOrder, oid=id)
+    order.order_status = "pending"
+    order.save()
     if order.payment_method == "credit_card":
         request_data = json.loads(request.body)
 
