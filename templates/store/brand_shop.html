@@ -1,5 +1,6 @@
 {% extends "partials/base.html" %}
 {% load static %}
+{% load template_tags %}
 
 {% block title %}
     shop
@@ -293,7 +294,7 @@
                   <ul class="page_navigation">
                     {% if products.has_previous %}
                       <li class="page-item">
-                          <a class="page-link" href="{% url 'store:brand-shop' meta_title=current_brand.meta_title %}?{% append_query_params page=products.previous_page_number %}" tabindex="-1" aria-disabled="true">
+                          <a class="page-link" href="{% url 'store:brand-shop' meta_title=brand.meta_title %}?{% append_query_params page=products.previous_page_number %}" tabindex="-1" aria-disabled="true">
                               <span class="fas fa-angle-left"></span>
                           </a>
                       </li>
@@ -301,7 +302,7 @@
                     
                   {% if products.has_next %}
                       <li class="page-item">
-                          <a class="page-link" href="{% url 'store:brand-shop' meta_title=current_brand.meta_title %}?{% append_query_params page=products.next_page_number %}">
+                          <a class="page-link" href="{% url 'store:brand-shop' meta_title=brand.meta_title %}?{% append_query_params page=products.next_page_number %}">
                               <span class="fas fa-angle-right"></span>
                           </a>
                       </li>

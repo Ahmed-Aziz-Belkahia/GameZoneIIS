@@ -2349,14 +2349,14 @@ def payment_completed_view(request, oid, *args, **kwargs):
             
     elif order.payment_status == "paid" or order.payment_method == "cash":
         messages.success(request, f'Your Order have been recieved.')
-        return redirect("core:profile")
+        return redirect("store:home")
             
     elif order.payment_status == "pending":
         messages.success(request, f'Your Order have been recieved.')
-        return redirect("core:profile")
+        return redirect("store:home")
     else:
         messages.success(request, 'Opps... Internal Server Error; please try again later')
-        return redirect("core:profile")
+        return redirect("store:home")
         
     products = CartOrderItem.objects.filter(order=order)
     
