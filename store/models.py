@@ -95,6 +95,7 @@ WIN_STATUS = (
 
 PRODUCT_TYPE = (
     ("regular", "Regular"),
+    ("pre_order", "Pre Order"),
     ("auction", "Auction"),
     ("offer", "Offer")
 )
@@ -377,7 +378,7 @@ class Product(models.Model):
     title = models.CharField(max_length=100)
     meta_title = models.SlugField(unique=True, blank=True, null=True)
     title_meta_title = models.CharField(max_length=1000, null=True, blank=True)
-
+    
     index = models.IntegerField(default=10, blank=True, null=True)
 
     image = models.ImageField(upload_to=user_directory_path, default="product.png")

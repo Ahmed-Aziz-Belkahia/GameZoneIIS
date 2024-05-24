@@ -1,6 +1,7 @@
 # yourapp/templatetags/custom_tags.py
 
 from django import template
+from store.models import Product  # replace with your actual product model
 
 register = template.Library()
 

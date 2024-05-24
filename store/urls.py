@@ -6,14 +6,14 @@ app_name = "store"
 urlpatterns = [
     path("", views.index, name="home"),
     path("offer/", views.offer, name="offer"),
-    #path("category/", views.category_list, name="category"),
+    path("category/", views.category_list, name="category"),
     path("shop/", views.shop, name="shop"),
     path("category/<str:meta_title>", views.category_shop, name="category-shop"),
     path("brand/<str:meta_title>", views.brand_shop, name="brand-shop"),
-    #path("hot_deals/", views.hot_deals, name="hot_deals"),
-    #path("search/", views.search_list, name="search"),
+    path("hot_deals/", views.hot_deals, name="hot_deals"),
+    path("search/", views.search_list, name="search"),
     path("my-cart/", views.cart_view, name="cart-view"),
-    #path("category/<cid>/", views.category_detail, name="category_detail"),
+    path("category/<cid>/", views.category_detail, name="category_detail"),
     path("shipping_address/", views.shipping_address, name="shipping_address"),
     path("checkout/<oid>/", views.checkout_view, name="checkout"),
     path("custom-checkout/<oid>/", views.custom_checkout_view, name="checkout2"),
@@ -23,7 +23,7 @@ urlpatterns = [
     
     
     # Paypal
-    #path('paypal/', include('paypal.standard.ipn.urls')),
+    path('paypal/', include('paypal.standard.ipn.urls')),
     path("payment-completed/<oid>/", views.payment_completed_view, name="payment-completed"),
     path("payment-failed/", views.payment_failed_view, name="payment-failed"),
 

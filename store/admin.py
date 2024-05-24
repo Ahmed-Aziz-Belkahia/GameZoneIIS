@@ -23,16 +23,20 @@ def make_featured(modeladmin, request, queryset):
 
 class ProductImagesAdmin(admin.TabularInline):
     model = Gallery
+    extra= 0
 
 class SpecificationValueInline(admin.TabularInline):
     model = SpecificationValue
+    extra= 0
 
 class SpecificationInline(admin.TabularInline):
     model = Specification
     inlines = [SpecificationValueInline]
+    extra= 0
 
-class CartOrderItemsInlineAdmin(admin.TabularInline):
+class CartOrderItemsInlineAdmin(admin.StackedInline):
     model = CartOrderItem
+    extra= 0
 
 class StaffUserChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
@@ -41,16 +45,19 @@ class StaffUserChoiceField(ModelChoiceField):
 class TypesChoicesAdmin(admin.TabularInline):
     model = Choice
     prepopulated_fields = {"meta_title": ("title", )}
+    extra= 0
 
 class InlineType(admin.TabularInline):
     model = Type
     list_display = ['title']
     prepopulated_fields = {"meta_title": ("title", )}
+    extra= 0
 
 class TypeAdmin(ImportExportModelAdmin):
     inlines = [TypesChoicesAdmin]
     """ list_display = ['__str__'] """
     prepopulated_fields = {"meta_title": ("title", )}
+    extra= 0
 
 class ProductAdmin(ImportExportModelAdmin):
     inlines = [ProductImagesAdmin, InlineType, SpecificationInline]  # Added SpecificationInline
@@ -62,6 +69,7 @@ class ProductAdmin(ImportExportModelAdmin):
     list_per_page = 1300
     prepopulated_fields = {"slug": ("title", )}
     prepopulated_fields = {"meta_title": ("title", )}
+    extra= 0
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'user':
@@ -73,14 +81,17 @@ class ProductAdmin(ImportExportModelAdmin):
 class CategoryAdmin(ImportExportModelAdmin):
     list_display = ['title', 'category_image']
     prepopulated_fields = {"meta_title": ("title", )}
+    extra= 0
 
 class SubCategoryAdmin(ImportExportModelAdmin):
     list_display = ['title', 'category_image']
     prepopulated_fields = {"meta_title": ("title", )}
+    extra= 0
 
 class GenreAdmin(ImportExportModelAdmin):
     list_display = ['title', 'genre_image']
     prepopulated_fields = {"meta_title": ("title", )}
+    extra= 0
 
 class CartOrderAdmin(ImportExportModelAdmin):
     inlines = [CartOrderItemsInlineAdmin]
@@ -88,44 +99,54 @@ class CartOrderAdmin(ImportExportModelAdmin):
     list_editable = ['order_status', 'payment_status' ,'delivery_status']
     list_filter = ['payment_status', 'order_status', 'delivery_status']
     list_display = ['oid', 'payment_status', 'order_status', 'delivery_status' ,'price', 'shipping', 'vat', 'service_fee' ,'total', 'saved' ,'email','date']
+    extra= 0
 
 class CartOrderItemsAdmin(ImportExportModelAdmin):
     search_fields = ['oid', 'tracking_id', 'product', 'coupon__code', 'order__oid', 'vendor__shop_name']
     list_filter = ['paid', 'paid_vendor', 'cancelled', 'delivery_couriers', 'applied_coupon']
     list_display = ['order',  'vendor' , 'order_img','product_obj' ,'qty', 'price', 'total', 'shipping' , 'service_fee', 'vat','total_payable', 'grand_total' , 'delivery_couriers' , 'paid', 'paid_vendor', 'applied_coupon' ,'cancelled']
+    extra= 0
 
 class BrandAdmin(ImportExportModelAdmin):
     list_editable = ['featured', 'active']
     list_display = ['title', 'brand_image', 'active', 'featured']
     prepopulated_fields = {"meta_title": ("title", )}
+    extra= 0
 
 class ProductFaqAdmin(ImportExportModelAdmin):
     list_editable = [ 'active', 'answer']
     list_display = ['user', 'question', 'answer' ,'active']
+    extra= 0
 
 class ProductBiddersAdmin(ImportExportModelAdmin):
     list_display = ['user', 'product', 'price','winner', 'win_status' ,'email']
+    extra= 0
 
 class ProductReviewAdmin(admin.ModelAdmin):
     list_editable = ['active']
     list_display = ['user', 'product', 'review', 'reply' ,'rating', 'active']
+    extra= 0
 
 class ProductOfferAdmin(ImportExportModelAdmin):
     list_display = ['user', 'product', 'price','status', 'email']
+    extra= 0
 
 class CallToActionBannerAdmin(ImportExportModelAdmin):
     list_editable = ["CTA_type"]
     list_display = ['banner_image', 'product', "CTA_type"]
+    extra= 0
 
 class SpecificationValueAdmin(admin.ModelAdmin):
     list_display = ['specification', 'title', 'description']
     list_filter = ['specification']
+    extra= 0
 
 class SpecificationAdmin(admin.ModelAdmin):
     inlines = [SpecificationValueInline]
     list_display = ['sid', 'product', 'title']
     search_fields = ['title']
     list_filter = ['product']
+    extra= 0
 
 admin.site.register(ProductBidders, ProductBiddersAdmin)
 admin.site.register(Review, ProductReviewAdmin)

@@ -11,7 +11,7 @@
               <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
               <li class="breadcrumb-item"><a href="{% url 'blog:blog-list' %}">Blog Posts</a></li>
               <li class="breadcrumb-item"><a href="{% url 'blog:blog-list' %}">Category</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><a>{{category.title}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a>{{category_.title}}</a></li>
             </ol>
           </div>
         </div>
@@ -26,7 +26,7 @@
           <div class="main-title text-center">
             
             {% if query == "" or query == None %}
-            <h2 class="title">{{category.title}} Category</h2>
+            <h2 class="title">{{category_.title}} Category</h2>
             {% else %}
             <h2 class="title">Showing Results for "{{query}}"</h2>
             {% endif %}
@@ -68,7 +68,7 @@
                 </div>
                 <div class="details">
                   <div class="tc_content">
-                    <span class="subtitle">{{p.category.title}}</span>
+                    <span class="subtitle">{{p.category_.title}}</span>
                     <h4 class="title"><a href="{% url 'blog:blog-detail' meta_title=p.meta_title %}">{{p.title|truncatechars:60}}</a></h4>
                     <span class="post_date">{{p.date|date:"d M, Y"}}</span> <br>
                     <a href="{% url 'blog:blog-detail' meta_title=p.meta_title %}" class="purple-btn btn mt-3">Read More</a>

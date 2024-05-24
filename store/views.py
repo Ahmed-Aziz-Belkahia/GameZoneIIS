@@ -18,6 +18,7 @@ from django.template.loader import render_to_string
 from django.shortcuts import render, HttpResponse
 from django.contrib.gis.geoip2 import GeoIP2
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
 
 
 from store.forms import CheckoutForm, ReviewForm
@@ -70,8 +71,13 @@ def index(request):
         "top_selling_products":top_selling_products,
     }
     #return render(request, "store/index.html", context) """
-    from django.core.mail import send_mail
+    import logging
 
+    logger = logging.getLogger('django')
+
+    def test_logging(request):
+        logger.debug('Debug message')
+        return HttpResponse('Logging Test')
     heros = Product.objects.filter(hero_section_featured=True)
     top_deals = Product.objects.filter(deal_category="top_deal")
     top_deals_banner = CallToActionBanner.objects.filter(CTA_type="top_deal").first()
@@ -1467,7 +1473,10 @@ def shipping_address(request):
             
             product = Product.objects.get(id=p_id)
             
-        form = CheckoutForm(user=request.user)
+        if request.user.is_authenticated:
+            form = CheckoutForm(user=request.user)
+        else:
+            form = CheckoutForm()
         if request.method == 'POST':
             form = CheckoutForm(request.POST)
             print(request.POST)
@@ -2088,7 +2097,7 @@ def create_checkout_session(request, id):
     order.save()
     if order.payment_method == "credit_card":
         request_data = json.loads(request.body)
-
+    request.session.pop('cart_data_obj')
     print(order.payment_method)
 
     for product_item in order.cartorderitem_set.all():

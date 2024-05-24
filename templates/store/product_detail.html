@@ -408,7 +408,10 @@ section{
   padding: unset;
 }
 </style>
-  
+
+{% block hhead %}
+<link rel="canonical" href="https://gameszone.tn/{{product.meta_title}}">
+{% endblock hhead %}
   <!-- <div class="body_content_wrapper position-relative"> -->
     <!-- Custom Shop Category List Menu -->
     <section class="p0 bb1 overflow-hidden" >
@@ -416,7 +419,28 @@ section{
         <div class="row"></div>
       </div>
     </section>
-    
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Product",
+        "name": "{{ product.title }}",
+        "description": "{{ product.description|escapejs|safe }}",
+        "sku": "{{ product.sku }}",
+        "image": "{{ product.image.url }}",
+        "url": "{{ request.build_absolute_uri }}",
+        "brand": {
+          "@type": "Brand",
+          "name": "{{ product.brand.title }}"
+        },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "TND",
+          "price": "{{ product.price }}",
+          "availability": "{{ product.in_stock }}",
+          "itemCondition": "{{ product.product_condition }}"
+        }
+      }
+    </script>
     <!-- Inner Page Breadcrumb -->
     <section class="inner_page_breadcrumb">
       <div class="container">
@@ -559,7 +583,7 @@ section{
                 <form>
                   {% csrf_token %}
                   {% for type in product.product_types.all %}
-                  <div class="prop-title">{{type.title}}:</div>
+                  <div class="prop-title">{{type.title}}</div>
                   <div class="d-flex align-items-center gap-3">
                     {% for choice in type.choices.all %}
                     <div class="choice-input {% if forloop.first %} selected {% endif %}">
@@ -583,12 +607,6 @@ section{
                       <th scope="col">Date de sortie</th>
                       <th scope="col">{{ product.release_date }}</th>
                     </tr>
-                    {% if product.brand %}
-                      <tr>
-                        <th scope="col">Brand</th>
-                        <th scope="col">{{product.brand.title|title}}</th>
-                      </tr>
-                    {% endif %}
                     <tr>
                       <th scope="col">Condition</th>
                       
@@ -1002,6 +1020,71 @@ section{
                   <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;"  disabled>en repture de stock</button></li>
                   {% else %}
                   <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">ajouter au panier</button></li>
+                  {% endif %}
+                  
+                  
+                  <!-- <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn"><i class="fi-rs-shopping-cart"></i>acheter</button> -->
+                </ul>
+                <ul class="shop_single_wishlist_area d-flex justify-content-center">
+                  <li class="pe-2 ms-2 ms-sm-0"><a  class="add-to-wishlist" data-product-item="{{product.id}}"><span class="fas fa-heart me-2"></span>Ajouter à la liste de vœux</a></li>
+                  <!-- <li class="pe-2 ms-2"><a href="#"><span class="flaticon-graph me-2"></span>Compare</a></li> -->
+                </ul>
+                <hr>
+                
+              </div>
+            {% endif %}
+
+            {% if product.type == "pre_order" %}
+              <div class="shop_single_product_details shop_single3_style sidebar ss3_style mb-3 mb-xl-0">
+                <div class="sspd_price mb25" style="text-align: center;">{{cs}}{{product.price}} <small>
+                  {% if product.old_price != 0.00 %}
+                  <del class="mr10 discounted">{{cs}}{{product.old_price}}</del>
+                  {% endif %}
+                </small></div>
+                <ul class="cart_btns ui_kit_button mb15">
+                  <li>
+                    <div class="cart_btn home_page_sidebar mb10">
+                      <div class="quantity-block home_page_sidebar">
+                        <button class="quantity-arrow-minus2 shop_single_page_sidebar" id="decrease-btn"> <i class="fas fa-minus"></i> </button>
+                        <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}" >
+                        <input class="quantity-num2 shop_single_page_sidebar product-quantity-{{ product.id }}" type="number" value="1" id="product-quantity" class="w-25 mb-10 product-quantity-{{ product.id }}">
+                        <button class="quantity-arrow-plus2 button-inc "  id="increase-btn"> <i class="fas fa-plus"></i> </button>
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <!-- <input type="hidden" class="product-new-rate{{ product.id }}" value="{{ new_rate }}"> -->
+                  
+                  <input type="hidden" class="product-tax-fee-{{ product.id }}" value="{{ new_rate_|floatformat:2 }}" />
+                  <input type="hidden" class="product-processing-fee-{{ product.id }}" value="{{ service_fee_rate_ }}" />
+                  <input type="hidden" class="product-vendor-{{ product.id }}" value="{{ product.vendor.id }}" />
+                  <input type="hidden" class="product-vendor-name-{{ product.id }}" value="{{ product.vendor.shop_name }}" />
+                  <input type="hidden" class="product-brand-{{ product.id }}" value="{{ product.brand }}" />
+                  
+                  <input type="hidden" class="product-types_choices-{{ product.id }}" value="{}" />
+                  <input type="hidden" class="product-gz_coins-{{ product.id }}" value="{{ product.gz_coins }}" />
+                  <input type="hidden" class="product-shipping_amount-{{ product.id }}" value="{{ product.shipping_amount }}" />
+                  <input type="hidden" class="product-quantity-{{ product.id }}" value="{{ product.stock_qty }}" id="product-quantity" class="w-25 mb-10 product-quantity-{{ product.id }}" />
+                  <input type="hidden" class="product-price-{{ product.id }}" value="{{ product.price }}" />
+                  <input type="hidden" class="product-pid-{{ product.id }}" value="{{ product.pid }}" />
+                  <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}" />
+                  <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}" />
+                  <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}" />
+
+                  <input type="hidden" class="product-is_digital-{{ product.id }}" value="{{ product.digital }}" />
+                  
+                  <input type="hidden" class="product-meta-title-{{ product.id }}" value="{{ product.meta_title }}" />
+                  <input type="hidden" class="product-meta_title-{{ product.id }}" value="{{ product.meta_title }}" />
+                  <input type="hidden" class="product-slug-{{ product.id }}" value="{{ product.slug }}" />                      
+                  <input type="hidden" class="product-vendor-slug-{{ p.id }}" value="{{ product.vendor.slug }}" />
+                  
+                  <input type="hidden" class="product-stock-qty-{{ product.id }}" value="{{ product.stock_qty }}" />
+                  <input type="hidden" class="product-in-stock-{{ product.id }}" value="{{ product.in_stock }}" />
+
+                  {% if disable_button %}
+                  <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;"  disabled>en repture de stock</button></li>
+                  {% else %}
+                  <li><button type="button" class="btn purple-btn btnf-thm w100 button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn" style="color: #fff;">pre commander</button></li>
                   {% endif %}
                   
                   

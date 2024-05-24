@@ -2,12 +2,53 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="fr">
   <head>
-    <title>GameZone - {% block title %} {% endblock title %}</title>
+    <title>Game Zone - {% block title %} {% endblock title %}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name" : "Game Zone",
+        "url" : "https://gameszone.tn/",
+        "logo": {
+          "@type": "ImageObject",
+          "url":"{% static 'gz/assets/logo/logo_black.png' %}"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "isPartOf": {
+          "@type": "WebSite",
+          "url":  "{{ request.build_absolute_uri }}",
+          "name": "GamesZone"
+        },
+        "name": "Game Zone",
+        "url":  "https://gameszone.tn/"
+      }
+    </script>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "url" : "https://gameszone.tn/",
+          "image": {
+            "@type": "ImageObject",
+            "url":"{% static 'gz/assets/logo/logo_black.png' %}"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://gameszone.tn/shop?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      </script>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <base href="{% static '/' %}">
-
+    {% block hhead %}{% endblock hhead %}
     {% if product and product.title_meta_title %}
     <meta
       name="title"
@@ -24,7 +65,7 @@
       content="{{ brand.title_meta_title }}"
     />
     {% else %}
-    <meta name="title" content="Gamezone"/>
+    <meta name="title" content="Game zone"/>
 
     {% endif %}
 
@@ -67,6 +108,20 @@
     {% else %}
       <meta name="description" content="GameZone - Le spécialiste de vente console de jeux, Ps4, PS5, Nintendo switch. Achetez vos consoles et jeux préférés à des prix compétitifs. Livraison rapide et sécurisée."/>
     {% endif %}
+
+    {% if product and product.price %}
+    <meta
+      name="price"
+      content="{{ product.price }}"
+    />
+    {% endif %}
+
+    {% if product and product.currency %}
+    <meta
+      name="currency"
+      content="{{ product.currency }}"
+    {% endif %}
+    />
 
     <meta name="author" content="GameZone"/>
     <meta name="copyright" content="GameZone 2024"/>
@@ -125,7 +180,7 @@
   </head>
 
   <body>
-    <div class="preloader"></div>
+    {% comment %} <div class="preloader"></div> {% endcomment %}
     <div>
       {% if '1' in basic_addon.header_type %}
 

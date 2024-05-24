@@ -80,7 +80,7 @@ def category_detail(request, meta_title):
         "blog_count": blog_count,
         "query": query,
         "blog": blog,
-        "category": category,
+        "category_": category,
         "categoriess": categories,
     }
     return render(request, 'blog/category-detail.html', context)

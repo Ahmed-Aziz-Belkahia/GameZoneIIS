@@ -5,10 +5,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.conf.urls import handler404, handler500
+from django.views.generic.base import TemplateView
+
 
 urlpatterns = [
     # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     path('khalabiza/', admin.site.urls),
+    
     
     path('user/', include("userauths.urls")),
     path('b/', include("core.urls")),
@@ -34,7 +37,8 @@ urlpatterns = [
     path('user/password-reset/done/', auth_views.PasswordResetDoneView.as_view( template_name='userauths/password-reset/password_reset_done.html' ), name='password_reset_done'),
     path('user/password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view( template_name='userauths/password-reset/password_reset_confirm.html' ), name='password_reset_confirm'),
     path('user/password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='userauths/password-reset/password_reset_complete.html'), name='password_reset_complete'),
-    
+
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),)
 ]
 
 

@@ -27,6 +27,9 @@
                 {% if p.type == "regular" %}
                     <div class="shop_item_cart_bftn d-grid"><a class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2" data-index="{{ p.id }}" id="add-to-cart-btn">Ajouter au panier</a></div>
                 {% endif %}  
+                {% if p.type == "pre_order" %}
+                    <div class="shop_item_cart_bftn d-grid"><a class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2" data-index="{{ p.id }}" id="add-to-cart-btn">Pre Order</a></div>
+                {% endif %}  
             {% else %}
             <div class="d-grid text-white"><a class="btn btngray mt-2 text-white" style="color: white;">En rupture de stock</a></div>
             {% endif %}   
