@@ -25,4 +25,4 @@ userauths/__pycache__
 vendor/migrations
 vendor/__pycache__
 
-geoip
+geoipdebug.log
