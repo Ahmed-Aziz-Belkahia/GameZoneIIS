@@ -25,7 +25,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-LOGGING = {
+""" LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
@@ -42,7 +42,7 @@ LOGGING = {
             'propagate': True,
         },
     },
-}
+} """
 
 # Application definition
 

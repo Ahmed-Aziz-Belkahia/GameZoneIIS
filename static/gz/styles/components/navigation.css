@@ -545,6 +545,11 @@ background: url(https://gameszone.tn/static/images/background/footer-bg-img-home
 .closefilter{
     color: black;
 }
+@media screen and (max-width: 1440px){
+    .categories__div{
+        padding: 0 1rem;
+    }
+}
 @media screen and (max-width: 768px) {
     .navbar__search{
         position: absolute !important;
