@@ -4,9 +4,7 @@
 
 <div class="main__consoleCatalog flexCenter">
     <div class="consoleCatalog__div flexCenter">
-        <div class="consoleCatalog__text">
-            Achetez les meilleures consoles
-        </div>
+        <h2 class="consoleCatalog__text">Achetez les meilleures consoles</h2>
         <div class="consoleCatalog__items flexCenter">
             {% for product in top_hardware %}
             <a href="/{{ product.meta_title }}" class="consoleCatalog__item flexCenter">
@@ -15,8 +13,8 @@
                         <img src="{{ product.image.url }}" alt="{{ product.title }}">
                     </div>
                     <div class="item__info flexCenter">
+                        <div class="info__title">{{ product.title|title|truncatechars:24}}</div>
                         <div class="info__price">{{ product.price }}<span>DT</span></div>
-                        <div class="info__title">{{ product.title|title|truncatechars:35}}</div>
                     </div>
                 </div>
             </a>

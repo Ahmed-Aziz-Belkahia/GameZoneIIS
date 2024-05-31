@@ -1,28 +1,25 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static "gz/styles/components/gamesCatalog.css" %}">
+<link rel="stylesheet" href="{% static 'gz/styles/components/gamesCatalog.css' %}">
 
 <div class="main__gamesCatalog flexCenter">
     <div class="gamesCatalog__div flexCenter">
-        <div class="gamesCatalog__text">
-            Meilleurs Jeux
-        </div>
-        
+        <div class="gamesCatalog__text"><h2>Ne manquez pas les meilleurs jeux du moment !</h2></div>
         <div class="gamesCatalog__items flexCenter">
             {% for game in top_games %}
-            <a href="/{{ game.meta_title }}">
-                <div class="gamesCatalog__item flexCenter">
-                    <div class="item__div flexCenter">
-                        <div class="item__img flexCenter">
-                            <img src="{{ game.image.url }}" alt="{{ game.title }}">
-                        </div>
-                        <div class="item__info flexCenter">
-                            <div class="info__price">{{ game.price }}<span>DT</span></div>
-                            <div class="info__title">{{ game.title|title|truncatechars:35}}</div>
+                <a href="/{{ game.meta_title }}">
+                    <div class="gamesCatalog__item flexCenter">
+                        <div class="item__div flexCenter">
+                            <div class="item__img flexCenter">
+                                <img src="{{ game.image.url }}" alt="{{ game.title }}">
+                            </div>
+                            <div class="item__info flexCenter">
+                                <div class="info__title">{{ game.title|title|truncatechars:24}}</div>
+                                <div class="info__price">{{ game.price }}<span>DT</span></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
             {% endfor %}
         </div>
     </div>

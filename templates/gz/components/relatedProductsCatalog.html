@@ -4,9 +4,7 @@
 
 <div class="main__consoleCatalog flexCenter">
     <div class="consoleCatalog__div flexCenter">
-        <div class="consoleCatalog__text">
-            Produits connexes
-        </div>
+        <h2 class="consoleCatalog__text">Produits connexes</h2>
         <div class="consoleCatalog__items flexCenter">
             {% for product in product.related_products.all %}
             <a href="/{{product.meta_title}}" class="consoleCatalog__item flexCenter">
@@ -16,7 +14,7 @@
                     </div>
                     <div class="item__info flexCenter">
                         <div class="info__price">{{ product.price }}<span>DT</span></div>
-                        <div class="info__title">{{ product.title }}</div>
+                        <h2 class="info__title">{{ product.title }}</h2> <!-- Changed to h2 -->
                     </div>
                 </div>
             </a>

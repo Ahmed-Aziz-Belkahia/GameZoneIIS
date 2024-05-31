@@ -1,26 +1,23 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static "gz/styles/components/accesoriesCatalog.css" %}">
-
+<link rel="stylesheet" href="{% static 'gz/styles/components/accesoriesCatalog.css' %}">
 <div class="main__accesoriesCatalog flexCenter">
     <div class="accesoriesCatalog__div flexCenter">
-        <div class="accesoriesCatalog__text">
-            Découvrez les Meilleurs Accessoires
-        </div>
+        <h2 class="accesoriesCatalog__text">Découvrez les Meilleurs Accessoires</h2>
         <div class="accesoriesCatalog__items flexCenter">
             <div class="accesoriesCatalog__list">
                 {% for accessory in top_accessories %}
-                <a href="/{{accessory.meta_title}}" class="accesoriesCatalog__item flexCenter">
-                    <div class="item__div flexCenter">
-                        <div class="item__img flexCenter">
-                            <img src="{{ accessory.image.url }}" alt="{{ accessory.title }}">
+                    <a href="/{{ accessory.meta_title }}" class="accesoriesCatalog__item flexCenter">
+                        <div class="item__div flexCenter">
+                            <div class="item__img flexCenter">
+                                <img src="{{ accessory.image.url }}" alt="{{ accessory.title }}">
+                            </div>
+                            <div class="item__info flexCenter">
+                                <div class="info__title">{{ accessory.title|title|truncatechars:24 }}</div>
+                                <div class="info__price">{{ accessory.price }}<span>DT</span></div>
+                            </div>
                         </div>
-                        <div class="item__info flexCenter">
-                            <div class="info__price">{{ accessory.price }}<span>DT</span></div>
-                            <div class="info__title">{{ accessory.title|title|truncatechars:35}}</div>
-                        </div>
-                    </div>
-                </a>
+                    </a>
                 {% endfor %}
             </div>
         </div>

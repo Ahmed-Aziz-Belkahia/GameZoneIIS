@@ -147,7 +147,7 @@
       <div class="row">
         <div class="col-sm-6 col-lg-4 m-auto">
           <div class="main-title text-center mb50">
-            <h2 class="title">Shopping Cart</h2>
+            <h2 class="title">Panier d'achat</h2>
             <!-- <input type="text" name="" id=""> -->
           </div>
         </div>
@@ -163,12 +163,12 @@
             <table class="table table-borderless">
               <thead>
                 <tr>
-                  <th scope="col">PRODUCT</th>
-                  <th scope="col">PRICE</th>
-                  <th scope="col">QUANTITY</th>
+                  <th scope="col">PRODUIT</th>
+                  <th scope="col">PRIX</th>
+                  <th scope="col">QUANTITÉ</th>
                   <th scope="col">TOTAL</th>
-                  <th scope="col">UPDATE</th>
-                  <th scope="col">REMOVE</th>
+                  <th scope="col">MISE À JOUR</th>
+                  <th scope="col">SUPPRIMER</th>
                 </tr>
               </thead>
               <tbody class="table_body">
@@ -195,11 +195,6 @@
                           href="{% url 'store:product-detail' meta_title=p.product_meta_title %}"
                         >
                           <span class="fz16">{{p.title|truncatechars:27}}</span>
-                          <br />
-                          <span class="fz16">By: <b><i>{{p.shop_name|title}}</i></b></span>
-                          <br />
-                          <span class="fz16">Stock Qty: </a><span id="stock_qty{{product_id}}">{{p.product_stock_qty}}</span></span>
-
                           <br />
                         </a>
                       </li>
@@ -277,8 +272,8 @@
                 {% empty %}
                 <tr>
                   <td>
-                    Your cart is empty,
-                    <a href="{% url 'store:shop' %}">continue shopping</a>
+                    Votre panier est vide.
+                    <a href="{% url 'store:shop' %}">Poursuivre les achats</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -288,57 +283,15 @@
         </div>
         <div class="col-lg-4 col-xl-3">
           <div class="order_sidebar_widget style2">
-            <h4 class="title">Cart Totals</h4>
+            <h4 class="title">Totaux du Panier</h4>
             <ul>
               <li class="subtitle">
                 <p>
-                  Product Subtotal
+                  Sous-total 
                   <span class="float-end"
                     >{{ cs }}{{cart_total_amount|floatformat:2}}</span
-                  >
-                </p>
-              </li>
-              <!-- <li class="subtitle"><p>Order Discounts <span class="float-end">-$30.01</span></p></li> -->
-              <li class="subtitle">
-                <p>
-                  Estimated Shipping
-                  <i
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Tooltip on top"
-                    class="bi bi-info-circle-fill"
-                  ></i>
-                  <span class="float-end"
-                    >{{ cs }}{{total_shipping_amount|floatformat:2}}</span
-                  >
-                </p>
-              </li>
-              <li class="subtitle">
-                <p>
-                  Estimated {{tax_country.custom_name}}
-                  <i
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Tooltip on top"
-                    class="bi bi-info-circle-fill"
-                  ></i
-                  ><span class="float-end"
-                    >{{cs}}{{ tax_amount_|floatformat:2 }}</span
-                  >
-                </p>
-              </li>
-              <li class="subtitle">
-                <p>
-                  Service Fee
-                  <span class="float-end"
-                    >{{ cs }}{{service_fee_amount|floatformat:2}}</span
-                  >
-                </p>
-              </li>
-              <!-- <li class="subtitle"><p>xEstimated Taxes <i data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" class="bi bi-info-circle-fill"></i><span class="float-end">{{ cs }}{{total_tax|floatformat:2}}</span></p></li> -->
-              <!-- <li class="subtitle"><p>Service Fee <span class="float-end">{{ cs }}{{service_fee_amount|floatformat:2}}</span></p></li> -->
-              <li class="subtitle"><hr /></li>
-              <li class="subtitle totals">
+                   <li class="subtitle"><hr /></li>
+                  <li class="subtitle totals">
                 <p>
                   Total
                   <span class="float-end"

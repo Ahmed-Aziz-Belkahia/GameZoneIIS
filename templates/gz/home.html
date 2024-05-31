@@ -1,7 +1,7 @@
 {% extends 'gz/base.html' %}
 {% load static %}
 {% block head %}
-    {% block title %}<title>GameZone</title>{% endblock title %}
+    {% block title %}<title>Game Zone</title>{% endblock title %}
     
 {% endblock head %}
 
@@ -11,8 +11,6 @@
 
 {% block main %}
 
-<!--<div id="preloader" class="preloader"></div>
-    <div class="main__div">-->
 
         {% include 'gz/components/hero.html' %}
         {% include 'gz/components/top-deals.html' %}
@@ -40,35 +38,3 @@
 {% block footer %}
     {% include 'gz/components/newfooter.html' %}
 {% endblock footer %}
-
-{% block scripts %}
-<!--<script>
- $(document).ready(function() {
-        function preloaderLoad() {
-            if ($('.preloader').length) {
-                $('.preloader').delay(1000).fadeOut(300, function() {
-                    // Fade out complete, set to display none
-                    $('.preloader').css('display', 'none');
-                });
-            }
-            $(".preloader_disabler").on('click', function() {
-                $("#preloader").hide();
-            });
-        }
-    
-        // Call preloaderLoad function when window is fully loaded
-        $(window).on('load', function() {
-            preloaderLoad();
-            
-            // Set timeout to hide after 5000 milliseconds (5 seconds)
-            setTimeout(function() {
-                $('.preloader').fadeOut(300, function() {
-                    $('.preloader').css('display', 'none');
-                });
-            }, 5000);
-        });
-    }); 
-    
-</script>-->
-{% endblock scripts %}
-
