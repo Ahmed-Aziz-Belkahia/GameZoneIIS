@@ -26,3 +26,4 @@ vendor/migrations
 vendor/__pycache__
 
 geoipdebug.log
+debug.log
