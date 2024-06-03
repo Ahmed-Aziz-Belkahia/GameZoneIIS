@@ -673,7 +673,10 @@ def offer(request):
 
 
 def product_detail(request, meta_title):
-    product = Product.objects.get(status="published", meta_title=meta_title)
+    try:
+        product = Product.objects.get(status="published", meta_title=meta_title)
+    except Product.DoesNotExist:
+        return redirect('404')
     disable_button = False
     if product.stock_qty == 0:
         disable_button = True
@@ -2429,3 +2432,8 @@ def country_get(request):
     return render(request, "store/country_get.html")
 
 
+def pageNotFoundView(request, invalid_path=None):
+    return render(request, '404.html', status=404)
+
+def handler404(request, exception):
+    return render(request, '404.html', status=404)

@@ -1234,7 +1234,6 @@
     $(document).on('ready', function() {
         // add your functions
         navbarScrollfixed();
-        scrollToTop();
         mobileNavToggle();
     });
 

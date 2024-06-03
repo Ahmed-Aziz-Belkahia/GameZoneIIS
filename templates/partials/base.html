@@ -2,10 +2,17 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="fr">
   <head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M7RMC3KH');</script>
+  <!-- End Google Tag Manager -->
+
     <title>Game Zone - {% block title %} {% endblock title %}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <base href="{% static '/' %}">
     {% block hhead %}{% endblock hhead %}
@@ -13,8 +20,12 @@
     <meta  name="title"  content="{{ product.title_meta_title }}"/>
     {% elif current_category and current_category.title_meta_title %}
     <meta  name="title"  content="{{ current_category.title_meta_title }}"/>
+    {% elif category and category.title_meta_title %}
+    <meta  name="title"  content="{{ category.title_meta_title }}"/>
     {% elif brand and brand.title_meta_title %}
     <meta  name="title"  content="{{ brand.title_meta_title }}"/>
+    {% elif post and post.title_meta_title %}
+    <meta  name="title"  content="{{ post.title_meta_title }}"/>
     {% else %}
     <meta name="title" content="Game zone"/>
 
@@ -28,6 +39,10 @@
     <meta  name="keywords"  content="{{ current_category.tags }}"/>
     {% elif brand and brand.tags %}
     <meta  name="keywords"  content="{{ brand.tags }}"/>
+    {% elif category and category.tags %}
+    <meta  name="keywords"  content="{{ category.tags }}"/>
+    {% elif post and post.tags %}
+    <meta  name="keywords"  content="{{ post.tags }}"/>
     {% else %}
     <meta name="keywords" content="Game zone, Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox, Console de jeux, Jeux vidéo, Accessoires de jeux"/>
     {% endif %}
@@ -36,8 +51,12 @@
     <meta  name="description"  content="{{ product.meta_description }}"/>
     {% elif current_category and current_category.meta_description%}
     <meta  name="description" content="{{ current_category.meta_description }}"/>
+    {% elif category and category.meta_description%}
+    <meta  name="description" content="{{ category.meta_description }}"/>
     {% elif brand and brand.meta_description%}
     <meta  name="description" content="{{ brand.meta_description }}"/>
+    {% elif post and post.meta_description%}
+    <meta  name="description" content="{{ post.meta_description }}"/>
     {% else %}
       <meta name="description" content="Découvrez notre sélection premium de jeux, consoles et accessoires PlayStation 5, Nintendo Switch et Xbox en Tunisie. Manettes PS4 et PS5 incluses. Des expériences de jeu inoubliables vous attendent. Explorez dès maintenant !"/>
     {% endif %}
@@ -105,6 +124,12 @@
   </head>
 
   <body>
+
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M7RMC3KH"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
    {% comment %} <div class="preloader"></div> {% endcomment %}
 
     <div>
@@ -542,7 +567,7 @@
                 <!-- <a href="{% url 'store:home' %}"><span class="title">Products</span></a> -->
               </li>
               <li class="megamenu_style">
-                <a href="{% url "store:shop" %}"><span class="title">Shop</span></a>
+                <a href="{% url "store:shop" %}"><span class="title">Boutique</span></a>
                 <ul class="row dropdown-megamenu">
                   <li class="col mega_menu_list pl30">
                     <h4 class="title">Categories</h4>
@@ -1377,7 +1402,7 @@
       {% endfor %}
     </script>
 
-    <script>
+    {% comment %} <script>
       let popUp = document.getElementById("cookiePopup");
       //When user clicks the accept button
       document.getElementById("acceptCookie").addEventListener("click", () => {
@@ -1412,7 +1437,7 @@
           checkCookie();
         }, 2000);
       };
-    </script>
+    </script> {% endcomment %}
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

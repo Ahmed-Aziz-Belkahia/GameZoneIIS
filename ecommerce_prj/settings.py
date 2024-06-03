@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     'reports',
     'blog',
     'help_center',
+    "django.contrib.sites",  # new
+    "django.contrib.sitemaps",  # new 
 
     # Third Party
     'import_export',

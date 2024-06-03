@@ -71,6 +71,7 @@
 
 .main__gamesCatalog .info__title {
     font-weight: 700;
+    text-align: center;
 }
 @media only screen and (max-width: 1824px) {
     .main__gamesCatalog{
@@ -85,4 +86,14 @@
         flex-wrap: wrap;
     }
     
+}
+@media screen and (max-width: 768px) {
+    .gamesCatalog__items{
+        flex-wrap: wrap;
+        gap: 0px;
+        width: 100%;
+    }
+    .gamesCatalog__items a{
+        width: 50%;
+    }
 }

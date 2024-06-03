@@ -7,8 +7,8 @@ let countDown = new Date('Dec 31, 2023 00:00:00').getTime(),
     x = setInterval(function() {
         let now = new Date().getTime(),
             distance = countDown - now;
-        document.getElementById("days").innerText = Math.floor(distance / (day)),
+            /* document.getElementById("days").innerText = Math.floor(distance / (day)),
             document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
             document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
-            document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
+            document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second); */
     }, second)

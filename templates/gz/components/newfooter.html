@@ -360,7 +360,11 @@
               <div class="icon"><span class="fas fa-envelope"></span></div>
               <div class="details ms-4">
                 <h5 class="title">Besoin d'aide ?</h5>
-                <a href="mailto:{{support_details.email}}">{{support_details.email}}</a>
+                 <a href="mailto:contactATgameszoneDOTtn"
+                onclick = "this.href=this.href
+                .replace(/AT/,'&#64;')
+                .replace(/DOT/,'&#46;')"
+                >Envoyer nous un E-mail</a>
               </div>
             </div>
           </div>

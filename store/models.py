@@ -519,6 +519,9 @@ class Product(models.Model):
 
         super(Product, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('store:product-detail', kwargs={'meta_title': self.meta_title})
+
 
 class Gallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, related_name="product_gallery")

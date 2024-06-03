@@ -29,13 +29,15 @@
 }
 
 .main__xbox .text__title {
-    font-size: 4rem;
-    font-weight: 900;
+    font-size: 3rem;
+    font-weight: 300;
+    text-align: center;
 }
 
 .main__xbox .text__slogan {
-    font-weight: 500;
     font-size: 2rem;
+    font-weight: 300;
+    text-align: center;
 }
 
 .main__xbox .xbox__layer2 {
@@ -112,10 +114,10 @@
     opacity: 1;
 }
 @media screen and (min-width: 1440px) {
-    .main__xbox{
+/*     .main__xbox{
         max-width: 1920px;
 
-    }
+    } */
     
 }
 
@@ -248,7 +250,16 @@
 }
 @media screen and (max-width: 768px) {
     .main__xbox .layer2__cards {
-        flex-direction: column;
+        flex-direction: row;
+        overflow-x: scroll;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 25%);
+        gap: 10px;
+        grid-template-columns: 15rem 15rem 15rem 15rem;
+        gap: 0px;
+        padding: 0;
+        justify-content: flex-start;
     }
     .main__xbox .card__lower{
         height: auto;
@@ -261,6 +272,13 @@
     }
     .main__xbox .lower__img img{
         height: auto;
+    }
+    .main__xbox .text__title{
+        font-size: 2rem;
+        
+    }
+    .main__xbox .text__slogan{
+        font-size: 1.5rem;
     }
 }
 @media screen and (max-width: 1440px) {

@@ -71,6 +71,7 @@
 
 .main__consoleCatalog .info__title {
     font-weight: 700;
+    text-align: center;
 }
 @media only screen and (max-width: 1824px) {
     .main__consoleCatalog{
@@ -89,6 +90,19 @@
     }
     .consoleCatalog__items {
         flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        display: flex;
+        gap: 0rem;
+    }
+    .main__consoleCatalog .consoleCatalog__item{
+        background-color: #ffffff;
+        height: 300px;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+        width: 50%;
     }
 }
 .main__consoleCatalog .item__div:hover .info__price{

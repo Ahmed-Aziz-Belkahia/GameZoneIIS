@@ -1,5 +1,8 @@
+#blog/models
+
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 import shortuuid
 from taggit.managers import TaggableManager
 from userauths.models import user_directory_path
@@ -85,6 +88,9 @@ class Post(models.Model):
             self.meta_title = slugify(self.title) + "-" + str(uniqueid.lower())
             
         super(Post, self).save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('blog:blog-detail', kwargs={'meta_title': self.meta_title})
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')

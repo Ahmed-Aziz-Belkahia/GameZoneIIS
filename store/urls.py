@@ -3,6 +3,8 @@ from store import views
 
 app_name = "store"
 
+
+
 urlpatterns = [
     path("", views.index, name="home"),
     path("offer/", views.offer, name="offer"),
@@ -19,13 +21,9 @@ urlpatterns = [
     path("custom-checkout/<oid>/", views.custom_checkout_view, name="checkout2"),
     path('checkout/order-detail/<id>/', views.PaymentConfirmation.as_view(), name='order-detail'),
     path('success-payment/', views.PaymentSuccessView, name='success'),
-    path('failed-payment/', views.PaymentFailedView, name='failed'),
+    path('failed-payment/', views.PaymentFailedView, name='failed'),    
     
-    
-    # Paypal
-    path('paypal/', include('paypal.standard.ipn.urls')),
-    path("payment-completed/<oid>/", views.payment_completed_view, name="payment-completed"),
-    path("payment-failed/", views.payment_failed_view, name="payment-failed"),
+
 
     # Ajax URLs
     path("ajax/add-to-cart/", views.add_to_cart, name="add-to-cart"),

@@ -64,7 +64,7 @@
                     <button class="sidemenu_back">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
-                    <h3 class="title"></h3>
+                    <div class="title"></div>
                     <button class="overlay_close">
                         <i class="fa-solid fa-times"></i>
                     </button>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="menu_group">
                         <div class="user_list_group">
-                            <h2>Bonjour, {{user.username}}</h2>
+                            <div>Bonjour, {{user.username}}</div>
                             <ul class="user_options">
                                 <li class="option_link">
                                     <span class="fas fa-user"></span>
@@ -217,28 +217,31 @@
     let lastScrollTop = 0;
 
     const HeaderCatagories = document.querySelector(".header__categories");
-    
+
     // Function to handle scroll event
     function handleScroll() {
         let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    
+
         if (currentScroll > lastScrollTop) {
             // Scrolling down
-            HeaderCatagories.style.opacity = "1";
-            HeaderCatagories.style.transform = "translateY(-50px)";
+            if (HeaderCatagories) {
+                HeaderCatagories.style.opacity = "1";
+                HeaderCatagories.style.transform = "translateY(-50px)";
+            }
         } else {
             // Scrolling up
-            HeaderCatagories.style.opacity = "1";
-            HeaderCatagories.style.transform = "translateY(0px)";
+            if (HeaderCatagories) {
+                HeaderCatagories.style.opacity = "1";
+                HeaderCatagories.style.transform = "translateY(0px)";
+            }
         }
-    
+
         lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
     }
-    
+
     // Add scroll event listener
     window.addEventListener('scroll', handleScroll);
-    
-    
+
     // SideBarMenu JS
     document.addEventListener("DOMContentLoaded", function () {
         const body = document.querySelector("body"); //page body
@@ -252,247 +255,225 @@
         const back = document.querySelector(".sidemenu_back"); //back arrow in the sub categories overlay
         const subSubMenuLinks = document.querySelectorAll(".sub_category_link"); //sub categories li s
         const subCategoriesDiv = document.querySelector(".Sub_categories") //Sub_categories div container
-        let subMenuLinksTitle = "";
-    
-        // Toggle menu when button is clicked
-        button.addEventListener("click", function () {
-            menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
-            body.style.overflowY = menu.style.display === "none" ? "auto" : "hidden";
-        });
-    
-        // Handle clicks on category links
-        subMenuLinks.forEach(function (link) {
-            link.addEventListener("click", function (event) {
-                event.preventDefault(); // Prevent default link behavior
-                menuOverlay.style.display = "block";
-                menuOverlay.setAttribute('data-meta-title', this.getAttribute("data-meta-title")) // Change subcategories overlay data id attribute
-                category = this.getAttribute("data-meta-title")
 
-                // Perform AJAX request to fetch subcategories
+        // Check if elements are not null before adding event listeners
+        if (button) {
+            button.addEventListener("click", function () {
+                menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+                body.style.overflowY = menu.style.display === "none" ? "auto" : "hidden";
+            });
+        }
+
+        if (subMenuLinks.length > 0) {
+            subMenuLinks.forEach(function (link) {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    menuOverlay.style.display = "block";
+                    menuOverlay.setAttribute('data-meta-title', this.getAttribute("data-meta-title")) // Change subcategories overlay data id attribute
+                    const category = this.getAttribute("data-meta-title");
+
+                    // Perform AJAX request to fetch subcategories
+                    $.ajax({
+                        type: 'GET',
+                        url: `/get-subcategories/${category}`,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function(xhr, settings) {
+                            xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                        },
+                        success: function(response) {
+                            // Clear existing subcategories
+                            subCategoriesDiv.innerHTML = '';
+                            shopAllButton.href = `/category/${category}`;
+                            // Populate subcategories
+                            response.subcategories.forEach(function(subcategory) {
+                                // Create a new list item for each subcategory
+                                let listItem = document.createElement('li');
+                                listItem.classList.add('sub_category_link');
+
+                                // Create a link for the subcategory
+                                let subcategoryLink = document.createElement('a');
+                                subcategoryLink.href = `/category/${category}?subcategories=${subcategory.meta_title}`;
+                                subcategoryLink.textContent = subcategory.title;
+
+                                // Append the subcategory link to the list item
+                                listItem.appendChild(subcategoryLink);
+
+                                // Append the list item to the subcategories container
+                                subCategoriesDiv.appendChild(listItem);
+                            });
+                        },
+                        error: function(error) {
+                            console.error('Error fetching subcategories:', error);
+                        }
+                    });
+
+                    body.style.overflowY = "hidden";
+                    const subMenuLinksTitle = link.textContent.trim(); // Get the innerText of the category
+                    const sideMenuTitle = document.querySelector(".sidemenu_title");
+                    if (sideMenuTitle) {
+                        sideMenuTitle.textContent = subMenuLinksTitle; // Change subcategories overlay title
+                    }
+                });
+            });
+        }
+
+        if (back) {
+            back.addEventListener("click", function () {
+                menuOverlay.style.display = "none";
+                menu.style.display = "block";
+            });
+        }
+
+        if (close) {
+            close.addEventListener("click", function () {
+                menuOverlay.style.display = "none";
+                menu.style.display = "none";
+                body.style.overflowY = "auto";
+            });
+        }
+
+        if (closeOverlay) {
+            closeOverlay.addEventListener("click", function () {
+                menuOverlay.style.display = "none";
+                menu.style.display = "none";
+                body.style.overflowY = "auto";
+            });
+        }
+
+        document.addEventListener("click", function (event) {
+            if (menu && button && back && menuOverlay) {
+                if (!menu.contains(event.target) && !button.contains(event.target) && !back.contains(event.target) && !menuOverlay.contains(event.target)) {
+                    menu.style.display = "none";
+                    menuOverlay.style.display = "none";
+                    body.style.overflowY = "auto";
+                }
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const body = document.querySelector("body");
+        const user_sidemenu_wrapper = document.querySelector(".user_sidemenu_wrapper");
+        const user_sidemenu_btn = document.querySelector(".user__signed");
+        const user_sidemenu_close = document.querySelector(".user_sidemenu_close");
+
+        // Check if elements are not null before adding event listeners
+        if (user_sidemenu_btn) {
+            user_sidemenu_btn.addEventListener("click", function () {
+                user_sidemenu_wrapper.style.display = (user_sidemenu_wrapper.style.display === "none" || user_sidemenu_wrapper.style.display === "") ? "block" : "none";
+                body.style.overflowY = user_sidemenu_wrapper.style.display === "none" ? "auto" : "hidden";
+            });
+        }
+
+        if (user_sidemenu_close) {
+            user_sidemenu_close.addEventListener("click", function () {
+                user_sidemenu_wrapper.style.display = "none";
+                body.style.overflowY = "auto";
+            });
+        }
+
+        document.addEventListener("click", function (event) {
+            if (user_sidemenu_wrapper && user_sidemenu_btn) {
+                if (!user_sidemenu_wrapper.contains(event.target) && !user_sidemenu_btn.contains(event.target)) {
+                    user_sidemenu_wrapper.style.display = "none";
+                    body.style.overflowY = "auto";
+                }
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("nav_search");
+        const searchICO = document.querySelector(".search__ico");
+        const searchResult = document.getElementById("searchResult");
+
+        // Check if elements are not null before adding event listeners
+        if (searchInput) {
+            searchInput.addEventListener("input", function (event) {
+                const q = event.target.value.trim();
+                const formData = new FormData();
+                formData.append('q', q);
+
                 $.ajax({
-                    type: 'GET',
-                    url: `/get-subcategories/${this.getAttribute("data-meta-title")}`,
+                    type: 'POST',
+                    url: '/nav-search/',
+                    data: formData,
                     processData: false,
                     contentType: false,
                     beforeSend: function(xhr, settings) {
                         xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
                     },
                     success: function(response) {
-                        // Clear existing subcategories
-                        subCategoriesDiv.innerHTML = '';
-                        shopAllButton.href = `/category/${category}`;
-                        // Populate subcategories
-                        response.subcategories.forEach(function(subcategory) {
-                            // Create a new list item for each subcategory
-                            let listItem = document.createElement('li');
-                            listItem.classList.add('sub_category_link');
-
-                            // Create a link for the subcategory
-                            let subcategoryLink = document.createElement('a');
-                            subcategoryLink.href = `/category/${category}?subcategories=${subcategory.meta_title}`;
-                            subcategoryLink.textContent = subcategory.title;
-
-                            // Append the subcategory link to the list item
-                            listItem.appendChild(subcategoryLink);
-
-                            // Append the list item to the subcategories container
-                            subCategoriesDiv.appendChild(listItem);
-                        });
+                        console.log(response.query_list);
+                        searchResult.innerHTML = '';
+                        if (response.query_list) {
+                            response.query_list.forEach((query) => {
+                                const div = document.createElement('div');
+                                div.innerHTML = query["title"];
+                                div.addEventListener('click', () => {
+                                    window.location.href = `/${encodeURIComponent(query["meta_title"])}`;
+                                });
+                                searchResult.appendChild(div);
+                                if (response.query_list.length > 0) {
+                                    searchResult.style.display = "block";
+                                } else {
+                                    searchResult.style.display = "none";
+                                }
+                            });
+                        }
+                        if (q === '') {
+                            searchResult.style.display = "none";
+                        }
                     },
                     error: function(error) {
-                        console.error('Error fetching subcategories:', error);
+                        console.error('Error filtering products:', error);
                     }
                 });
-
-                body.style.overflowY = "hidden";
-                subMenuLinksTitle = link.textContent.trim(); // Get the innerText of the category
-                document.querySelector(".sidemenu_title").textContent = subMenuLinksTitle; // Change subcategories overlay title
             });
-        });
-    
-        // Handle clicks on back button
-        back.addEventListener("click", function () {
-            menuOverlay.style.display = "none";
-            menu.style.display = "block";
-        });
-    
-        // Close menu when close button is clicked
-        close.addEventListener("click", function () {
-            menuOverlay.style.display = "none";
-            menu.style.display = "none";
-            body.style.overflowY = "auto";
-        });
-    
-        // Close Overlay when close button is clicked
-        closeOverlay.addEventListener("click", function () {
-            menuOverlay.style.display = "none";
-            menu.style.display = "none";
-            body.style.overflowY = "auto";
-        });
-    
-        // Close menu when clicking outside of it
-        document.addEventListener("click", function (event) {
-            if (!menu.contains(event.target) && !button.contains(event.target) && !back.contains(event.target) && !menuOverlay.contains(event.target)) {
-                menu.style.display = "none";
-                menuOverlay.style.display = "none";
-                body.style.overflowY = "auto";
-            }
-        });
-    });
-    
-    
-    document.addEventListener("DOMContentLoaded", function () {
-        var body = document.querySelector("body");
-        var user_sidemenu_wrapper = document.querySelector(".user_sidemenu_wrapper");
-        var user_sidemenu_btn = document.querySelector(".user__signed");
-        var user_sidemenu_close = document.querySelector(".user_sidemenu_close");
-    
-        // Toggle menu when button is clicked
-        user_sidemenu_btn.addEventListener("click", function () {
-            user_sidemenu_wrapper.style.display = (user_sidemenu_wrapper.style.display === "none" || user_sidemenu_wrapper.style.display === "") ? "block" : "none";
-            body.style.overflowY = user_sidemenu_wrapper.style.display === "none" ? "auto" : "hidden";
-        });
-    
-        // Close menu when close button is clicked
-        user_sidemenu_close.addEventListener("click", function () {
-            user_sidemenu_wrapper.style.display = "none";
-            body.style.overflowY = "auto";
-        });
-    
-        // Close menu when clicking outside of it
-        document.addEventListener("click", function (event) {
-            if (!user_sidemenu_wrapper.contains(event.target) && !user_sidemenu_btn.contains(event.target)) {
-                user_sidemenu_wrapper.style.display = "none";
-                body.style.overflowY = "auto";
-            }
-        });
-    }
-    );
 
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const searchInput = document.getElementById("nav_search");
-        const searchICO = document.querySelector(".search__ico");
-        const searchResult = document.getElementById("searchResult");
-    
-        searchInput.addEventListener("input", function (event) {
-            const q = event.target.value.trim();
-            const formData = new FormData();
-            formData.append('q', q);
-    
-            $.ajax({
-                type: 'POST',
-                url: '/nav-search/',
-                data: formData,
-                processData: false,
-                contentType: false,
-                beforeSend: function(xhr, settings) {
-                    xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
-                },
-                success: function(response) {
-                    console.log(response.query_list);
-                    searchResult.innerHTML = '';
-                    if (response.query_list) {
-                        response.query_list.forEach((query) => {
-                            const div = document.createElement('div');
-                            div.innerHTML = query["title"];
-                            div.addEventListener('click', () => {
-                                window.location.href = `/${encodeURIComponent(query["meta_title"])}`;
-                            });
-                            searchResult.appendChild(div);
-                            if(response.query_list.length > 0){
-                                searchResult.style.display = "block";
-                            }
-                            else{
-                                searchResult.style.display = "none";
-                            }
-                        });
+            searchInput.addEventListener("keyup", function (event) {
+                if (event.key === 'Enter') {
+                    const q = event.target.value.trim();
+                    if (q !== '') {
+                        window.location.href = `/shop?q=${encodeURIComponent(q)}`;
                     }
-                    if(q === ''){
-                        searchResult.style.display = "none";
-                    }
-    
-                },
-                error: function(error) {
-                    console.error('Error filtering products:', error);
                 }
             });
-        });
-    
-        searchInput.addEventListener("keyup", function (event) {
-            if (event.key === 'Enter') {
-                const q = event.target.value.trim();
-                if (q !== '') {
-                    window.location.href = `/shop?q=${encodeURIComponent(q)}`;
+
+            document.addEventListener("keyup", function (event) {
+                if (event.key === 'Escape') {
+                    resetSearch();
                 }
-            }
-        });
-        searchInput.addEventListener("keyup", function (event) {
-            if (event.key === 'Enter') {
-                const q = event.target.value.trim();
-                if (q !== '') {
-                    window.location.href = `/shop?q=${encodeURIComponent(q)}`;
+            });
+
+            document.body.addEventListener("click", function (event) {
+                if (!event.target.matches('#nav_search') && !event.target.matches('#searchResult')) {
+                    resetSearch();
                 }
+            });
+
+            function resetSearch() {
+                searchInput.value = ''; // Clear the input value
+                searchResult.style.display = 'none'; // Hide the search results
             }
-        });
-            // Event listener for "Escape" key
-        document.addEventListener("keyup", function (event) {
-            if (event.key === 'Escape') {
-                resetSearch();
-            }
-        });
-                // Event listener for clicks on the body
-        document.body.addEventListener("click", function (event) {
-            // Check if the click is outside of the search input and search results
-            if (!event.target.matches('#nav_search') && !event.target.matches('#searchResult')) {
-                resetSearch();
-            }
-        });
-        function resetSearch() {
-            searchInput.value = ''; // Clear the input value
-            searchResult.style.display = 'none'; // Hide the search results
         }
-        searchICO.addEventListener("click", function (event) {
-            const q = searchInput.value.trim()
-            if (q !== '') {
-                window.location.href = `/catalog?q=${encodeURIComponent(q)}`;
-            }
-        });
+
+        if (searchICO) {
+            searchICO.addEventListener("click", function (event) {
+                const q = searchInput.value.trim();
+                if (q !== '') {
+                    window.location.href = `/catalog?q=${encodeURIComponent(q)}`;
+                }
+            });
+        }
     });
-    
-    
-    // Function to perform the search
-    function performSearch(searchText) {
-        // You can implement your search logic here
-        // For example, you can filter the categories based on the search text
-        // and update the UI accordingly
-        // For now, let's just log the search text to the console
-        console.log("Search Text: ", searchText);
-    }
 
-
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-      }
-
-
-
+    // Function to generate a unique session ID
     function generateSessionId() {
-        // Generate a unique session ID
         return 'guest_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
     }
-    
+
     // Function to retrieve or generate a session ID and display it
     function displaySessionId() {
         let sessionId = localStorage.getItem('sessionId');
@@ -502,14 +483,11 @@
         }
         console.log('Session ID: ' + sessionId);
     }
-    
+
     // Call the function to display the session ID when the page loads
     document.addEventListener('DOMContentLoaded', function() {
         displaySessionId();
     });
-
-
-
 
     function getCookie(name) {
         let cookieValue = null;
@@ -525,10 +503,5 @@
         }
         return cookieValue;
     }
-
-
-
-
-
-    
 </script>
+

@@ -34,7 +34,7 @@
 //         }
 //     };
 // }
-window.onload = function() {
+/* window.onload = function() {
     var c_container = document.querySelector('.c_container');
     var div = document.createElement('div');
     div.classList.add('chart-container');
@@ -46,8 +46,8 @@ window.onload = function() {
     var ctx = canvas.getContext('2d');
     var config = createConfig();
     new Chart(ctx, config);
-};
-// Circle Doughnut Chart
+}; */
+/* // Circle Doughnut Chart
 var ctx = document.getElementById('myChart').getContext('2d');
 var chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -78,7 +78,7 @@ var chart = new Chart(ctx, {
             position: 'left'
         }
     }
-});
+}); */
 
 // // BarChart Style
 // var data = {
@@ -116,7 +116,7 @@ var chart = new Chart(ctx, {
 //   options: options,
 //   data: data
 // });
-console.log('{{request.user}}');
+/* console.log('{{request.user}}');
 // LineChart Style 2
 var ctx = document.getElementById('myChartweave').getContext('2d');
 var chart = new Chart(ctx, {
@@ -188,7 +188,7 @@ var chart = new Chart(ctx, {
             }]
         }
     }
-});
+}); */
 
 // Chart JS ALl Options
 // Chart.defaults.global = {

@@ -693,7 +693,7 @@ address {
     overflow: hidden;
     position: relative;
     text-align: center;
-    z-index: 1;
+    z-index: 0;
     -webkit-transition: all .3s ease;
     -o-transition: all .3s ease;
     transition: all .3s ease
@@ -6140,7 +6140,7 @@ form.listing_page_v9 {
 }
 
 .footer_one {
-    padding: 60px 0 0
+    padding: 0 0 0
 }
 
 .footer_one.home6:before {
@@ -15703,7 +15703,21 @@ a.shop_btn:before {
     color: #443297;
     text-decoration: underline
 }
-
+.shop_item a > img{
+    height: 200px;
+    width: fit-content;
+    object-fit: cover;
+    border-radius: 3px;
+    margin: 0 auto;
+}
+@media screen and (max-width: 768px) {
+    .shop_item a > img{
+        height:300px;
+    }
+    .filter__div{
+        border-bottom: 1px solid lightgray;
+    }
+}
 .shop_item.small_style .details .title,
 .shop_item.small_style .details .title a {
     color: #041e42;
@@ -15712,7 +15726,7 @@ a.shop_btn:before {
     line-height: 28px;
     letter-spacing: 0;
     display: inline;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: .75rem;
 }
@@ -17435,4 +17449,21 @@ input.quantity-num[type="number"]::-webkit-outer-spin-button {
 }
 .mbf0,.list-inline-item:not(:last-child){
     margin: 0 !important;
+}
+@media screen and (max-width: 786px) {
+    .footer_contact_widget{
+        text-align: center;
+    }
+    .footer_contact_widget h4{
+        text-align: center;
+    }
+    .footer_contact_widget > .footer_contact_iconbox {
+        justify-content: center;
+    }
+    .footer_qlink_widget {
+        width: fit-content;
+    }
+    .footer_one .col-sm-6{
+        width: fit-content;
+    }
 }
