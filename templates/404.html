@@ -3,9 +3,42 @@
 <html>
 <head>
     <title>Page Not Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background: whitesmoke;
+            font-family: "Outfit", sans-serif;
+        }
+        .contency{
+            display: flex;
+            flex-direction: column;
+            align-items:center;
+            justify-content: center;
+        }
+        .contency img{
+            width: 20%;
+        }
+        .button-redi{
+            background: #94d92f;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: larger;
+        }
+    </style>
+    
 </head>
 <body>
-    <h1>Page Not Found</h1>
-    <p>Sorry, but the page you were trying to view does not exist.</p>
+    <div class="container">
+        <div class="contency">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/404-error-9783679-7962584.png" alt="404 PAGE">
+            <h1>Page Not Found</h1>
+            <p>Sorry , you've reached a page that dosen't exist.</p>
+            <a href="/" class="button-redi">Go Home</a>
+        </div> 
+    </div>
 </body>
 </html>
