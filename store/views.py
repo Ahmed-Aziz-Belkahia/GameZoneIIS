@@ -157,7 +157,7 @@ def category_list(request):
 
 def get_fuzzy_matched_products(query, products, threshold=70):
     product_data = [
-        (product.id, product.title or "", product.description or "", product.category.title or "")
+        (product.id, product.title.lower() or "", product.description or "", product.category.title or "")
         for product in products
     ]
 
@@ -165,13 +165,13 @@ def get_fuzzy_matched_products(query, products, threshold=70):
         title_score = fuzz.partial_ratio(query, product[1])
         description_score = fuzz.partial_ratio(query, product[2])
         category_score = fuzz.partial_ratio(query, product[3])
-        return max(title_score, description_score, category_score)
+        return title_score
 
     matched_product_ids = [product[0] for product in product_data if match_score(product) >= threshold]
     return products.filter(id__in=matched_product_ids).distinct()
 
 def search_list(request):
-    query = request.GET.get("q")
+    query = request.GET.get("q").lower()
     products = Product.objects.filter(status="published").order_by("index", "-id")
 
     print(f"Initial product count: {products.count()}")
@@ -199,7 +199,7 @@ def search_list(request):
 
 def nav_search(request):
     if request.method == 'POST':
-        query = request.POST.get("q")
+        query = request.POST.get("q").lower()
         products = Product.objects.filter(status="published").order_by("index", "-id")
 
         print(f"Initial product count: {products.count()}")
@@ -1916,9 +1916,6 @@ def checkout_view(request, oid, *args, **kwargs):
             'item_name': "Order-Item-No-" + str(order.id),
             'invoice': "INVOICE_NO-" + str(timezone.now()),
             'currency_code': "USD",
-            'notify_url': 'http://{}{}'.format(host, reverse("store:paypal-ipn")),
-            'return_url': 'http://{}{}'.format(host, reverse("store:payment-completed", kwargs={'oid': order.oid})),
-            'cancel_url': 'http://{}{}'.format(host, reverse("store:payment-failed")),
         }
         
         paypal_payment_button = PayPalPaymentsForm(initial=paypal_dict)
