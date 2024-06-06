@@ -155,7 +155,7 @@ def category_list(request):
     }
     return render(request, "store/categories.html", context)
 
-def get_fuzzy_matched_products(query, products, threshold=70):
+def get_fuzzy_matched_products(query, products, threshold=80):
     product_data = [
         (product.id, product.title.lower() or "", product.description or "", product.category.title or "")
         for product in products
@@ -206,7 +206,6 @@ def nav_search(request):
 
         if query:
             products = get_fuzzy_matched_products(query, products)
-            print(f"Product count after fuzzy matching: {products.count()}")
             matched_ids = products.values_list('id', flat=True)
             print(f"Matched product IDs: {list(matched_ids)}")
 
