@@ -2,14 +2,11 @@
 
     "use strict";
 
-    function preloaderLoad() {
-        if ($('.preloader').length) {
-            $('.preloader').delay(200).fadeOut(300);
-        }
-        $(".preloader_disabler").on('click', function() {
-            $("#preloader").hide();
+    setTimeout(function() {
+        $('.preloader').fadeOut(300, function() {
+            $(this).css('display', 'none');
         });
-    }
+    }, 4000);
 
     /* ----- Navbar Scroll To Fixed ----- */
     function navbarScrollfixed() {
@@ -1241,10 +1238,16 @@
        When document is loading, do
        ====== */
     // window on Load function
-    $(window).on('load', function() {
-        // add your functions
+    /* $(window).on('load', function() {
         preloaderLoad();
-    });
+        hidePreloaderAfterDelay();
+    }); */
+    /* $(document).ready(function() {
+        // Hide preloader after 4 seconds
+        setTimeout(function() {
+            preloaderLoad();
+        }, 4000);
+    }); */
     // window on Scroll function
     $(window).on('scroll', function() {
         // add your functions

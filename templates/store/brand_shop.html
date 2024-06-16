@@ -3,7 +3,7 @@
 {% load template_tags %}
 
 {% block title %}
-    shop
+    {{brand.title_meta_title}}
 {% endblock title %}
     
 {% block content %}
@@ -253,6 +253,7 @@
       </form>
 
   </div>
+
   </div>
   <div class="filter__div container">
     <button class="filter__button"><i class="fa-solid fa-filter" aria-hidden="true"></i> Filtrer</button>
@@ -270,13 +271,12 @@
     <div class="container">
       
       
-      
       <div class="row mt60">
         <div class="col-lg-12 col-xl-12 pl15-md">
           <div class="row">
             <div class="col-lg-12">
               <div class="main-title bfb1 pb10">
-                <h2 class="title">Tous les produits</h2>
+                <h2 class="title">Tous les produits de {{brand.title}}</h2>
               </div>
             </div>
           </div>

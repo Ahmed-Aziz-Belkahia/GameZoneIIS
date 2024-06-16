@@ -50,6 +50,8 @@ class Category(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(upload_to=user_directory_path)
+    outer_image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    tags = models.CharField(blank=True, null=True, max_length=10000)
     alt = models.CharField(max_length=10000, blank=True, null=True)
     title = models.CharField(max_length=1000)
     title_meta_title = models.CharField(max_length=150, blank=True, null=True)

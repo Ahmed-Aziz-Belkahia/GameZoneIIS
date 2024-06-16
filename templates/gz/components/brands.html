@@ -1,1 +1,28 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><style>h1{font-size:22px}</style>{% load static %}<link rel="stylesheet" href="{% static "gz/styles/components/brands.css" %}"></head><body><div class="main__brands flexCenter"><h1 class="gme-v3-global-heading">Découvrir catégories <span> Playstation et Nintendo</span></h1><div class="brands__div flexCenter">{% for brand in brands %}<a href="/brand/{{ brand.meta_title }}" class="brands__brand"><div class="brand__img"><img src="{{ brand.image.url }}" alt="{{ brand.title }}"></div></a>{% endfor %}</div></div></body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h1 {
+            font-size: 22px;
+        }
+    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'gz/styles/components/brands.css' %}">
+</head>
+<body>
+    <div class="main__brands flexCenter">
+        <h1 class="gme-v3-global-heading">Découvrir catégories <span>Playstation et Nintendo</span></h1>
+        <div class="brands__div flexCenter">
+            {% for brand in brands %}
+            <a href="/brand/{{ brand.meta_title }}" class="brands__brand">
+                <div class="brand__img">
+                    <img src="{{ brand.image.url }}" alt="{{ brand.title }}">
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

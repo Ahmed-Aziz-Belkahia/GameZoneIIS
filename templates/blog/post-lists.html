@@ -1,5 +1,9 @@
 {% extends "partials/base.html" %}
 {% load static %}
+{% block title %}
+Blog
+{% endblock title %}
+
 {% block content %}
   
   <section class="inner_page_breadcrumb">
@@ -24,9 +28,9 @@
           <div class="main-title text-center">
             
             {% if query == "" or query == None %}
-            <h2 class="title">Trending Posts 🔥</h2>
+            <h1 class="title">Trending Posts 🔥</h1>
             {% else %}
-            <h2 class="title">Showing Results for "{{query}}"</h2>
+            <h2 class="title">Résultats pour {{query}}"</h2>
             {% endif %}
                 
           </div>
@@ -45,7 +49,7 @@
             </form>
           </div>
           <div class="terms_condition_widget">
-            <h4 class="title">Categories</h4>
+            <h4 class="title">Catégories</h4>
             <div class="widget_list">
               <ul class="list_details">
                 {% for c in categoriess %}
@@ -56,12 +60,12 @@
             </div>
           </div>
           <div class="sidebar_feature_listing">
-            <h4 class="title">Featured Posts</h4>
+            <h4 class="title">Articles en vedette</h4>
             {% for p in featured_blog %}
             <a href="{% url 'blog:blog-detail' meta_title=p.meta_title %}">
             <div class="d-flex shadow p-2 mb-3 mt-1" style="border-radius: 8px;">
               <div class="flex-shrink-0">
-                <img class="align-self-start mr-3" src="{{p.image.url}}" style="width: 40px; height: 40px; object-fit: cover;" alt="s1.jpg">
+                <img class="align-self-start mr-3" src="{% if p.outer_image %}{{p.outer_image.url}}{% else %}{{p.image.url}}{% endif %}" style="width: 40px; height: 40px; object-fit: cover;" alt="s1.jpg">
               </div>
               <div class="flex-grow-1 ms-3">
                 <h5 class="post_title">{{p.title|truncatechars:27}}</a></h5>
@@ -78,7 +82,7 @@
             <div class="col-md-6 col-xl-4">
               <div class="for_blog">
                 <div class="thumb">
-                  <img class="img-whp" src="{{p.image.url}}" style="width: 100%; height: 240px; object-fit: cover;" alt="{{p.title}}">
+                  <img class="img-whp" src="{% if p.outer_image %}{{p.outer_image.url}}{% else %}{{p.image.url}}{% endif %}" style="width: 100%; height: 240px; object-fit: cover;" alt="{{p.title}}">
                 </div>
                 <div class="details">
                   <div class="tc_content">
@@ -110,7 +114,7 @@
                     </li>
                 {% endif %}
                 </ul>
-                <p class="mt20 pagination_page_count text-center">{{blog_count.count}} Article(s) Found</p>
+                <p class="mt20 pagination_page_count text-center">{{blog_count.count}} Article(s) trouvé(s)</p>
               </div>
             </div>
           </div>

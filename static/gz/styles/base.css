@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -123,16 +124,76 @@ a:active {
     
 }
 .preloader {
-    background-color: #eaeaea;
-    background-image: url(../../images/preloader.gif);
-    background-position: center center;
-    background-repeat: no-repeat;
     height: 100%;
     left: 0;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 99999;
+    background-color: #eaeaea;
+}
+.cmd-loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 70px;
+    font-size: 3rem;
+    text-align: center;
+    padding-left: 50px;
+    display: inline-flex;
+    width: 360px;
+    letter-spacing: 4px;
+    font-family: "Press Start 2P", cursive;
+    color: #212121;
+}
+.cmd-loader > span{
+    color: #94d92f;
+}
+.cmd-loader::before{
+    content: "-";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    animation: animateZ 0.5s ease-in-out infinite;
+}
+@keyframes animateZ {
+    0%,
+    100% {
+      content: "-";
+    }
+    25% {
+      content: "/";
+    }
+    50% {
+      content: "-";
+    }
+    75% {
+      content: "\\";
+    }
+  }
+@media screen and (max-width: 1024px) {
+    .cmd-loader {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        height: 70px;
+        font-size: 2rem;
+        text-align: center;
+        padding-left: 50px;
+        display: inline-flex;
+        width: 300px;
+        letter-spacing: 4px;
+        font-family: "Press Start 2P", cursive;
+        color: #212121;
+    }
 }
 ::-webkit-scrollbar {
     width: 8px;

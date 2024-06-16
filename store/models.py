@@ -768,3 +768,11 @@ class SpecificationValue(models.Model):
     specification = models.ForeignKey(Specification, on_delete=models.CASCADE, related_name="values", null=True, blank=True)
     title = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=255, null=True, blank=True)
+    
+    
+class Mapping(models.Model):
+    key = models.CharField(max_length=1000)
+    value = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return f"{self.key} -> {self.value}"

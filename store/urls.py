@@ -23,6 +23,7 @@ urlpatterns = [
     path('success-payment/', views.PaymentSuccessView, name='success'),
     path('failed-payment/', views.PaymentFailedView, name='failed'),    
     
+    path("payment-completed/<oid>/", views.payment_completed_view, name="payment-completed"),
 
 
     # Ajax URLs

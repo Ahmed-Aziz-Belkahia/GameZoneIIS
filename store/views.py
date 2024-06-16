@@ -22,7 +22,7 @@ from django.core.mail import send_mail
 
 
 from store.forms import CheckoutForm, ReviewForm
-from store.models import RATING, CallToActionBanner, Genre, Product, Category, CartOrder, CartOrderItem, Brand, Gallery, Review, ProductFaq, ProductBidders, ProductOffers, SubCategory, Type
+from store.models import RATING, CallToActionBanner, Genre, Mapping, Product, Category, CartOrder, CartOrderItem, Brand, Gallery, Review, ProductFaq, ProductBidders, ProductOffers, SubCategory, Type
 from core.models import Address
 from blog.models import Post
 from vendor.forms import CouponApplyForm
@@ -155,41 +155,42 @@ def category_list(request):
     }
     return render(request, "store/categories.html", context)
 
-def get_fuzzy_matched_products(query, products, threshold=80):
+
+def get_fuzzy_matched_products(query, products, threshold=70):
     product_data = [
-        (product.id, product.title.lower() or "", product.description or "", product.category.title or "")
+        (product.id, product.title or "", product.brand.title or "", product.category.title or "")
         for product in products
     ]
 
     def match_score(product):
         title_score = fuzz.partial_ratio(query, product[1])
-        description_score = fuzz.partial_ratio(query, product[2])
-        category_score = fuzz.partial_ratio(query, product[3])
-        return title_score
+        brand_score = fuzz.partial_ratio(query, product[2])
+        return max(title_score, brand_score)
 
     matched_product_ids = [product[0] for product in product_data if match_score(product) >= threshold]
     return products.filter(id__in=matched_product_ids).distinct()
 
-def search_list(request):
-    query = request.GET.get("q").lower()
-    products = Product.objects.filter(status="published").order_by("index", "-id")
+def get_mapped_query(query):
+    mapping = Mapping.objects.filter(key=query).first()
+    return mapping.value if mapping else query
 
-    print(f"Initial product count: {products.count()}")
+def search_list(request):
+    query = request.GET.get("q")
     
     if query:
+        query = get_mapped_query(query.lower())
+
+    products = Product.objects.filter(status="published").order_by("index", "-id")
+
+    if query:
         products = get_fuzzy_matched_products(query, products)
-        print(f"Product count after fuzzy matching: {products.count()}")
-        matched_ids = products.values_list('id', flat=True)
-        print(f"Matched product IDs: {list(matched_ids)}")
-    
+
     product_count = products.count()
-    print(f"Final product count: {product_count}")
-    
-    paginator = Paginator(products, 16)
+
+    paginator = Paginator(products, 16)  # 16 products per page
     page_number = request.GET.get('page')
     products = paginator.get_page(page_number)
-    print(f"Products on page {page_number}: {list(products)}")
-    
+
     context = {
         "product_count": product_count,
         "products": products,
@@ -199,26 +200,25 @@ def search_list(request):
 
 def nav_search(request):
     if request.method == 'POST':
-        query = request.POST.get("q").lower()
-        products = Product.objects.filter(status="published").order_by("index", "-id")
+        query = request.POST.get("q")
+        
+        if query:
+            query = get_mapped_query(query.lower())
+            print(query)
 
-        print(f"Initial product count: {products.count()}")
+        products = Product.objects.filter(status="published").order_by("index", "-id")
 
         if query:
             products = get_fuzzy_matched_products(query, products)
-            matched_ids = products.values_list('id', flat=True)
-            print(f"Matched product IDs: {list(matched_ids)}")
 
         product_count = products.count()
-        print(f"Final product count: {product_count}")
 
         paginator = Paginator(products, 16)
         page_number = request.POST.get('page') or 1
         products = paginator.get_page(page_number)
-        print(f"Products on page {page_number}: {list(products)}")
 
         query_list = [{'meta_title': product.meta_title, 'title': product.title} for product in products.object_list]
-        
+
         context = {
             "success": True,
             "product_count": product_count,
@@ -227,14 +227,12 @@ def nav_search(request):
         }
         return JsonResponse(context)
 
-    return JsonResponse({'success': True, 'queryList': []})
-
+    return JsonResponse({'success': False, 'queryList': []})
 def shop(request):
     products = Product.objects.filter(status="published").order_by("index", "-id")
     filtered_products = products
     products_count = products.count()
     top_selling = Product.objects.filter(status="published").order_by("-orders")[:20]
-    query_params = request.GET
 
     # Get all categories, brands, and subcategories associated with the products
     categories = Category.objects.filter(products__in=products).distinct()
@@ -242,6 +240,10 @@ def shop(request):
     direct_subcategories = SubCategory.objects.none()
 
     q = request.GET.get('q')
+    
+    if q:
+        q = get_mapped_query(q.lower())
+    
     if q:
         filtered_products = get_fuzzy_matched_products(q, filtered_products)
 
@@ -1998,7 +2000,7 @@ def PaymentSuccessView(request):
     elif order.payment_status == "paid":
         request.session.pop('cart_data_obj')
         messages.success(request, f'Your order has been received.')
-        return redirect("store:home")
+        return redirect("core:buyer-order-detail", oid=order.oid)
     else:
         messages.success(request, 'Oops... Internal Server Error; please try again later')
         return redirect("store:home")
@@ -2096,7 +2098,10 @@ def create_checkout_session(request, id):
     order.save()
     if order.payment_method == "credit_card":
         request_data = json.loads(request.body)
-    request.session.pop('cart_data_obj')
+    try:
+        request.session.pop('cart_data_obj')
+    except:
+        pass
     print(order.payment_method)
 
     for product_item in order.cartorderitem_set.all():
@@ -2108,7 +2113,7 @@ def create_checkout_session(request, id):
             product_user.gz_coins += product_item.gz_coins
             product_user.save()
     if order.payment_method == "cash":
-        print("zzzzzzzzzzzzz")
+        messages.success(request, f'Your order has been received.')
         return redirect('store:payment-completed', oid=order.oid)
 
 
@@ -2260,7 +2265,6 @@ def payment_completed_view(request, oid, *args, **kwargs):
 
     if order.payment_status == "pending" and order.payment_method == "credit_card":
         order.payment_status = "paid"
-        order.payment_method = "Paypal"
         order.delivery_status = "shipping_processing"
         order.save()
         
@@ -2354,14 +2358,14 @@ def payment_completed_view(request, oid, *args, **kwargs):
                 o.save()
             
             o.save()
-            
+        
     elif order.payment_status == "paid" or order.payment_method == "cash":
         messages.success(request, f'Your Order have been recieved.')
-        return redirect("store:home")
+        return redirect("core:buyer-order-detail", oid=order.oid)
             
     elif order.payment_status == "pending":
         messages.success(request, f'Your Order have been recieved.')
-        return redirect("store:home")
+        return redirect("core:buyer-order-detail", oid=order.oid)
     else:
         messages.success(request, 'Opps... Internal Server Error; please try again later')
         return redirect("store:home")
