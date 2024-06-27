@@ -443,7 +443,7 @@ section{
         "name": "{{ product.title }}",
         "description": "{{ product.description|escapejs|safe }}",
         "sku": "{{ product.sku }}",
-        "image": "{{ product.image.url }}",
+        "image": ["{{ product.image.url }}"],
         "url": "{{ request.build_absolute_uri }}",
         "brand": {
           "@type": "Brand",
@@ -453,11 +453,43 @@ section{
           "@type": "Offer",
           "priceCurrency": "TND",
           "price": "{{ product.price }}",
-          "availability": "{{ product.in_stock }}",
-          "itemCondition": "{{ product.product_condition }}"
+          "availability": "{% if product.in_stock %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+          "itemCondition": "https://schema.org/NewCondition",
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": "7.00",
+              "currency": "TND"
+            },
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "name": "Tunisia"
+            },
+            "deliveryTime": {
+              "@type": "ShippingDeliveryTime",
+              "businessDays": "1-2",
+              "transitTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 1,
+                "maxValue": 2,
+                "unitCode": "DAY"
+              }
+            },
+            "shippingLabel": "Standard shipping",
+            "freeShippingThreshold": {
+              "@type": "MonetaryAmount",
+              "value": "500.00",
+              "currency": "TND"
+            }
+          }
         }
       }
-    </script>
+      </script>
+      
+      
+      
+      
     <!-- Inner Page Breadcrumb -->
     <section class="inner_page_breadcrumb">
       <div class="container">
