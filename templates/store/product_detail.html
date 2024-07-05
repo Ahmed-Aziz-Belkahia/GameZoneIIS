@@ -443,7 +443,9 @@ section{
         "name": "{{ product.title }}",
         "description": "{{ product.description|escapejs|safe }}",
         "sku": "{{ product.sku }}",
-        "image": ["{{ product.image.url }}"],
+        "image": [
+          "{{ product.image.url }}"{% for g in product_images %}, "{{ g.image.url }}"{% endfor %}
+        ],
         "url": "{{ request.build_absolute_uri }}",
         "brand": {
           "@type": "Brand",
@@ -468,8 +470,7 @@ section{
             },
             "deliveryTime": {
               "@type": "ShippingDeliveryTime",
-              "businessDays": "1-2",
-              "transitTime": {
+              "handlingTime": {
                 "@type": "QuantitativeValue",
                 "minValue": 1,
                 "maxValue": 2,
@@ -482,10 +483,26 @@ section{
               "value": "500.00",
               "currency": "TND"
             }
+          },
+          "returnPolicy": {
+            "@type": "ReturnPolicy",
+            "returnsAccepted": "http://schema.org/True",
+            "refundType": "http://schema.org/ExchangeRefund",
+            "restockingFee": {
+              "@type": "MonetaryAmount",
+              "value": "0.00",
+              "currency": "TND"
+            },
+            "returnShippingFees": "http://schema.org/Seller"
+          },
+          "seller": {
+            "@type": "Organization",
+            "name": "Game zone ariana"
           }
         }
       }
       </script>
+      
       
       
       

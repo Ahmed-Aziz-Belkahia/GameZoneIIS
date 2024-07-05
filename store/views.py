@@ -180,7 +180,7 @@ def search_list(request):
     if query:
         query = get_mapped_query(query.lower())
 
-    products = Product.objects.filter(status="published").order_by("index", "-id")
+    products = Product.objects.filter(status="published").order_by("index")
 
     if query:
         products = get_fuzzy_matched_products(query, products)
@@ -206,7 +206,7 @@ def nav_search(request):
             query = get_mapped_query(query.lower())
             print(query)
 
-        products = Product.objects.filter(status="published").order_by("index", "-id")
+        products = Product.objects.filter(status="published").order_by("index")
 
         if query:
             products = get_fuzzy_matched_products(query, products)
@@ -229,7 +229,7 @@ def nav_search(request):
 
     return JsonResponse({'success': False, 'queryList': []})
 def shop(request):
-    products = Product.objects.filter(status="published").order_by("index", "-id")
+    products = Product.objects.filter(status="published").order_by("index")
     filtered_products = products
     products_count = products.count()
     top_selling = Product.objects.filter(status="published").order_by("-orders")[:20]
@@ -245,7 +245,7 @@ def shop(request):
         q = get_mapped_query(q.lower())
     
     if q:
-        filtered_products = get_fuzzy_matched_products(q, filtered_products)
+        filtered_products = filtered_products.filter(title__icontains=q) | filtered_products.filter(description__icontains=q)
 
     print(f"Initial product count: {products.count()}")
     if q:
@@ -300,9 +300,9 @@ def shop(request):
     sort_by = request.GET.get('sort_by')
     if sort_by:
         if sort_by == 'price-low-to-high':
-            filtered_products = filtered_products.order_by('price')
+            filtered_products = filtered_products.order_by("index", 'price')
         elif sort_by == 'price-high-to-low':
-            filtered_products = filtered_products.order_by('-price')
+            filtered_products = filtered_products.order_by("index", '-price')
 
     # Paginate the filtered products
     paginator = Paginator(filtered_products, 16)
@@ -328,10 +328,10 @@ def shop(request):
 
 def category_shop(request, meta_title):
     brands = Brand.objects.filter(active=True)
-    products = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by('index', "-id")
+    products = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by('index')
     filtered_products = products
     products_count = products.count()
-    top_selling = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by("-orders")[:20]
+    top_selling = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by("index", "-orders")[:20]
     query_params = request.GET
     # Filter
     # Get category object
@@ -387,9 +387,9 @@ def category_shop(request, meta_title):
     sort_by = request.GET.get('sort_by')
     if sort_by:
         if sort_by == 'price-low-to-high':
-            filtered_products = filtered_products.order_by('price')
+            filtered_products = filtered_products.order_by("index", 'price')
         elif sort_by == 'price-high-to-low':
-            filtered_products = filtered_products.order_by('-price')    
+            filtered_products = filtered_products.order_by("index", '-price')    
 
     # Paginate the filtered products
     paginator = Paginator(filtered_products, 16)
@@ -417,10 +417,10 @@ def category_shop(request, meta_title):
 
 def brand_shop(request, meta_title):
     brand = Brand.objects.get(meta_title=meta_title)
-    products = Product.objects.filter(brand=brand, status="published").order_by("index", "-id")
+    products = Product.objects.filter(brand=brand, status="published").order_by("index")
     filtered_products = products
     products_count = products.count()
-    top_selling = Product.objects.filter(brand=brand, status="published").order_by("-orders")[:20]
+    top_selling = Product.objects.filter(brand=brand, status="published").order_by("index", "-orders")[:20]
     query_params = request.GET
 
     # Get category object
@@ -478,9 +478,9 @@ def brand_shop(request, meta_title):
     sort_by = request.GET.get('sort_by')
     if sort_by:
         if sort_by == 'price-low-to-high':
-            filtered_products = filtered_products.order_by('price')
+            filtered_products = filtered_products.order_by("index", 'price')
         elif sort_by == 'price-high-to-low':
-            filtered_products = filtered_products.order_by('-price')  
+            filtered_products = filtered_products.order_by("index", '-price')  
 
     # Paginate the filtered products
     paginator = Paginator(filtered_products, 16)
@@ -508,7 +508,7 @@ def brand_shop(request, meta_title):
 
 
 def hot_deals(request):
-    products = Product.objects.filter(status="published", hot_deal=True).order_by("-id")
+    products = Product.objects.filter(status="published", hot_deal=True).order_by("index")
     
     query = request.GET.get("q")
     if query:
@@ -527,8 +527,8 @@ def hot_deals(request):
 
 def category_detail(request, cid):
     category__ = Category.objects.get(cid=cid)
-    top_selling = Product.objects.filter(status="published", category=category__).order_by("-id")[:10]
-    products = Product.objects.filter(status="published", category=category__).order_by("orders")
+    top_selling = Product.objects.filter(status="published", category=category__).order_by("index")[:10]
+    products = Product.objects.filter(status="published", category=category__).order_by("index", "orders")
     
     
     context = {
@@ -539,7 +539,7 @@ def category_detail(request, cid):
     return render(request, "store/category-detail.html", context)
 
 def auction(request):
-    products = Product.objects.filter(status="published", type="auction").order_by("-id")
+    products = Product.objects.filter(status="published", type="auction").order_by("index")
     products_count = Product.objects.filter(status="published", type="auction")
     
     query = request.GET.get("q")
@@ -687,7 +687,7 @@ def product_detail(request, meta_title):
     
     product_images = Gallery.objects.filter(product=product)
     vendor = Vendor.objects.get(user=product.user)
-    vendor_product = Product.objects.filter(vendor=vendor).order_by("-id")
+    vendor_product = Product.objects.filter(vendor=vendor).order_by("index")
     reviews = Review.objects.filter(product=product, active=True).order_by("-id")
     review_form = ReviewForm()
 
@@ -700,10 +700,10 @@ def product_detail(request, meta_title):
     relatedproduct = None  # Initialize relatedproduct outside the loop
     
     
-    relatedproduct = Product.objects.filter(category=product.category, status="published").order_by("-id")[:5]
+    relatedproduct = Product.objects.filter(category=product.category, status="published").order_by("index")[:5]
     # Exit the loop after finding related products for the first category
     
-    youmightlike = Product.objects.filter(status="published").order_by("orders")[:5]
+    youmightlike = Product.objects.filter(status="published").order_by("index", "orders")[:5]
     
     questions_answers = ProductFaq.objects.filter(product=product, active=True).order_by("-id")
     
