@@ -178,6 +178,10 @@ class Category(models.Model):
             
         super(Category, self).save(*args, **kwargs)
 
+class categoryMetaTitle(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='meta_titles')
+    meta_title = models.SlugField(unique=True, null=True, blank=True)
+
 class SubCategory(models.Model):
     sid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet="abcdefghijklmnopqrstuvxyz")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='subcategories')
@@ -323,6 +327,10 @@ class Brand(models.Model):
             self.meta_title = slugify(self.title) + "-" + str(uniqueid.lower())
             
         super(Brand, self).save(*args, **kwargs) 
+
+class brandMetaTitle(models.Model):
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=True, blank=True, related_name='meta_titles')
+    meta_title = models.SlugField(unique=True, null=True, blank=True)
 
 class Type(models.Model):
     tid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet="abcdefghijklmnopqrstuvxyz")
@@ -522,6 +530,10 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('store:product-detail', kwargs={'meta_title': self.meta_title})
 
+class productMetaTitle(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='meta_titles')
+    meta_title = models.SlugField(unique=True, null=True, blank=True)
+    
 
 class Gallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, related_name="product_gallery")

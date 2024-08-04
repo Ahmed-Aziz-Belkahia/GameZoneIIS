@@ -22,7 +22,7 @@ from django.core.mail import send_mail
 
 
 from store.forms import CheckoutForm, ReviewForm
-from store.models import RATING, CallToActionBanner, Genre, Mapping, Product, Category, CartOrder, CartOrderItem, Brand, Gallery, Review, ProductFaq, ProductBidders, ProductOffers, SubCategory, Type
+from store.models import RATING, CallToActionBanner, Genre, Mapping, Product, Category, CartOrder, CartOrderItem, Brand, Gallery, Review, ProductFaq, ProductBidders, ProductOffers, SubCategory, Type, brandMetaTitle, categoryMetaTitle, productMetaTitle
 from core.models import Address
 from blog.models import Post
 from vendor.forms import CouponApplyForm
@@ -326,9 +326,19 @@ def shop(request):
     }
     return render(request, "store/shop.html", context)
 
+def category_shop_redirect(request, meta_title):
+    category = get_object_or_404(Category, meta_title=meta_title)
+    
+    category_meta_title = categoryMetaTitle.objects.filter(meta_title=meta_title).first()
+    if category_meta_title:
+        return redirect('category-shop_main', meta_title=category.meta_title)
+    
+    return redirect('category-shop_main', meta_title=category.meta_title)
+
+
 def category_shop(request, meta_title):
-    brands = Brand.objects.filter(active=True)
     products = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by('index')
+    brands = Brand.objects.filter(active=True)
     filtered_products = products
     products_count = products.count()
     top_selling = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by("index", "-orders")[:20]
@@ -414,6 +424,15 @@ def category_shop(request, meta_title):
         return render(request, "store/category_shop.html", context)
     else:
        return redirect(reverse("store:home"))
+
+def brand_shop_redirect(request, meta_title):
+    brand = get_object_or_404(Brand, meta_title=meta_title)
+    
+    brand_meta_title = brandMetaTitle.objects.filter(meta_title=meta_title).first()
+    if brand_meta_title:
+        return redirect('brand-shop_main', meta_title=brand.meta_title)
+    
+    return redirect('brand-shop_main', meta_title=brand.meta_title)
 
 def brand_shop(request, meta_title):
     brand = Brand.objects.get(meta_title=meta_title)
@@ -672,6 +691,14 @@ def offer(request):
     }
     return render(request, "store/offer.html", context)
 
+def product_detail_redirect(request, meta_title):
+    product = get_object_or_404(Product, meta_title=meta_title)
+    
+    product_meta_title = productMetaTitle.objects.filter(meta_title=meta_title).first()
+    if product_meta_title:
+        return redirect('product-detail_main', meta_title=product.meta_title)
+    
+    return redirect('product-detail_main', meta_title=product.meta_title)
 
 def product_detail(request, meta_title):
     try:

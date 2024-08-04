@@ -1,7 +1,7 @@
 from django.contrib import admin
 from store.models import (CallToActionBanner, CartOrderItem, Choice, Genre, Product, Category, CartOrder, Gallery,
                          Brand, ProductFaq, Review, ProductBidders, ProductOffers, SubCategory, Type, Specification,
-                         SpecificationValue, Mapping)
+                         SpecificationValue, Mapping, brandMetaTitle, categoryMetaTitle, productMetaTitle)
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.db import models
@@ -38,6 +38,18 @@ class CartOrderItemsInlineAdmin(admin.StackedInline):
     model = CartOrderItem
     extra= 0
 
+class categoryMetaTitleInlineAdmin(admin.StackedInline):
+    model = categoryMetaTitle
+    extra= 0
+
+class brandMetaTitleInlineAdmin(admin.StackedInline):
+    model = brandMetaTitle
+    extra= 0
+
+class productMetaTitleInlineAdmin(admin.StackedInline):
+    model = productMetaTitle
+    extra= 0
+
 class StaffUserChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
         return obj.username
@@ -60,7 +72,7 @@ class TypeAdmin(ImportExportModelAdmin):
     extra= 0
 
 class ProductAdmin(ImportExportModelAdmin):
-    inlines = [ProductImagesAdmin, InlineType, SpecificationInline]  # Added SpecificationInline
+    inlines = [productMetaTitleInlineAdmin, ProductImagesAdmin, InlineType, SpecificationInline]  # Added SpecificationInline
     search_fields = ['title', 'price']
     list_filter = ['featured', 'status', 'in_stock', 'type', 'vendor']
     list_editable = ['price', 'featured', 'status', 'shipping_amount', 'hot_deal', 'hero_section_featured']
@@ -79,6 +91,7 @@ class ProductAdmin(ImportExportModelAdmin):
 
 
 class CategoryAdmin(ImportExportModelAdmin):
+    inlines = [categoryMetaTitleInlineAdmin]
     list_display = ['title', 'category_image']
     prepopulated_fields = {"meta_title": ("title", )}
     extra= 0
@@ -108,6 +121,7 @@ class CartOrderItemsAdmin(ImportExportModelAdmin):
     extra= 0
 
 class BrandAdmin(ImportExportModelAdmin):
+    inlines = [brandMetaTitleInlineAdmin]
     list_editable = ['featured', 'active']
     list_display = ['title', 'brand_image', 'active', 'featured']
     prepopulated_fields = {"meta_title": ("title", )}
