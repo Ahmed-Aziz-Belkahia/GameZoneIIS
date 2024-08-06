@@ -71,17 +71,54 @@ class TypeAdmin(ImportExportModelAdmin):
     prepopulated_fields = {"meta_title": ("title", )}
     extra= 0
 
+from import_export import resources
+from import_export.fields import Field
+
+class ProductResource(resources.ModelResource):
+    product_link = Field(column_name='Product Link', attribute='product_link')
+    product_image_link = Field(column_name='Product Image Link', attribute='product_image_link')
+    availability = Field(column_name='Availability', attribute='availability')
+
+    class Meta:
+        model = Product
+        fields = (
+            'pid', 'user', 'vendor', 'category', 'subcategory', 'brand', 
+            'title', 'meta_title', 'title_meta_title', 'index', 'image', 
+            'alt', 'description', 'meta_description', 'price', 'old_price', 
+            'shipping_amount', 'gz_coins', 'show_old_price', 'tags', 'status', 
+            'product_condition', 'product_condition_rating', 'product_condition_description', 
+            'stock_qty', 'in_stock', 'featured', 'game', 'featured_game', 
+            'featured_game_banner', 'featured_game_banner_alt', 'add_to_featured_games_slider', 
+            'featured_game_slider_banner', 'featured_game_slider_mobile_banner', 
+            'featured_game_slider_alt', 'hero_section_featured', 'hero_banner', 
+            'hero_banner_mobile', 'hero_alt', 'deal_category', 'deal_image', 
+            'deal_alt', 'deal_description', 'catalog_type', 'hot_deal', 
+            'digital', 'sku', 'type', 'auction_status', 'ending_date', 
+            'bidding_ended', 'suggested_products', 'related_products', 
+            'views', 'saved', 'orders', 'liked', 'bidders', 'slug', 'date', 
+            'release_date', 'product_link', 'product_image_link', 'availability'
+        )
+
+    def dehydrate_product_link(self, product):
+        return product.get_product_link()
+
+    def dehydrate_product_image_link(self, product):
+        return product.get_product_image_link()
+
+    def dehydrate_availability(self, product):
+        return product.check_availability()
+
 class ProductAdmin(ImportExportModelAdmin):
-    inlines = [productMetaTitleInlineAdmin, ProductImagesAdmin, InlineType, SpecificationInline]  # Added SpecificationInline
+    resource_class = ProductResource
+    inlines = [productMetaTitleInlineAdmin, ProductImagesAdmin, InlineType, SpecificationInline]
     search_fields = ['title', 'price']
     list_filter = ['featured', 'status', 'in_stock', 'type', 'vendor']
     list_editable = ['price', 'featured', 'status', 'shipping_amount', 'hot_deal', 'hero_section_featured']
-    list_display = ['product_image' ,'title',  'price', 'featured', 'shipping_amount', 'in_stock' ,'stock_qty', 'order_count', 'vendor' ,'status', 'featured', 'hero_section_featured' ,'hot_deal']
+    list_display = ['product_image', 'title', 'price', 'featured', 'shipping_amount', 'in_stock', 'stock_qty', 'order_count', 'vendor', 'status', 'hero_section_featured', 'hot_deal']
     actions = [make_published, make_in_review, make_featured]
     list_per_page = 1300
     prepopulated_fields = {"slug": ("title", )}
-    prepopulated_fields = {"meta_title": ("title", )}
-    extra= 0
+    extra = 0
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'user':

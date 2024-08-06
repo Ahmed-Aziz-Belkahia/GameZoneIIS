@@ -1,4 +1,4 @@
-from django.http import HttpResponseBadRequest
+from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404 ,redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -327,13 +327,15 @@ def shop(request):
     return render(request, "store/shop.html", context)
 
 def category_shop_redirect(request, meta_title):
-    category = get_object_or_404(Category, meta_title=meta_title)
-    
-    category_meta_title = categoryMetaTitle.objects.filter(meta_title=meta_title).first()
-    if category_meta_title:
-        return redirect('category-shop_main', meta_title=category.meta_title)
-    
-    return redirect('category-shop_main', meta_title=category.meta_title)
+    try:
+        category = Category.objects.get(meta_title=meta_title)
+        return redirect('store:category-shop_main', meta_title=category.meta_title)
+    except:
+        category_meta_title = categoryMetaTitle.objects.filter(meta_title=meta_title).first()
+        if category_meta_title:
+            return redirect('store:category-shop_main', meta_title=category_meta_title.category.meta_title)
+        else:
+            return redirect("404")
 
 
 def category_shop(request, meta_title):
@@ -426,13 +428,15 @@ def category_shop(request, meta_title):
        return redirect(reverse("store:home"))
 
 def brand_shop_redirect(request, meta_title):
-    brand = get_object_or_404(Brand, meta_title=meta_title)
-    
-    brand_meta_title = brandMetaTitle.objects.filter(meta_title=meta_title).first()
-    if brand_meta_title:
-        return redirect('brand-shop_main', meta_title=brand.meta_title)
-    
-    return redirect('brand-shop_main', meta_title=brand.meta_title)
+    try:
+        brand = Brand.objects.get(meta_title=meta_title)
+        return redirect('store:brand-shop_main', meta_title=brand.meta_title)
+    except:
+        brand_meta_title = brandMetaTitle.objects.filter(meta_title=meta_title).first()
+        if brand_meta_title:
+            return redirect('store:brand-shop_main', meta_title=brand_meta_title.brand.meta_title)
+        else:
+            return redirect("404")
 
 def brand_shop(request, meta_title):
     brand = Brand.objects.get(meta_title=meta_title)
@@ -692,13 +696,30 @@ def offer(request):
     return render(request, "store/offer.html", context)
 
 def product_detail_redirect(request, meta_title):
-    product = get_object_or_404(Product, meta_title=meta_title)
+    try:
+        product = Product.objects.get(meta_title=meta_title)
+        return redirect('store:product-detail_main', meta_title=product.meta_title)
+    except:
+        product_meta_title = productMetaTitle.objects.filter(meta_title=meta_title).first()
+        if product_meta_title:
+            return redirect('store:product-detail_main', meta_title=product_meta_title.product.meta_title)
+        else:
+            return redirect("404")
     
-    product_meta_title = productMetaTitle.objects.filter(meta_title=meta_title).first()
-    if product_meta_title:
+    """ try:
+        # Try to get the product by meta_title
+        
+        
+        # Redirect to the product detail page if found
         return redirect('product-detail_main', meta_title=product.meta_title)
-    
-    return redirect('product-detail_main', meta_title=product.meta_title)
+    except Http404:
+        # If product is not found, check if there is a productMetaTitle with the given meta_title
+        product_meta_title = productMetaTitle.objects.filter(meta_title=meta_title).first()
+        if product_meta_title:
+            # Redirect to the actual product's meta_title if available
+            return redirect('product-detail_main', meta_title=product_meta_title.product.meta_title)
+        # If no related product is found, show a 404 error
+        raise Http404("Product not found") """
 
 def product_detail(request, meta_title):
     try:
@@ -1554,13 +1575,13 @@ def shipping_address(request):
 
             if request.user.is_authenticated:
                 order = CartOrder.objects.create(
-                    full_name=request.user.profile.full_name,
-                    email=request.user.email,
-                    mobile=request.user.profile.phone,
-                    country=request.user.profile.country,
-                    state=request.user.profile.state,
-                    town_city=request.user.profile.city,
-                    address=request.user.profile.address,
+                    full_name=full_name,
+                    email=email,
+                    mobile=mobile,
+                    country=country,
+                    state=state,
+                    town_city=town_city,
+                    address=address,
                     shipping_method=shipping_method,
                     payment_method=payment_method,
 

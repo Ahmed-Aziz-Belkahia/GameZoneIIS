@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from shortuuid.django_fields import ShortUUIDField
 from django.utils.html import mark_safe
@@ -455,6 +456,19 @@ class Product(models.Model):
     slug = models.SlugField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     release_date = models.DateField(null=True, blank=True)
+
+    def get_product_link(self):
+        return f"https://gameszone.tn/{self.meta_title}"
+
+    def get_product_image_link(self):
+        # Ensure that the domain is included in the URL
+        return f"{settings.SITE_URL}{self.image.url}"
+
+    def check_availability(self):
+        if self.in_stock:
+            return "In Stock"
+        else:
+            return "Out of Stock"
 
     class Meta:
         ordering = ['-date']

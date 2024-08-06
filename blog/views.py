@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from blog.models import Post, Category, Comment
+from blog.models import CategoryMetaTitle, Post, Category, Comment, postMetaTitle
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.core.paginator import Paginator
@@ -31,6 +31,17 @@ def blogList(request):
     }
     return render(request, 'blog/post-lists.html', context)
 
+def blogDetail_redirect(request, meta_title):
+    try:
+        post = Post.objects.get(meta_title=meta_title)
+        return redirect('blog:blog-detail_main', meta_title=post.meta_title)
+    except:
+        post_meta_title = postMetaTitle.objects.filter(meta_title=meta_title).first()
+        if post_meta_title:
+            return redirect('store:blog-detail_main', meta_title=post_meta_title.post.meta_title)
+        else:
+            return redirect("404")
+
 def blogDetail(request, meta_title):
     post = Post.objects.get(status="published", meta_title=meta_title)
     comment = Comment.objects.filter(post=post, active=True)
@@ -59,6 +70,17 @@ def blogDetail(request, meta_title):
     return render(request, 'blog/post-detail.html', context)
 
 
+def category_detail_redirect(request, meta_title):
+    try:
+        category = Category.objects.get(meta_title=meta_title)
+        return redirect('blog:category-detail_main', meta_title=category.meta_title)
+    except:
+        category_meta_title = CategoryMetaTitle.objects.filter(meta_title=meta_title).first()
+        if category_meta_title:
+            return redirect('store:category-detail_main', meta_title=category_meta_title.category.meta_title)
+        else:
+            return redirect("404")
+        
 def category_detail(request, meta_title):
     category = Category.objects.get(meta_title=meta_title)
     blog_count = Post.objects.filter(category=category, status="published")

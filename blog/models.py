@@ -46,7 +46,10 @@ class Category(models.Model):
             
         super(Category, self).save(*args, **kwargs)
         
-    
+class CategoryMetaTitle(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='meta_titles')
+    meta_title = models.SlugField(unique=True, null=True, blank=True)
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(upload_to=user_directory_path)
@@ -93,6 +96,10 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse('blog:blog-detail', kwargs={'meta_title': self.meta_title})
+
+class postMetaTitle(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True, related_name='meta_titles')
+    meta_title = models.SlugField(unique=True, null=True, blank=True)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
