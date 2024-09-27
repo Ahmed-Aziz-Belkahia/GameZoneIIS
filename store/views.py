@@ -22,7 +22,7 @@ from django.core.mail import send_mail
 
 
 from store.forms import CheckoutForm, ReviewForm
-from store.models import RATING, CallToActionBanner, Genre, Mapping, Product, Category, CartOrder, CartOrderItem, Brand, Gallery, Review, ProductFaq, ProductBidders, ProductOffers, SubCategory, Type, brandMetaTitle, categoryMetaTitle, productMetaTitle
+from store.models import RATING, CallToActionBanner, Genre, Mapping, Product, Category, CartOrder, CartOrderItem, Brand, Gallery, Review, ProductFaq, ProductBidders, ProductOffers, SubCategory, Type, brandMetaTitle, categoryMetaTitle, productMetaTitle, subcategoryMetaTitle
 from core.models import Address
 from blog.models import Post
 from vendor.forms import CouponApplyForm
@@ -326,20 +326,19 @@ def shop(request):
     }
     return render(request, "store/shop.html", context)
 
-def category_shop_redirect(request, meta_title):
+
+def category_shop(request, meta_title):
     try:
         category = Category.objects.get(meta_title=meta_title)
-        return redirect('store:category-shop_main', meta_title=category.meta_title)
     except:
         category_meta_title = categoryMetaTitle.objects.filter(meta_title=meta_title).first()
         if category_meta_title:
-            return redirect('store:category-shop_main', meta_title=category_meta_title.category.meta_title)
+            return redirect('store:category-shop', meta_title=category_meta_title.category.meta_title, permanent = True)
         else:
             return redirect("404")
 
 
-def category_shop(request, meta_title):
-    products = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by('index')
+    products = Product.objects.filter(category__meta_title__in=[category.meta_title], status="published").order_by('index')
     brands = Brand.objects.filter(active=True)
     filtered_products = products
     products_count = products.count()
@@ -347,7 +346,6 @@ def category_shop(request, meta_title):
     query_params = request.GET
     # Filter
     # Get category object
-    category = Category.objects.get(meta_title=meta_title)
     # Get direct subcategories objects
     direct_subcategories = category.subcategories.filter(parent_subcategory=None)
     # Get brands associated with the products
@@ -374,8 +372,14 @@ def category_shop(request, meta_title):
     
     # Filter products by selected direct subcategories
     selected_subcategories = request.GET.getlist('subcategories')
+
+
+    sc = None
     if selected_subcategories:
+        if len(selected_subcategories) == 1:
+            sc = SubCategory.objects.get(meta_title=selected_subcategories[0])
         filtered_products = filtered_products.filter(subcategory__meta_title__in=selected_subcategories)
+
 
     # Filter products by selected brands
     selected_brands = request.GET.getlist('brands')
@@ -421,25 +425,128 @@ def category_shop(request, meta_title):
         'selected_ratings': selected_ratings,
         'selected_subcategories': selected_subcategories,
         'selected_brands': selected_brands,
+        'sc': sc,
     }
     if products:
         return render(request, "store/category_shop.html", context)
     else:
        return redirect(reverse("store:home"))
+    
 
-def brand_shop_redirect(request, meta_title):
+
+def subcategory_shop(request, meta_title):
     try:
-        brand = Brand.objects.get(meta_title=meta_title)
-        return redirect('store:brand-shop_main', meta_title=brand.meta_title)
+        subcategory = SubCategory.objects.get(meta_title=meta_title)
     except:
-        brand_meta_title = brandMetaTitle.objects.filter(meta_title=meta_title).first()
-        if brand_meta_title:
-            return redirect('store:brand-shop_main', meta_title=brand_meta_title.brand.meta_title)
+        subcategory_meta_title = subcategoryMetaTitle.objects.filter(meta_title=meta_title).first()
+        if subcategory_meta_title:
+            return redirect('store:subcategory-shop', meta_title=subcategory_meta_title.subcategory.meta_title, permanent = True)
         else:
             return redirect("404")
 
+
+    products = Product.objects.filter(subcategory__meta_title__in=[subcategory.meta_title], status="published").order_by('index')
+    brands = Brand.objects.filter(active=True)
+    filtered_products = products
+    products_count = products.count()
+    top_selling = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by("index", "-orders")[:20]
+    query_params = request.GET
+    # Filter
+    # Get category object
+    # Get direct subcategories objects
+    # Get brands associated with the products
+    brands = Brand.objects.filter(product_brand__in=products).distinct()
+
+
+    q=request.GET.get('q')
+    if q:
+        filtered_products = filtered_products.filter(Q(title__icontains=q) | Q(description__icontains=q) | Q(category__title__icontains=q)).distinct()
+
+
+    # Filter products by price range
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if not min_price:
+        min_price = filtered_products.aggregate(min_price=Min('price'))['min_price']
+
+    if not max_price:
+        max_price = filtered_products.aggregate(max_price=Max('price'))['max_price']
+
+    # Filter products by price range
+    if min_price and max_price:
+        filtered_products = filtered_products.filter(price__range=(min_price, max_price))
+    
+    # Filter products by selected direct subcategories
+    selected_subcategories = request.GET.getlist('subcategories')
+
+
+    sc = None
+    if selected_subcategories:
+        if len(selected_subcategories) == 1:
+            sc = SubCategory.objects.get(meta_title=selected_subcategories[0])
+        filtered_products = filtered_products.filter(subcategory__meta_title__in=selected_subcategories)
+
+
+    # Filter products by selected brands
+    selected_brands = request.GET.getlist('brands')
+    if selected_brands:
+        filtered_products = filtered_products.filter(brand__meta_title__in=selected_brands)
+
+    # Step 1: Get all reviews from products
+    all_reviews = Review.objects.filter(product__in=products)
+    
+    # Step 2: Extract the ratings from these reviews
+    all_ratings = [review.rating for review in all_reviews]
+    
+    # Step 3: Remove duplicate ratings
+    unique_ratings = sorted(set(all_ratings))
+    
+    # Filter products by selected ratings
+    selected_ratings = [int(rating.strip()) for rating in request.GET.getlist('ratings')]
+    if selected_ratings:
+        filtered_products = filtered_products.filter(reviews__rating__in=selected_ratings).distinct()
+
+    sort_by = request.GET.get('sort_by')
+    if sort_by:
+        if sort_by == 'price-low-to-high':
+            filtered_products = filtered_products.order_by("index", 'price')
+        elif sort_by == 'price-high-to-low':
+            filtered_products = filtered_products.order_by("index", '-price')    
+
+    # Paginate the filtered products
+    paginator = Paginator(filtered_products, 16)
+    page_number = request.GET.get('page')
+    pages_filtered_products = paginator.get_page(page_number)
+
+    context = {
+        "current_subcategory": subcategory,
+        "brands": brands,
+        "products_count": products_count,
+        "products": pages_filtered_products,
+        "top_selling": top_selling,
+        "min_price": min_price,
+        "max_price": max_price,
+        'all_ratings': [(rating, '★' * rating + '☆' * (5 - rating)) for rating in unique_ratings],
+        'selected_ratings': selected_ratings,
+        'selected_subcategories': selected_subcategories,
+        'selected_brands': selected_brands,
+        'sc': sc,
+    }
+    if products:
+        return render(request, "store/subcategory_shop.html", context)
+    else:
+       return redirect(reverse("store:home"))
+
+
 def brand_shop(request, meta_title):
-    brand = Brand.objects.get(meta_title=meta_title)
+    try:
+        brand = Brand.objects.get(meta_title=meta_title)
+    except:
+        brand_meta_title = brandMetaTitle.objects.filter(meta_title=meta_title).first()
+        if brand_meta_title:
+            return redirect('store:brand-shop', meta_title=brand_meta_title.brand.meta_title, permanent = True)
+        else:
+            return redirect("404")
     products = Product.objects.filter(brand=brand, status="published").order_by("index")
     filtered_products = products
     products_count = products.count()
@@ -695,33 +802,17 @@ def offer(request):
     }
     return render(request, "store/offer.html", context)
 
-def product_detail_redirect(request, meta_title):
+def product_detail(request, meta_title):
+
     try:
         product = Product.objects.get(meta_title=meta_title)
-        return redirect('store:product-detail_main', meta_title=product.meta_title)
     except:
         product_meta_title = productMetaTitle.objects.filter(meta_title=meta_title).first()
         if product_meta_title:
-            return redirect('store:product-detail_main', meta_title=product_meta_title.product.meta_title)
+            return redirect('store:product-detail', meta_title=product_meta_title.product.meta_title, permanent = True)
         else:
             return redirect("404")
-    
-    """ try:
-        # Try to get the product by meta_title
-        
-        
-        # Redirect to the product detail page if found
-        return redirect('product-detail_main', meta_title=product.meta_title)
-    except Http404:
-        # If product is not found, check if there is a productMetaTitle with the given meta_title
-        product_meta_title = productMetaTitle.objects.filter(meta_title=meta_title).first()
-        if product_meta_title:
-            # Redirect to the actual product's meta_title if available
-            return redirect('product-detail_main', meta_title=product_meta_title.product.meta_title)
-        # If no related product is found, show a 404 error
-        raise Http404("Product not found") """
 
-def product_detail(request, meta_title):
     try:
         product = Product.objects.get(status="published", meta_title=meta_title)
     except Product.DoesNotExist:

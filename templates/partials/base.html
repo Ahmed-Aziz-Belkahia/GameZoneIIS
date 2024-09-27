@@ -40,6 +40,8 @@
     {% block hhead %}{% endblock hhead %}
     {% if product and product.title_meta_title %}
     <meta  name="title"  content="{{ product.title_meta_title }}"/>
+    {% elif sc and sc.title_meta_title %}
+    <meta  name="title"  content="{{ sc.title_meta_title }}"/>
     {% elif current_category and current_category.title_meta_title %}
     <meta  name="title"  content="{{ current_category.title_meta_title }}"/>
     {% elif category and category.title_meta_title %}
@@ -57,6 +59,8 @@
 
     {% if product and product.tags %}
     <meta  name="keywords"  content="{{ product.tags }}"/>
+    {% elif sc and sc.tags %}
+    <meta  name="keywords"  content="{{ sc.tags }}"/>
     {% elif current_category and current_category.tags %}
     <meta  name="keywords"  content="{{ current_category.tags }}"/>
     {% elif brand and brand.tags %}
@@ -69,8 +73,11 @@
     <meta name="keywords" content="Game zone, Playstation 5, Playstation 4, Manette Ps4, Manette PS5, Jeux PS4, Jeux PS5, Carte PSN, Nintendo Switch, Xbox, Console de jeux, Jeux vidéo, Accessoires de jeux"/>
     {% endif %}
 
+
     {% if product and product.meta_description %}
     <meta  name="description"  content="{{ product.meta_description }}"/>
+    {% elif sc and sc.meta_description%}
+    <meta  name="description" content="{{ sc.meta_description }}"/>
     {% elif current_category and current_category.meta_description%}
     <meta  name="description" content="{{ current_category.meta_description }}"/>
     {% elif category and category.meta_description%}

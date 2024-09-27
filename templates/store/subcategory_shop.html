@@ -1,0 +1,404 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% load template_tags %}
+
+{% block title %}
+  {{ current_subcategory.title_meta_title }}
+{% endblock title %}
+
+
+    
+{% block content %}
+<style>
+  ul,li{
+    list-style: none;
+ }
+ .filter__div{
+   flex-direction: row;
+   display: flex;
+   gap: 20px;
+   padding: 50px 0 0;
+}
+.filter__button{
+   -webkit-box-align: center;
+   -ms-flex-align: center;
+   fill: #000;
+   align-items: center;
+   background: #e5e5e5;
+   border: 2px solid #e5e5e5;
+   border-radius: 8px;
+   color: #000;
+   cursor: pointer;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -ms-flex-wrap: nowrap;
+   flex-wrap: nowrap;
+   font-size: medium;
+   font-weight: 600;
+   gap: 4px;
+   height: 42px;
+   padding: 0 2rem;
+   position: relative;
+   text-align: left;
+   text-decoration: none;
+   text-transform: none !important;
+   -webkit-transition: all .25s ease-in-out;
+   transition: all .25s ease-in-out;
+}
+.filter-options{
+ display: none;
+ position: fixed;
+ background: white;
+ color: black;
+ width: 340px;
+ top: 0;
+ left: 0;
+ height: 100vh;
+ z-index: 2000;
+ box-shadow: 0 0.5rem 20rem 2000px rgba(0,0,0,.5);
+ max-height: 100vh;
+ overflow-y: scroll;
+}
+.catalog_header {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ padding: 1rem;
+ box-shadow: 0 2px 16px rgba(0,0,0,.078);
+}
+.catalog_header > h3{
+ font-weight: 700;
+}
+.catalog_header button {
+ width: fit-content;
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ background: transparent;
+ border: none;
+ padding: 1rem;
+ cursor: pointer;
+ font-size: medium;
+}
+.filter-options > form{
+ padding: 1rem;
+}
+form > h3{
+ font-weight: 500;
+ font-size: medium;
+ -webkit-box-pack: justify;
+ -ms-flex-pack: justify;
+ -webkit-box-orient: vertical;
+ -webkit-box-direction: normal;
+ background: 0 0;
+ border-bottom: 0;
+ border-radius: 0;
+ border-top: 1px solid #d2d2d2;
+ color: #282828;
+ display: -webkit-box;
+ display: -ms-flexbox;
+ display: flex;
+ -ms-flex-direction: column;
+ flex-direction: column;
+ font-size: 1rem;
+ font-weight: 700;
+ justify-content: space-between;
+ line-height: 19px;
+ margin: 0;
+ padding: 12px 0 16px;
+ text-transform: capitalize;
+}
+label{
+ display: flex;
+ gap: 5px;
+ font-size: medium;
+ font-weight: 500;
+}
+.apply_btn{
+ width: 100;
+}
+#min_price , #max_price{
+ width: 100%;
+ padding: 5px;
+ border-radius: 4px;
+ font-size: medium;
+ font-weight: 500;
+}
+.deliver-divider{
+ padding: 0;
+ padding-bottom: 70px;
+}
+.btn{
+  z-index: 0;
+}
+
+.sort-dropdown-menu{
+  z-index: 10;
+  border: 0;
+  border-radius: 0;
+  -webkit-box-shadow: 0 0 1rem rgba(0,0,0,.18);
+  box-shadow: 0 0 1rem rgba(0,0,0,.18);
+  float: none;
+  left: 0;
+  margin-left: 4px;
+  position: absolute;
+  right: unset;
+  top: 55px;
+  width: 226px;
+  z-index: 10000;
+  display: none;
+}
+.sort-by-up-arrow {
+  border-bottom: 15px solid #fff;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  height: 0;
+  left: 8px;
+  position: absolute;
+  top: -8px;
+  width: 0;
+  z-index: -1;
+}
+.dropdown-item {
+  z-index: 100;
+  background-color: transparent;
+  border: 0;
+  clear: both;
+  color: #292b33;
+  display: block;
+  font-weight: 400;
+  padding: 0.25rem 1.5rem;
+  text-align: inherit;
+  width: 100%;
+  background-color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+.dropdown-item:hover{
+  background-color: #609700;
+  color: #fff;
+}
+.filter_box{
+  position: relative;
+}
+
+@media screen and (max-width: 768px){
+  .filter__div{
+    padding: 10px;
+    padding-right: var(--bs-gutter-x, .75rem);
+    padding-left: var(--bs-gutter-x, .75rem);
+  }
+ }
+ .reset-btn{
+  background: white;
+    border: 1px solid #212529;
+ }
+ </style>
+    <!-- Vue en grille de liste -->
+    <div class="filter-options">
+      <div class="catalog_header">
+        <h3 class="mb-0 d-flex align-items-center">Menu de filtre</h3>
+        <button type="button" class="toggleFilters">
+            <i class="fa-solid fa-xmark closefilter"></i>
+        </button>
+      </div>
+      <form method="GET" class="filter-form">
+          <!-- Filtrer par marques -->
+          <h3>Marques</h3>
+          <ul>
+              {% for brand in brands %}
+                  <li>
+                      <label>
+                          <input type="checkbox" name="brands" value="{{ brand.meta_title }}" {% if brand.meta_title in selected_brands %} checked {% endif %}>
+                          {{ brand.title }}
+                      </label>
+                  </li>
+              {% endfor %}
+          </ul>
+          
+          <!-- Filtrer par notation -->
+          <h3>Notations</h3>
+          <ul>
+              {% for rating_choice in all_ratings %}
+                  <li>
+                      <label>
+                          <input type="checkbox" name="ratings" value="{{ rating_choice.0 }}" {% if rating_choice.0 in selected_ratings %} checked {% endif %}>
+                          {{ rating_choice.1 }}
+                      </label>
+                  </li>
+              {% endfor %}
+          </ul>
+          
+          <!-- Filtre de plage de prix -->
+          <h3>Plage de prix</h3>
+          <label for="min_price">Prix minimum :</label>
+          <input type="number" name="min_price" id="min_price" value="{{ min_price }}">
+          
+          <label for="max_price">Prix maximum :</label>
+          <input type="number" name="max_price" id="max_price" value="{{ max_price }}">
+          <input type="hidden" name="sort_by" id="sort_by" value="">
+          <button type="submit" class="btn btn-tfhm button-add-to-cart add-to-cart-btn purple-btn mt-2 w-100">Appliquer les filtres</button>
+          <a href="{% url 'store:shop' %}" class="btn btn-tfhm button-add-to-cart add-to-cart-btn reset-btn mt-2 w-100">Réinitialiser</a>
+      </form>
+  </div>
+  </div>
+  <div class="filter__div container">
+    <button class="filter__button"><i class="fa-solid fa-filter" aria-hidden="true"></i> Filtre</button>
+    <div class="filter_box">
+        <button id="sortButton" class="filter__button sort__button"><i class="fa-solid fa-sort" aria-hidden="true"></i> Trier</button>
+        <div class="dropdown-menu sort-dropdown-menu show" aria-labelledby="sortby-dropdown" style="display:none;">
+            <span class="sort-by-up-arrow"></span>
+            <a class="dropdown-item price-low-to-high" data-id="price-low-to-high">Prix croissant</a>
+            <a class="dropdown-item price-high-to-low" data-id="price-high-to-low">Prix décroissant</a>
+            
+        </div>
+    </div>
+  </div>
+  <section class="our-listing pt0">
+    <div class="container">
+      
+      
+      
+      <div class="row mt60">
+        <div class="col-lg-12 col-xl-12 pl15-md">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="main-title bfb1 pb10">
+                <h3 class="title">{{ current_subcategory.title }}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row">
+              {% for p in products %}
+                <div class="col-sm-6 col-lg-3 col-xl-3 p0 pl15-520 mb3">
+                  {% include 'store/product_list.html' %}
+                </div>
+              {% endfor %}
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="mbp_pagination mt30 text-center">
+                  <ul class="page_navigation">
+                    {% if products.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'store:subcategory-shop' meta_title=current_subcategory.meta_title %}?{% append_query_params page=products.previous_page_number %}" tabindex="-1" aria-disabled="true">
+                                <span class="fas fa-angle-left"></span>
+                            </a>
+                        </li>
+                    {% endif %}
+                
+                    {% if products.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'store:subcategory-shop' meta_title=current_subcategory.meta_title %}?{% append_query_params page=products.next_page_number %}">
+                                <span class="fas fa-angle-right"></span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                  <p class="mt20 pagination_page_count text-center">{{products}} -- {{products_couunt.count}} Produits trouvés</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    <section class="deliver-divider pb70">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-10">
+              <div class="main-title text-center text-sm-start mb80-520 mb25-414">
+                  <h2 class="title">Produits les plus vendus</h2>
+              </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-12">
+                <div class="shop_item_4grid_slider dots_none owl-theme owl-carousel">
+                  {% for p in top_selling %}
+                    {% include 'store/product_list.html' %}
+                  {% endfor %}
+              </div>
+              </div>
+          </div>
+          
+      </div>
+  </section>
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const filters = document.querySelector(".filter__button"); // Ajout de "." pour le sélecteur de classe
+        const menu = document.querySelector(".filter-options"); // Ajout de "." pour le sélecteur de classe
+        const body = document.querySelector("body");
+        const closefilter = document.querySelector(".closefilter");
+
+        // Bascule du menu lorsque le bouton est cliqué
+        filters.addEventListener("click", function() {
+            menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+            body.style.overflowY = menu.style.display === "none" ? "auto" : "hidden";
+        });
+    
+        closefilter.addEventListener("click", function() {
+            menu.style.display = "none";
+            body.style.overflowY = "auto";
+        });
+
+        // Ferme le menu lorsqu'on clique en dehors
+        document.addEventListener("click", function(event) {
+            if (!menu.contains(event.target) && !filters.contains(event.target)) {
+                menu.style.display = "none";
+                body.style.overflowY = "auto";
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      const button = document.querySelector(".sort__button");
+      const menu = document.querySelector(".sort-dropdown-menu");
+  
+      // Bascule du menu lorsque le bouton est cliqué
+      button.addEventListener("click", function () {
+          menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+      });
+  
+      // Ferme le menu lorsqu'on clique en dehors
+      document.addEventListener("click", function (event) {
+          if (!menu.contains(event.target) && !button.contains(event.target)) {
+              menu.style.display = "none";
+          }
+      });
+  });
+
+
+
+
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const sortButtons = document.querySelectorAll(".dropdown-item");
+    const sortInput = document.getElementById("sort_by");
+    const form = document.querySelector(".filter-form");
+    console.log(sortButtons)
+    console.log(sortInput)
+    console.log(form)
+    
+    sortButtons.forEach(function(sortButton) {
+        sortButton.addEventListener("click", function(event) {
+            event.preventDefault(); // Empêche le comportement de lien par défaut
+            
+            // Obtient la valeur de l'attribut data-id du bouton de tri cliqué
+            const sortByValue = sortButton.getAttribute("data-id");
+            
+            // Met à jour la valeur du champ de saisie masqué
+            sortInput.value = sortByValue;
+            
+            // Soumet le formulaire
+            form.submit();
+        });
+    });
+});
+    </script>
+    {% endblock content %}

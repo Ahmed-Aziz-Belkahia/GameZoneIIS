@@ -10,10 +10,9 @@ urlpatterns = [
     path("offer/", views.offer, name="offer"),
     path("category/", views.category_list, name="category"),
     path("shop/", views.shop, name="shop"),
-    path("category/c/<str:meta_title>", views.category_shop_redirect, name="category-shop"),
-    path("category/<str:meta_title>", views.category_shop, name="category-shop_main"),
-    path("brand/b/<str:meta_title>", views.brand_shop_redirect, name="brand-shop"),
-    path("brand/<str:meta_title>", views.brand_shop, name="brand-shop_main"),
+    path("subcategory/<str:meta_title>", views.subcategory_shop, name="subcategory-shop"),
+    path("category/<str:meta_title>", views.category_shop, name="category-shop"),
+    path("brand/<str:meta_title>", views.brand_shop, name="brand-shop"),
     path("hot_deals/", views.hot_deals, name="hot_deals"),
     path("search/", views.search_list, name="search"),
     path("my-cart/", views.cart_view, name="cart-view"),
@@ -47,7 +46,6 @@ urlpatterns = [
 
     path('get-subcategories/<str:category_meta_title>', views.get_subcategories, name='get-subcategories'),
     path('nav-search/', views.nav_search, name='nav-search'),
-    path('p/<str:meta_title>/', views.product_detail_redirect, name='product-detail'),
-    path('<str:meta_title>/', views.product_detail, name='product-detail_main'),
+    path('<str:meta_title>/', views.product_detail, name='product-detail'),
 
 ]

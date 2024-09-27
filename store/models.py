@@ -150,9 +150,9 @@ PAYMENT_METHOD = (
 class Category(models.Model):
     cid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet="abcdefghijklmnopqrstuvxyz")
     title = models.CharField(max_length=100)
+    meta_title = models.SlugField(unique=True, null=True, blank=True)
     title_meta_title = models.CharField(max_length=150, blank=True, null=True)
     meta_description = models.CharField(max_length=10000, blank=True, null=True)
-    meta_title = models.SlugField(unique=True, null=True, blank=True)
     tags = models.CharField(blank=True, null=True, max_length=10000)
     image = models.ImageField(upload_to="category", default="category.png", null=True, blank=True)
     alt = models.CharField(max_length=100, blank=True, null=True)
@@ -189,6 +189,9 @@ class SubCategory(models.Model):
     parent_subcategory = models.ForeignKey('self', null=True, blank=True, related_name='child_subcategories', on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     meta_title = models.SlugField(unique=True, null=True, blank=True)
+    title_meta_title = models.CharField(max_length=200, null=True, blank=True)
+    meta_description = models.CharField(max_length=300, null=True, blank=True)
+    tags = models.CharField(blank=True, null=True, max_length=10000)
     image = models.ImageField(upload_to="sub_category", default="sub_category.png", null=True, blank=True)
     alt = models.CharField(max_length=100, blank=True, null=True)
 
@@ -265,6 +268,11 @@ class SubCategory(models.Model):
             self.meta_title = slugify(self.title) + "-" + str(uniqueid.lower())
         
         super(SubCategory, self).save(*args, **kwargs)
+
+
+class subcategoryMetaTitle(models.Model):
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, blank=True, related_name='meta_titles')
+    meta_title = models.SlugField(unique=True, null=True, blank=True)
 
 class Genre(models.Model):
     cid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet="abcdefghijklmnopqrstuvxyz")

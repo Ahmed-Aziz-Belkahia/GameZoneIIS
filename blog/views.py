@@ -34,11 +34,11 @@ def blogList(request):
 def blogDetail_redirect(request, meta_title):
     try:
         post = Post.objects.get(meta_title=meta_title)
-        return redirect('blog:blog-detail_main', meta_title=post.meta_title)
+        return redirect('blog:blog-detail_main', meta_title=post.meta_title, permanent = True)
     except:
         post_meta_title = postMetaTitle.objects.filter(meta_title=meta_title).first()
         if post_meta_title:
-            return redirect('store:blog-detail_main', meta_title=post_meta_title.post.meta_title)
+            return redirect('store:blog-detail_main', meta_title=post_meta_title.post.meta_title, permanent = True)
         else:
             return redirect("404")
 
@@ -73,11 +73,11 @@ def blogDetail(request, meta_title):
 def category_detail_redirect(request, meta_title):
     try:
         category = Category.objects.get(meta_title=meta_title)
-        return redirect('blog:category-detail_main', meta_title=category.meta_title)
+        return redirect('blog:category-detail_main', meta_title=category.meta_title, permanent = True)
     except:
         category_meta_title = CategoryMetaTitle.objects.filter(meta_title=meta_title).first()
         if category_meta_title:
-            return redirect('store:category-detail_main', meta_title=category_meta_title.category.meta_title)
+            return redirect('store:category-detail_main', meta_title=category_meta_title.category.meta_title, permanent = True)
         else:
             return redirect("404")
         
