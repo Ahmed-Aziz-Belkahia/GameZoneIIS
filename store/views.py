@@ -467,16 +467,16 @@ def subcategory_shop(request, category_meta_title, subcategory_path):
         subcategory_meta_title = subcategoryMetaTitle.objects.filter(meta_title=current_subcategory_meta_title).first()
         if subcategory_meta_title:
             r2=True
-        # else:
-        #     return redirect("404")
+        else:
+            return redirect("404")
 
 
-    # if r1  and r2:
-    #     return redirect('store:subcategory-shop', category_meta_title=category_meta_title_obj.category.meta_title, subcategory_path=subcategory_meta_title.subcategory.get_full_path_with_slashes(), permanent = True)
-    # if r1:
-    #     return redirect('store:subcategory-shop', category_meta_title=category_meta_title_obj.category.meta_title, subcategory_path=subcategory_path, permanent = True)
-    # if r2:
-    #     return redirect('store:subcategory-shop', category_meta_title=category_meta_title, subcategory_path=subcategory_meta_title.subcategory.get_full_path_with_slashes(), permanent = True)
+    if r1  and r2:
+        return redirect('store:subcategory-shop', category_meta_title=category_meta_title_obj.category.meta_title, subcategory_path=subcategory_meta_title.subcategory.get_full_path_with_slashes(), permanent = True)
+    if r1:
+        return redirect('store:subcategory-shop', category_meta_title=category_meta_title_obj.category.meta_title, subcategory_path=subcategory_path, permanent = True)
+    if r2:
+        return redirect('store:subcategory-shop', category_meta_title=category_meta_title, subcategory_path=subcategory_meta_title.subcategory.get_full_path_with_slashes(), permanent = True)
 
     products = Product.objects.filter(subcategory__meta_title__in=[subcategory.meta_title], status="published").order_by('index')
     brands = Brand.objects.filter(active=True)
