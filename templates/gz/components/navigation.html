@@ -169,7 +169,7 @@
                             {% for subcategory in category.subcategories.all %}
                                 {% if subcategory.parent_subcategory is None %}
                                     <div class="subcategory__div">
-                                        <a href="/category/{{ category.meta_title }}?subcategories={{ subcategory.meta_title }}">{{ subcategory.title }}
+                                        <a href="/{{ category.meta_title }}/{{ subcategory.get_full_path_with_slashes }}">{{ subcategory.title }}
                                             {% if subcategory.child_subcategories.all %}
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
                                             {% endif %}
@@ -177,7 +177,7 @@
                                         {% if subcategory.child_subcategories.all %}
                                             <div class="sub-sub-menu">
                                                 {% for sub_subcategory in subcategory.child_subcategories.all %}
-                                                    <a href="/category/{{ category.meta_title }}?subcategories={{sub_subcategory.meta_title}}">{{ sub_subcategory.title }}</a>
+                                                    <a href="/{{ category.meta_title }}/{{ subcategory.get_full_path_with_slashes }}">{{ sub_subcategory.title }}</a>
                                                 {% endfor %}
                                             </div>
                                         {% endif %}
@@ -293,7 +293,7 @@
 
                                 // Create a link for the subcategory
                                 let subcategoryLink = document.createElement('a');
-                                subcategoryLink.href = `/category/${category}?subcategories=${subcategory.meta_title}`;
+                                subcategoryLink.href = `/${category}/${subcategory.full_p}`;
                                 subcategoryLink.textContent = subcategory.title;
 
                                 // Append the subcategory link to the list item

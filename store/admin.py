@@ -1,7 +1,7 @@
 from django.contrib import admin
 from store.models import (CallToActionBanner, CartOrderItem, Choice, Genre, Product, Category, CartOrder, Gallery,
                          Brand, ProductFaq, Review, ProductBidders, ProductOffers, SubCategory, Type, Specification,
-                         SpecificationValue, Mapping, brandMetaTitle, categoryMetaTitle, productMetaTitle)
+                         SpecificationValue, Mapping, brandMetaTitle, categoryMetaTitle, productMetaTitle, subcategoryMetaTitle)
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.db import models
@@ -40,6 +40,10 @@ class CartOrderItemsInlineAdmin(admin.StackedInline):
 
 class categoryMetaTitleInlineAdmin(admin.StackedInline):
     model = categoryMetaTitle
+    extra= 0
+
+class subcategoryMetaTitleInlineAdmin(admin.StackedInline):
+    model = subcategoryMetaTitle
     extra= 0
 
 class brandMetaTitleInlineAdmin(admin.StackedInline):
@@ -134,6 +138,7 @@ class CategoryAdmin(ImportExportModelAdmin):
     extra= 0
 
 class SubCategoryAdmin(ImportExportModelAdmin):
+    inlines = [subcategoryMetaTitleInlineAdmin]
     list_display = ['title', 'category_image']
     prepopulated_fields = {"meta_title": ("title", )}
     extra= 0

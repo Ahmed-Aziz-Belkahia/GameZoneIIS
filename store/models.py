@@ -199,17 +199,19 @@ class SubCategory(models.Model):
         verbose_name_plural = "Sub Categories"
 
     def __str__(self):
+        # Safely handles cases where parent_subcategory is None
         if self.parent_subcategory:
-            return str(self.meta_title) + "-" + f"{self.get_full_path()[0]}"
-        return str(self.meta_title) + " - " + self.title
+            return f"{self.meta_title} - {self.get_full_path()[0]}"
+        return f"{self.meta_title} - {self.title}"
 
     def get_parent_category(self):
         """
-        Returns the parent category of the subcategory.
+        Returns the parent category of the subcategory, 
+        handles subcategories without parents.
         """
         parent = self.parent_subcategory
-        while parent is not None:
-            if parent.parent_subcategory is None:
+        while parent:
+            if not parent.parent_subcategory:
                 return parent.category
             parent = parent.parent_subcategory
         return self.category
@@ -217,30 +219,51 @@ class SubCategory(models.Model):
     def get_full_path(self):
         """
         Returns the full path of the subcategory including the current subcategory and all parent subcategories.
+        Safely handles cases where there is no parent subcategory.
         """
         path_pairs = [(self.title, self.meta_title)]  # Include the current subcategory
-        self._collect_parent_subcategories(self.parent_subcategory, path_pairs)  # Collect parent subcategories
+        if self.parent_subcategory:
+            self._collect_parent_subcategories(self.parent_subcategory, path_pairs)
         return path_pairs
+
+    def get_full_path_with_slashes(self):
+        """
+        Returns the full path of the subcategory as a string with slashes, using only meta_titles.
+        """
+        # Use get_full_path() to get the subcategory hierarchy
+        full_path_list = self.get_full_path()
+
+        # Extract only the meta_title from the tuples (title, meta_title)
+        meta_titles_only = [meta_title for _, meta_title in full_path_list]
+
+        # Join the list of meta_titles with slashes
+        full_path = '/'.join(meta_titles_only)
+
+        # Return the full path with leading and trailing slashes
+        return f'{full_path}'
+
 
     def category_image(self):
         return mark_safe('<img src="%s" width="50" height="50" style="object-fit:cover; border-radius: 6px;" />' % (self.image.url))
 
     def get_all_parent_subcategories(self):
         """
-        Returns all parent subcategories of this category.
+        Returns all parent subcategories of this subcategory.
         """
         parent_subcategories = set()
-        self._collect_parent_subcategories(self, parent_subcategories)
+        if self.parent_subcategory:
+            self._collect_parent_subcategories(self, parent_subcategories)
         return parent_subcategories
 
     def _collect_parent_subcategories(self, subcategory, parent_subcategories):
         """
-        Recursively collect all parent subcategories of a given subcategory.
+        Recursively collect all parent subcategories of a given subcategory, 
+        handles cases where there is no parent.
         """
         parent_subcategory = subcategory.parent_subcategory
-        if parent_subcategory is not None:
+        while parent_subcategory:
             parent_subcategories.add(parent_subcategory)  # Add parent subcategory
-            self._collect_parent_subcategories(parent_subcategory, parent_subcategories)
+            parent_subcategory = parent_subcategory.parent_subcategory
 
     def products(self):
         """
@@ -273,6 +296,9 @@ class SubCategory(models.Model):
 class subcategoryMetaTitle(models.Model):
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, blank=True, related_name='meta_titles')
     meta_title = models.SlugField(unique=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.meta_title
 
 class Genre(models.Model):
     cid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet="abcdefghijklmnopqrstuvxyz")

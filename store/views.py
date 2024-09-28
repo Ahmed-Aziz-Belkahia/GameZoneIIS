@@ -134,6 +134,7 @@ def get_subcategories(request, category_meta_title):
             subcategory_dict = {
                 'meta_title': subcategory.meta_title,
                 'title': subcategory.title,
+                'full_p': subcategory.get_full_path_with_slashes()
                 # Add more fields if needed
             }
             subcategories_list.append(subcategory_dict)
@@ -434,22 +435,54 @@ def category_shop(request, meta_title):
     
 
 
-def subcategory_shop(request, meta_title):
+def subcategory_shop(request, category_meta_title, subcategory_path):
+    r1=False
+    r2=False
     try:
-        subcategory = SubCategory.objects.get(meta_title=meta_title)
+        category = Category.objects.get(meta_title=category_meta_title)
     except:
-        subcategory_meta_title = subcategoryMetaTitle.objects.filter(meta_title=meta_title).first()
-        if subcategory_meta_title:
-            return redirect('store:subcategory-shop', meta_title=subcategory_meta_title.subcategory.meta_title, permanent = True)
-        else:
-            return redirect("404")
+        category_meta_title_obj = categoryMetaTitle.objects.filter(meta_title=category_meta_title).first()
+        if category_meta_title_obj:
+            r1=True
+        # else:
+        #     return redirect("404")
+        
 
+
+
+    # Split the subcategory path by "/"
+    subcategory_meta_titles = subcategory_path.split('/')
+    print(subcategory_meta_titles)
+    print("Category Meta Title:", category_meta_title)
+    print("Subcategory Meta Titles:", subcategory_meta_titles)
+    
+    # Assuming that the last element in subcategory_meta_titles is the current subcategory
+    current_subcategory_meta_title = subcategory_meta_titles[-1]
+    try:
+        subcategory = SubCategory.objects.get(meta_title=current_subcategory_meta_title)
+    except:
+        print(subcategoryMetaTitle.objects.all(), "-----------------------------------------------")
+        print(current_subcategory_meta_title, "-----------------------------------------------")
+        print(subcategoryMetaTitle.objects.filter(meta_title=current_subcategory_meta_title))
+        subcategory_meta_title = subcategoryMetaTitle.objects.filter(meta_title=current_subcategory_meta_title).first()
+        if subcategory_meta_title:
+            r2=True
+        # else:
+        #     return redirect("404")
+
+
+    # if r1  and r2:
+    #     return redirect('store:subcategory-shop', category_meta_title=category_meta_title_obj.category.meta_title, subcategory_path=subcategory_meta_title.subcategory.get_full_path_with_slashes(), permanent = True)
+    # if r1:
+    #     return redirect('store:subcategory-shop', category_meta_title=category_meta_title_obj.category.meta_title, subcategory_path=subcategory_path, permanent = True)
+    # if r2:
+    #     return redirect('store:subcategory-shop', category_meta_title=category_meta_title, subcategory_path=subcategory_meta_title.subcategory.get_full_path_with_slashes(), permanent = True)
 
     products = Product.objects.filter(subcategory__meta_title__in=[subcategory.meta_title], status="published").order_by('index')
     brands = Brand.objects.filter(active=True)
     filtered_products = products
     products_count = products.count()
-    top_selling = Product.objects.filter(category__meta_title__in=[meta_title], status="published").order_by("index", "-orders")[:20]
+    top_selling = Product.objects.filter(category__meta_title__in=[current_subcategory_meta_title], status="published").order_by("index", "-orders")[:20]
     query_params = request.GET
     # Filter
     # Get category object
